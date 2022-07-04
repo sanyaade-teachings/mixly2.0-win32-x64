@@ -1,0 +1,23 @@
+# 同步时忽略以下路径
+__pycache__
+
+arduino-cli/
+mixlyBuild/
+resources/app/board/**/libraries/ThirdParty/
+resources/app/board/**/libraries/myLib/
+testArduino/testArduino.ino
+resources/app/board/**/libraries/cloudLibsUrl.json
+mixpyBuild/mixly.py
+testArduino/*.cpp
+testArduino/*.hpp
+testArduino/*.c
+testArduino/*.h
+!resources/app/board/ThirdParty/common/
+resources/app/board/ThirdParty/
+*.DS_Store
+log.txt
+download/
+setting/
+resources/app/board/**/wiki/content.md
+resources/app/board/**/build/lib/libs.json
+mixlyBuildCache/

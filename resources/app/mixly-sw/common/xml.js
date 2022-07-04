@@ -94,7 +94,7 @@ XML.TEMPLATE_CONFIG = [
     }
 ];
 
-XML.TEMPLATE_Env = {
+XML.TEMPLATE_ENV = {
     SETTING_DIV: true,
     PROGRESS_BAR_DIV: true,
     LOADER_DIV: true,
@@ -126,7 +126,7 @@ XML.renderAllTemplete = () => {
             appendToBody,
             render
         } = i;
-        if (render && XML.TEMPLATE_Env[type]) {
+        if (render && XML.TEMPLATE_ENV[type]) {
             const xmlStr = XML.TEMPLATE_STR[type];
             XML.TEMPLATE_STR_RENDER[type] = XML.render(xmlStr);
             if (appendToBody) {
@@ -151,7 +151,7 @@ for (let i of XML.TEMPLATE_CONFIG) {
         appendToBody,
         generateDom
     } = i;
-    if (XML.TEMPLATE_Env[type]) {
+    if (XML.TEMPLATE_ENV[type]) {
         const xmlStr = Mixly.get(XML.TEMPLATE_DIR_PATH + path);
         if (xmlStr) {
             XML.TEMPLATE_STR[type] = xmlStr;
@@ -173,7 +173,7 @@ for (let i of XML.TEMPLATE_CONFIG) {
 window.addEventListener('load', () => {
     for (let i of XML.TEMPLATE_CONFIG) {
         const { type, appendToBody } = i;
-        if (XML.TEMPLATE_Env[type] && XML.TEMPLATE_DOM[type] && appendToBody) {
+        if (XML.TEMPLATE_ENV[type] && XML.TEMPLATE_DOM[type] && appendToBody) {
             $('body').append(XML.TEMPLATE_DOM[type]);
         }
     }

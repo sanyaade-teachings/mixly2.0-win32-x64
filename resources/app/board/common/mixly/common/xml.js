@@ -105,7 +105,7 @@ XML.TEMPLATE_CONFIG = [
     }
 ];
 
-XML.TEMPLATE_Env = {
+XML.TEMPLATE_ENV = {
     LOADER_DIV: true,
     SELECTOR_DIV: true,
     SIMULATOR_DIV: Env.isElectron && BOARD?.nav?.compile,
@@ -178,7 +178,7 @@ XML.convert = function (str, trimEscaped) {
 
 for (let i of XML.TEMPLATE_CONFIG) {
     const { type, path, config, appendToBody } = i;
-    if (XML.TEMPLATE_Env[type]) {
+    if (XML.TEMPLATE_ENV[type]) {
         const xmlStr = Mixly.get(XML.TEMPLATE_DIR_PATH + path);
         if (xmlStr) {
             XML.TEMPLATE_STR[type] = xmlStr;
@@ -205,7 +205,7 @@ if (layui._typeof(BOARD.board) === 'object') {
 window.addEventListener('load', () => {
     for (let i of XML.TEMPLATE_CONFIG) {
         const { type, appendToBody } = i;
-        if (XML.TEMPLATE_Env[type] && XML.TEMPLATE_DOM[type] && appendToBody) {
+        if (XML.TEMPLATE_ENV[type] && XML.TEMPLATE_DOM[type] && appendToBody) {
             $('body').append(XML.TEMPLATE_DOM[type]);
         }
     }
