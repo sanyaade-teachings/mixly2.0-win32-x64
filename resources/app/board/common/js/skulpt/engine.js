@@ -52,13 +52,7 @@ PyEngine.prototype.loadEngine = function() {
     // Sk.python3 = true;
     //输出海龟画图图片
     //如果需要输出pygame_zero场景，需要重新设置
-    Sk.TurtleGraphics = {
-        'target': 'output_img',
-        'width': '600',
-        'height': '600'
-        /*'width': $('#output_img').width() - 50, 
-        'height': $('#output_img').height() - 50*/
-    };
+    Sk.TurtleGraphics = {};
 
     //数据分析显示图片
      Sk.console="matplot_img";
@@ -347,8 +341,7 @@ PyEngine.prototype.run = function(type) {
           }
       },'json');
     })*/
-  
-    layer.closeAll('page');
+    
     window.actionArrayRecord = [];          
     $("#matplot_img").css('width','');
     $("#matplot_img").css('height','');
@@ -363,7 +356,7 @@ PyEngine.prototype.run = function(type) {
     this.reset();
 
     //SK设置
-    this.loadEngine();
+    // this.loadEngine();
     // Major Skulpt configurations
     Sk.configure({
     // Function to handle the text outputted by Skulpt
@@ -402,6 +395,7 @@ PyEngine.prototype.run = function(type) {
     if(code === "") {
         engine.programStatus['running'] = false;
         $("#loading").css('display', "none");
+        Mixly.StatusBar.setValue('==无程序需运行==\n', true);
         return;
     }
 
@@ -443,7 +437,7 @@ PyEngine.prototype.run = function(type) {
                     if(re!=null){
                         target=re[0];
                         // code_piece[i]=code_piece[i].replace(/\)$/,"+'\\n'"+target)
-                        code_piece[i]=code_piece[i].replace(/\)$/,target+";print('\\n');");
+                        code_piece[i]=code_piece[i].replace(/\)$/,target+";");
                     }
                     //console.log(code_piece[i])
                 }
@@ -451,43 +445,58 @@ PyEngine.prototype.run = function(type) {
         }
         code_new=code_piece.join("\n");
         // console.log(code_new)
-        code=code_new    
+        code=code_new
     }
 
     let showSkulptImg = false;
 
+    if (this.layerNum && this.layerSize) {
+        this.layerSize.content = [
+            $('#skulpt-img').width(),
+            $('#skulpt-img').height(),
+        ];
+    }
+
     //检验是否存在turtle模块
     if ((code.indexOf("import turtle") !== -1) || (code.indexOf("from turtle import") !== -1)){
+        document.getElementById("mat_div").style.height='0%';
+        document.getElementById("output_img").style.height='100%';
+        document.getElementById("pggame_stage").style.height='0%';
+        // const Sk = window.Sk;
+        Sk.TurtleGraphics.reset && Sk.TurtleGraphics.reset();
+        Sk.TurtleGraphics.target = "output_img";
+        Sk.TurtleGraphics.width = (this?.layerSize?.content[0] ?? ($('body').width() / 2) - 30) - 5;
+        Sk.TurtleGraphics.height = (this?.layerSize?.content[1] ?? ($('body').height() - 35)) - 5;
         showSkulptImg = true;
     }
   
     if(code_pack_list.includes('matplotlib')){
-        document.getElementById("mat_div").style.height='100%'
-        document.getElementById("output_img").style.height='0%'
-        document.getElementById("pggame_stage").style.height='0%'
-        $("#matplot_img").css('width','450px');
-        $("#matplot_img").css('height','450px');
+        document.getElementById("mat_div").style.height='100%';
+        document.getElementById("output_img").style.height='0%';
+        document.getElementById("pggame_stage").style.height='0%';
+        $("#matplot_img").css('width', this?.layerSize?.content[0] ?? ($('body').width() / 2 + 'px'));
+        $("#matplot_img").css('height',this?.layerSize?.content[1] ?? ($('body').height() - 30 + 'px'));
         showSkulptImg = true;
     }
 
     //如果存在pygame-zero，则进行相关的配置
     if(ifpgzrun){
-        document.getElementById("mat_div").style.height='0%'
-        document.getElementById("output_img").style.height='0%'
-        document.getElementById("pggame_stage").style.height='100%'
+        document.getElementById("mat_div").style.height='0%';
+        document.getElementById("output_img").style.height='0%';
+        document.getElementById("pggame_stage").style.height='100%';
         
         const Sk = window.Sk;
         Sk.TurtleGraphics.reset && Sk.TurtleGraphics.reset()
         Sk.TurtleGraphics.target = "pggame_stage";
-        Sk.TurtleGraphics.width = $('#pggame_stage').width() - 50
-        Sk.TurtleGraphics.height = $('#pggame_stage').height() - 50
+        Sk.TurtleGraphics.width = (this?.layerSize?.content[0] ?? ($('body').width() / 2) - 30) - 5;
+        Sk.TurtleGraphics.height = (this?.layerSize?.content[1] ?? ($('body').height() - 35)) - 5;
 
         const PyGameZero = window.PyGameZero;
         const stageSize = {width: 0, height: 0};
         const stageEl = document.getElementById("pggame_stage");
         // 配置容器
-        stageSize.width = $('#pggame_stage').width() - 50;
-        stageSize.height = $('#pggame_stage').height() - 50;
+        stageSize.width = this?.layerSize?.content[0] ?? '500px';
+        stageSize.height = this?.layerSize?.content[1] ?? '500px';
         PyGameZero.setContainer(stageEl)
         PyGameZero.reset();
         showSkulptImg = true;
@@ -495,14 +504,21 @@ PyEngine.prototype.run = function(type) {
     }
     //已经读取了代码：code
     // Actually run the python code
-    if (showSkulptImg) {
-        Mixly.LayerExtend.open({
+    if (showSkulptImg && !this.layerNum) {
+        const _this = this;
+        this.layerNum = Mixly.LayerExtend.open({
             title: ['显示', '30px'],
-            shade: Mixly.LayerExtend.shadeWithHeight,
+            shade: 0,
             offset: 'rt',
-            area: ['50%', '100%'],
+            area: _this?.layerSize?.layero ?? ['50%', '100%'],
             max: ['600px', '1000px'],
-            content: $('#skulpt-img')
+            content: $('#skulpt-img'),
+            resizing: function(size) {
+                _this.layerSize = size;
+            },
+            end: function() {
+                _this.layerNum = null;
+            }
         });
     }
 
@@ -533,11 +549,6 @@ PyEngine.prototype.run = function(type) {
             //hack for kill program with time limiterror
             if(original.indexOf("TimeLimitError") !== -1)
                 return;
-            if($('.inputMsg').length > 0)
-                $('#side_code').text($('#side_code').text() + $('.inputMsg').val()) 
-
-            var $errorE = $('<span />').addClass('errorMsg').html(original);
-            $("#side_code").append($errorE)
             var matchRet = /on line (\d+)/.exec(original);
             var lineNumber = -1;
             if(matchRet !== null && matchRet.length == 2){

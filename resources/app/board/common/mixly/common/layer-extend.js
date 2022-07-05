@@ -63,6 +63,7 @@ LayerExtend.open = (toolConfig) => {
         success: null,
         end: null,
         cancel: null,
+        resizing: null,
         offset: 'auto',
         borderRadius: '8px',
         maxmin: false
@@ -85,6 +86,7 @@ LayerExtend.open = (toolConfig) => {
         shade,
         end,
         cancel,
+        resizing,
         offset,
         borderRadius,
         maxmin
@@ -180,10 +182,18 @@ LayerExtend.open = (toolConfig) => {
                 cancel(index, layero);
         },
         resizing: function (layero) {
-            let winHeight = $(window).height();
-            let winWidth = $(window).width();
-            layero.css('width', layero.width()/winWidth*100 + "%");
-            layero.css('height', layero.height()/winHeight*100 + "%");
+            const winHeight = $(window).height();
+            const winWidth = $(window).width();
+            const width = layero.width()/winWidth*100 + "%";
+            const height = layero.height()/winHeight*100 + "%";
+            layero.css({ width, height });
+            if (typeof resizing === 'function') {
+                const $content = layero.children('.layui-layer-content');
+                resizing({
+                    layero: [ width, height ],
+                    content: [ $content.width(), $content.height() ]
+                });
+            }
         }
     });
 }

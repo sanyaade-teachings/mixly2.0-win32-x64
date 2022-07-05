@@ -319,7 +319,6 @@ PyEngine.prototype.steprun = function(type) {
         var fn = document.getElementById("boardSelector").value + '.xml'
     }
 
-    layer.closeAll('page');
     window.actionArrayRecord = [];     
     // $("#blocklySVG").empty();
     $("#loading").css('display', "inline-block");
@@ -365,6 +364,7 @@ PyEngine.prototype.steprun = function(type) {
     if(code === "") {
         engine.programStatus['running'] = false;
         $("#loading").css('display', "none");
+        Mixly.StatusBar.setValue('==无程序需运行==\n', true);
         return;
     }
 
@@ -406,7 +406,7 @@ PyEngine.prototype.steprun = function(type) {
                     if(re!=null){
                         target=re[0];
                         // code_piece[i]=code_piece[i].replace(/\)$/,"+'\\n'"+target)
-                        code_piece[i]=code_piece[i].replace(/\)$/,target+";print('\\n');");
+                        code_piece[i]=code_piece[i].replace(/\)$/,target+";");
                     }
                     //console.log(code_piece[i])
                 }
@@ -416,13 +416,20 @@ PyEngine.prototype.steprun = function(type) {
         //console.log(code_new)
         code=code_new    
     }
+
+    if (this.layerNum && this.layerSize) {
+        this.layerSize.content = [
+            $('#skulpt-img').width(),
+            $('#skulpt-img').height(),
+        ];
+    }
   
     if(code_pack_list.includes('matplotlib')){
         document.getElementById("mat_div").style.height='100%'
         document.getElementById("output_img").style.height='0%'
         document.getElementById("pggame_stage").style.height='0%'
-        $("#matplot_img").css('width','450px');
-        $("#matplot_img").css('height','450px');
+        $("#matplot_img").css('width', this?.layerSize?.content[0] ?? ($('body').width() / 2 + 'px'));
+        $("#matplot_img").css('height',this?.layerSize?.content[1] ?? ($('body').height() - 30 + 'px'));
     }
 
     //如果存在pygame-zero，则进行相关的配置
@@ -433,8 +440,8 @@ PyEngine.prototype.steprun = function(type) {
         const Sk = window.Sk;
         Sk.TurtleGraphics.reset && Sk.TurtleGraphics.reset()
         Sk.TurtleGraphics.target = "pggame_stage";
-        Sk.TurtleGraphics.width = $('#pggame_stage').width() - 50
-        Sk.TurtleGraphics.height = $('#pggame_stage').height() - 50
+        Sk.TurtleGraphics.width = (this?.layerSize?.content[0] ?? ($('body').width() / 2) - 30) - 5;
+        Sk.TurtleGraphics.height = (this?.layerSize?.content[1] ?? ($('body').height() - 35)) - 5;
 
         const PyGameZero = window.PyGameZero;
         const stageSize = {width: 0, height: 0};
@@ -464,17 +471,22 @@ PyEngine.prototype.steprun = function(type) {
     event_save('steprun');
 
     if (ifpgzrun || ifbg_nonehl) {
-        Mixly.LayerExtend.open({
+        const _this = this;
+        this.layerNum = Mixly.LayerExtend.open({
             title: ['显示', '30px'],
-            shade: Mixly.LayerExtend.shadeWithHeight,
+            shade: 0,
             offset: 'rt',
-            area: ['50%', '100%'],
+            area: _this?.layerSize?.layero ?? ['50%', '100%'],
             max: ['600px', '1000px'],
-            content: $('#skulpt-img')
-        })
+            content: $('#skulpt-img'),
+            resizing: function(size) {
+                _this.layerSize = size;
+            },
+            end: function() {
+                _this.layerNum = null;
+            }
+        });
     }
-
-    console.log(code)
     //已经读取了代码：code
     // Actually run the python code
     var executionPromise = Sk.misceval.asyncToPromise(function() {
@@ -555,7 +567,6 @@ PyEngine.prototype.steprun = function(type) {
         var fn = document.getElementById("boardSelector").value + '.xml'
     }
 
-    layer.closeAll('page');
     window.actionArrayRecord = [];     
     $("#blocklySVG").empty();
     $("#loading").css('display', "inline-block");
@@ -595,12 +606,12 @@ PyEngine.prototype.steprun = function(type) {
     event_save('run'); 
     // Get the code
     var code = Mixly.MFile.getCode();
-    /*if(document.getElementById('tab_arduino').className == 'tabon'){
-        //code = document.getElementById('content_arduino').value;
-        code = editor.getValue();
-    }else{
-        code = Blockly.Python.workspaceToCode(Blockly.mainWorkspace) || '';//code
-    }*/
+    if(code === "") {
+        this.programStatus['running'] = false;
+        $("#loading").css('display', "none");
+        Mixly.StatusBar.setValue('==无程序需运行==\n', true);
+        return;
+    }
     //如果存在游戏模块，则只能读取模块代码
     if ((code.indexOf("import blocklygame")!=-1)||(code.indexOf("from blocklygame import")!=-1)){
         code = Blockly.Python.workspaceToCode(Blockly.mainWorkspace) || '';//code
@@ -640,12 +651,6 @@ PyEngine.prototype.steprun = function(type) {
     }
 
     var engine = this;
-    if(code === "") {
-        engine.programStatus['running'] = false;
-        $("#loading").css('display', "none");
-        return;
-    }
-
     var pack_num = 0;
     //检验是否有数据分析、机器学习相关的模块
     var pack_list = ["numpy","pandas","scikit-learn","matplotlib"];
@@ -691,7 +696,7 @@ PyEngine.prototype.steprun = function(type) {
                     if(re!=null){
                         target=re[0];
                         // code_piece[i]=code_piece[i].replace(/\)$/,"+'\\n'"+target)
-                        code_piece[i]=code_piece[i].replace(/\)$/,target+";print('\\n');");
+                        code_piece[i]=code_piece[i].replace(/\)$/,target+";");
                     }
                     //console.log(code_piece[i])
                 }
@@ -706,8 +711,8 @@ PyEngine.prototype.steprun = function(type) {
         document.getElementById("mat_div").style.height='100%'
         document.getElementById("output_img").style.height='0%'
         document.getElementById("pggame_stage").style.height='0%'
-        $("#matplot_img").css('width','450px');
-        $("#matplot_img").css('height','450px');
+        $("#matplot_img").css('width', this?.layerSize?.content[0] ?? ($('body').width() / 2 + 'px'));
+        $("#matplot_img").css('height',this?.layerSize?.content[1] ?? ($('body').height() - 30 + 'px'));
     }
 
     //如果存在pygame-zero，则进行相关的配置
@@ -719,8 +724,8 @@ PyEngine.prototype.steprun = function(type) {
         const Sk = window.Sk;
         Sk.TurtleGraphics.reset && Sk.TurtleGraphics.reset()
         Sk.TurtleGraphics.target = "pggame_stage";
-        Sk.TurtleGraphics.width = $('#pggame_stage').width() - 50
-        Sk.TurtleGraphics.height = $('#pggame_stage').height() - 50
+        Sk.TurtleGraphics.width = (this?.layerSize?.content[0] ?? ($('body').width() / 2) - 30) - 5;
+        Sk.TurtleGraphics.height = (this?.layerSize?.content[1] ?? ($('body').height() - 35)) - 5;
 
         const PyGameZero = window.PyGameZero;
         const stageSize = {width: 0, height: 0};
@@ -740,17 +745,22 @@ PyEngine.prototype.steprun = function(type) {
     }
 
     if (ifpgzrun || ifbg_nonehl) {
-        Mixly.LayerExtend.open({
+        const _this = this;
+        this.layerNum = Mixly.LayerExtend.open({
             title: ['显示', '30px'],
-            shade: Mixly.LayerExtend.shadeWithHeight,
+            shade: 0,
             offset: 'rt',
-            area: ['50%', '100%'],
+            area: _this?.layerSize?.layero ?? ['50%', '100%'],
             max: ['600px', '1000px'],
-            content: $('#skulpt-img')
-        })
+            content: $('#skulpt-img'),
+            resizing: function(size) {
+                _this.layerSize = size;
+            },
+            end: function() {
+                _this.layerNum = null;
+            }
+        });
     }
-
-    console.log(code)
     
     //已经读取了代码：code
     // Actually run the python code
