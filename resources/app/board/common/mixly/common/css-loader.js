@@ -37,10 +37,15 @@ Mixly.CssLoader.removeCss = function (href) {
 
 /* 公共css */
 Mixly.CssLoader.commonCss = [
-    //"common/css/ACEfont.css",
-    //"common/css/fontello.css",
-    //"common/css/nav.css",
-    //"common/css/library.css"
+    "common/css/root.css",
+    "common/ui/layui/css/layui.css",
+    "common/css/ACEfont.css",
+    "common/css/fontello.css",
+    "common/css/nav.css",
+    "common/css/library.css",
+    "common/css/drag.css",
+    "common/css/button.css",
+    "common/css/xscrollbar.css"
 ];
 
 /* 客户端css */
