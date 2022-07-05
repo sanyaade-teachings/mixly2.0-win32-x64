@@ -476,7 +476,7 @@ PyEngine.prototype.steprun = function(type) {
             title: ['显示', '30px'],
             shade: 0,
             offset: 'rt',
-            area: _this?.layerSize?.layero ?? ['50%', '50%'],
+            area: _this?.layerSize?.layero ?? ['50%', '70%'],
             max: [$('body').width() + 'px', $('body').height() + 'px'],
             fixed: false,
             content: $('#skulpt-img'),
@@ -752,14 +752,16 @@ PyEngine.prototype.steprun = function(type) {
             title: ['显示', '30px'],
             shade: 0,
             offset: 'rt',
-            area: _this?.layerSize?.layero ?? ['50%', '100%'],
-            max: ['600px', '1000px'],
+            area: _this?.layerSize?.layero ?? ['50%', '70%'],
+            max: [$('body').width() + 'px', $('body').height() + 'px'],
+            fixed: false,
             content: $('#skulpt-img'),
             resizing: function(size) {
                 _this.layerSize = size;
             },
             end: function() {
                 _this.layerNum = null;
+                pyengine.kill();
             }
         });
     }
