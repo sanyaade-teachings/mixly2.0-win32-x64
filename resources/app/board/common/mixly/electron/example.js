@@ -106,7 +106,7 @@ Example.render = () => {
             const $treeDiv = $('#mixly-examples-tree');
             const $treeDivParent = $treeDiv.parent();
             $treeDivParent.css({
-                'bottom': '23px',
+                'bottom': 'var(--footer-height)',
                 'top': 'auto',
                 'margin-bottom': '0px'
             });

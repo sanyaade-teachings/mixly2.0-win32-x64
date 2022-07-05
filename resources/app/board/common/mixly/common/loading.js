@@ -3,6 +3,7 @@ goog.require('Mixly.Env');
 goog.require('Mixly.Config');
 goog.require('Mixly.Modules');
 goog.require('Mixly.LocalStorage');
+goog.require('Mixly.CssLoader');
 goog.provide('Mixly.Loading');
 
 const {
@@ -10,6 +11,7 @@ const {
     Config,
     Modules,
     LocalStorage,
+    CssLoader,
     Loading
 } = Mixly;
 
@@ -46,8 +48,8 @@ Loading.LIGHT_CSS = `
 .loading .left-div {
     position: absolute;
     left: 0px;
-    top: 30px;
-    bottom: 22px;
+    top: var(--nav-height);
+    bottom: var(--footer-height);
     width: 160px;
     background-color: #ddd;
     border-radius: 2px;
@@ -58,8 +60,7 @@ Loading.LIGHT_CSS = `
     position: absolute;
     left: 0px;
     top: 0px;
-    bottom: 22px;
-    height: 30px;
+    height: var(--nav-height);
     width: 100%;
     background-color: #009688;
     border-radius: 2px;
@@ -70,7 +71,7 @@ Loading.LIGHT_CSS = `
     position: absolute;
     left: 0px;
     bottom: 0px;
-    height: 22px;
+    height: var(--footer-height);
     width: 100%;
     background-color: #05bbaa;
     border-radius: 2px;
@@ -96,8 +97,8 @@ Loading.DARK_CSS = `
 .loading .left-div {
     position: absolute;
     left: 0px;
-    top: 30px;
-    bottom: 22px;
+    top: var(--nav-height);
+    bottom: var(--footer-height);
     width: 160px;
     background-color: #333333;
     border-radius: 2px;
@@ -109,7 +110,7 @@ Loading.DARK_CSS = `
     left: 0px;
     top: 0px;
     width: 100%;
-    height: 30px;
+    height: var(--nav-height);
     background-color: #2F4056;
     border-radius: 2px;
     opacity: 0.9;
@@ -119,7 +120,7 @@ Loading.DARK_CSS = `
     position: absolute;
     left: 0px;
     bottom: 0px;
-    height: 22px;
+    height: var(--footer-height);
     width: 100%;
     background-color: #007acc;
     border-radius: 2px;

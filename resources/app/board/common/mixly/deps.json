@@ -874,7 +874,8 @@
                 "Mixly.Env",
                 "Mixly.Config",
                 "Mixly.Modules",
-                "Mixly.LocalStorage"
+                "Mixly.LocalStorage",
+                "Mixly.CssLoader"
             ],
             "provide":[
                 "Mixly.Loading"
