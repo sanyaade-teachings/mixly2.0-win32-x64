@@ -36,7 +36,7 @@
         "env": 2
     },{
         "boardImg": "./board/micropython_esp32_mixgo_pe_generic/media/mixgo.png",
-        "boardName": "ESP32",
+        "boardName": "Python ESP32",
         "boardIndex": "./board/micropython_esp32_mixgo_pe_generic/index.html",
         "env": 2
     },{
