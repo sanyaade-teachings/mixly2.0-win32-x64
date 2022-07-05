@@ -466,7 +466,7 @@ PyEngine.prototype.run = function(type) {
         Sk.TurtleGraphics.reset && Sk.TurtleGraphics.reset();
         Sk.TurtleGraphics.target = "output_img";
         Sk.TurtleGraphics.width = (this?.layerSize?.content[0] ?? ($('body').width() / 2) - 30) - 5;
-        Sk.TurtleGraphics.height = (this?.layerSize?.content[1] ?? ($('body').height() - 35)) - 5;
+        Sk.TurtleGraphics.height = (this?.layerSize?.content[1] ?? ($('body').height() * 0.7 - 40)) - 5;
         showSkulptImg = true;
     }
   
@@ -475,7 +475,7 @@ PyEngine.prototype.run = function(type) {
         document.getElementById("output_img").style.height='0%';
         document.getElementById("pggame_stage").style.height='0%';
         $("#matplot_img").css('width', this?.layerSize?.content[0] ?? ($('body').width() / 2 + 'px'));
-        $("#matplot_img").css('height',this?.layerSize?.content[1] ?? ($('body').height() - 30 + 'px'));
+        $("#matplot_img").css('height',this?.layerSize?.content[1] ?? ($('body').height() * 0.7 - 40 + 'px'));
         showSkulptImg = true;
     }
 
@@ -489,7 +489,7 @@ PyEngine.prototype.run = function(type) {
         Sk.TurtleGraphics.reset && Sk.TurtleGraphics.reset()
         Sk.TurtleGraphics.target = "pggame_stage";
         Sk.TurtleGraphics.width = (this?.layerSize?.content[0] ?? ($('body').width() / 2) - 30) - 5;
-        Sk.TurtleGraphics.height = (this?.layerSize?.content[1] ?? ($('body').height() - 35)) - 5;
+        Sk.TurtleGraphics.height = (this?.layerSize?.content[1] ?? ($('body').height() * 0.7 - 40)) - 5;
 
         const PyGameZero = window.PyGameZero;
         const stageSize = {width: 0, height: 0};
@@ -510,14 +510,16 @@ PyEngine.prototype.run = function(type) {
             title: ['显示', '30px'],
             shade: 0,
             offset: 'rt',
-            area: _this?.layerSize?.layero ?? ['50%', '100%'],
-            max: ['600px', '1000px'],
+            area: _this?.layerSize?.layero ?? ['50%', '70%'],
+            max: ['700px', '900px'],
+            fixed: false,
             content: $('#skulpt-img'),
             resizing: function(size) {
                 _this.layerSize = size;
             },
             end: function() {
                 _this.layerNum = null;
+                pyengine.kill();
             }
         });
     }

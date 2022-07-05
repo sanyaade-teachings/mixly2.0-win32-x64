@@ -65,6 +65,7 @@ LayerExtend.open = (toolConfig) => {
         cancel: null,
         resizing: null,
         offset: 'auto',
+        fixed: true,
         borderRadius: '8px',
         maxmin: false
     };
@@ -88,6 +89,7 @@ LayerExtend.open = (toolConfig) => {
         cancel,
         resizing,
         offset,
+        fixed,
         borderRadius,
         maxmin
     } = toolConfig;
@@ -114,7 +116,7 @@ LayerExtend.open = (toolConfig) => {
         shade,
         closeBtn: 1,
         resize,
-        fixed: true,
+        fixed,
         offset,
         maxmin,
         success: function (layero, index) {
