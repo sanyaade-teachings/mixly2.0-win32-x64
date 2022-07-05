@@ -274,6 +274,24 @@ Blockly.Blocks['pins_exlcdv'] = {
     }
 };
 
+Blockly.Blocks['pins_exlcdh5x8'] = {
+    init: function() {
+        this.setColour(Blockly.Blocks.pins.HUE);
+        this.appendDummyInput("")
+            .appendField(new Blockly.FieldDropdown(profile.default.exlcdh5x8), 'PIN');
+        this.setOutput(true, Number);
+    }
+};
+
+Blockly.Blocks['pins_exlcdv5x8'] = {
+    init: function() {
+        this.setColour(Blockly.Blocks.pins.HUE);
+        this.appendDummyInput("")
+            .appendField(new Blockly.FieldDropdown(profile.default.exlcdv5x8), 'PIN');
+        this.setOutput(true, Number);
+    }
+};
+
 Blockly.Blocks['pins_axis'] = {
     init: function() {
         this.setColour(Blockly.Blocks.pins.HUE);

@@ -1404,19 +1404,19 @@
     </category>
     <!--<category id="catOnBoard" name="catOnBoard" colour="65">-->
       <category id="catOnBoardSensor" name="catOnBoardSensor" colour="40">
-        <block type="sensor_mixgo_button_is_pressed" m-show='micropython:esp32c3:mixgocc'>
+        <block type="sensor_mixgo_button_is_pressed">
           <value name="btn">
             <shadow type="pins_button">
             </shadow>
           </value>
         </block>
-        <block type="sensor_mixgo_button_was_pressed" m-show='micropython:esp32c3:mixgocc'>
+        <block type="sensor_mixgo_button_was_pressed">
           <value name="btn">
             <shadow type="pins_button">
             </shadow>
           </value>
         </block>
-        <block type="sensor_mixgo_button_get_presses" m-show='micropython:esp32c3:mixgocc'>
+        <block type="sensor_mixgo_button_get_presses">
           <value name="btn">
             <shadow type="pins_button">
             </shadow>
@@ -1427,7 +1427,7 @@
             </shadow>
           </value>
         </block>
-        <block type="sensor_mixgo_button_attachInterrupt" m-show='micropython:esp32c3:mixgocc'>
+        <block type="sensor_mixgo_button_attachInterrupt">
           <value name="btn">
             <shadow type="pins_buttonB">
             </shadow>
@@ -1438,7 +1438,7 @@
             </shadow>
           </value>
         </block>
-        <block type="procedures_defnoreturn" m-show='micropython:esp32c3:mixgocc'>
+        <block type="procedures_defnoreturn">
           <mutation>
             <arg name="x"></arg>
           </mutation>
@@ -1447,12 +1447,12 @@
             <block type="controls_pass"></block>
           </statement>
         </block>
-        <block type="sensor_mixgo_pin_near" m-show='micropython:esp32c3:mixgocc'></block>
-        <block type="sensor_LTR308" m-show='micropython:esp32c3:mixgocc'></block>
-        <block type="sensor_sound" m-show='micropython:esp32c3:mixgocc'></block>
+        <block type="sensor_mixgo_pin_near"></block>
+        <block type="sensor_LTR308"></block>
+        <block type="sensor_sound"></block>
         <block type="sensor_hp203" m-show='micropython:esp32c3:mixgocc'></block>        
         <block type="sensor_aht11" m-show='micropython:esp32c3:mixgocc'></block>
-        <block type="sensor_get_acceleration" m-show='micropython:esp32c3:mixgocc'></block>
+        <block type="sensor_get_acceleration"></block>
         <block type="rfid_readid" m-show='micropython:esp32c3:mixgocc'>
           <value name="SUB">
             <shadow type="variables_get">
@@ -1480,58 +1480,9 @@
             </value>
           </block>
 
-          <!-- MixGo Me Onboard_sensor: --> 
-
-          <block type="sensor_mixgome_button_is_pressed" m-show='micropython:esp32c3:mixgome'>
-          <value name="btn">
-            <shadow type="pins_button">
-            </shadow>
-          </value>
-        </block>
-        <block type="sensor_mixgome_button_was_pressed" m-show='micropython:esp32c3:mixgome'>
-          <value name="btn">
-            <shadow type="pins_button">
-            </shadow>
-          </value>
-        </block>
-        <block type="sensor_mixgome_button_get_presses" m-show='micropython:esp32c3:mixgome'>
-          <value name="btn">
-            <shadow type="pins_button">
-            </shadow>
-          </value>
-          <value name="VAR">
-            <shadow type="math_number">
-              <field name="NUM">1</field>
-            </shadow>
-          </value>
-        </block>
-        <block type="sensor_mixgome_button_attachInterrupt" m-show='micropython:esp32c3:mixgome'>
-          <value name="btn">
-            <shadow type="pins_buttonB">
-            </shadow>
-          </value>
-          <value name="DO">
-            <shadow type="factory_block_return">
-              <field name="VALUE">attachInterrupt_func</field>
-            </shadow>
-          </value>
-        </block>
-        <block type="procedures_defnoreturn" m-show='micropython:esp32c3:mixgome'>
-          <mutation>
-            <arg name="x"></arg>
-          </mutation>
-          <field name="NAME">attachInterrupt_func</field>
-          <statement name="STACK">
-            <block type="controls_pass"></block>
-          </statement>
-        </block>
-        <block type="sensor_mixgome_pin_near" m-show='micropython:esp32c3:mixgome'></block>
-        <block type="sensor_mixgome_LTR308" m-show='micropython:esp32c3:mixgome'></block>
-        <block type="sensor_mixgome_sound" m-show='micropython:esp32c3:mixgome'></block>    
+          <!-- MixGo Me Onboard_sensor: -->  
+        
         <block type="sensor_mixgome_temperature" m-show='micropython:esp32c3:mixgome'></block>
-        <block type="sensor_mixgome_get_acceleration" m-show='micropython:esp32c3:mixgome'></block>
-        
-        
        
       </category>
       <category id="catOnBoardActuator" name="catOnBoardActuator" colour="100">
@@ -1568,14 +1519,14 @@
             </shadow>
           </value>
         </block>
-        <block type="esp32_onboard_music_pitch" m-show='micropython:esp32c3:mixgocc'>
+        <block type="esp32_onboard_music_pitch">
         <value name="pitch">
           <shadow type="pins_tone_notes">
             <field name="PIN">440</field>
           </shadow>
         </value>
       </block>
-      <block type="esp32_onboard_music_pitch_with_time" m-show='micropython:esp32c3:mixgocc'>
+      <block type="esp32_onboard_music_pitch_with_time">
         <value name="pitch">
           <shadow type="pins_tone_notes">
             <field name="PIN">440</field>
@@ -1587,14 +1538,14 @@
           </shadow>
         </value>
       </block>
-      <block type="esp32_onboard_music_stop" m-show='micropython:esp32c3:mixgocc'>
+      <block type="esp32_onboard_music_stop">
         <value name="PIN">
           <shadow type="pins_pwm_pin">
             <field name="PIN">0</field>
           </shadow>
         </value>
       </block>
-      <block type="esp32_onboard_music_play_list" m-show='micropython:esp32c3:mixgocc'>
+      <block type="esp32_onboard_music_play_list">
         <value name="LIST">
           <shadow type="pins_playlist"></shadow>
         </value>
@@ -1604,7 +1555,7 @@
           </shadow>
         </value>
       </block>
-      <block type="esp32_music_set_tempo" m-show='micropython:esp32c3:mixgocc'>
+      <block type="esp32_music_set_tempo">
         <value name="TICKS">
           <shadow type="math_number">
             <field name="NUM">4</field>
@@ -1616,9 +1567,9 @@
           </shadow>
         </value>
       </block>
-      <block type="esp32_music_get_tempo" m-show='micropython:esp32c3:mixgocc'></block>
-      <block type="esp32_music_reset" m-show='micropython:esp32c3:mixgocc'></block>
-        <block type="actuator_onboard_neopixel_rgb" m-show='micropython:esp32c3:mixgocc'>
+      <block type="esp32_music_get_tempo"></block>
+      <block type="esp32_music_reset"></block>
+        <block type="actuator_onboard_neopixel_rgb">
         <value name="_LED_">
           <shadow type="math_number">
             <field name="NUM">0</field>
@@ -1640,7 +1591,7 @@
           </shadow>
         </value>
       </block>
-      <block type="actuator_onboard_neopixel_rgb_all" m-show='micropython:esp32c3:mixgocc'>
+      <block type="actuator_onboard_neopixel_rgb_all">
         <value name="RVALUE">
           <shadow type="math_number">
             <field name="NUM">0</field>
@@ -1657,7 +1608,7 @@
           </shadow>
         </value>
       </block>
-      <block type="actuator_onboard_neopixel_rgb_show_all_chase" m-show='micropython:esp32c3:mixgocc'>
+      <block type="actuator_onboard_neopixel_rgb_show_all_chase">
         <value name="RVALUE">
           <shadow type="math_number">
             <field name="NUM">0</field>
@@ -1679,148 +1630,26 @@
           </shadow>
         </value>
       </block>
-      <block type="actuator_onboard_neopixel_rgb_show_all_rainbow" m-show='micropython:esp32c3:mixgocc'>
+      <block type="actuator_onboard_neopixel_rgb_show_all_rainbow">
         <value name="time">
           <shadow type="math_number">
             <field name="NUM">1000</field>
           </shadow>
         </value>
       </block>
-      <block type="actuator_onboard_neopixel_write" m-show='micropython:esp32c3:mixgocc'>
+      <block type="actuator_onboard_neopixel_write">
       </block>
 
-      <!-- MixGo ME Onboard Actuator: -->  
-
-      <block type="mixgome_onboard_music_pitch" m-show='micropython:esp32c3:mixgome'>
-        <value name="pitch">
-          <shadow type="pins_tone_notes">
-            <field name="PIN">440</field>
-          </shadow>
-        </value>
-      </block>
-      <block type="mixgome_onboard_music_pitch_with_time" m-show='micropython:esp32c3:mixgome'>
-        <value name="pitch">
-          <shadow type="pins_tone_notes">
-            <field name="PIN">440</field>
-          </shadow>
-        </value>
-        <value name="time">
-          <shadow type="math_number">
-            <field name="NUM">1000</field>
-          </shadow>
-        </value>
-      </block>
-      <block type="mixgome_onboard_music_stop" m-show='micropython:esp32c3:mixgome'>
-        <value name="PIN">
-          <shadow type="pins_pwm_pin">
-            <field name="PIN">0</field>
-          </shadow>
-        </value>
-      </block>
-      <block type="mixgome_onboard_music_play_list" m-show='micropython:esp32c3:mixgome'>
-        <value name="LIST">
-          <shadow type="pins_playlist"></shadow>
-        </value>
-        <value name="PIN">
-          <shadow type="pins_pwm_pin">
-            <field name="PIN">0</field>
-          </shadow>
-        </value>
-      </block>
-      <block type="mixgome_music_set_tempo" m-show='micropython:esp32c3:mixgome'>
-        <value name="TICKS">
-          <shadow type="math_number">
-            <field name="NUM">4</field>
-          </shadow>
-        </value>
-        <value name="BPM">
-          <shadow type="math_number">
-            <field name="NUM">120</field>
-          </shadow>
-        </value>
-      </block>
-      <block type="mixgome_music_get_tempo" m-show='micropython:esp32c3:mixgome'></block>
-      <block type="mixgome_music_reset" m-show='micropython:esp32c3:mixgome'></block>
-        <block type="mixgome_actuator_onboard_neopixel_rgb" m-show='micropython:esp32c3:mixgome'>
-        <value name="_LED_">
-          <shadow type="math_number">
-            <field name="NUM">0</field>
-          </shadow>
-        </value>
-        <value name="RVALUE">
-          <shadow type="math_number">
-            <field name="NUM">0</field>
-          </shadow>
-        </value>
-        <value name="GVALUE">
-          <shadow type="math_number">
-            <field name="NUM">0</field>
-          </shadow>
-        </value>
-        <value name="BVALUE">
-          <shadow type="math_number">
-            <field name="NUM">0</field>
-          </shadow>
-        </value>
-      </block>
-      <block type="mixgome_actuator_onboard_neopixel_rgb_all" m-show='micropython:esp32c3:mixgome'>
-        <value name="RVALUE">
-          <shadow type="math_number">
-            <field name="NUM">0</field>
-          </shadow>
-        </value>
-        <value name="GVALUE">
-          <shadow type="math_number">
-            <field name="NUM">0</field>
-          </shadow>
-        </value>
-        <value name="BVALUE">
-          <shadow type="math_number">
-            <field name="NUM">0</field>
-          </shadow>
-        </value>
-      </block>
-      <block type="mixgome_actuator_onboard_neopixel_rgb_show_all_chase" m-show='micropython:esp32c3:mixgome'>
-        <value name="RVALUE">
-          <shadow type="math_number">
-            <field name="NUM">0</field>
-          </shadow>
-        </value>
-        <value name="GVALUE">
-          <shadow type="math_number">
-            <field name="NUM">0</field>
-          </shadow>
-        </value>
-        <value name="BVALUE">
-          <shadow type="math_number">
-            <field name="NUM">0</field>
-          </shadow>
-        </value>
-        <value name="time">
-          <shadow type="math_number">
-            <field name="NUM">1000</field>
-          </shadow>
-        </value>
-      </block>
-      <block type="mixgome_actuator_onboard_neopixel_rgb_show_all_rainbow" m-show='micropython:esp32c3:mixgome'>
-        <value name="time">
-          <shadow type="math_number">
-            <field name="NUM">1000</field>
-          </shadow>
-        </value>
-      </block>
-      <block type="mixgome_actuator_onboard_neopixel_write" m-show='micropython:esp32c3:mixgome'>
-      </block>
-
+      
 
       </category>
       <category id="catOnBoardDisplay" name="catOnBoardDisplay" colour="180">        
-        <block type="display_show_image" m-show='micropython:esp32c3:mixgocc'>
+        <block type="display_show_image">
           <value name="data">
             <shadow type="pins_builtinimg"></shadow>
           </value>
         </block>     
-        <block type="display_show_image_or_string_delay" m-show='micropython:esp32c3:mixgocc'>
+        <block type="display_show_image_or_string_delay">
           <value name="data">
             <shadow type="text">
               <field name="TEXT">Mixly</field>
@@ -1832,14 +1661,14 @@
           </shadow>
         </value>
         </block>   
-        <block type="display_scroll_string" m-show='micropython:esp32c3:mixgocc'>
+        <block type="display_scroll_string">
           <value name="data">
             <shadow type="text">
               <field name="TEXT">Mixly</field>
             </shadow>
           </value>
         </block>       
-        <block type="display_scroll_string_delay" m-show='micropython:esp32c3:mixgocc'>       
+        <block type="display_scroll_string_delay">       
           <value name="data">
             <shadow type="text">
               <field name="TEXT">Mixly</field>
@@ -1856,14 +1685,14 @@
           </shadow>
         </value>
         </block>
-        <block type="display_show_frame_string" m-show='micropython:esp32c3:mixgocc'>          
+        <block type="display_show_frame_string">          
           <value name="data">
             <shadow type="text">
               <field name="TEXT">Mixly</field>
             </shadow>
           </value>
         </block>
-        <block type="display_show_frame_string_delay" m-show='micropython:esp32c3:mixgocc'>          
+        <block type="display_show_frame_string_delay">          
           <value name="data">
             <shadow type="text">
               <field name="TEXT">Mixly</field>
@@ -1875,10 +1704,12 @@
             </shadow>
           </value>
         </block>
+        <block type="mixgome_display_font" m-show='micropython:esp32c3:mixgome'></block> 
+        <block type="mixgome_display_image_create" m-show='micropython:esp32c3:mixgome'></block>
         <block type="display_image_create" m-show='micropython:esp32c3:mixgocc'></block>
-        <block type="display_image_builtins" m-show='micropython:esp32c3:mixgocc'></block>
+        <block type="display_image_builtins"></block>
      
-      <block type="image_arithmetic" m-show='micropython:esp32c3:mixgocc'>
+      <block type="image_arithmetic">
         <value name="A">
           <shadow type="pins_builtinimg"></shadow>
         </value>>
@@ -1886,12 +1717,12 @@
           <shadow type="pins_builtinimg"></shadow>
         </value>
       </block> 
-      <block type="image_invert" m-show='micropython:esp32c3:mixgocc'>
+      <block type="image_invert">
         <value name="A">
           <shadow type="pins_builtinimg"></shadow>
         </value>
       </block>
-      <block type="display_shift" m-show='micropython:esp32c3:mixgocc'>
+      <block type="display_shift">
         
         <value name="val">
           <shadow type="math_number">
@@ -1920,131 +1751,28 @@
           </shadow>
         </value>
       </block>
-      <block type="display_bright_screen" m-show='micropython:esp32c3:mixgocc'>
-       
-        <value name="x">
-         <shadow type="math_number">
-            <field name="NUM">0.5</field>
-          </shadow>
-        </value>
-      </block>
-      <block type="display_get_screen_pixel" m-show='micropython:esp32c3:mixgocc'>
-       
-      </block>
-      <block type="display_clear" m-show='micropython:esp32c3:mixgocc'></block>
-
-      
-      <!-- MixGo ME Onboard Display: -->
-
-
-      <block type="mixgome_display_show_image" m-show='micropython:esp32c3:mixgome'>
-          <value name="data">
-            <shadow type="pins_builtinimg"></shadow>
-          </value>
-        </block>     
-        <block type="mixgome_display_show_image_or_string_delay" m-show='micropython:esp32c3:mixgome'>
-          <value name="data">
-            <shadow type="text">
-              <field name="TEXT">Mixly</field>
-            </shadow>
-          </value>
-          <value name="space">
-          <shadow type="math_number">
-            <field name="NUM">0</field>
-          </shadow>
-        </value>
-        </block>   
-        <block type="mixgome_display_scroll_string" m-show='micropython:esp32c3:mixgome'>
-          <value name="data">
-            <shadow type="text">
-              <field name="TEXT">Mixly</field>
-            </shadow>
-          </value>
-        </block>       
-        <block type="mixgome_display_scroll_string_delay" m-show='micropython:esp32c3:mixgome'>       
-          <value name="data">
-            <shadow type="text">
-              <field name="TEXT">Mixly</field>
-            </shadow>
-          </value>
-          <value name="time">
-            <shadow type="math_number">
-              <field name="NUM">50</field>
-            </shadow>
-          </value>
-          <value name="space">
-          <shadow type="math_number">
-            <field name="NUM">0</field>
-          </shadow>
-        </value>
-        </block>
-        <block type="mixgome_display_show_frame_string" m-show='micropython:esp32c3:mixgome'>          
-          <value name="data">
-            <shadow type="text">
-              <field name="TEXT">Mixly</field>
-            </shadow>
-          </value>
-        </block>
-        <block type="mixgome_display_show_frame_string_delay" m-show='micropython:esp32c3:mixgome'>          
-          <value name="data">
-            <shadow type="text">
-              <field name="TEXT">Mixly</field>
-            </shadow>
-          </value>
-          <value name="time">
-            <shadow type="math_number">
-              <field name="NUM">500</field>
-            </shadow>
-          </value>
-        </block>
-        <block type="mixgome_display_font" m-show='micropython:esp32c3:mixgome'></block> 
-        <block type="mixgome_display_image_create" m-show='micropython:esp32c3:mixgome'></block>
-        <block type="mixgome_display_image_builtins" m-show='micropython:esp32c3:mixgome'></block>
-
-     
-      <block type="mixgome_image_arithmetic" m-show='micropython:esp32c3:mixgome'>
-        <value name="A">
-          <shadow type="pins_builtinimg"></shadow>
-        </value>>
-        <value name="B">
-          <shadow type="pins_builtinimg"></shadow>
-        </value>
-      </block> 
-      <block type="mixgome_image_invert" m-show='micropython:esp32c3:mixgome'>
-        <value name="A">
-          <shadow type="pins_builtinimg"></shadow>
-        </value>
-      </block>
-      <block type="mixgome_display_shift" m-show='micropython:esp32c3:mixgome'>
-        
-        <value name="val">
-          <shadow type="math_number">
-            <field name="NUM">1</field>
-          </shadow>
-        </value>
-      </block>
       <block type="mixgome_display_get_pixel" m-show='micropython:esp32c3:mixgome'>
        
         <value name="x">
-          <shadow type="pins_exlcdh"></shadow>
+          <shadow type="pins_exlcdh5x8"></shadow>
         </value>
         <value name="y">
-          <shadow type="pins_exlcdv"></shadow>
+          <shadow type="pins_exlcdv5x8"></shadow>
         </value>
       </block>
       <block type="mixgome_display_bright_point" m-show='micropython:esp32c3:mixgome'>       
         <value name="x">
-          <shadow type="pins_exlcdh"></shadow>
+          <shadow type="pins_exlcdh5x8"></shadow>
         </value>
         <value name="y">
-          <shadow type="pins_exlcdv"></shadow>
+          <shadow type="pins_exlcdv5x8"></shadow>
         </value>
         <value name="STAT">
           <shadow type="display_onoff">
           </shadow>
         </value>
       </block>
-      <block type="mixgome_display_bright_screen" m-show='micropython:esp32c3:mixgome'>
+      <block type="display_bright_screen">
        
         <value name="x">
          <shadow type="math_number">
@@ -2052,11 +1780,13 @@
           </shadow>
         </value>
       </block>
-      <block type="mixgome_display_get_screen_pixel" m-show='micropython:esp32c3:mixgome'>
+      <block type="display_get_screen_pixel">
        
       </block>
-      <block type="mixgome_display_clear" m-show='micropython:esp32c3:mixgome'></block>
-
+      <block type="display_clear"></block>     
+       
+      
+      
       </category>
 
       <category id="catME_GO" colour="100" m-show='micropython:esp32c3:mixgome'>

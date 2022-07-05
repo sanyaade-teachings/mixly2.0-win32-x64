@@ -107,6 +107,8 @@ Blockly.Blocks.me_go_stepper_keep = {
           .setCheck(Number)
           .setAlign(Blockly.ALIGN_RIGHT)
           .appendField(Blockly.MIXLY_STEPPER_SET_SPEED);
+      this.appendDummyInput("")
+          .appendField("%")    
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setInputsInline(true);
@@ -137,6 +139,8 @@ Blockly.Blocks.me_go_dc_motor = {
           .setCheck(Number)
           .setAlign(Blockly.ALIGN_RIGHT)
           .appendField(Blockly.MIXLY_STEPPER_SET_SPEED);
+      this.appendDummyInput("")
+          .appendField("%")    
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setInputsInline(true);

@@ -4,7 +4,8 @@ goog.provide('Blockly.Python.actuator');
 goog.require('Blockly.Python');
 
 Blockly.Python.esp32_music_set_tempo=function(){
-    Blockly.Python.definitions_['import_mixgo_cc_onboard_music'] = 'from mixgo_cc import onboard_music';
+    var version = Mixly.Boards.getSelectedBoardKey().slice(-2)
+  Blockly.Python.definitions_['import_mixgo_'+version+'_onboard_music'] = 'from mixgo_'+version+' import onboard_music';
     var bpm = Blockly.Python.valueToCode(this, 'BPM', Blockly.Python.ORDER_ASSIGNMENT);
     var ticks = Blockly.Python.valueToCode(this, 'TICKS', Blockly.Python.ORDER_ASSIGNMENT);
     var code = "onboard_music.set_tempo("+ ticks +", "+ bpm +")\n";
@@ -12,20 +13,23 @@ Blockly.Python.esp32_music_set_tempo=function(){
 };
 
 Blockly.Python.esp32_music_get_tempo=function(){
-    Blockly.Python.definitions_['import_mixgo_cc_onboard_music'] = 'from mixgo_cc import onboard_music';
+    var version = Mixly.Boards.getSelectedBoardKey().slice(-2)
+  Blockly.Python.definitions_['import_mixgo_'+version+'_onboard_music'] = 'from mixgo_'+version+' import onboard_music';
     var code =  "onboard_music.get_tempo()";
     return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
 Blockly.Python.esp32_onboard_music_pitch = function(block) {
-  Blockly.Python.definitions_['import_mixgo_cc_onboard_music'] = 'from mixgo_cc import onboard_music';
+  var version = Mixly.Boards.getSelectedBoardKey().slice(-2)
+  Blockly.Python.definitions_['import_mixgo_'+version+'_onboard_music'] = 'from mixgo_'+version+' import onboard_music';
   var number_pitch = Blockly.Python.valueToCode(block, 'pitch', Blockly.Python.ORDER_ATOMIC);
   var code = 'onboard_music.pitch(' + number_pitch + ')\n';
   return code;
 };
 
 Blockly.Python.esp32_onboard_music_pitch_with_time = function(block) {
-  Blockly.Python.definitions_['import_mixgo_cc_onboard_music'] = 'from mixgo_cc import onboard_music';
+  var version = Mixly.Boards.getSelectedBoardKey().slice(-2)
+  Blockly.Python.definitions_['import_mixgo_'+version+'_onboard_music'] = 'from mixgo_'+version+' import onboard_music';
   var number_pitch = Blockly.Python.valueToCode(block, 'pitch', Blockly.Python.ORDER_ATOMIC);
   var number_time = Blockly.Python.valueToCode(block, 'time', Blockly.Python.ORDER_ATOMIC);
   var code = 'onboard_music.pitch_time(' + number_pitch + ', ' + number_time + ')\n';
@@ -33,13 +37,15 @@ Blockly.Python.esp32_onboard_music_pitch_with_time = function(block) {
 };
 
 Blockly.Python.esp32_onboard_music_stop = function(block) {
-  Blockly.Python.definitions_['import_mixgo_cc_onboard_music'] = 'from mixgo_cc import onboard_music';
+  var version = Mixly.Boards.getSelectedBoardKey().slice(-2)
+  Blockly.Python.definitions_['import_mixgo_'+version+'_onboard_music'] = 'from mixgo_'+version+' import onboard_music';
   var code = 'onboard_music.stop('+')\n';
   return code;
 };
 
 Blockly.Python.esp32_onboard_music_play_list=function(){
-    Blockly.Python.definitions_['import_mixgo_cc_onboard_music'] = 'from mixgo_cc import onboard_music';
+    var version = Mixly.Boards.getSelectedBoardKey().slice(-2)
+  Blockly.Python.definitions_['import_mixgo_'+version+'_onboard_music'] = 'from mixgo_'+version+' import onboard_music';
     var lst = Blockly.Python.valueToCode(this, 'LIST', Blockly.Python.ORDER_ASSIGNMENT);
     var code = "onboard_music.play("+ lst +")\n";
     return code;
@@ -54,7 +60,8 @@ Blockly.Python.esp32_music_play_list=function(){
 };
 
 Blockly.Python.esp32_music_reset=function(){
-    Blockly.Python.definitions_['import_mixgo_cc_onboard_music'] = 'from mixgo_cc import onboard_music';
+    var version = Mixly.Boards.getSelectedBoardKey().slice(-2)
+  Blockly.Python.definitions_['import_mixgo_'+version+'_onboard_music'] = 'from mixgo_'+version+' import onboard_music';
     return "onboard_music.reset()\n";
 };
 
@@ -99,13 +106,15 @@ Blockly.Python.actuator_led_brightness = function() {
 };
 
 Blockly.Python.actuator_onboard_neopixel_write=function(){
-    Blockly.Python.definitions_['import_mixgo_cc_onboard_rgb'] = 'from mixgo_cc import onboard_rgb';
+    var version = Mixly.Boards.getSelectedBoardKey().slice(-2)
+    Blockly.Python.definitions_['import_mixgo_'+version+'_onboard_rgb'] = 'from mixgo_'+version+' import onboard_rgb';
   var code= 'onboard_rgb.write()\n';   
   return code;
 };
 
 Blockly.Python.actuator_onboard_neopixel_rgb=function(){
-    Blockly.Python.definitions_['import_mixgo_cc_onboard_rgb'] = 'from mixgo_cc import onboard_rgb';
+    var version = Mixly.Boards.getSelectedBoardKey().slice(-2)
+    Blockly.Python.definitions_['import_mixgo_'+version+'_onboard_rgb'] = 'from mixgo_'+version+' import onboard_rgb';
   var value_led = Blockly.Python.valueToCode(this, '_LED_', Blockly.Python.ORDER_ATOMIC);
   var value_rvalue = Blockly.Python.valueToCode(this, 'RVALUE', Blockly.Python.ORDER_ATOMIC);
   var value_gvalue = Blockly.Python.valueToCode(this, 'GVALUE', Blockly.Python.ORDER_ATOMIC);
@@ -115,7 +124,8 @@ Blockly.Python.actuator_onboard_neopixel_rgb=function(){
 };
 
 Blockly.Python.actuator_onboard_neopixel_rgb_all=function(){
-  Blockly.Python.definitions_['import_mixgo_cc_onboard_rgb'] = 'from mixgo_cc import onboard_rgb';
+  var version = Mixly.Boards.getSelectedBoardKey().slice(-2)
+    Blockly.Python.definitions_['import_mixgo_'+version+'_onboard_rgb'] = 'from mixgo_'+version+' import onboard_rgb';
   var value_rvalue = Blockly.Python.valueToCode(this, 'RVALUE', Blockly.Python.ORDER_ATOMIC);
   var value_gvalue = Blockly.Python.valueToCode(this, 'GVALUE', Blockly.Python.ORDER_ATOMIC);
   var value_bvalue = Blockly.Python.valueToCode(this, 'BVALUE', Blockly.Python.ORDER_ATOMIC);
@@ -124,7 +134,8 @@ Blockly.Python.actuator_onboard_neopixel_rgb_all=function(){
 };
 
 Blockly.Python.actuator_onboard_neopixel_rgb_show_all_chase = function(){
-  Blockly.Python.definitions_['import_mixgo_cc_onboard_rgb'] = 'from mixgo_cc import onboard_rgb';
+  var version = Mixly.Boards.getSelectedBoardKey().slice(-2)
+    Blockly.Python.definitions_['import_mixgo_'+version+'_onboard_rgb'] = 'from mixgo_'+version+' import onboard_rgb';
   var value_rvalue = Blockly.Python.valueToCode(this, 'RVALUE', Blockly.Python.ORDER_ATOMIC);
   var value_gvalue = Blockly.Python.valueToCode(this, 'GVALUE', Blockly.Python.ORDER_ATOMIC);
   var value_bvalue = Blockly.Python.valueToCode(this, 'BVALUE', Blockly.Python.ORDER_ATOMIC);
@@ -134,7 +145,8 @@ Blockly.Python.actuator_onboard_neopixel_rgb_show_all_chase = function(){
 };
 
 Blockly.Python.actuator_onboard_neopixel_rgb_show_all_rainbow = function(){
-  Blockly.Python.definitions_['import_mixgo_cc_onboard_rgb'] = 'from mixgo_cc import onboard_rgb';
+  var version = Mixly.Boards.getSelectedBoardKey().slice(-2)
+    Blockly.Python.definitions_['import_mixgo_'+version+'_onboard_rgb'] = 'from mixgo_'+version+' import onboard_rgb';
   var number_time = Blockly.Python.valueToCode(this, 'time', Blockly.Python.ORDER_ATOMIC);
   var code= 'onboard_rgb.rainbow_cycle('+number_time+')\n';
   return code;
@@ -240,94 +252,3 @@ Blockly.Python.actuator_ms32006_stepper = function () {
     return code;
 };
 
-//mixgo_me onboard_actuator below:
-
-Blockly.Python.mixgome_music_set_tempo=function(){
-    Blockly.Python.definitions_['import_mixgo_me_onboard_music'] = 'from mixgo_me import onboard_music';
-    var bpm = Blockly.Python.valueToCode(this, 'BPM', Blockly.Python.ORDER_ASSIGNMENT);
-    var ticks = Blockly.Python.valueToCode(this, 'TICKS', Blockly.Python.ORDER_ASSIGNMENT);
-    var code = "onboard_music.set_tempo("+ ticks +", "+ bpm +")\n";
-    return code;
-};
-
-Blockly.Python.mixgome_music_get_tempo=function(){
-    Blockly.Python.definitions_['import_mixgo_me_onboard_music'] = 'from mixgo_me import onboard_music';
-    var code =  "onboard_music.get_tempo()";
-    return [code, Blockly.Python.ORDER_ATOMIC];
-};
-
-Blockly.Python.mixgome_onboard_music_pitch = function(block) {
-  Blockly.Python.definitions_['import_mixgo_me_onboard_music'] = 'from mixgo_me import onboard_music';
-  var number_pitch = Blockly.Python.valueToCode(block, 'pitch', Blockly.Python.ORDER_ATOMIC);
-  var code = 'onboard_music.pitch(' + number_pitch + ')\n';
-  return code;
-};
-
-Blockly.Python.mixgome_onboard_music_pitch_with_time = function(block) {
-  Blockly.Python.definitions_['import_mixgo_me_onboard_music'] = 'from mixgo_me import onboard_music';
-  var number_pitch = Blockly.Python.valueToCode(block, 'pitch', Blockly.Python.ORDER_ATOMIC);
-  var number_time = Blockly.Python.valueToCode(block, 'time', Blockly.Python.ORDER_ATOMIC);
-  var code = 'onboard_music.pitch_time(' + number_pitch + ', ' + number_time + ')\n';
-  return code;
-};
-
-Blockly.Python.mixgome_onboard_music_stop = function(block) {
-  Blockly.Python.definitions_['import_mixgo_me_onboard_music'] = 'from mixgo_me import onboard_music';
-  var code = 'onboard_music.stop('+')\n';
-  return code;
-};
-
-Blockly.Python.mixgome_onboard_music_play_list=function(){
-    Blockly.Python.definitions_['import_mixgo_me_onboard_music'] = 'from mixgo_me import onboard_music';
-    var lst = Blockly.Python.valueToCode(this, 'LIST', Blockly.Python.ORDER_ASSIGNMENT);
-    var code = "onboard_music.play("+ lst +")\n";
-    return code;
-};
-
-
-Blockly.Python.mixgome_music_reset=function(){
-    Blockly.Python.definitions_['import_mixgo_me_onboard_music'] = 'from mixgo_me import onboard_music';
-    return "onboard_music.reset()\n";
-};
-
-Blockly.Python.mixgome_actuator_onboard_neopixel_write=function(){
-    Blockly.Python.definitions_['import_mixgo_me_onboard_rgb'] = 'from mixgo_me import onboard_rgb';
-  var code= 'onboard_rgb.write()\n';   
-  return code;
-};
-
-Blockly.Python.mixgome_actuator_onboard_neopixel_rgb=function(){
-    Blockly.Python.definitions_['import_mixgo_me_onboard_rgb'] = 'from mixgo_me import onboard_rgb';
-  var value_led = Blockly.Python.valueToCode(this, '_LED_', Blockly.Python.ORDER_ATOMIC);
-  var value_rvalue = Blockly.Python.valueToCode(this, 'RVALUE', Blockly.Python.ORDER_ATOMIC);
-  var value_gvalue = Blockly.Python.valueToCode(this, 'GVALUE', Blockly.Python.ORDER_ATOMIC);
-  var value_bvalue = Blockly.Python.valueToCode(this, 'BVALUE', Blockly.Python.ORDER_ATOMIC);
-  var code= 'onboard_rgb['+value_led+'] = ('+value_gvalue+', '+value_rvalue+', '+value_bvalue+')\n';
-  return code;
-};
-
-Blockly.Python.mixgome_actuator_onboard_neopixel_rgb_all=function(){
-  Blockly.Python.definitions_['import_mixgo_me_onboard_rgb'] = 'from mixgo_me import onboard_rgb';
-  var value_rvalue = Blockly.Python.valueToCode(this, 'RVALUE', Blockly.Python.ORDER_ATOMIC);
-  var value_gvalue = Blockly.Python.valueToCode(this, 'GVALUE', Blockly.Python.ORDER_ATOMIC);
-  var value_bvalue = Blockly.Python.valueToCode(this, 'BVALUE', Blockly.Python.ORDER_ATOMIC);
-  var code= 'onboard_rgb.fill(('+value_gvalue+', '+value_rvalue+', '+value_bvalue+'))\n';
-  return code;
-};
-
-Blockly.Python.mixgome_actuator_onboard_neopixel_rgb_show_all_chase = function(){
-  Blockly.Python.definitions_['import_mixgo_me_onboard_rgb'] = 'from mixgo_me import onboard_rgb';
-  var value_rvalue = Blockly.Python.valueToCode(this, 'RVALUE', Blockly.Python.ORDER_ATOMIC);
-  var value_gvalue = Blockly.Python.valueToCode(this, 'GVALUE', Blockly.Python.ORDER_ATOMIC);
-  var value_bvalue = Blockly.Python.valueToCode(this, 'BVALUE', Blockly.Python.ORDER_ATOMIC);
-  var number_time = Blockly.Python.valueToCode(this, 'time', Blockly.Python.ORDER_ATOMIC);
-  var code= 'onboard_rgb.color_chase('+value_rvalue+', '+value_gvalue+', '+value_bvalue+', '+number_time+')\n';
-  return code;
-};
-
-Blockly.Python.mixgome_actuator_onboard_neopixel_rgb_show_all_rainbow = function(){
-  Blockly.Python.definitions_['import_mixgo_me_onboard_rgb'] = 'from mixgo_me import onboard_rgb';
-  var number_time = Blockly.Python.valueToCode(this, 'time', Blockly.Python.ORDER_ATOMIC);
-  var code= 'onboard_rgb.rainbow_cycle('+number_time+')\n';
-  return code;
-};
