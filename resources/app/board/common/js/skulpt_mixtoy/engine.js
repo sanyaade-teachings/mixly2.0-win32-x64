@@ -476,8 +476,8 @@ PyEngine.prototype.steprun = function(type) {
             title: ['显示', '30px'],
             shade: 0,
             offset: 'rt',
-            area: _this?.layerSize?.layero ?? ['50%', '70%'],
-            max: ['700px', '900px'],
+            area: _this?.layerSize?.layero ?? ['50%', '50%'],
+            max: [$('body').width() + 'px', $('body').height() + 'px'],
             fixed: false,
             content: $('#skulpt-img'),
             resizing: function(size) {
