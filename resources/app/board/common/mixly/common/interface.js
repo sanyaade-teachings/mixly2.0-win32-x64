@@ -121,6 +121,7 @@ Interface.onresize = (event) => {
             $('#copyright').css('display', '-webkit-box');
         }
     } else {
+        $('#copyright').css('display', '-webkit-box');
         $liOperate.css('display', 'none');
         for (let i = 0; i < Nav.navItemId.length; i++) {
             const $navItem = $('#' + Nav.navItemId[i]);
