@@ -2131,9 +2131,7 @@ Blockly.Blocks['tft_generate_bitmap_data'] = {
             addition += '0';
           }
           hexData = addition + hexData;
-          const hexLeft = hexData.substring(0, 2);
-          const hexRight = hexData.substring(2, 4);
-          bitmapStr += '0x' + hexLeft + ',0x' + hexRight + (i === data.length - 1 ? '' : ',');
+          bitmapStr += '0x' + hexData + (i === data.length - 1 ? '' : ',');
           pixelData = 0;
       }
       if ((i + 1) % 400 === 0 && i !== data.length - 1)
