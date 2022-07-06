@@ -1,6 +1,7 @@
 {    "board": {
         "MixGo CC": "micropython:esp32c3:mixgocc",
-        "MixGo ME":"micropython:esp32c3:mixgome"
+        "MixGo ME":"micropython:esp32c3:mixgome",
+        "ESP32C3 Generic":"micropython:esp32c3:generic"
     },
     "language": "MicroPython",
     "burn": {
@@ -10,6 +11,9 @@
         },
         "micropython:esp32c3:mixgome": {
             "command": "\"{esptool}\" --chip esp32c3 --port {com} --baud 460800 erase_flash && \"{esptool}\" --chip esp32c3 --port {com} --baud 460800 write_flash 0x0 \"{indexPath}\\build\\MixGo_ME-0x0-V1.19.1-220701.bin\""
+        },
+        "micropython:esp32c3:generic": {
+            "command": "\"{esptool}\" --chip esp32c3 --port {com} --baud 460800 erase_flash && \"{esptool}\" --chip esp32c3 --port {com} --baud 460800 write_flash 0x0 \"{indexPath}\\build\\MixGo_CC-0x0-V1.19.1-220701.bin\""
         }
     },
     "upload": {

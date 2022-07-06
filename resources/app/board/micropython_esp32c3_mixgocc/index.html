@@ -1395,7 +1395,7 @@
       <block type="serial_readline"></block>
     </category>
     <!--<category id="catOnBoard" name="catOnBoard" colour="65">-->
-    <category id="catOnBoardSensor" name="catOnBoardSensor" colour="40">
+    <category id="catOnBoardSensor" name="catOnBoardSensor" colour="40" m-hide='micropython:esp32c3:generic'>
       <block type="sensor_mixgo_button_is_pressed">
         <value name="btn">
           <shadow type="pins_button">
@@ -1477,7 +1477,7 @@
       <block type="sensor_mixgome_temperature" m-show='micropython:esp32c3:mixgome'></block>
 
     </category>
-    <category id="catOnBoardActuator" name="catOnBoardActuator" colour="100">
+    <category id="catOnBoardActuator" name="catOnBoardActuator" colour="100" m-hide='micropython:esp32c3:generic'>
       <block type="actuator_led_bright" m-show='micropython:esp32c3:mixgocc'>
         <value name="led">
           <shadow type="number">
@@ -1635,7 +1635,7 @@
 
 
     </category>
-    <category id="catOnBoardDisplay" name="catOnBoardDisplay" colour="180">
+    <category id="catOnBoardDisplay" name="catOnBoardDisplay" colour="180" m-hide='micropython:esp32c3:generic'>
       <block type="display_show_image">
         <value name="data">
           <shadow type="pins_builtinimg"></shadow>
@@ -1722,7 +1722,7 @@
           </shadow>
         </value>
       </block>
-      <block type="display_get_pixel" m-show='micropython:esp32c3:mixgocc'>
+      <block type="display_get_pixel">
 
         <value name="x">
           <shadow type="pins_exlcdh"></shadow>
@@ -1731,7 +1731,7 @@
           <shadow type="pins_exlcdv"></shadow>
         </value>
       </block>
-      <block type="display_bright_point" m-show='micropython:esp32c3:mixgocc'>
+      <block type="display_bright_point">
         <value name="x">
           <shadow type="pins_exlcdh"></shadow>
         </value>
@@ -1743,27 +1743,7 @@
           </shadow>
         </value>
       </block>
-      <block type="mixgome_display_get_pixel" m-show='micropython:esp32c3:mixgome'>
-
-        <value name="x">
-          <shadow type="pins_exlcdh5x8"></shadow>
-        </value>
-        <value name="y">
-          <shadow type="pins_exlcdv5x8"></shadow>
-        </value>
-      </block>
-      <block type="mixgome_display_bright_point" m-show='micropython:esp32c3:mixgome'>
-        <value name="x">
-          <shadow type="pins_exlcdh5x8"></shadow>
-        </value>
-        <value name="y">
-          <shadow type="pins_exlcdv5x8"></shadow>
-        </value>
-        <value name="STAT">
-          <shadow type="display_onoff">
-          </shadow>
-        </value>
-      </block>
+      
       <block type="display_bright_screen">
 
         <value name="x">
@@ -2809,16 +2789,6 @@
               <field name="NUM">200000</field>
             </shadow>
           </value>
-          <value name="polarity">
-            <shadow type="math_number">
-              <field name="NUM">1</field>
-            </shadow>
-          </value>
-          <value name="phase">
-            <shadow type="math_number">
-              <field name="NUM">0</field>
-            </shadow>
-          </value>
           <value name="sck">
             <shadow type="pins_digital_pin">
               <field name="PIN">0</field>
@@ -2946,6 +2916,8 @@
             </shadow>
           </value>
         </block>
+        </category>
+        <category id="catOneWire" colour="140">
         <block type="communicate_ow_init">
           <value name="VAR">
             <shadow type="variables_get">

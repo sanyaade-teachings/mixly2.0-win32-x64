@@ -120,8 +120,16 @@ Blockly.Blocks.actuator_onboard_neopixel_rgb = {
         this.setInputsInline(true);
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
-        this.setTooltip('');
-        this.setTooltip(Blockly.MIXLY_RGB_NUM_R_G_B_MIXGOCC);
+        const { Boards } = Mixly;
+        const boardKey = Boards.getSelectedBoardKey();
+        switch (boardKey) {
+            case 'micropython:esp32c3:mixgocc':
+                this.setTooltip(Blockly.MIXLY_RGB_NUM_R_G_B_MIXGOCC);
+                break;
+            case 'micropython:esp32c3:mixgome':
+            default:
+                this.setTooltip(Blockly.MIXLY_RGB_NUM_R_G_B_MIXGOME);
+        }
     }
 };
 

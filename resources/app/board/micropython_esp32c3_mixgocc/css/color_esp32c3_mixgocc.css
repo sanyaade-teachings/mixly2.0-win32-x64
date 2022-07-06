@@ -537,6 +537,14 @@ div.blocklyToolboxDiv > div.blocklyToolboxContents > div:nth-child(13) > div.blo
     background:url('../../common/media/mark/comuni2.png') no-repeat;
     background-size: 100% auto;
 }
+#catOneWire.blocklyTreeRow > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
+    background:url('../../common/media/mark/comuni.png') no-repeat;
+    background-size: 100% auto;
+}
+#catOneWire.blocklyTreeRow.blocklyTreeSelected > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
+    background:url('../../common/media/mark/comuni2.png') no-repeat;
+    background-size: 100% auto;
+}
 #catESPNow.blocklyTreeRow > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
     background:url('../../common/media/mark/comuni.png') no-repeat;
     background-size: 100% auto;

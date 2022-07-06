@@ -148,7 +148,8 @@ Blockly.Python['display_image_create'] = function(block) {
 
 
 Blockly.Python['display_get_pixel'] = function(block) {
-  Blockly.Python.definitions_['import_mixgo_cc_onboard_matrix'] = "from mixgo_cc import onboard_matrix";
+  var version = Mixly.Boards.getSelectedBoardKey().slice(-2)
+  Blockly.Python.definitions_['import_mixgo_'+version+'_onboard_matrix'] = "from mixgo_"+version+" import onboard_matrix";
   var value_x = Blockly.Python.valueToCode(block, 'x', Blockly.Python.ORDER_ATOMIC);
   var value_y = Blockly.Python.valueToCode(block, 'y', Blockly.Python.ORDER_ATOMIC);
   var code = 'onboard_matrix.pixel(int(' + value_x + '), int(' + value_y + '))';
@@ -156,7 +157,8 @@ Blockly.Python['display_get_pixel'] = function(block) {
 };
 
 Blockly.Python.display_bright_point= function() {
-    Blockly.Python.definitions_['import_mixgo_cc_onboard_matrix'] = "from mixgo_cc import onboard_matrix";
+  var version = Mixly.Boards.getSelectedBoardKey().slice(-2)
+    Blockly.Python.definitions_['import_mixgo_'+version+'_onboard_matrix'] = "from mixgo_"+version+" import onboard_matrix";
     var x = Blockly.Python.valueToCode(this, 'x', Blockly.Python.ORDER_ASSIGNMENT);
     var y = Blockly.Python.valueToCode(this, 'y', Blockly.Python.ORDER_ASSIGNMENT);
     var dropdown_stat = Blockly.Python.valueToCode(this, 'STAT', Blockly.Python.ORDER_ATOMIC);
@@ -311,24 +313,6 @@ Blockly.Python['mixgome_display_image_create'] = function(block) {
   return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
-
-
-Blockly.Python['mixgome_display_get_pixel'] = function(block) {
-  Blockly.Python.definitions_['import_mixgo_me_onboard_matrix'] = "from mixgo_me import onboard_matrix";
-  var value_x = Blockly.Python.valueToCode(block, 'x', Blockly.Python.ORDER_ATOMIC);
-  var value_y = Blockly.Python.valueToCode(block, 'y', Blockly.Python.ORDER_ATOMIC);
-  var code = 'onboard_matrix.pixel(int(' + value_x + '), int(' + value_y + '))';
-  return [code, Blockly.Python.ORDER_ATOMIC];
-};
-
-Blockly.Python.mixgome_display_bright_point= function() {
-    Blockly.Python.definitions_['import_mixgo_me_onboard_matrix'] = "from mixgo_me import onboard_matrix";
-    var x = Blockly.Python.valueToCode(this, 'x', Blockly.Python.ORDER_ASSIGNMENT);
-    var y = Blockly.Python.valueToCode(this, 'y', Blockly.Python.ORDER_ASSIGNMENT);
-    var dropdown_stat = Blockly.Python.valueToCode(this, 'STAT', Blockly.Python.ORDER_ATOMIC);
-    var code ='onboard_matrix.pixel(int(' + x + '), int(' + y + '), '+ dropdown_stat + ")\n"+'onboard_matrix.show()\n';
-    return code;
-}
 
 
 

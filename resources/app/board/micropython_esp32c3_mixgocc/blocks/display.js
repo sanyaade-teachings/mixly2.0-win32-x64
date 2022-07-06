@@ -1183,41 +1183,6 @@ Blockly.Blocks['mixgome_display_image_create']= {
 
 
 
-Blockly.Blocks.mixgome_display_get_pixel = {
-  init: function() {
-    this.setColour(Blockly.Blocks.display.HUE);
-      this.appendValueInput('x')
-        .setCheck(Number)
-            .appendField(Blockly.MIXLY_MICROBIT_JS_MONITOR_GET_POINT_X);
-      this.appendValueInput('y')
-          .setCheck(Number)
-          .appendField(Blockly.MIXLY_MICROBIT_JS_MONITOR_PLOT_POINT_Y);
-    this.appendDummyInput()
-        .appendField(Blockly.MIXLY_ESP32_JS_MONITOR_GET_POINT);
-    this.setInputsInline(true);
-      this.setOutput(true, Number);
-    this.setTooltip(Blockly.MIXLY_ESP32_JS_MONITOR_BRIGHTNESS);
-  }
-};
-
-Blockly.Blocks.mixgome_display_bright_point = {
-  init: function() {
-    this.setColour(Blockly.Blocks.display.HUE);
-    this.appendValueInput('x')
-        .setCheck(Number)
-        .appendField(Blockly.MIXLY_ESP32_JS_MONITOR_SET_BRIGHTNESS)
-          .appendField(Blockly.MIXLY_MICROBIT_JS_MONITOR_GET_POINT_X);
-    this.appendValueInput('y')
-        .setCheck(Number)
-        .appendField(Blockly.MIXLY_MICROBIT_JS_MONITOR_PLOT_POINT_Y);
-    this.appendValueInput("STAT")        
-        .setCheck([Number,Boolean]);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setInputsInline(true);
-    this.setTooltip(Blockly.MIXLY_ESP32_DISPLAY_SETPIXEL);
-  }
-};
 
 Blockly.Blocks['mixgome_display_font'] = {
   init: function() {
