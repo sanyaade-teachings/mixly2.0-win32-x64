@@ -658,7 +658,7 @@ dd > button {
     overflow-y: auto;
 }
 
-.layui-layer-tips .layui-layer-content {
+.light .layui-layer-tips .layui-layer-content {
     background-color: #f2f2f2;
     color: #000;
     box-shadow: 1px 1px 3px rgb(0 0 0 / 20%);
