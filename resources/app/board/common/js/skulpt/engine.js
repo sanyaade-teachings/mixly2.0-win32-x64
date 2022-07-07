@@ -436,8 +436,8 @@ PyEngine.prototype.run = function(type) {
                     var re=/\)$/.exec(code_piece[i])
                     if(re!=null){
                         target=re[0];
-                        // code_piece[i]=code_piece[i].replace(/\)$/,"+'\\n'"+target)
-                        code_piece[i]=code_piece[i].replace(/\)$/,target+";");
+                        code_piece[i]=code_piece[i].replace(/\)$/,"+'\\n'"+target)
+                        // code_piece[i]=code_piece[i].replace(/\)$/,target+";");
                     }
                     //console.log(code_piece[i])
                 }
