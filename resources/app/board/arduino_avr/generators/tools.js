@@ -639,6 +639,7 @@ Blockly.Arduino.tool_modulus = function() {
   Blockly.Arduino.stm32f103c8t6_pin=Blockly.Arduino.nano_pin;
   Blockly.Arduino.esp32s2_pin=Blockly.Arduino.nano_pin;
   Blockly.Arduino.esp32c3_pin=Blockly.Arduino.nano_pin;
+  Blockly.Arduino.core_esp32c3_pin=Blockly.Arduino.nano_pin;
 
   //获取两个日期差值
 Blockly.Arduino.get_the_number_of_days_between_the_two_dates = function() {

@@ -167,6 +167,16 @@ Blockly.Blocks['esp32c3_pin'] = {
   }
 };
 
+Blockly.Blocks['core_esp32c3_pin'] = {
+  init: function() {
+    this.appendDummyInput()
+    .appendField(new Blockly.FieldImage("../common/media/board_pin/core_esp32c3_pin.png", 500, 376, "*"));
+    this.setColour(Blockly.Blocks.tools.HUE);
+    this.setTooltip();
+    this.setHelpUrl();
+  }
+};
+
 Blockly.Blocks['esp8266_pin'] = {
   init: function() {
     this.appendDummyInput()
