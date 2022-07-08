@@ -307,8 +307,7 @@ Boards.setSelectedBoard = (name, userConfig) => {
         return;
     const boardInfo = Boards.INFO[name];
     if (boardInfo && boardInfo.key) {
-        $("#boards-type").children('option').attr('selected', false);
-        $("#boards-type").children('*[value="'+boardInfo.key+'"]').attr('selected', true);
+        $("#boards-type").val(boardInfo.key);
         if (typeof userConfig === 'object') {
             const { config } = boardInfo;
             for (let key in userConfig) {
@@ -525,13 +524,14 @@ Boards.showConfigMenu = () => {
                 'max-height': 'calc(100vh - var(--footer-height))'
             });
             layero.find('.layui-layer-TipsG').css('display', 'none');
+            const boardLabelWidth = $('#board-config-labels').width();
             for (let item of list) {
                 dropdown.render({
                     elem: '#board-config-' + item.name,
                     align: 'right',
                     data: item.options,
                     className: 'layer-extend editor-dropdown-menu board-config-menu',
-                    style: 'display:inline-block;box-shadow:1px 1px 30px rgb(0 0 0 / 12%);',
+                    style: 'display:inline-block;box-shadow:1px 1px 30px rgb(0 0 0 / 12%);min-width:' + boardLabelWidth + ';',
                     ready: function(elemPanel, elem) {
                         const $p = $(elem).find('p');
                         const $lis = $(elemPanel).find('li');
