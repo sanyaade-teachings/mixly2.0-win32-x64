@@ -492,7 +492,15 @@ Boards.showConfigMenu = () => {
         reset: indexText['使用默认配置'],
         close: indexText['关闭窗口']
     });
-    Boards.layerMenuNum = layer.tips(`<div id="mixly-board-config" style="max-height:calc(100vh - var(--footer-height));height:100%;width:100%;overflow:hidden;">${xmlStr}</div>`, '#mixly-board-config', {
+    Boards.layerMenuNum = layer.tips(`<div id="mixly-board-config" 
+                                        style="
+                                            max-height:calc(100vh - var(--footer-height));
+                                            height:100%;
+                                            width:100%;
+                                            overflow:hidden;
+                                        "
+                                    >${xmlStr}
+                                    </div>`, '#mixly-board-config', {
         tips: 1,
         time: 0,
         offset: 'rb',
@@ -524,39 +532,50 @@ Boards.showConfigMenu = () => {
                 'max-height': 'calc(100vh - var(--footer-height))'
             });
             layero.find('.layui-layer-TipsG').css('display', 'none');
-            const boardLabelWidth = $('#board-config-labels').width();
-            for (let item of list) {
-                dropdown.render({
-                    elem: '#board-config-' + item.name,
-                    align: 'right',
-                    data: item.options,
-                    className: 'layer-extend editor-dropdown-menu board-config-menu',
-                    style: 'display:inline-block;box-shadow:1px 1px 30px rgb(0 0 0 / 12%);min-width:' + boardLabelWidth + ';',
-                    ready: function(elemPanel, elem) {
-                        const $p = $(elem).find('p');
-                        const $lis = $(elemPanel).find('li');
-                        for (let i = 0; $lis[i]; i++) {
-                            const $div = $($lis[i]).children('div');
-                            if ($div.text() === $p.text()) {
-                                $($lis[i]).css('background-color', '#5FB878');
-                                $div.css('color', '#fff');
-                            }
-                        }
-                    },
-                    click: function(data, othis){
-                        const $elem = $(this.elem);
-                        const $p = $elem.children('p');
-                        $p.text(data.title);
-                        defaultConfig[item.name] = data.id;
-                    }
-                });
-            }
+            Boards.renderConfigMenuDropdown(list);
         },
         end: function() {
             Boards.layerMenuNum = null;
             Boards.writeSelectedBoardConfig();
         }
     });
+}
+
+Boards.renderConfigMenuDropdown = (optionList) => {
+    const selectedBoardName = Boards.getSelectedBoardName();
+    for (let item of optionList) {
+        dropdown.render({
+            elem: '#board-config-' + item.name,
+            align: 'right',
+            data: item.options,
+            className: 'layer-extend editor-dropdown-menu board-config-menu',
+            style: 'display:inline-block;box-shadow:1px 1px 30px rgb(0 0 0 / 12%);',
+            ready: function(elemPanel, elem) {
+                const $elemPanel = $(elemPanel);
+                const $elem = $(elem);
+                $elemPanel.css({
+                    'left': 'auto',
+                    'right': 'calc(100vw - ' + ($elem.offset().left + $elem.outerWidth()) + 'px)',
+                    'min-width': $elem.outerWidth() + 'px'
+                });
+                const $p = $elem.find('p');
+                const $lis = $elemPanel.find('li');
+                for (let i = 0; $lis[i]; i++) {
+                    const $div = $($lis[i]).children('div');
+                    if ($div.text() === $p.text()) {
+                        $($lis[i]).css('background-color', '#5FB878');
+                        $div.css('color', '#fff');
+                    }
+                }
+            },
+            click: function(data, othis){
+                const $elem = $(this.elem);
+                const $p = $elem.children('p');
+                $p.text(data.title);
+                Boards.INFO[selectedBoardName].default[item.name] = data.id;
+            }
+        });
+    }
 }
 
 Boards.writeSelectedBoardConfig = () => {
