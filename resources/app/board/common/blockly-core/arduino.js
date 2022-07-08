@@ -427,6 +427,7 @@ profile["Arduino Robot Control"] =
 profile["Arduino Robot Motor"] =
 profile["arduino_robot"];
 
+profile["Arduino Mega or Mega 2560"] =
 profile["Arduino/Genuino Mega or Mega 2560"] =
 profile["Arduino/Genuino Mega or Mega 1280"] =
 profile["Arduino Mega ADK"] =
@@ -458,6 +459,7 @@ profile["Arduino Nano w/ ATmega168"] =
 profile["Arduino Nano w/ ATmega328P"] =
 profile["Arduino Nano w/ ATmega328P (old bootloader)"] =
 
+profile["Arduino Pro or Pro Mini"] =
 profile["Arduino Pro or Pro Mini (5V, 16 MHz) w/ ATmega328P"] =
 profile["Arduino Pro or Pro Mini (3.3V, 8 MHz) w/ ATmega328P"] =
 profile["Arduino Pro or Pro Mini (5V, 16 MHz) w/ ATmega168"] =

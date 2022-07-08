@@ -1038,9 +1038,13 @@ LibManager.writeLibConfig = (info) => {
         const libConfig = {
             version
         };
-        fs_extra.outputJsonSync(configPath, libConfig, {
-            spaces: '\t'
-        });
+        try {
+            fs_extra.outputJsonSync(configPath, libConfig, {
+                spaces: '    '
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 

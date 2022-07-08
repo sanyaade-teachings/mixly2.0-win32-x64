@@ -97,10 +97,8 @@ Example.getExampleList = () => {
 Example.render = () => {
     const inst = dropdown.render({
         elem: '#mixly-examples',
-        content: [
-            `<div id="mixly-examples-tree" style="height:100%;width:100%;overflow:auto;"></div>`
-        ].join(''),
-        className: 'layer-extend',
+        content: `<div id="mixly-examples-tree" style="height:100%;width:100%;overflow:auto;"></div>`,
+        className: 'layer-extend examples-dropdown',
         style: 'display:inline-block;box-shadow:1px 1px 30px rgb(0 0 0 / 12%);',
         ready: function() {
             const $treeDiv = $('#mixly-examples-tree');

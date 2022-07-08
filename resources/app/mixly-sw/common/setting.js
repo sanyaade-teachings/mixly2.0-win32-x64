@@ -51,7 +51,9 @@ Setting.init = () => {
             USER[i] = data.field[i];
         }
         try {
-            fs_extra.outputJsonSync(path.resolve(Env.clientPath, './setting/config.json'), USER);
+            fs_extra.outputJsonSync(path.resolve(Env.clientPath, './setting/config.json'), USER, {
+                spaces: '    '
+            });
         } catch(error) {
             console.log(error);
         }
@@ -75,7 +77,9 @@ Setting.init = () => {
                  .addClass(Env.theme);
         LayerExtend.updateShade();
         try {
-            fs_extra.outputJsonSync(path.resolve(Env.clientPath, './setting/config.json'), USER);
+            fs_extra.outputJsonSync(path.resolve(Env.clientPath, './setting/config.json'), USER, {
+                spaces: '    '
+            });
         } catch(error) {
             console.log(error);
         }

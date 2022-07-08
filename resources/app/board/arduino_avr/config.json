@@ -1,15 +1,63 @@
 {
     "board": {
         "Arduino/Genuino Uno": "arduino:avr:uno",
-        "Arduino Nano w/ ATmega328P": "arduino:avr:nano:cpu=atmega328",
-        "Arduino Nano w/ ATmega328P (old bootloader)": "arduino:avr:nano:cpu=atmega328old",
-        "Arduino Nano w/ ATmega168": "arduino:avr:nano:cpu=atmega168",
-        "Arduino Pro or Pro Mini (5V, 16 MHz) w/ ATmega328P": "arduino:avr:pro:cpu=16MHzatmega328",
-        "Arduino Pro or Pro Mini (3.3V, 8 MHz) w/ ATmega328P": "arduino:avr:pro:cpu=8MHzatmega328",
-        "Arduino Pro or Pro Mini (5V, 16 MHz) w/ ATmega168": "arduino:avr:pro:cpu=16MHzatmega168",
-        "Arduino Pro or Pro Mini (3.3V, 8 MHz) w/ ATmega168": "arduino:avr:pro:cpu=8MHzatmega168",
-        "Arduino Mega w/ ATmega2560": "arduino:avr:mega:cpu=atmega2560",
-        "Arduino Mega w/ ATmega1280": "arduino:avr:mega:cpu=atmega1280",
+        "Arduino Nano": {
+            "key": "arduino:avr:nano",
+            "config": {
+                "cpu": [
+                    {
+                        "key": "atmega328",
+                        "label": "ATmega328P"
+                    }, {
+                        "key": "atmega328old",
+                        "label": "ATmega328P (Old Bootloader)"
+                    }, {
+                        "key": "atmega168",
+                        "label": "ATmega168"
+                    }
+                ]
+            }
+        },
+        "Arduino Pro or Pro Mini": {
+            "key": "arduino:avr:pro",
+            "config": {
+                "cpu": [
+                    {
+                        "key": "16MHzatmega328",
+                        "label": "ATmega328P (5V, 16 MHz)"
+                    }, {
+                        "key": "8MHzatmega328",
+                        "label": "ATmega328P (3.3V, 8 MHz)"
+                    }, {
+                        "key": "16MHzatmega168",
+                        "label": "ATmega168 (5V, 16 MHz)"
+                    }, {
+                        "key": "8MHzatmega168",
+                        "label": "ATmega168 (3.3V, 8 MHz)"
+                    }
+                ]
+            }
+        },
+        "Arduino Mega or Mega 2560": {
+            "key": "arduino:avr:mega",
+            "config": {
+                "cpu": [
+                    {
+                        "key": "atmega2560",
+                        "label": "ATmega2560 (Mega 2560)"
+                    }, {
+                        "key": "atmega1280",
+                        "label": "ATmega1280"
+                    }, {
+                        "key": "16MHzatmega168",
+                        "label": "ATmega168 (5V, 16 MHz)"
+                    }, {
+                        "key": "8MHzatmega168",
+                        "label": "ATmega168 (3.3V, 8 MHz)"
+                    }
+                ]
+            }
+        },
         "Arduino Leonardo": "arduino:avr:leonardo"
     },
     "language": "C/C++",

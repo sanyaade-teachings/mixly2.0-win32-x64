@@ -299,7 +299,10 @@ var indexText = {
     "列": "Column",
     "未知": "Unknown",
     "打开代码编辑器": "Open editor",
-    "退出代码编辑器": "Exit editor"
+    "退出代码编辑器": "Exit editor",
+    "配置板卡": "Config",
+    "恢复默认配置": "Use default configuration",
+    "关闭窗口": "Close the window"
 };
 
 /* 背包 */

@@ -232,13 +232,17 @@ BoardManager.ignoreBoard = (boardName, endFunc) => {
     USER.boardIgnore = USER.boardIgnore ?? [];
     USER.boardIgnore.push(boardName);
     const settingPath = path.resolve(Env.clientPath, './setting/config.json');
-    fs_extra.outputJson(settingPath, USER, endFunc);
+    fs_extra.outputJson(settingPath, USER, {
+        spaces: '    '
+    }, endFunc);
 }
 
 BoardManager.resetBoard = (endFunc) => {
     USER.boardIgnore = [];
     const settingPath = path.resolve(Env.clientPath, './setting/config.json');
-    fs_extra.outputJson(settingPath, USER, endFunc);
+    fs_extra.outputJson(settingPath, USER, {
+        spaces: '    '
+    }, endFunc);
 }
 
 BoardManager.showDelBoardProgress = () => {
@@ -513,9 +517,13 @@ BoardManager.writePackageConfig = (boardInfo) => {
             const packageIndexPath = path.resolve(Env.arduinoCliPath, './Arduino15/' + packageIndexName);
             boardConfig.packagePath.push(packageIndexPath);
         }
-        fs_extra.outputJsonSync(configPath, boardConfig, {
-            spaces: '\t'
-        });
+        try {
+            fs_extra.outputJsonSync(configPath, boardConfig, {
+                spaces: '    '
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 

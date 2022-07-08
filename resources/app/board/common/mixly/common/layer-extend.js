@@ -17,6 +17,25 @@ const { BOARD, USER } = Config;
 
 const { layer } = layui;
 
+LayerExtend.DEFAULT_CONFIG = {
+    area: ['50%', '50%'],
+    max: ['850px', '543px'],
+    min: ['350px', '243px'],
+    title: '信息',
+    id: 'info',
+    content: '',
+    resize: true,
+    shade: LayerExtend.shade,
+    success: null,
+    end: null,
+    cancel: null,
+    resizing: null,
+    offset: 'auto',
+    fixed: true,
+    borderRadius: '8px',
+    maxmin: false
+};
+
 LayerExtend.SHADE = {
     "dark": [
         [0.005, 'rgb(46 64 86)'],
@@ -51,30 +70,11 @@ LayerExtend.openSerialTool = (toolConfig, sucFunc, endFunc) => {
 }
 
 LayerExtend.open = (toolConfig) => {
-    const DEFAULT_CONFIG = {
-        area: ['50%', '50%'],
-        max: ['850px', '543px'],
-        min: ['350px', '243px'],
-        title: '信息',
-        id: 'info',
-        content: '',
-        resize: true,
-        shade: LayerExtend.shade,
-        success: null,
-        end: null,
-        cancel: null,
-        resizing: null,
-        offset: 'auto',
-        fixed: true,
-        borderRadius: '8px',
-        maxmin: false
-    };
-
     if (typeof toolConfig !== 'object')
-        toolConfig = DEFAULT_CONFIG;
+        toolConfig = LayerExtend.DEFAULT_CONFIG;
     else
         toolConfig = {
-            ...DEFAULT_CONFIG,
+            ...LayerExtend.DEFAULT_CONFIG,
             ...toolConfig
         };
 

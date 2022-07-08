@@ -7,7 +7,8 @@ Mixly.require({
         "Mixly.Config",
         "Mixly.XML",
         "Mixly.Env",
-        "Mixly.ToolboxSearcher"
+        "Mixly.ToolboxSearcher",
+        "Mixly.Modules"
     ]
 });
 
@@ -19,13 +20,13 @@ const {
     XML,
     Env,
     ToolboxSearcher,
-    Electron = {},
+    Modules,
     Boards
 } = Mixly;
 
-const { form, element } = layui;
+const { form, element, dropdown } = layui;
 
-const { BOARD } = Config;
+const { BOARD, USER } = Config;
 
 /**
  *  "board": {
@@ -44,6 +45,11 @@ Boards.HAS_CONFIG_SETTING = false;
 Boards.init = () => {
     if (BOARD.board) {
         let num = 0;
+        let userBoard = {};
+        const { board = {} } = USER;
+        if (board && board[BOARD.boardName] && typeof board[BOARD.boardName] === 'object') {
+            userBoard = board[BOARD.boardName];
+        }
         for (let i in BOARD.board) {
             Boards.NAME.push(i);
             const boardInfo = BOARD.board[i];
@@ -56,14 +62,35 @@ Boards.init = () => {
                 };
                 num++;
             } else if (typeof boardInfo === 'object') {
-                const { key = null, config = null, ignore = [] } = BOARD.board[i];
+                const { key = null, config = null, ignore = [] } = boardInfo;
                 let defaultConfig = null;
                 if (typeof config === 'object') {
                     defaultConfig = {};
-                    for (let j in config) {
-                        if (typeof config[j] === 'object' && typeof config[j][0] === 'object') {
-                            //defaultConfig[j] = { ...config[j][0] };
-                            defaultConfig[j] = config[j][0].key;
+                    const userConfig = userBoard.default,
+                    userBoardKey = userBoard.key;
+                    if (typeof userConfig === 'object' && userBoardKey === key) {
+                        for (let key in userConfig) {
+                            if (!config[key] || typeof config[key] !== 'object') {
+                                delete userConfig[key];
+                                continue;
+                            }
+                            let needDel = true;
+                            for (let option of config[key]) {
+                                if (option.key === userConfig[key]) {
+                                    needDel = false;
+                                    break;
+                                }
+                            }
+                            if (needDel)
+                                delete userConfig[key];
+                        }
+                        defaultConfig = { ...userConfig };
+                    } else {
+                        for (let j in config) {
+                            if (typeof config[j] === 'object' && typeof config[j][0] === 'object') {
+                                //defaultConfig[j] = { ...config[j][0] };
+                                defaultConfig[j] = config[j][0].key;
+                            }
                         }
                     }
                 } else {
@@ -96,7 +123,16 @@ Boards.init = () => {
             boardNames.append(`<option value="${Boards.INFO[board]?.key ?? board}" ${(selectedBoardName && selectedBoardName[0] === board)? ' selected' : ''}>${board}</option>`);
         form.render();
     }
-    Boards.onclickBoardSelector();
+    // Boards.onclickBoardSelector();
+    $('#mixly-board-config').off().click(function() {
+        Boards.showConfigMenu();
+    });
+    $(window).on('resize', function() {
+        if (Boards.layerMenuNum) {
+            $('#layui-layer' + Boards.layerMenuNum).css('display', 'none');
+            layer.close(Boards.layerMenuNum);
+        }
+    });
 }
 
 Boards.getConfigInfo = (boardName) => {
@@ -128,6 +164,7 @@ Boards.updateBoardDefaultConfig = (boardName) => {
     Boards.INFO[boardName].default = defaultConfig;
 }
 
+/* RC2版本弃用，将在以后版本中删除 */
 Boards.onclickBoardSelector = () => {
     //板卡选择事件
     $("#boardSelector").on("click", function () {
@@ -174,6 +211,7 @@ Boards.onclickBoardSelector = () => {
     });
 }
 
+/* RC2版本弃用，将在以后版本中删除 */
 Boards.showConfigDialog = (boardName) => {
     const { config } = Boards.INFO[boardName];
     const menuList = Object.keys(config);
@@ -212,50 +250,12 @@ Boards.showConfigDialog = (boardName) => {
             form.val('board-config-form-filter', Boards.INFO[boardName].default);
             form.on('submit(board-config-submit)', function(data) {
                 Boards.INFO[boardName].default = data.field;
-                //layer.close(layerNum);
                 layer.msg(indexText['板卡配置已更新'], { time: 1000 });
                 return false;
             });
             const $configForm = $('#board-config-form');
-            // 跟随右侧form变化实时更新左侧菜单栏选中项
-            /*
-            let disabled = false;
-            let selectedKey = menuList[0];
-            $configForm.scroll(function() {
-                if (disabled) {
-                    disabled = false;
-                    return
-                };
-                const $options = $configForm.find('.m-anchor');
-                const $menu = $('#board-config-menu-options');
-                let i = 0;
-                let $option;
-                for (; i < $options.length; i++) {
-                    $option = $($options[i]);
-                    if ($option.position().top - 20 > 0) {
-                        $option = $($options[i - 1]);
-                        break;
-                    }
-                }
-                if (i === $options.length)
-                    $option = $($options[--i]);
-                const optionKey = $option.attr('key');
-                if (selectedKey === optionKey) return;
-                selectedKey = optionKey;
-                const $li = $menu.children('li');
-                $li.removeClass('layui-this');
-                const $selected = $menu.children('li[m-key="' + optionKey + '"]');
-                $selected.addClass('layui-this');
-                $menu.parent().scrollTop($selected.position().top + $menu.scrollTop());
-            });
-            */
             element.render('nav', 'board-config-menu-filter');
             element.on('nav(board-config-menu-filter)', function(elem) {
-                /*
-                if (selectedKey === elem.text()) return;
-                selectedKey = elem.text();
-                disabled = true;
-                */
                 $selected = $configForm.find('.m-anchor[key="' + elem.text() + '"]');
                 $configForm.scrollTop($selected.position().top + $configForm.scrollTop() - 10);
                 elem.parent().removeClass('layui-this');
@@ -266,6 +266,7 @@ Boards.showConfigDialog = (boardName) => {
     });
 }
 
+/* RC2版本弃用，将在以后版本中删除 */
 Boards.onclickChangeConfig = () => {
     $(".board-config-btn").off("click").click((event) => {
         const boardName = $(event.currentTarget).attr('board');
@@ -379,6 +380,15 @@ Boards.updateCategories = (boardName, enforce = false) => {
     if (Boards.selected === boardName && !enforce) return;
     Boards.selected = boardName;
     $('#mixly-footer-boardname').html(boardName);
+    if (Boards.INFO[boardName] && Boards.INFO[boardName].config) {
+        $('#mixly-board-config').css('display', 'inline-flex');
+    } else {
+        $('#mixly-board-config').css('display', 'none');
+    }
+    if (Boards.layerMenuNum) {
+        $('#layui-layer' + Boards.layerMenuNum).css('display', 'none');
+        layer.close(Boards.layerMenuNum);
+    }
     let thirdPartyStr = '';
     if (Env.isElectron) {
         thirdPartyStr = Env.thirdPartyXML.join('');
@@ -448,6 +458,127 @@ Boards.removeBlocks = (blocksdom, boardKeyList) => {
         }
     }
     return false;
+}
+
+Boards.showConfigMenu = () => {
+    if (Boards.layerMenuNum)
+        return;
+    const selectedBoardName = Boards.getSelectedBoardName();
+    const { INFO } = Boards;
+    const { config, ignore, key } = INFO[selectedBoardName];
+    INFO[selectedBoardName].default = INFO[selectedBoardName].default ?? {};
+    const defaultConfig = INFO[selectedBoardName].default;
+    let list = [];
+    for (let key in config) {
+        let selectedConfig = defaultConfig[key] ?? config[key][0].label;
+        let options = [];
+        for (let i of config[key]) {
+            if (defaultConfig[key] && i.key === defaultConfig[key])
+                selectedConfig = i.label;
+            options.push({
+                title: i.label,
+                id: i.key
+            });
+        }
+        if (!defaultConfig)
+            selectedConfig = config[key][0].label;
+        list.push({
+            name: key,
+            label: selectedConfig,
+            options
+        });
+    }
+    const xmlStr = XML.render(XML.TEMPLATE_STR['BOARD_CONFIG_MENU_DIV'], {
+        list,
+        reset: indexText['使用默认配置'],
+        close: indexText['关闭窗口']
+    });
+    Boards.layerMenuNum = layer.tips(`<div id="mixly-board-config" style="max-height:calc(100vh - var(--footer-height));height:100%;width:100%;overflow:hidden;">${xmlStr}</div>`, '#mixly-board-config', {
+        tips: 1,
+        time: 0,
+        offset: 'rb',
+        move: false,
+        tipsMore: false,
+        success: function(layero, index) {
+            $('#board-config-menu-reset').off().click(function() {
+                INFO[selectedBoardName].default = INFO[selectedBoardName].default ?? {};
+                for (let key in config) {
+                    defaultConfig[key] = config[key][0].key;
+                    $('#board-config-' + key).find('p').text(config[key][0].label);
+                }
+            });
+            $('#board-config-menu-colse').off().click(function() {
+                layero.css('display', 'none');
+                layer.close(Boards.layerMenuNum);
+            });
+            layero.css({
+                'left': 'auto',
+                'right': '5px',
+                'top': 'auto',
+                'bottom': 'calc(var(--footer-height) + 1px)',
+                'width': 'auto',
+                'height': 'auto',
+                'max-height': 'calc(100vh - var(--footer-height))'
+            });
+            layero.children('.layui-layer-content').css({
+                'padding': '0px',
+                'max-height': 'calc(100vh - var(--footer-height))'
+            });
+            layero.find('.layui-layer-TipsG').css('display', 'none');
+            for (let item of list) {
+                dropdown.render({
+                    elem: '#board-config-' + item.name,
+                    align: 'right',
+                    data: item.options,
+                    className: 'layer-extend editor-dropdown-menu board-config-menu',
+                    style: 'display:inline-block;box-shadow:1px 1px 30px rgb(0 0 0 / 12%);',
+                    ready: function(elemPanel, elem) {
+                        const $p = $(elem).find('p');
+                        const $lis = $(elemPanel).find('li');
+                        for (let i = 0; $lis[i]; i++) {
+                            const $div = $($lis[i]).children('div');
+                            if ($div.text() === $p.text()) {
+                                $($lis[i]).css('background-color', '#5FB878');
+                                $div.css('color', '#fff');
+                            }
+                        }
+                    },
+                    click: function(data, othis){
+                        const $elem = $(this.elem);
+                        const $p = $elem.children('p');
+                        $p.text(data.title);
+                        defaultConfig[item.name] = data.id;
+                    }
+                });
+            }
+        },
+        end: function() {
+            Boards.layerMenuNum = null;
+            Boards.writeSelectedBoardConfig();
+        }
+    });
+}
+
+Boards.writeSelectedBoardConfig = () => {
+    if (!Env.isElectron)
+        return;
+    USER.board = USER.board ?? {};
+    const { board } = USER;
+    board[BOARD.boardName] = board[BOARD.boardName] ?? {};
+    board[BOARD.boardName].key = Boards.getSelectedBoardKey();
+    const selectedBoardName = Boards.getSelectedBoardName();
+    if (!Boards.INFO[selectedBoardName])
+        return;
+    const defaultConfig = Boards.INFO[selectedBoardName].default;
+    board[BOARD.boardName].default = { ...defaultConfig };
+    const { fs_extra, path } = Modules;
+    try {
+        fs_extra.outputJsonSync(path.resolve(Env.clientPath, 'setting/config.json'), USER, {
+            spaces: '    '
+        });
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 })();

@@ -148,8 +148,8 @@
                     flex-direction: row;
                     flex-wrap: nowrap;
                     align-items: center;
-                    font-size:12px;
-                    line-height:12px;
+                    font-size: 12px;
+                    line-height: 12px;
                     color: #fff;
                 "
             >
@@ -167,13 +167,12 @@
                 font-size:12px;
                 line-height:12px;
                 color: #fff;
-                padding-right: 15px;
             "
         >
             <div style="
                     display: inline-flex;
                     flex-direction: row;
-                    padding-right: 15px;
+                    margin:0px 15px 0px 0px;
                 "
             >
                 <a
@@ -183,9 +182,23 @@
                 ></a>
                 <p id="mixly-footer-codelang">{{ d.unknown }}</p>
             </div>
+            <!-- <button
+                id="mixly-board"
+                type="button"
+                class="layui-btn layui-btn-xs layui-btn-primary m-btn"
+                style="cursor:pointer;border:none;margin:0 10px 0 10px;padding:0 5px;display:inline-flex;align-items:center;"
+            >
+                <a
+                    id="mixly-footer-boardname"
+                    href="javascript:;"
+                    class="icon-microchip"
+                    style="color:#fff;font-size:12px;line-height:12px;"
+                ></a>
+            </button> -->
             <div style="
                     display: inline-flex;
                     flex-direction: row;
+                    margin:0px 15px 0px 0px;
                 "
             >
                 <a
@@ -195,6 +208,26 @@
                 ></a>
                 <p id="mixly-footer-boardname"></p>
             </div>
+            <button
+                id="mixly-board-config"
+                type="button"
+                class="layui-btn layui-btn-xs layui-btn-primary m-btn"
+                style="
+                    cursor:pointer;
+                    border:none;
+                    margin:0px 10px 0px 0px;
+                    padding:0px 5px;
+                    display:inline-flex;
+                    align-items:center;
+                "
+            >
+                <a
+                    id="mixly-footer-boardname"
+                    href="javascript:;"
+                    class="icon-cog"
+                    style="color:#fff;font-size:12px;line-height:12px;"
+                >{{ d.config }}</a>
+            </button>
         </div>
     </div>
 </div>

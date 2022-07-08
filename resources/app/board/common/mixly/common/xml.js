@@ -35,11 +35,6 @@ XML.TEMPLATE_CONFIG = [
         config: {},
         appendToBody: true
     }, {
-        type: 'WEBPY_TABLE',
-        path: '/webpy-table.html',
-        config: {},
-        appendToBody: false
-    }, {
         type: 'BOARD_SELECTOR',
         path: '/board-selector-div.html',
         config: {},
@@ -99,8 +94,14 @@ XML.TEMPLATE_CONFIG = [
             outputAceName: indexText['输出'],
             row: indexText['行'],
             column: indexText['列'],
-            unknown: indexText['未知']
+            unknown: indexText['未知'],
+            config: indexText['配置板卡']
         },
+        appendToBody: false
+    }, {
+        type: 'BOARD_CONFIG_MENU_DIV',
+        path: '/board-config-menu-div.html',
+        config: {},
         appendToBody: false
     }
 ];
@@ -111,7 +112,6 @@ XML.TEMPLATE_ENV = {
     SIMULATOR_DIV: Env.isElectron && BOARD?.nav?.compile,
     BOARD_SELECTOR: true,
     PORT_SELECTOR: !(BOARD?.nav?.run || BOARD?.nav?.cancel || BOARD?.nav?.webrun || BOARD?.nav?.webcancel || (!Env.isElectron && !Env.hasSocketServer)),
-    WEBPY_TABLE: BOARD?.nav?.webrun || BOARD?.nav?.webcancel,
     BOARD_CONFIGURATOR: BOARD?.nav?.compile,
     BOARD_CONFIG_ELEMENT: BOARD?.nav?.compile,
     PARSE_MIX_ERROR_DIV: true,
@@ -119,7 +119,8 @@ XML.TEMPLATE_ENV = {
     SEARCH_DIV: true,
     PROGRESS_BAR_DIV: Env.isElectron && BOARD?.nav?.setting?.thirdPartyLibrary,
     LIB_MANAGER_DIV: Env.isElectron && BOARD?.nav?.setting?.thirdPartyLibrary,
-    APP_DIV: true
+    APP_DIV: true,
+    BOARD_CONFIG_MENU_DIV: true
 };
 
 XML.TEMPLATE_STR = {};

@@ -111,7 +111,7 @@ ArduShell.updateConfig = (config) => {
             ...config
         };
         fs_extra.outputJson(configPath, nowConfig, {
-            spaces: '\t'
+            spaces: '    '
         })
         .then(() => {
             console.log('arduino-cli.json已更新');
