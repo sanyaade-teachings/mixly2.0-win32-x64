@@ -267,29 +267,6 @@ Blockly.Generator.prototype.INDENT="  ";
         serial_HardwareSelect: [["Serial", "Serial"], ["Serial1", "Serial1"], ["Serial2", "Serial2"]],
         serial_select: [["Serial", "Serial"], ["SoftwareSerial", "mySerial"], ["SoftwareSerial1", "mySerial1"], ["SoftwareSerial2", "mySerial2"], ["SoftwareSerial3", "mySerial3"]],
         serial : 9600
-    },
-    arduino_esp32c3: {
-        description: "esp32s2_Arduino",
-        digital: [["0","0"],["1","1"],["2","2"],["3","3"],["4","4"],["5","5"],["6","6"],["7","7"],["8","8"],["9","9"],["10","10"],["18","18"],["19","19"],["20","20"],["21","21"]],
-        digitalWrite: [["0","0"],["1","1"],["2","2"],["3","3"],["4","4"],["5","5"],["6","6"],["7","7"],["8","8"],["9","9"],["10","10"],["18","18"],["19","19"],["20","20"],["21","21"]],
-        interrupt: [["0","0"],["1","1"],["2","2"],["3","3"],["4","4"],["5","5"],["6","6"],["7","7"],["8","8"],["9","9"],["10","10"],["18","18"],["19","19"],["20","20"],["21","21"]],
-        pwm: [["0","0"],["1","1"],["2","2"],["3","3"],["4","4"],["5","5"],["6","6"],["7","7"],["8","8"],["9","9"],["10","10"],["18","18"],["19","19"],["20","20"],["21","21"]],
-        analog: [["0","0"],["1","1"],["2","2"],["3","3"]],
-        tx: [["0", "0"], ["2", "2"], ["4", "4"], ["5", "5"], ["12", "12"], ["13", "13"], ["14", "14"], ["15", "15"], ["16", "16"], ["17", "17"], ["18", "18"], ["19", "19"], ["20", "20"], ["21", "21"], ["22", "22"], ["23", "23"], ["25", "25"], ["26", "26"], ["27", "27"], ["31", "31"]],
-        dac: [["17", "17"], ["18", "18"]],
-        SDA:[["19","19"]],
-        SCL:[["18","18"]],
-        MOSI:[["41","41"]],
-        MISO:[["40","40"]],
-        SCK:[["39","39"]],
-        TONE_NOTE:[["NOTE_C","NOTE_C"],["NOTE_Cs","NOTE_Cs"],["NOTE_D","NOTE_D"],["NOTE_Eb","NOTE_Eb"],["NOTE_E","NOTE_E"],["NOTE_F","NOTE_F"],["NOTE_Fs","NOTE_Fs"],["NOTE_G","NOTE_G"],["NOTE_Gs","NOTE_Gs"],["NOTE_A","NOTE_A"],["NOTE_Bb","NOTE_Bb"],["NOTE_B","NOTE_B"],["NOTE_MAX","NOTE_MAX"]],
-        OCTAVE:[["0", "0"],["1", "1"],["2", "2"],["3", "3"],["4", "4"],["5", "5"],["6", "6"],["7", "7"]],
-        CHANNEL:[["0", "0"],["1", "1"],["2", "2"],["3", "3"],["4", "4"],["5", "5"],["6", "6"],["7", "7"],["8", "8"],["9", "9"],["10", "10"],["11", "11"],["12", "12"],["13", "13"],["14", "14"],["15", "15"]],
-        PWM_RESOLUTION:[["8", "8"],["9", "9"],["10", "10"],["11", "11"],["12", "12"],["13", "13"],["14", "14"],["15", "15"],["16", "16"],["17", "17"],["18", "18"],["19", "19"],["20", "20"]],
-        touch: [["1","1"],["2","2"],["3","3"],["4","4"],["5","5"],["6","6"],["7","7"],["8","8"],["9","9"],["10","10"],["11","11"],["12","12"],["13","13"],["14","14"]],
-        serial_HardwareSelect: [["Serial", "Serial"], ["Serial1", "Serial1"], ["Serial2", "Serial2"]],
-        serial_select: [["Serial", "Serial"], ["SoftwareSerial", "mySerial"], ["SoftwareSerial1", "mySerial1"], ["SoftwareSerial2", "mySerial2"], ["SoftwareSerial3", "mySerial3"]],
-        serial : 9600
     },  
     esp32_handbit: {
         description: "esp32_handbit",
@@ -385,6 +362,50 @@ Blockly.Generator.prototype.INDENT="  ";
         serial_select: [["Serial", "Serial"], ["Serial1", "Serial1"], ["Serial2", "Serial2"]],
         serial : 9600
     }
+};
+
+profile.arduino_esp32c3 = {
+    description: "esp32c3_Arduino",
+    digital: profile.generate([ '0-10', '18-21' ]),
+    digitalWrite: profile.generate([ '0-10', '18-21' ]),
+    interrupt: profile.generate([ '0-10', '18-21' ]),
+    pwm: profile.generate([ '0-10', '18-21' ]),
+    analog: profile.generate([ '0-3' ]),
+    tx: profile.generate([ '21' ]),
+    SDA: [["8","8"]],
+    SCL: [["9","9"]],
+    MOSI: [["6","6"]],
+    MISO: [["5","5"]],
+    SCK: [["4","4"]],
+    TONE_NOTE: [["NOTE_C","NOTE_C"],["NOTE_Cs","NOTE_Cs"],["NOTE_D","NOTE_D"],["NOTE_Eb","NOTE_Eb"],["NOTE_E","NOTE_E"],["NOTE_F","NOTE_F"],["NOTE_Fs","NOTE_Fs"],["NOTE_G","NOTE_G"],["NOTE_Gs","NOTE_Gs"],["NOTE_A","NOTE_A"],["NOTE_Bb","NOTE_Bb"],["NOTE_B","NOTE_B"],["NOTE_MAX","NOTE_MAX"]],
+    OCTAVE: profile.generate([ '0-7' ]),
+    CHANNEL: profile.generate([ '0-15' ]),
+    PWM_RESOLUTION: profile.generate([ '8-20' ]),
+    serial_HardwareSelect: [["Serial", "Serial"], ["Serial1", "Serial1"], ["Serial2", "Serial2"]],
+    serial_select: [["Serial", "Serial"], ["SoftwareSerial", "mySerial"], ["SoftwareSerial1", "mySerial1"], ["SoftwareSerial2", "mySerial2"], ["SoftwareSerial3", "mySerial3"]],
+    serial : 9600
+};
+
+profile.arduino_core_esp32c3 = {
+    description: "core_esp32c3_Arduino",
+    digital: profile.generate([ '0-10', '12-13', '18-21' ]),
+    digitalWrite: profile.generate([ '0-8', '10', '12-13', '18-21' ]),
+    interrupt: profile.generate([ '0-10', '12-13', '18-21' ]),
+    pwm: profile.generate([ '2', '6', '8', '10' ]),
+    analog: profile.generate([ '0-5' ]),
+    tx: profile.generate([ '21' ]),
+    SDA: [["8","8"]],
+    SCL: [["9","9"]],
+    MOSI: [["6","6"]],
+    MISO: [["5","5"]],
+    SCK: [["4","4"]],
+    TONE_NOTE: [["NOTE_C","NOTE_C"],["NOTE_Cs","NOTE_Cs"],["NOTE_D","NOTE_D"],["NOTE_Eb","NOTE_Eb"],["NOTE_E","NOTE_E"],["NOTE_F","NOTE_F"],["NOTE_Fs","NOTE_Fs"],["NOTE_G","NOTE_G"],["NOTE_Gs","NOTE_Gs"],["NOTE_A","NOTE_A"],["NOTE_Bb","NOTE_Bb"],["NOTE_B","NOTE_B"],["NOTE_MAX","NOTE_MAX"]],
+    OCTAVE: profile.generate([ '0-7' ]),
+    CHANNEL: profile.generate([ '0-15' ]),
+    PWM_RESOLUTION: profile.generate([ '8-20' ]),
+    serial_HardwareSelect: [["Serial", "Serial"], ["Serial1", "Serial1"], ["Serial2", "Serial2"]],
+    serial_select: [["Serial", "Serial"], ["SoftwareSerial", "mySerial"], ["SoftwareSerial1", "mySerial1"], ["SoftwareSerial2", "mySerial2"], ["SoftwareSerial3", "mySerial3"]],
+    serial : 9600
 };
 
 profile.arduino_esp32s3 = {
@@ -585,8 +606,10 @@ profile["arduino_esp32s2"];
 
 /* Arduino ESP32C3用管脚定义 */
 profile['ESP32C3 Dev Module'] =
-profile['CORE-ESP32-C3'] =
 profile["arduino_esp32c3"];
+
+profile['CORE-ESP32-C3'] =
+profile["arduino_core_esp32c3"];
 
 /* Arduino ESP32S3用管脚定义 */
 profile['ESP32S3 Dev Module'] =
