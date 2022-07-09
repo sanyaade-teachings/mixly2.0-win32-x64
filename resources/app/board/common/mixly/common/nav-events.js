@@ -74,7 +74,6 @@ NavEvents.onclickChangeLang = () => {
         let nowCode = editor.getValue();
         showTag();
         Code.initLanguage(false);
-        renderContent();
         let endBtnId = 'left-nav-mark';
         MixlyBlockly.LEFT_MARK_X = getid(endBtnId).offsetLeft + getid(endBtnId).offsetWidth;
         Blockly.fireUiEvent(window, 'resize');

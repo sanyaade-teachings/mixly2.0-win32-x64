@@ -172,12 +172,7 @@ button.launch {
   background-color: #d43;
   color: white;
 }
-/*button:active {
-  border: 0px solid blue !important;
-}*/
-button:hover {
-  box-shadow: 2px 2px 5px #888;
-}
+
 .right-top {
 width: 20px;
 height:74px;
