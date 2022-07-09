@@ -548,6 +548,7 @@ Boards.renderConfigMenuDropdown = (optionList) => {
             elem: '#board-config-' + item.name,
             align: 'right',
             data: item.options,
+            anywhereClose: true,
             className: 'layer-extend editor-dropdown-menu board-config-menu',
             style: 'display:inline-block;box-shadow:1px 1px 30px rgb(0 0 0 / 12%);',
             ready: function(elemPanel, elem) {
