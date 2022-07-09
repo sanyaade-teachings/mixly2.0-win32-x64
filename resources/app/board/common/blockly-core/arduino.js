@@ -370,7 +370,7 @@ profile.arduino_esp32c3 = {
     digitalWrite: profile.generate([ '0-10', '18-21' ]),
     interrupt: profile.generate([ '0-10', '18-21' ]),
     pwm: profile.generate([ '0-10', '18-21' ]),
-    analog: profile.generate([ '0-3' ]),
+    analog: profile.generate([ '0-5' ]),
     tx: profile.generate([ '21' ]),
     SDA: [["8","8"]],
     SCL: [["9","9"]],
