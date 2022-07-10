@@ -543,8 +543,9 @@ LibManager.onclickManageLibs = () => {
         defaultToolbar: [],
         title: indexText['管理库'],
         cols: [[
-            { type: 'checkbox', width: "10%", unresize: false, align: "center" },
-            { field: 'path', title: indexText['路径'], width: "90%", unresize: false, align: "left" }
+            { type: 'checkbox', unresize: false, align: "center" },
+            { field: 'name', title: indexText['名称'], sort: true, unresize: false, align: "center", minWidth: 150 },
+            { field: 'path', title: indexText['路径'], unresize: false, align: "left", minWidth: 300 }
         ]],
         limit: 1000,
         skin: 'line',
@@ -558,10 +559,7 @@ LibManager.onclickManageLibs = () => {
         data: [],
         defaultToolbar: [],
         title: indexText['管理库'],
-        cols: [[
-            { type: 'checkbox', width: "10%", unresize: false, align: "center" },
-            { field: 'path', title: indexText['路径'], width: "90%", unresize: false, align: "left" }
-        ]],
+        cols: mixlyTableConfig.cols,
         limit: 1000,
         skin: 'line',
         even: false,
@@ -608,6 +606,7 @@ LibManager.onclickManageLibs = () => {
                     const extname = path.extname(read);
                     if (extname === '.json') continue;
                     data.push({
+                        name: read,
                         path: path.resolve(needRead.path, read)
                     });
                 }
