@@ -95,7 +95,8 @@
                 "Mixly.MFile",
                 "Mixly.Title",
                 "Mixly.XML",
-                "Mixly.Electron.BU"
+                "Mixly.Electron.BU",
+                "Mixly.Electron.File"
             ],
             "provide":[
                 "Mixly.Electron.Example"

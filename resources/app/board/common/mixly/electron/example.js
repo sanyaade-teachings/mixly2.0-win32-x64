@@ -8,6 +8,7 @@ goog.require('Mixly.MFile');
 goog.require('Mixly.Title');
 goog.require('Mixly.XML');
 goog.require('Mixly.Electron.BU');
+goog.require('Mixly.Electron.File');
 goog.provide('Mixly.Electron.Example');
 
 const {
@@ -22,7 +23,7 @@ const {
 
 const { dropdown, tree } = layui;
 
-const { Example, BU } = Electron;
+const { File, Example, BU } = Electron;
 
 const { BOARD } = Config;
 

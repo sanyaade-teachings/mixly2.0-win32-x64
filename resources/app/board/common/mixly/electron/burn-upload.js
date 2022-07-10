@@ -237,7 +237,6 @@ BU.readConfigAndSet = function () {
             BU.libPath = [ path.resolve(Env.indexPath, 'build/lib/') ];
         }
     }
-    console.log(upload)
 }
 
 try {
