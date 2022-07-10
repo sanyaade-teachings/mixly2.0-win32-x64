@@ -1,7 +1,9 @@
 (() => {
 
+goog.require('layui');
 goog.require('Mixly.Config');
 goog.require('Mixly.StatusBar');
+goog.require('Mixly.StatusBarPort');
 goog.require('Mixly.Modules');
 goog.require('Mixly.LayerExtend');
 goog.require('Mixly.Env');
@@ -14,6 +16,7 @@ const {
     Electron,
     Config,
     StatusBar,
+    StatusBarPort,
     Modules,
     LayerExtend,
     Env,
@@ -26,11 +29,15 @@ const { BOARD } = Config;
 
 var downloadShell = null;
 
-Modules.iconvLite = require('iconv-lite');
+Modules.iconv_lite = require('iconv-lite');
+
+const { form } = layui;
 
 const {
     fs,
-    iconvLite,
+    fs_extra,
+    fs_extend,
+    iconv_lite,
     os,
     lodash_fp,
     child_process,
@@ -54,6 +61,8 @@ BU.uploadCommand = "";
 BU.burnCommand = "";
 
 BU.uploadAndCopyLib = false;
+
+BU.shell = null;
 
 function isExitsFunction(funcName) {
     try {
@@ -96,14 +105,27 @@ function copyFileWithName(oldPath, newPath, filesName) {
 BU.readConfigAndSet = function () {
     const selectedBoardKey = Boards.getSelectedBoardKey();
     let burn, upload;
-    if (BOARD.burn[selectedBoardKey])
-        burn = { ...BOARD.burn[selectedBoardKey] };
-    else
+    if (BOARD.burn[selectedBoardKey]) {
+        burn = { ...BOARD.burn, ...BOARD.burn[selectedBoardKey] };
+    } else {
         burn = { ...BOARD.burn };
-    if (BOARD.upload[selectedBoardKey])
-        upload = { ...BOARD.upload[selectedBoardKey] };
-    else
+    }
+    if (BOARD.upload[selectedBoardKey]) {
+        upload = { ...BOARD.upload, ...BOARD.upload[selectedBoardKey] };
+    } else {
         upload = { ...BOARD.upload };
+    }
+    if (BOARD.burn[selectedBoardKey] || BOARD.upload[selectedBoardKey]) {
+        for (let i in Boards.INFO) {
+            const key = Boards.INFO[i].key;
+            if (burn[key]) {
+                delete burn[key];
+            }
+            if (upload[key]) {
+                delete upload[key];
+            }
+        }
+    }
 
     if (upload?.filePath) {
         BU.uploadFilePath = upload.filePath;
@@ -206,25 +228,19 @@ BU.readConfigAndSet = function () {
     }
     if (upload?.copyLib) {
         BU.uploadAndCopyLib = upload.copyLib;
+        if (upload.libPath) {
+            BU.libPath = [];
+            for (let dirPath of upload.libPath) {
+                BU.libPath.push(replaceWithReg(dirPath, Env.indexPath, "indexPath"));
+            }
+        } else {
+            BU.libPath = [ path.resolve(Env.indexPath, 'build/lib/') ];
+        }
     }
+    console.log(upload)
 }
 
 try {
-    /*
-    if (Env.currentPlatform === "darwin" || Env.currentPlatform === "linux") {
-        child_process.exec('which python3', function (error, stdout, stderr) {
-            if (error || stdout == null) {
-                Env.python3Path = '/usr/local/bin/python3';
-            } else {
-                Env.python3Path = stdout.replace("\n", "");
-            }
-            console.log(Env.python3Path);
-            BU.readConfigAndSet();
-        });
-    } else {
-        BU.readConfigAndSet();
-    }
-    */
     if (Env.currentPlatform !== "win32") {
         if (fs.existsSync("/usr/local/bin/python3")) {
             Env.python3Path = '/usr/local/bin/python3';
@@ -238,121 +254,6 @@ try {
 window.addEventListener('DOMContentLoaded', () => {
     BU.readConfigAndSet();
 });
-
-/**
-* @function 烧录或上传时判断是否有多个设备
-* @description 判断是否有多个设备，如果存在，则弹出设备选择框，若不存在，则开始一个烧录或上传过程
-* @param burn {Boolean} 烧录或上传，true - 烧录，false - 上传
-* @param addAllOption {Boolean} 是否在串口下拉框内添加【全部】选项，true - 添加，false - 不添加
-* @return void
-*/
-BU.checkNumOfSerialPort = function (ports, burn, addAllOption, command) {
-    var form = layui.form;
-    const $devNames = $('#mixly-selector-type');
-    var old_Device = $('#mixly-selector-type option:selected').val();
-    $devNames.empty();
-    lodash_fp.map(v => {
-        if (v.name != undefined && v.name != '') {
-            if (`${v.name}` == old_Device) {
-                $devNames.append($(`<option value="${v.name}" selected>${v.name}</option>`));
-            } else {
-                $devNames.append($(`<option value="${v.name}">${v.name}</option>`));
-            }
-        }
-    }, ports);
-
-    form.render();
-
-    var device_num = document.getElementById("mixly-selector-type").length;
-
-    if (device_num > 1 && addAllOption) {
-        if (old_Device == 'all') {
-            $devNames.append('<option value="all" selected>' + indexText['全部'] + '</option>');
-        } else {
-            $devNames.append('<option value="all">' + indexText['全部'] + '</option>');
-        }
-        device_num++;
-    } else {
-        addAllOption = false;
-    }
-
-    form.render();
-
-    if (device_num > addAllOption) {
-        if (burn)
-            BU.burning = true;
-        else
-            BU.uploading = true;
-    }
-    if (device_num == addAllOption) {
-        layer.msg(indexText['无可用设备'] + '!', {
-            time: 1000
-        });
-        BU.burning = false;
-        BU.uploading = false;
-    } else if (device_num == 1 + addAllOption) {
-        const layerNum = layer.open({
-            type: 1,
-            title: (burn ? indexText['烧录中'] + '...' : indexText['上传中'] + '...'),
-            content: $('#mixly-loader-div'),
-            shade: Mixly.LayerExtend.shade,
-            resize: false,
-            closeBtn: 0,
-            success: function () {
-                $(".layui-layer-page").css("z-index","198910151");
-                $("#mixly-loader-btn").off("click").click(() => {
-                    layer.close(layerNum);
-                    BU.cancel();
-                });
-            },
-            end: function () {
-                $('#mixly-loader-div').css('display', 'none');
-                $("#layui-layer-shade" + layerNum).remove();
-                $("#mixly-loader-btn").off("click");
-            }
-        });
-        var com_data = $('#mixly-selector-type option:selected').val();
-        if (burn) {
-            BU.burnByCmd(com_data, command);
-        } else {
-            BU.uploadByCmd(com_data, command);
-        }
-    } else {
-        let initBtnClicked = false;
-        layui.use(['layer', 'form'], function () {
-            var layer = layui.layer;
-            const layerNum = layer.open({
-                type: 1,
-                id: "serial-select",
-                title: indexText['检测到多个串口，请选择：'],
-                area: ['350px', '150px'],
-                content: $('#mixly-selector-div'),
-                shade: Mixly.LayerExtend.shade,
-                resize: false,
-                closeBtn: 0,
-                success: function (layero) {
-                    $('#serial-select').css("height","195px");
-                    $(".layui-layer-page").css("z-index","198910151");
-                    $("#mixly-selector-btn1").off("click").click(() => {
-                        layer.close(layerNum);
-                        BU.cancel();
-                    });
-                    $("#mixly-selector-btn2").off("click").click(() => {
-                        layer.close(layerNum);
-                        initBtnClicked = true;
-                    });
-                },
-                end: function () {
-                    $('#mixly-selector-div').css("display","none");
-                    $("#layui-layer-shade" + layerNum).remove();
-                    if (initBtnClicked) {
-                        BU.initWithDropdownBox();
-                    }
-                }
-            });
-        });
-    }
-}
 
 BU.checkNumOfDisks = function (stdout, path, pyCode, portSelect, addAllOption) {
     var wmicResult = stdout;
@@ -438,7 +339,6 @@ BU.checkNumOfDisks = function (stdout, path, pyCode, portSelect, addAllOption) {
             }
         });
     }
-    
 }
 
 BU.writeAndCopyFile = function (writeFilePath, copyFilePath, pyCode, portSelect) {
@@ -507,8 +407,8 @@ BU.errFunc = function (err) {
     layer.msg(indexText['写文件出错了，错误是：'] + err, {
         time: 1000
     });
-    Mixly.StatusBar.setValue(indexText['写文件出错了，错误是：'] + err + '\n', true);
-    Mixly.StatusBar.show(1);
+    StatusBar.setValue(indexText['写文件出错了，错误是：'] + err + '\n', true);
+    StatusBar.show(1);
     console.log(indexText['写文件出错了，错误是：'] + err);
     BU.uploading = false;
 }
@@ -520,7 +420,7 @@ BU.doFunc = function (portSelect) {
     layer.msg(indexText['上传成功'] + '!', {
         time: 1000
     });
-    Mixly.StatusBar.show(1);
+    StatusBar.show(1);
     Serial.connect(Serial.uploadPorts[0].name, null, (opened) => {
         if (opened)
             Serial.writeCtrlD(Serial.uploadPorts[0].name);
@@ -654,8 +554,8 @@ BU.uploadWithDropdownBox = async function (path, pyCode, portSelect) {
             layer.msg(indexText['写文件出错了，错误是：'] + err, {
                 time: 1000
             });
-            Mixly.StatusBar.setValue(indexText['写文件出错了，错误是：'] + err + '\n', true);
-            Mixly.StatusBar.show(1);
+            StatusBar.setValue(indexText['写文件出错了，错误是：'] + err + '\n', true);
+            StatusBar.show(1);
             BU.uploading = false;
             return;
         } else if (!BU.uploading) { //如果检测到用户取消上传，则隐藏上传框
@@ -687,14 +587,14 @@ BU.uploadWithDropdownBox = async function (path, pyCode, portSelect) {
                             layer.msg(indexText['写文件出错了，错误是：'] + err, {
                                 time: 1000
                             });
-                            Mixly.StatusBar.setValue(indexText['写文件出错了，错误是：'] + err + '\n', true);
-                            Mixly.StatusBar.show(1);
+                            StatusBar.setValue(indexText['写文件出错了，错误是：'] + err + '\n', true);
+                            StatusBar.show(1);
                         } else if (BU.uploading) {
                             if (upload_finish_num >= device_num - 1) {
                                 layer.msg(indexText['上传成功'] + '!', {
                                     time: 1000
                                 });
-                                Mixly.StatusBar.show(1);
+                                StatusBar.show(1);
                                 BU.uploading = false;
                             }
                         }
@@ -721,13 +621,13 @@ BU.uploadWithDropdownBox = async function (path, pyCode, portSelect) {
                             layer.msg(indexText['写文件出错了，错误是：'] + err, {
                                 time: 1000
                             });
-                            Mixly.StatusBar.setValue(indexText['写文件出错了，错误是：'] + err + '\n', true);
-                            Mixly.StatusBar.show(1);
+                            StatusBar.setValue(indexText['写文件出错了，错误是：'] + err + '\n', true);
+                            StatusBar.show(1);
                         } else if (BU.uploading) {
                             layer.msg(indexText['上传成功'] + '!', {
                                 time: 1000
                             });
-                            Mixly.StatusBar.show(1);
+                            StatusBar.show(1);
                         }
                         BU.uploading = false;
                     });
@@ -753,37 +653,25 @@ function basename(str) {
 * @description 取消烧录或上传过程
 * @return void
 */
-BU.cancel = function () {
-    layer.closeAll('page');
-    $('#mixly-selector-div').css('display', 'none');
-    $('#mixly-loader-div').css('display', 'none');
-    if (downloadShell) {
-        downloadShell.stdout.end();
+BU.cancel = function (type) {
+    if (BU.shell) {
+        BU.shell.stdout.end();
         //downloadShell.stdin.end();
-        downloadShell.kill("SIGTERM");
-        downloadShell = null;
+        BU.shell.kill("SIGTERM");
+        BU.shell = null;
+    } else {
+        if (BU.uploading) {
+            BU.uploading = false;
+            layer.msg(indexText['已取消上传'], {
+                time: 1000
+            });
+        } else if (BU.burning) {
+            BU.burning = false;
+            layer.msg(indexText['已取消烧录'], {
+                time: 1000
+            });
+        }
     }
-    if (BU.uploading) {
-        BU.uploading = false;
-        layer.msg(indexText['已取消上传'], {
-            time: 1000
-        });
-    } else if (BU.burning) {
-        BU.burning = false;
-        layer.msg(indexText['已取消烧录'], {
-            time: 1000
-        });
-    }
-}
-
-/**
-* @function 开始烧录
-* @description 开始一个烧录过程
-* @param portSelect {Array | String} 通过串口的VID和PID获取对应串口，当为all时，则获取全部串口
-* @return void
-*/
-BU.burn = function () {
-    BU.checkNumOfSerialPort(Serial.burnPorts, true, true, BU.burnCommand);
 }
 
 /**
@@ -793,10 +681,13 @@ BU.burn = function () {
 */
 BU.initBurn = function () {
     if (BU.burning) return;
-    Mixly.StatusBar.setValue('', true);
-    Mixly.StatusBarPort.tabChange("output");
+    StatusBar.setValue('', true);
+    StatusBarPort.tabChange("output");
+    StatusBar.show(1);
     BU.burning = true;
-    BU.burn();
+    BU.uploading = false;
+    const port = Serial.getSelectedPortName();
+    BU.burnWithPort(port, BU.burnCommand);
 }
 
 /**
@@ -806,18 +697,18 @@ BU.initBurn = function () {
 */
 BU.initUpload = function () {
     if (BU.uploading) return;
-    Mixly.StatusBar.setValue('', true);
-    Mixly.StatusBarPort.tabChange("output");
+    StatusBar.setValue('', true);
+    StatusBarPort.tabChange("output");
+    StatusBar.show(1);
     BU.burning = false;
-    if (BU.uploadFileType == "hex") {
-        BU.uploading = true;
+    BU.uploading = true;
+    if (BU.uploadFileType === "hex") {
         BU.uploadWithVolumeName(BU.uploadVolumeName, BU.uploadFilePath, false, Serial.uploadPortType, true);
     } else {
-        if (BU.uploadType == "volumeLabel") {
-            BU.uploading = true;
+        if (BU.uploadType === "volumeLabel") {
             BU.uploadWithVolumeName(BU.uploadVolumeName, BU.uploadFilePath, true, Serial.uploadPortType, true);
         } else {
-            const port = Serial.getUploadPortSelectBoxValue();
+            const port = Serial.getSelectedPortName();
             BU.uploadWithPort(port, BU.uploadCommand);
         }
     }
@@ -899,25 +790,6 @@ BU.initWithDropdownBox = function () {
     }
 }
 
-/**
-* @function 运行cmd
-* @description 通过所给串口运行用户提供的esptool的cmd指令
-* @param com {Array | String} 所选择的串口
-* @return void
-*/
-BU.burnByCmd = function (com, command, currentTimes = 0, totalTimes = 1) {
-    Mixly.StatusBar.show(1);
-    BU.burning = true;
-    if (Serial.object && Serial.object.isOpen) {
-        Serial.object.close();
-    }
-    BU.runCmd(true, com, Serial.burnPortType, command, currentTimes, totalTimes);
-}
-
-async function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 BU.copyLib = function (code) {
     var uploadLibPath = BU.uploadFilePath.substring(0, BU.uploadFilePath.lastIndexOf('/'));
     var uploadFileName = BU.uploadFilePath.substring(BU.uploadFilePath.lastIndexOf('/') + 1, BU.uploadFilePath.length);
@@ -973,29 +845,29 @@ BU.searchLibs = function (code, libArr) {
             moduleArr[j] = moduleArr[j].replace(/(^\s*)|(\s*$)/g, "");
             if (!libArr.includes(moduleArr[j] + '.py') && !libArr.includes(moduleArr[j] + '.mpy')) {
                 try {
-                    let pyPath = Env.indexPath + '/build/lib/' + moduleArr[j] + '.py',
-                        mpyPath = Env.indexPath + '/build/lib/' + moduleArr[j] + '.mpy',
-                        commonPyPath = Env.indexPath + '/build/lib/common/' + moduleArr[j] + '.py',
-                        commonMpyPath = Env.indexPath + '/build/lib/common/' + moduleArr[j] + '.mpy',
-                        oldLibPath = null;
-                    if (fs.existsSync(mpyPath))
-                        oldLibPath = mpyPath;
-                    else if (fs.existsSync(pyPath))
-                        oldLibPath = pyPath;
-                    else if (fs.existsSync(commonMpyPath))
-                        oldLibPath = commonMpyPath;
-                    else if (fs.existsSync(commonPyPath))
-                        oldLibPath = commonPyPath;
+                    let oldLibPath = null;
+                    if (!(BU.libPath && BU.libPath.length))
+                        return;
+                    for (let nowDirPath of BU.libPath) {
+                        const nowMpyFilePath = path.resolve(nowDirPath, moduleArr[j] + '.mpy');
+                        const nowPyFilePath = path.resolve(nowDirPath, moduleArr[j] + '.py');
+                        if (fs_extend.isfile(nowMpyFilePath)) {
+                            oldLibPath = nowMpyFilePath;
+                            break;
+                        } else if (fs_extend.isfile(nowPyFilePath)) {
+                            oldLibPath = nowPyFilePath;
+                        }
+                    }
                     if (oldLibPath) {
-                        var stat = fs.statSync(oldLibPath);
-                        if (stat.isFile()) {
-                            const extname = path.extname(oldLibPath);
-                            var newLibPath = uploadLibPath + '/' + moduleArr[j] + extname;
-                            Mixly.StatusBar.addValue(indexText['拷贝库'] + ' ' + moduleArr[j] + '\n', true);
-                            fs.copyFileSync(oldLibPath, newLibPath);
-                            if (extname === '.py')
-                                pyFileArr.push(moduleArr[j] + extname);
-                            libArr.push(moduleArr[j] + extname);
+                        const extname = path.extname(oldLibPath);
+                        var newLibPath = uploadLibPath + '/' + moduleArr[j] + extname;
+                        StatusBar.addValue(indexText['拷贝库'] + ' ' + moduleArr[j] + '\n', true);
+                        fs.copyFileSync(oldLibPath, newLibPath);
+                        libArr.push(moduleArr[j] + extname);
+                        if (extname === '.py') {
+                            pyFileArr.push(moduleArr[j] + extname);
+                            code = fs.readFileSync(oldLibPath, 'utf8');
+                            libArr = BU.searchLibs(code, libArr);
                         }
                     }
                 } catch (e) {
@@ -1004,15 +876,17 @@ BU.searchLibs = function (code, libArr) {
             }
         }
     }
-    for (var i = 0; i < pyFileArr.length; i++) {
-        try {
-            code = String(fs.readFileSync(Env.indexPath + '/build/lib/' + pyFileArr[i]));
-            libArr = BU.searchLibs(code, libArr);
-        } catch (e) {
-            console.log(e);
-        }
-    }
     return libArr;
+}
+
+/**
+* @function 运行cmd
+* @description 通过所给串口运行用户提供的esptool的cmd指令
+* @param com {Array | String} 所选择的串口
+* @return void
+*/
+BU.burnByCmd = function (layerNum, port, command) {
+    BU.runCmd(layerNum, 'burn', port, command);
 }
 
 /**
@@ -1021,42 +895,23 @@ BU.searchLibs = function (code, libArr) {
 * @param com {Array | String} 所选择的串口
 * @return void
 */
-BU.uploadByCmd = async function (com, command, currentTimes = 0, totalTimes = 1) {
-    var code = MFile.getCode('py');
-    Mixly.StatusBar.show(1);
-    BU.uploading = true;
-
-    if (Serial.object && Serial.object.isOpen) {
-        await Serial.reset();
-    }
-
+BU.uploadByCmd = async function (layerNum, port, command) {
+    const code = MFile.getCode();
     if (BU.uploadAndCopyLib) {
         BU.copyLib(code);
     }
 
-    if (Serial.object && Serial.object.isOpen) {
-        Serial.object.close();
-    }
-    await sleep(100);
-
-    fs.writeFile(BU.uploadFilePath, code, 'utf8', function (err) {
-        //如果err=null，表示文件使用成功，否则，表示希尔文件失败
-        if (err) {
-            layer.closeAll('page');
-            $('#mixly-loader-div').css('display', 'none');
-            layer.msg(indexText['写文件出错了，错误是：'] + err, {
-                time: 1000
-            });
-            Mixly.StatusBar.setValue(indexText['写文件出错了，错误是：'] + err + '\n', true);
-            Mixly.StatusBar.show(1);
-            console.log(indexText['写文件出错了，错误是：'] + err);
-            BU.uploading = false;
-            return;
-        } else {
-            Mixly.StatusBar.addValue(indexText['上传中'] + '...\n', true);
-            BU.runCmd(false, com, Serial.uploadPortType, command, currentTimes, totalTimes);
-        }
+    fs_extra.outputFile(BU.uploadFilePath, code)
+    .then(() => {
+        StatusBar.addValue(indexText['上传中'] + '...\n', true);
+        BU.runCmd(layerNum, 'upload', port, command);
     })
+    .catch((error) => {
+        StatusBar.setValue(error.toString() + '\n', true);
+        console.log(error);
+        layer.close(layerNum);
+        BU.uploading = false;
+    });
 }
 
 /**
@@ -1067,189 +922,187 @@ BU.uploadByCmd = async function (com, command, currentTimes = 0, totalTimes = 1)
 * @param portSelect {Array | String} 通过串口的VID和PID获取对应串口，当为all时，则获取全部串口
 * @return void
 */
-BU.runCmd = function (burn, com, portSelect, command, currentTimes = 0, totalTimes = 1) {
-    var now_command = "";
-    try {
-        if (burn)
-            now_command = replaceWithReg(command, com, "com");
-        else
-            now_command = replaceWithReg(command, com, "com");
-    } catch (e) {
-        console.log(e);
-    }
-    console.log(now_command);
-    downloadShell = child_process.exec(now_command, function (error, stdout, stderr) {
-        currentTimes++;
-        if (error !== null) {
+BU.runCmd = function (layerNum, type, port, command, sucFunc) {
+    let nowCommand = replaceWithReg(command, port, "com");
+    BU.shell = child_process.exec(nowCommand, function (error, stdout, stderr) {
+        layer.close(layerNum);
+        BU.burning = false;
+        BU.uploading = false;
+        BU.shell = null;
+        if (error) {
             try {
-                error = decode(iconvLite.decode(iconvLite.encode(error, "iso-8859-1"), 'gbk'));
+                error = decode(iconv_lite.decode(iconv_lite.encode(error, "iso-8859-1"), 'gbk'));
             } catch (e) {
                 console.log(e);
             }
-            console.log("exec error" + error);
-            Mixly.StatusBar.addValue(error + "\n", true);
-            layer.closeAll('page');
-            $('#mixly-loader-div').css('display', 'none');
-            BU.burning = false;
-            BU.uploading = false;
-            return;
+            StatusBar.addValue(error + "\n", true);
         } else {
-            if (currentTimes >= totalTimes) {
-                BU.burning = false;
-                BU.uploading = false;
-                layer.msg((burn ? indexText['烧录成功'] + '！' : indexText['上传成功'] + '！'), {
-                    time: 1000
+            layer.msg((type === 'burn' ? indexText['烧录成功'] + '！' : indexText['上传成功'] + '！'), {
+                time: 1000
+            });
+            if (type === 'upload') {
+                StatusBar.show(1);
+                Serial.connect(port, null, (opened) => {
+                    if (opened)
+                        Serial.writeCtrlD(port);
                 });
-                if (!burn) {
-                    Mixly.StatusBar.show(1);
-                    Serial.connect(com, null, (opened) => {
-                        if (opened)
-                            Serial.writeCtrlD(com);
-                    });
-                }
-            }
-        }
-        Mixly.StatusBar.scrollToTheBottom();
-        if (currentTimes >= totalTimes) {
-            layer.closeAll('page');
-            $('#mixly-loader-div').css('display', 'none');
-        } else {
-            if (BU.uploading || BU.burning) {
-                var device_values = $.map($('#mixly-selector-type option'), function (ele) {
-                    return ele.value;
-                });
-                BU.runCmd(burn, device_values[currentTimes], portSelect, command, currentTimes, totalTimes);
             }
         }
     })
 
-    downloadShell.stdout.on('data', function (data) {
+    BU.shell.stdout.on('data', function (data) {
         if (BU.uploading || BU.burning) {
             try {
-                data = decode(iconvLite.decode(iconvLite.encode(data, "iso-8859-1"), 'gbk'));
+                data = decode(iconv_lite.decode(iconv_lite.encode(data, "iso-8859-1"), 'gbk'));
             } catch (e) {
                 console.log(e);
             }
-            Mixly.StatusBar.addValue(data, true);
+            StatusBar.addValue(data, true);
         }
     });
 }
 
 
 BU.burnWithSpecialBin = () => {
+    const devNames = $('#mixly-selector-type');
+    let oldDevice = $('#mixly-selector-type option:selected').val();
+    devNames.empty();
+    let firmwareList = BOARD.burn.special;
+    let firmwareObj = {};
+    for (let i = 0; i < firmwareList.length; i++)
+        firmwareObj[firmwareList[i].name] = firmwareList[i].command;
+    firmwareList.map(firmware => {
+        if (!firmware?.name && !firmware?.command) return;
 
-    layui.use(['layer', 'form'], function () {
-        let layer = layui.layer;
-        let form = layui.form;
-        const devNames = $('#mixly-selector-type');
-        let oldDevice = $('#mixly-selector-type option:selected').val();
-        devNames.empty();
-        let firmwareList = BOARD.burn.special;
-        let firmwareObj = {};
-        for (let i = 0; i < firmwareList.length; i++)
-            firmwareObj[firmwareList[i].name] = firmwareList[i].command;
-        firmwareList.map(firmware => {
-            if (!firmware?.name && !firmware?.command) return;
+        if (`${firmware.name}` == oldDevice) {
+            devNames.append($(`<option value="${firmware.name}" selected>${firmware.name}</option>`));
+        } else {
+            devNames.append($(`<option value="${firmware.name}">${firmware.name}</option>`));
+        }
+    });
+    form.render();
 
-            if (`${firmware.name}` == oldDevice) {
-                devNames.append($(`<option value="${firmware.name}" selected>${firmware.name}</option>`));
-            } else {
-                devNames.append($(`<option value="${firmware.name}">${firmware.name}</option>`));
-            }
-        });
-        form.render();
+    let initBtnClicked = false;
 
-        let initBtnClicked = false;
-
-        const layerNum = layer.open({
-            type: 1,
-            id: "serial-select",
-            title: "请选择固件：",
-            area: ['350px', '150px'],
-            content: $('#mixly-selector-div'),
-            shade: Mixly.LayerExtend.shade,
-            resize: false,
-            closeBtn: 0,
-            success: function (layero) {
-                $('#serial-select').css('height', '180px');
-                $('#serial-select').css('overflow', 'inherit');
-                $(".layui-layer-page").css("z-index", "198910151");
-                $("#mixly-selector-btn1").off("click").click(() => {
-                    layer.close(layerNum);
-                });
-                $("#mixly-selector-btn2").click(() => {
-                    layer.close(layerNum);
-                    initBtnClicked = true;
-                });
-            },
-            end: function () {
-                $("#mixly-selector-btn1").off("click");
-                $("#mixly-selector-btn2").off("click");
-                $('#mixly-selector-div').css('display', 'none');
-                $(".layui-layer-shade").remove();
-                if (initBtnClicked) {
-                    let selectedFirmwareName = $('#mixly-selector-type option:selected').val();
-                    try {
-                        firmwareObj[selectedFirmwareName] = firmwareObj[selectedFirmwareName].replace(/\\/g, "/");
-                    } catch (e) {
-                        console.log(e);
-                    }
-                    let pyToolName = ["esptool", "kflash", "stm32loader", "stm32bl"];
-                    let pyToolPath = "{path}/mixpyBuild/win_python3/Lib/site-packages/"
-                    if (Env.currentPlatform == "darwin" || Env.currentPlatform == "linux") {
-                        pyToolPath = "{path}/pyTools/";
-                    }
-                    for (let i = 0; i < pyToolName.length; i++) {
-                        if (firmwareObj[selectedFirmwareName].indexOf("\"") != -1) {
-                            firmwareObj[selectedFirmwareName] = replaceWithReg(firmwareObj[selectedFirmwareName], Env.python3Path + "\" \"" + pyToolPath + pyToolName[i] + ".py", pyToolName[i]);
-                        } else {
-                            firmwareObj[selectedFirmwareName] = replaceWithReg(firmwareObj[selectedFirmwareName], Env.python3Path + " " + pyToolPath + pyToolName[i] + ".py", pyToolName[i]);
-                        }
-                    }
-                    firmwareObj[selectedFirmwareName] = replaceWithReg(firmwareObj[selectedFirmwareName], Env.clientPath, "path");
-                    firmwareObj[selectedFirmwareName] = replaceWithReg(firmwareObj[selectedFirmwareName], Env.indexPath, "indexPath");
-                    BU.checkNumOfSerialPort(Serial.burnPorts, true, true, firmwareObj[selectedFirmwareName]);
-                } else {
-                    layer.msg(indexText['已取消烧录'], { time: 1000 });
+    const layerNum = layer.open({
+        type: 1,
+        id: "serial-select",
+        title: "请选择固件：",
+        area: ['350px', '150px'],
+        content: $('#mixly-selector-div'),
+        shade: Mixly.LayerExtend.shade,
+        resize: false,
+        closeBtn: 0,
+        success: function (layero) {
+            $('#serial-select').css('height', '180px');
+            $('#serial-select').css('overflow', 'inherit');
+            $(".layui-layer-page").css("z-index", "198910151");
+            $("#mixly-selector-btn1").off("click").click(() => {
+                layer.close(layerNum);
+            });
+            $("#mixly-selector-btn2").click(() => {
+                layer.close(layerNum);
+                initBtnClicked = true;
+            });
+        },
+        end: function () {
+            $("#mixly-selector-btn1").off("click");
+            $("#mixly-selector-btn2").off("click");
+            $('#mixly-selector-div').css('display', 'none');
+            $(".layui-layer-shade").remove();
+            if (initBtnClicked) {
+                let selectedFirmwareName = $('#mixly-selector-type option:selected').val();
+                try {
+                    firmwareObj[selectedFirmwareName] = firmwareObj[selectedFirmwareName].replace(/\\/g, "/");
+                } catch (e) {
+                    console.log(e);
                 }
+                let pyToolName = ["esptool", "kflash", "stm32loader", "stm32bl"];
+                let pyToolPath = "{path}/mixpyBuild/win_python3/Lib/site-packages/"
+                if (Env.currentPlatform == "darwin" || Env.currentPlatform == "linux") {
+                    pyToolPath = "{path}/pyTools/";
+                }
+                for (let i = 0; i < pyToolName.length; i++) {
+                    if (firmwareObj[selectedFirmwareName].indexOf("\"") != -1) {
+                        firmwareObj[selectedFirmwareName] = replaceWithReg(firmwareObj[selectedFirmwareName], Env.python3Path + "\" \"" + pyToolPath + pyToolName[i] + ".py", pyToolName[i]);
+                    } else {
+                        firmwareObj[selectedFirmwareName] = replaceWithReg(firmwareObj[selectedFirmwareName], Env.python3Path + " " + pyToolPath + pyToolName[i] + ".py", pyToolName[i]);
+                    }
+                }
+                firmwareObj[selectedFirmwareName] = replaceWithReg(firmwareObj[selectedFirmwareName], Env.clientPath, "path");
+                firmwareObj[selectedFirmwareName] = replaceWithReg(firmwareObj[selectedFirmwareName], Env.indexPath, "indexPath");
+                StatusBar.setValue('', true);
+                StatusBarPort.tabChange("output");
+                StatusBar.show(1);
+                BU.burning = true;
+                BU.uploading = false;
+                const port = Serial.getSelectedPortName();
+                BU.burnWithPort(port, firmwareObj[selectedFirmwareName]);
+            } else {
+                layer.msg(indexText['已取消烧录'], { time: 1000 });
             }
-        });
+        }
     });
 }
 
-BU.uploadWithPort = (port, command) => {
+BU.operateWithPort = (type, port, command) => {
     if (!port) {
         layer.msg(indexText['无可用设备'] + '!', {
             time: 1000
         });
+        BU.burning = false;
+        BU.uploading = false;
         return;
     }
-    this.upload = () => {
-        BU.uploading = true;
-        BU.burning = false;
+    const title = (type === 'burn' ? indexText['烧录中'] : indexText['上传中']) + '...';
+    const operate = () => {
         const layerNum = layer.open({
             type: 1,
-            title: indexText['上传中'] + '...',
+            title,
             content: $('#mixly-loader-div'),
-            shade: Mixly.LayerExtend.shade,
+            shade: LayerExtend.shadeWithHeight,
             resize: false,
             closeBtn: 0,
-            success: function () {
+            success: function (layero, index) {
                 $(".layui-layer-page").css("z-index","198910151");
-                BU.uploadByCmd(port, command);
+                switch (type) {
+                    case 'burn':
+                        BU.burnByCmd(index, port, command);
+                        break;
+                    case 'upload':
+                    default:
+                        BU.uploadByCmd(index, port, command);
+                }
                 $("#mixly-loader-btn").off("click").click(() => {
-                    layer.close(layerNum);
-                    BU.cancel();
+                    $("#mixly-loader-btn").css('display', 'none');
+                    switch (type) {
+                        case 'burn':
+                            layer.title(indexText['烧录终止中'] + '...', index);
+                            break;
+                        case 'upload':
+                        default:
+                            layer.title(indexText['上传终止中'] + '...', index);
+                    }
+                    BU.cancel(type);
                 });
             },
             end: function () {
                 $('#mixly-loader-div').css('display', 'none');
                 $("layui-layer-shade" + layerNum).remove();
                 $("#mixly-loader-btn").off("click");
+                $("#mixly-loader-btn").css('display', 'inline-block');
             }
         });
     }
-    Serial.portClose(port, this.upload);
+    Serial.portClose(port, operate);
+}
+
+BU.burnWithPort = (port, command) => {
+    BU.operateWithPort('burn', port, command);
+}
+
+BU.uploadWithPort = (port, command) => {
+    BU.operateWithPort('upload', port, command);
 }
 
 })();

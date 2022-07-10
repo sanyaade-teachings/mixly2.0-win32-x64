@@ -235,7 +235,8 @@ Serial.selectedBurnPort = {};
  *          "name": String,
  *          "vendorId": String,
  *          "productId": String
- *      }
+ *      },
+ *      ...
  * ]
  **/
 Serial.ports = [];
@@ -248,7 +249,8 @@ Serial.ports = [];
  *          "name": String,
  *          "vendorId": String,
  *          "productId": String
- *      }
+ *      },
+ *      ...
  * ]
  **/
 Serial.burnPorts = [];
@@ -261,7 +263,8 @@ Serial.burnPorts = [];
  *          "name": String,
  *          "vendorId": String,
  *          "productId": String
- *      }
+ *      },
+ *      ...
  * ]
  **/
 Serial.uploadPorts = [];
@@ -273,7 +276,7 @@ Serial.uploadPorts = [];
  *      vendorId: id,
  *      productId: id,
  *      name: name
- *  }]
+ *  }, ...]
  * @return void
  **/
 Serial.initPorts = (endFunc = (data) => {}) => {
@@ -316,14 +319,16 @@ Serial.initPorts = (endFunc = (data) => {}) => {
  *          vendorId: id,
  *          productId: id,
  *          name: name
- *      ]
+ *      },
+ *      ...
  *  }
  * @param portSelect { Array | String }, 传入的串口筛选项
  *  portSelect = [
  *      {
  *          vendorId: id,
  *          productId: id
- *      }
+ *      },
+ *      ...
  *  ]
  * 或portSelect = 'all'
  * @return void
@@ -377,17 +382,19 @@ Serial.refreshPorts = () => {
     Serial.initPorts((ports) => {
         if (!MArray.equals(ports, Serial.ports)) {
             Serial.ports = ports;
-            if (Serial.HAS_PORT.BURN)
+            if (Serial.HAS_PORT.BURN) {
                 Serial.burnPorts = Serial.getBurnPorts();
-            if (Serial.HAS_PORT.UPLOAD) {
-                let newPorts = Serial.getUploadPorts();
-                if (!MArray.equals(newPorts, Serial.uploadPorts)) {
-                    Serial.uploadPorts = newPorts;
-                    Serial.refreshPortOperator(newPorts);
-                    Serial.refreshUploadPortSelectBox(newPorts);
-                    //Serial.refreshToolPortSelectBox(newPorts);
-                }
+            } else {
+                Serial.burnPorts = [];
             }
+            if (Serial.HAS_PORT.UPLOAD) {
+                Serial.uploadPorts = Serial.getUploadPorts();
+            } else {
+                Serial.uploadPorts = [];
+            }
+            const allPorts = [ ...Serial.burnPorts, ...Serial.uploadPorts ];
+            Serial.refreshPortOperator(allPorts);
+            Serial.refreshUploadPortSelectBox(allPorts);
         }
     });
 }
@@ -497,7 +504,7 @@ Serial.getOpenedPortsName = () => {
     return newPorts;
 }
 
-Serial.getUploadPortSelectBoxValue = () => {
+Serial.getSelectedPortName = () => {
     const portSelectBoxDom = $('#ports-type');
     const selectedPort = portSelectBoxDom.val();
     return selectedPort;
@@ -526,9 +533,9 @@ Serial.refreshOutputBox = (port) => {
 * @function 打开串口工具
 * @description 打开串口工具并打开串口列表中选中的串口
 * @return void
-*/
+**/
 Serial.openTool = () => {
-    const selectedPort = Serial.getUploadPortSelectBoxValue();
+    const selectedPort = Serial.getSelectedPortName();
     if (!selectedPort) {
         layer.msg(indexText["无可用设备"] + "!", {
             time: 1000

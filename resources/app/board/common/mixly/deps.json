@@ -38,8 +38,10 @@
         {
             "path":"/electron/burn-upload.js",
             "require":[
+                "layui",
                 "Mixly.Config",
                 "Mixly.StatusBar",
+                "Mixly.StatusBarPort",
                 "Mixly.Modules",
                 "Mixly.LayerExtend",
                 "Mixly.Env",
@@ -206,7 +208,8 @@
                 "Mixly.Config",
                 "Mixly.XML",
                 "Mixly.Env",
-                "Mixly.ToolboxSearcher"
+                "Mixly.ToolboxSearcher",
+                "Mixly.Modules"
             ]
         },
         {
@@ -373,7 +376,8 @@
                 "Mixly.Config",
                 "Mixly.XML",
                 "Mixly.Env",
-                "Mixly.ToolboxSearcher"
+                "Mixly.ToolboxSearcher",
+                "Mixly.Modules"
             ]
         },
         {
@@ -443,7 +447,8 @@
                     "Mixly.Config",
                     "Mixly.XML",
                     "Mixly.Env",
-                    "Mixly.ToolboxSearcher"
+                    "Mixly.ToolboxSearcher",
+                    "Mixly.Modules"
                 ]
             },
             {
@@ -510,7 +515,8 @@
                     "Mixly.Config",
                     "Mixly.XML",
                     "Mixly.Env",
-                    "Mixly.ToolboxSearcher"
+                    "Mixly.ToolboxSearcher",
+                    "Mixly.Modules"
                 ]
             },
             {
@@ -633,7 +639,8 @@
                     "Mixly.Config",
                     "Mixly.XML",
                     "Mixly.Env",
-                    "Mixly.ToolboxSearcher"
+                    "Mixly.ToolboxSearcher",
+                    "Mixly.Modules"
                 ]
             },
             {
@@ -700,7 +707,8 @@
                     "Mixly.Config",
                     "Mixly.XML",
                     "Mixly.Env",
-                    "Mixly.ToolboxSearcher"
+                    "Mixly.ToolboxSearcher",
+                    "Mixly.Modules"
                 ]
             },
             {

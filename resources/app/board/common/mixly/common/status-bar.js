@@ -126,7 +126,7 @@ StatusBar.show = (type) => {
 StatusBar.setValue = (data, scroll = false) => {
     if (!Ace) return;
     Ace.updateSelectionMarkers();
-    if (StatusBar.getValue() == data) return;
+    if (StatusBar.getValue() === data) return;
     Ace.setValue(data);
     if (scroll)
         Ace.gotoLine(Ace.session.getLength());
@@ -151,8 +151,18 @@ StatusBar.getValue = function () {
 */
 StatusBar.addValue = (data, scroll = false) => {
     if (!Ace) return;
-    StatusBar.setValue(StatusBar.getValue() + data, scroll);
-    Ace.resize();
+    Ace.updateSelectionMarkers();
+    const { selection, session } = Ace;
+    const initCursor = selection.getCursor();
+    Ace.gotoLine(session.getLength());
+    selection.moveCursorLineEnd();
+    Ace.insert(data);
+    if (!scroll) {
+        selection.moveCursorTo(initCursor.row, initCursor.column, true);
+    } else {
+        Ace.gotoLine(session.getLength());
+        selection.moveCursorLineEnd();
+    }
 }
 
 /**

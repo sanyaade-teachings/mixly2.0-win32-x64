@@ -236,7 +236,7 @@ ArduShell.initUpload = () => {
     ArduShell.uploading = true;
     const boardType = Boards.getSelectedBoardCommandParam();
     const uploadType = Boards.getSelectedBoardConfigParam('upload_method');
-    let port = Serial.getUploadPortSelectBoxValue();
+    let port = Serial.getSelectedPortName();
     switch (uploadType) {
         case 'STLinkMethod':
         case 'jlinkMethod':

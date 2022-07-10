@@ -234,6 +234,7 @@ var indexText = {
     "删除成功": "successfully deleted",
     "上传终止中": "Upload is terminating",
     "编译终止中": "Compilation is terminating",
+    "烧录终止中": "Burn is terminating",
     "剪切": "Cut",
     "复制": "Copy",
     "粘贴": "Paste",
