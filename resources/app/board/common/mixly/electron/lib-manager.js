@@ -545,7 +545,7 @@ LibManager.onclickManageLibs = () => {
         cols: [[
             { type: 'checkbox', unresize: false, align: "center" },
             { field: 'name', title: indexText['名称'], sort: true, unresize: false, align: "center", minWidth: 150 },
-            { field: 'path', title: indexText['路径'], unresize: false, align: "left", minWidth: 300 }
+            { field: 'path', title: indexText['路径'], unresize: false, align: "center", minWidth: 300 }
         ]],
         limit: 1000,
         skin: 'line',
