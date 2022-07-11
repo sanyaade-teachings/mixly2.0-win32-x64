@@ -161,7 +161,8 @@
                 "Mixly.Modules",
                 "Mixly.MFile",
                 "Mixly.StatusBar",
-                "Mixly.Env"
+                "Mixly.Env",
+                "Mixly.Electron"
             ],
             "provide":[
                 "Mixly.Electron.PythonShell"

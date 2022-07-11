@@ -1,48 +1,35 @@
-goog.provide('Mixly.Electron.PythonShell');
+(() => {
+
 goog.require('Mixly.Modules');
 goog.require('Mixly.MFile');
 goog.require('Mixly.StatusBar');
 goog.require('Mixly.Env');
+goog.require('Mixly.Electron');
+goog.provide('Mixly.Electron.PythonShell');
 
-Mixly.Modules.iconvLite = require('iconv-lite');
-Mixly.Modules.PythonShell = require('python-shell').PythonShell;
+const {
+    Electron,
+    Modules,
+    MFile,
+    StatusBar,
+    Env
+} = Mixly;
+
+const { PythonShell } = Electron;
+
+Modules.iconvLite = require('iconv-lite');
+Modules.PythonShell = require('python-shell').PythonShell;
 var input_prompt_message = "";
 var input_prompt_message_line = -1;
 var input_prompt_position_row = -1;
 var input_prompt_position_column = -1;
 //python-shell输出中文数据有乱码，现在编码为iso-8859-1，原来编码为GBK
 var options = {
-    pythonPath: Mixly.Env.python3Path,
+    pythonPath: Env.python3Path,
     pythonOptions: ['-u'],
     encoding: "binary",
     mode: 'utf-8'
 };
-
-/*
-if (Mixly.Env.currentPlatform == "darwin" || Mixly.Env.currentPlatform == "linux") {
-    Mixly.Modules.child_process.exec('which python3', function (error, stdout, stderr) {
-        if (error || stdout == null) {
-            Mixly.Env.python3Path = '/usr/local/bin/python3';
-        } else {
-            Mixly.Env.python3Path = stdout.replace("\n", "");
-        }
-        console.log(Mixly.Env.python3Path);
-        options = {
-            pythonPath: Mixly.Env.python3Path,
-            pythonOptions: ['-u'],
-            encoding: "binary",
-            mode: 'utf-8'
-        };
-    });
-} else {
-    options = {
-        pythonPath: Mixly.Env.python3Path,
-        pythonOptions: ['-u'],
-        encoding: "binary",
-        mode: 'utf-8'
-    };
-}
-*/
 
 let shell = null;
 
@@ -62,10 +49,10 @@ function message_decode(s) {
 * @description 运行当前画布上的python程序
 * @return void
 */
-Mixly.Electron.PythonShell.run = function () {
-    const cursorCallback = Mixly.Electron.PythonShell.addEvent();
-    Mixly.StatusBar.show(1);
-    Mixly.StatusBar.setValue(indexText["程序正在运行"] + "...\n", true);
+PythonShell.run = function () {
+    const cursorCallback = PythonShell.addEvent();
+    StatusBar.show(1);
+    StatusBar.setValue(indexText["程序正在运行"] + "...\n", true);
     var code = Mixly.MFile.getCode();
     code = code.replace(/(_[0-9A-F]{2}_[0-9A-F]{2}_[0-9A-F]{2})+/g, function (s) { return decodeURIComponent(s.replace(/_/g, '%')); });
     try {
@@ -80,22 +67,22 @@ Mixly.Electron.PythonShell.run = function () {
     if (code.indexOf("import turtle") != -1) code += "\nturtle.done()\n";
     if (shell)
         shell.terminate('SIGKILL');
-    Mixly.Modules.fs.writeFile(Mixly.Env.pyFilePath, code, 'utf8', function (err) {
+    Modules.fs.writeFile(Env.pyFilePath, code, 'utf8', function (err) {
         //如果err=null，表示文件使用成功，否则，表示希尔文件失败
         err = message_decode(err);
         if (err) {
             layer.msg(indexText['写文件出错了，错误是：'] + err, {
                 time: 1000
             });
-            Mixly.StatusBar.setValue(indexText['写文件出错了，错误是：'] + err + '\n', true);
-            Mixly.StatusBar.show(1);
+            StatusBar.setValue(indexText['写文件出错了，错误是：'] + err + '\n', true);
+            StatusBar.show(1);
         } else {
-            shell = new Mixly.Modules.PythonShell(Mixly.Env.pyFilePath, options);
-            let iconv = Mixly.Modules.iconvLite;
+            shell = new Modules.PythonShell(Env.pyFilePath, options);
+            let iconv = Modules.iconvLite;
             var startTime = Number(new Date());
             //程序运行完成时执行
             shell.childProcess.on('exit', (code) => {
-                Mixly.StatusBar.Ace.getSession().selection.removeEventListener('changeCursor', cursorCallback);
+                StatusBar.Ace.getSession().selection.removeEventListener('changeCursor', cursorCallback);
                 //var timeCost = parseInt((Number(new Date()) - startTime) / 1000);
                 var timeCost = Number(new Date()) - startTime;
                 var timeCostSecond = timeCost % 60;
@@ -103,30 +90,20 @@ Mixly.Electron.PythonShell.run = function () {
                 //var timeCostStr = (timeCostMinute ? timeCostMinute + "m" : "") + timeCostSecond + "s";
                 var timeCostStr = timeCost + "ms";
                 //if (code == 0) {
-                if (Mixly.StatusBar.getValue().lastIndexOf("\n") == Mixly.StatusBar.getValue().length - 1)
-                    Mixly.StatusBar.addValue("==" + indexText["程序运行完成"]  + "(" + indexText["用时"] + " " + timeCostStr + ")==\n", false);
+                if (StatusBar.getValue().lastIndexOf("\n") == StatusBar.getValue().length - 1)
+                    StatusBar.addValue("==" + indexText["程序运行完成"]  + "(" + indexText["用时"] + " " + timeCostStr + ")==\n", false);
                 else
-                    Mixly.StatusBar.addValue("\n==" + indexText["程序运行完成"]  + "(" + indexText["用时"] + " " + timeCostStr + ")==\n", false);
-                Mixly.StatusBar.scrollToTheBottom();
+                    StatusBar.addValue("\n==" + indexText["程序运行完成"]  + "(" + indexText["用时"] + " " + timeCostStr + ")==\n", false);
+                StatusBar.scrollToTheBottom();
                 shell = null;
                 //}
             });
-
-            /*
-            //有数据输入时执行
-            var data =  Buffer.from([0, 1, 2], 'float32');  
-            shell.stdin.setEncoding('utf-8');   
-            setInterval(function(){
-                if (shell)
-                    shell.stdin.write('111\r\n');
-            }, 500);
-            */
 
             //有数据输出时执行
             shell.stdout.setEncoding('binary');
             shell.stdout.on('data', function (data) {
                 try {
-                    if (Mixly.Env.currentPlatform === 'drawin') {
+                    if (Env.currentPlatform === 'darwin') {
                         data = decode(iconv.decode(iconv.encode(data, "iso-8859-1"), 'utf-8'));
                     } else {
                         data = decode(iconv.decode(iconv.encode(data, "iso-8859-1"), 'gbk'));
@@ -136,14 +113,14 @@ Mixly.Electron.PythonShell.run = function () {
                 } catch (e) {
                     console.log(e);
                 }
-                Mixly.StatusBar.addValue(data, true);
+                StatusBar.addValue(data, true);
 
                 if (data.lastIndexOf(">>>") != -1 && shell) {
                     input_prompt_message = data.substring(data.lastIndexOf(">>>"));
-                    input_prompt_message_line = Mixly.StatusBar.Ace.session.getLength();
-                    Mixly.StatusBar.Ace.selection.moveCursorLineEnd();
-                    input_prompt_position_row = Mixly.StatusBar.Ace.selection.getCursor().row;
-                    input_prompt_position_column = Mixly.StatusBar.Ace.selection.getCursor().column;
+                    input_prompt_message_line = StatusBar.Ace.session.getLength();
+                    StatusBar.Ace.selection.moveCursorLineEnd();
+                    input_prompt_position_row = StatusBar.Ace.selection.getCursor().row;
+                    input_prompt_position_column = StatusBar.Ace.selection.getCursor().column;
                 }
             });
 
@@ -157,17 +134,17 @@ Mixly.Electron.PythonShell.run = function () {
                     console.log(e);
                 }
                 try {
-                    if (Mixly.Env.currentPlatform === 'drawin') {
-                        Mixly.StatusBar.addValue(iconv.decode(iconv.encode(err, "iso-8859-1"), 'utf-8'), false);
+                    if (Env.currentPlatform === 'darwin') {
+                        StatusBar.addValue(iconv.decode(iconv.encode(err, "iso-8859-1"), 'utf-8'), false);
                     } else {
-                        Mixly.StatusBar.addValue(iconv.decode(iconv.encode(err, "iso-8859-1"), 'gbk'), false);
+                        StatusBar.addValue(iconv.decode(iconv.encode(err, "iso-8859-1"), 'gbk'), false);
                     }
                     err = message_decode(err);
                 } catch (e) {
                     err = message_decode(err);
-                    Mixly.StatusBar.addValue(err, false);
+                    StatusBar.addValue(err, false);
                 }
-                Mixly.StatusBar.scrollToTheBottom();
+                StatusBar.scrollToTheBottom();
                 shell = null;
             });
         }
@@ -180,18 +157,18 @@ Mixly.Electron.PythonShell.run = function () {
 * @description 停止当前正在运行的python程序
 * @return void
 */
-Mixly.Electron.PythonShell.stop = function () {
-    Mixly.StatusBar.show(1);
+PythonShell.stop = function () {
+    StatusBar.show(1);
     if (shell) {
         shell.terminate('SIGKILL');
         //shell.stdout.end();
         //shell.stdin.end();
-        //Mixly.StatusBar.addValue("\n==" + indexText["程序运行完成"] + "==\n", false);
+        //StatusBar.addValue("\n==" + indexText["程序运行完成"] + "==\n", false);
         shell = null;
     } else {
-        Mixly.StatusBar.addValue("\n==" + indexText["无程序在运行"] + "==\n", false);
+        StatusBar.addValue("\n==" + indexText["无程序在运行"] + "==\n", false);
     }
-    Mixly.StatusBar.scrollToTheBottom();
+    StatusBar.scrollToTheBottom();
 }
 
 /**
@@ -199,24 +176,24 @@ Mixly.Electron.PythonShell.stop = function () {
 * @description 清空当前状态栏内的所有数据
 * @return void
 */
-Mixly.Electron.PythonShell.clearOutput = function () {
-    Mixly.StatusBar.setValue("");
+PythonShell.clearOutput = function () {
+    StatusBar.setValue("");
 }
 
-Mixly.Electron.PythonShell.addEvent = () => {
-    return Mixly.StatusBar.Ace.getSession().selection.on('changeCursor', function (e) {
+PythonShell.addEvent = () => {
+    return StatusBar.Ace.getSession().selection.on('changeCursor', function (e) {
         if (shell && input_prompt_message_line != -1) {
-            if (Mixly.StatusBar.Ace.selection.getCursor().row < input_prompt_position_row) {
-                Mixly.StatusBar.Ace.selection.moveCursorTo(input_prompt_position_row, input_prompt_position_column, true);
+            if (StatusBar.Ace.selection.getCursor().row < input_prompt_position_row) {
+                StatusBar.Ace.selection.moveCursorTo(input_prompt_position_row, input_prompt_position_column, true);
             }
-            else if (Mixly.StatusBar.Ace.selection.getCursor().row <= input_prompt_position_row
-                && Mixly.StatusBar.Ace.selection.getCursor().column <= input_prompt_position_column) {
-                Mixly.StatusBar.Ace.selection.moveCursorTo(input_prompt_position_row, input_prompt_position_column, true);
+            else if (StatusBar.Ace.selection.getCursor().row <= input_prompt_position_row
+                && StatusBar.Ace.selection.getCursor().column <= input_prompt_position_column) {
+                StatusBar.Ace.selection.moveCursorTo(input_prompt_position_row, input_prompt_position_column, true);
             }
-            last_row_data = Mixly.StatusBar.Ace.session.getLine(input_prompt_message_line - 1);
+            last_row_data = StatusBar.Ace.session.getLine(input_prompt_message_line - 1);
             if (last_row_data.indexOf(">>>") != -1
-                && Mixly.StatusBar.Ace.selection.getCursor().row == input_prompt_message_line
-                && Mixly.StatusBar.Ace.selection.getCursor().column == 0) {
+                && StatusBar.Ace.selection.getCursor().row == input_prompt_message_line
+                && StatusBar.Ace.selection.getCursor().column == 0) {
                 //shell.stdin.setEncoding('utf-8'); 
                 if (last_row_data.indexOf(input_prompt_message) == -1) {
                     last_row_data = last_row_data.replace(">>> ", "");
@@ -233,4 +210,4 @@ Mixly.Electron.PythonShell.addEvent = () => {
     });
 }
 
-
+})();
