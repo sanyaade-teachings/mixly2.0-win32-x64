@@ -392,7 +392,8 @@ Serial.refreshPorts = () => {
             } else {
                 Serial.uploadPorts = [];
             }
-            const allPorts = [ ...Serial.burnPorts, ...Serial.uploadPorts ];
+            let allPorts = [ ...Serial.burnPorts, ...Serial.uploadPorts ];
+            allPorts =  MArray.unique(allPorts);
             Serial.refreshPortOperator(allPorts);
             Serial.refreshUploadPortSelectBox(allPorts);
         }
