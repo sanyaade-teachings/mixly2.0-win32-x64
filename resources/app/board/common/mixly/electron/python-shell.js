@@ -11,22 +11,7 @@ var input_prompt_message_line = -1;
 var input_prompt_position_row = -1;
 var input_prompt_position_column = -1;
 //python-shell输出中文数据有乱码，现在编码为iso-8859-1，原来编码为GBK
-var options = null;
-
-try {
-    if (Mixly.Env.currentPlatform !== "win32") {
-        if (Mixly.Modules.fs.existsSync("/usr/local/bin/python3")) {
-            Mixly.Env.python3Path = '/usr/local/bin/python3';
-        }
-        console.log(Mixly.Env.python3Path);
-    }
-} catch (e) {
-    console.log(e);
-}
-
-console.log(Mixly.Env.python3Path);
-
-options = {
+var options = {
     pythonPath: Mixly.Env.python3Path,
     pythonOptions: ['-u'],
     encoding: "binary",

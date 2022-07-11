@@ -107,30 +107,26 @@ if (Env.isElectron) {
     Modules.lodash_fp = require('lodash/fp');
     Modules.node_downloader_helper = require('node-downloader-helper');
     Env.currentPlatform = Modules.os.platform();
-    console.log(Env.currentPlatform);
-    if (Env.currentPlatform == "darwin") {
-        Env.clientPath = Modules.path.resolve(Modules.app.getPath("exe"), '../../../../');
+    const { path, fs_extend, app } = Modules;
+    if (Env.currentPlatform === "darwin") {
+        Env.clientPath = path.resolve(app.getPath("exe"), '../../../../');
     } else {
-        Env.clientPath = Modules.path.resolve(Modules.app.getPath("exe"), '../');
+        Env.clientPath = path.resolve(app.getPath("exe"), '../');
     }
-    try {
-        Env.clientPath = Env.clientPath.replace(/\\/g, "/");
-    } catch (e) {
-        console.log(e);
-    }
-    Env.pyFilePath = Env.clientPath + '/mixpyBuild/mixly.py';
+    Env.pyFilePath = path.resolve(Env.clientPath, 'mixpyBuild/mixly.py');
     if (Env.currentPlatform == "darwin" || Env.currentPlatform == "linux") {
         Env.python3Path = '/usr/bin/python3';
+        if (fs_extend.isfile('/usr/local/bin/python3')) {
+            Env.python3Path = '/usr/local/bin/python3';
+        }
     } else {
         Env.python3Path = Env.clientPath + '/mixpyBuild/win_python3/python3.exe';
     }
-    Env.indexPath = Modules.path.resolve(__dirname);
-    if (Env.currentPlatform == "win32") {
-        try {
-            Env.indexPath = Env.indexPath.replace(/\\/g, "/");
-        } catch (e) {
-            console.log(e);
-        }
+    if (Env.currentPlatform === 'win32') {
+        Env.python3Path = path.resolve(Env.clientPath, 'mixpyBuild/win_python3/python3.exe');
+    } else {
+        Env.python3Path = '/usr/bin/python3';
     }
+    Env.indexPath = __dirname;
 }
 })();

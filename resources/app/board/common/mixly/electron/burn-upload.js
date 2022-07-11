@@ -196,7 +196,7 @@ BU.readConfigAndSet = function () {
         }
         BU.burnCommand = replaceWithReg(BU.burnCommand, Env.clientPath, "path");
         BU.burnCommand = replaceWithReg(BU.burnCommand, Env.indexPath, "indexPath");
-        console.log('烧录指令:', BU.burnCommand);
+        // console.log('烧录指令:', BU.burnCommand);
     }
     if (upload?.command) {
         BU.uploadCommand = upload.command;
@@ -210,7 +210,7 @@ BU.readConfigAndSet = function () {
         } else {
             BU.uploadCommand = replaceWithReg(BU.uploadCommand, Env.python3Path + "\" \"{path}/mixpyBuild/win_python3/Lib/site-packages/ampy/cli.py", "ampy");
         }
-        console.log('上传指令:', BU.uploadCommand);
+        // console.log('上传指令:', BU.uploadCommand);
         BU.uploadCommand = replaceWithReg(BU.uploadCommand, Env.clientPath, "path");
         BU.uploadCommand = replaceWithReg(BU.uploadCommand, Env.indexPath, "indexPath");
 
@@ -222,7 +222,7 @@ BU.readConfigAndSet = function () {
             } catch (e) {
                 console.log(e);
             }
-            console.log('复位指令:', resetStr)
+            // console.log('复位指令:', resetStr)
             BU.uploadCommand = replaceWithReg(BU.uploadCommand, resetStr, "reset");
         }
     }
@@ -239,28 +239,16 @@ BU.readConfigAndSet = function () {
     }
 }
 
-try {
-    if (Env.currentPlatform !== "win32") {
-        if (fs.existsSync("/usr/local/bin/python3")) {
-            Env.python3Path = '/usr/local/bin/python3';
-        }
-        console.log(Env.python3Path);
-    }
-} catch (e) {
-    console.log(e);
-}
-
 window.addEventListener('DOMContentLoaded', () => {
     BU.readConfigAndSet();
 });
 
-BU.checkNumOfDisks = function (stdout, path, pyCode, portSelect, addAllOption) {
+BU.checkNumOfDisks = function (stdout, inpath, pyCode, portSelect, addAllOption) {
     var wmicResult = stdout;
     wmicResult = wmicResult.replace(/\s+/g, "");
     wmicResult = wmicResult.replace("DeviceID", "");
     // wmicResult = 'G:K:F:';
     let result = wmicResult.split(':');
-    console.log(result);
     var pathAdd = (Env.currentPlatform == "win32") ? ':' : '';
     if (stdout.indexOf(":") != stdout.lastIndexOf(":")) {
         var form = layui.form;
@@ -325,7 +313,7 @@ BU.checkNumOfDisks = function (stdout, path, pyCode, portSelect, addAllOption) {
             resize: false,
             closeBtn: 0,
             success: function () {
-                BU.writeAndCopyFile(path, result[0] + pathAdd + "/" + basename(path), pyCode, portSelect);
+                BU.writeAndCopyFile(inpath, result[0] + pathAdd + "/" + path.basename(inpath), pyCode, portSelect);
                 $("#mixly-loader-btn").off("click").click(() => {
                     layer.close(layerNum);
                     BU.cancel();
@@ -352,9 +340,6 @@ BU.writeAndCopyFile = function (writeFilePath, copyFilePath, pyCode, portSelect)
         let oldLibPath = BU.uploadFilePath.substring(0, BU.uploadFilePath.lastIndexOf('/'));
         let newLibPath = copyFilePath.substring(0, copyFilePath.lastIndexOf('/'));
         let pyFileArr = BU.copyLib(code);
-        console.log(oldLibPath);
-        console.log(newLibPath);
-        console.log(pyFileArr);
         copyFileWithName(oldLibPath, newLibPath, pyFileArr);
     }
 
@@ -369,8 +354,8 @@ BU.writeAndCopyFile = function (writeFilePath, copyFilePath, pyCode, portSelect)
     }, portSelect);
 }
 
-BU.writeFile = function (path, data, errFunc, doFunc, portSelect) {
-    fs.writeFile(path, data, 'utf8', function (err) {
+BU.writeFile = function (inPath, data, errFunc, doFunc, portSelect) {
+    fs.writeFile(inPath, data, 'utf8', function (err) {
         //如果err=null，表示文件使用成功，否则，表示希尔文件失败
         if (err) {
             errFunc(err);
@@ -437,12 +422,12 @@ BU.doFunc = function (portSelect) {
 * @param addAllOption {Boolean} 是否在串口下拉框内添加【全部】选项，true - 添加，false - 不添加
 * @return void
 */
-BU.uploadWithVolumeName = function (VolumeName, path, pyCode, portSelect, addAllOption) {
-    let dirPath = path.substring(0, path.lastIndexOf('/'));
+BU.uploadWithVolumeName = function (VolumeName, inPath, pyCode, portSelect, addAllOption) {
+    let dirPath = inPath.substring(0, inPath.lastIndexOf('/'));
     if (!(fs.existsSync(dirPath)
         && fs.statSync(dirPath).isDirectory())) {
         try {
-            fs.mkdirSync(path.substring(0, path.lastIndexOf('/')));
+            fs.mkdirSync(inPath.substring(0, inPath.lastIndexOf('/')));
         } catch(e) {
             console.log(e);
         }
@@ -485,7 +470,7 @@ BU.uploadWithVolumeName = function (VolumeName, path, pyCode, portSelect, addAll
             BU.uploading = false;
             return;
         }
-        BU.checkNumOfDisks(stdout, path, pyCode, portSelect, addAllOption);
+        BU.checkNumOfDisks(stdout, inPath, pyCode, portSelect, addAllOption);
     } else {
         child_process.exec('wmic logicaldisk where "' + VolumeName + '" get DeviceID', function (err, stdout, stderr) {
             if (err || stderr) {
@@ -498,7 +483,7 @@ BU.uploadWithVolumeName = function (VolumeName, path, pyCode, portSelect, addAll
                 BU.uploading = false;
                 return;
             }
-            BU.checkNumOfDisks(stdout, path, pyCode, portSelect, addAllOption);
+            BU.checkNumOfDisks(stdout, inPath, pyCode, portSelect, addAllOption);
         });
     }
 }
@@ -511,7 +496,7 @@ BU.uploadWithVolumeName = function (VolumeName, path, pyCode, portSelect, addAll
 * @param portSelect {Array | String} 通过串口的VID和PID获取对应串口，当为all时，则获取全部串口
 * @return void
 */
-BU.uploadWithDropdownBox = async function (path, pyCode, portSelect) {
+BU.uploadWithDropdownBox = async function (inPath, pyCode, portSelect) {
     BU.uploading = true;
     const layerNum = layer.open({
         type: 1,
@@ -545,7 +530,7 @@ BU.uploadWithDropdownBox = async function (path, pyCode, portSelect) {
         code = MFile.getHex();
     }
 
-    fs.writeFile(path, code, 'utf8', function (err) {
+    fs.writeFile(inPath, code, 'utf8', function (err) {
         //如果err=null，表示文件使用成功，否则，表示希尔文件失败
         if (err) {
             layer.closeAll('page');
@@ -580,7 +565,7 @@ BU.uploadWithDropdownBox = async function (path, pyCode, portSelect) {
                         let pyFileArr = BU.copyLib(code);
                         copyFileWithName(oldLibPath, newLibPath, pyFileArr);
                     }
-                    fs.copyFile(path, device_values[i] + "/" + basename(path), (err) => {
+                    fs.copyFile(inPath, device_values[i] + "/" + path.basename(inPath), (err) => {
                         upload_finish_num++;
                         if (err) {
                             layer.msg(indexText['写文件出错了，错误是：'] + err, {
@@ -613,7 +598,7 @@ BU.uploadWithDropdownBox = async function (path, pyCode, portSelect) {
                         let pyFileArr = BU.copyLib(code);
                         copyFileWithName(oldLibPath, newLibPath, pyFileArr);
                     }
-                    fs.copyFile(path, device_select_name + "/" + basename(path), (err) => {
+                    fs.copyFile(inPath, device_select_name + "/" + path.basename(inPath), (err) => {
                         layer.closeAll('page');
                         $('#mixly-loader-div').css('display', 'none');
                         if (err) {
@@ -635,16 +620,6 @@ BU.uploadWithDropdownBox = async function (path, pyCode, portSelect) {
 
         }
     })
-}
-
-function basename(str) {
-    var idx = 0;
-    idx = str.lastIndexOf('/')
-    idx = idx > -1 ? idx : str.lastIndexOf('/')
-    if (idx < 0) {
-        return str
-    }
-    return str.substring(idx + 1);
 }
 
 /**
