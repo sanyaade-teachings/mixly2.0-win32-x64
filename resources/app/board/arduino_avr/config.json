@@ -6,11 +6,11 @@
             "config": {
                 "cpu": [
                     {
-                        "key": "atmega328",
-                        "label": "ATmega328P"
-                    }, {
                         "key": "atmega328old",
                         "label": "ATmega328P (Old Bootloader)"
+                    }, {
+                        "key": "atmega328",
+                        "label": "ATmega328P"
                     }, {
                         "key": "atmega168",
                         "label": "ATmega168"
