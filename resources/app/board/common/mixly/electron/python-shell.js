@@ -126,7 +126,11 @@ Mixly.Electron.PythonShell.run = function () {
             shell.stdout.setEncoding('binary');
             shell.stdout.on('data', function (data) {
                 try {
-                    data = decode(iconv.decode(iconv.encode(data, "iso-8859-1"), 'gbk'));
+                    if (Mixly.Env.currentPlatform === 'drawin') {
+                        data = decode(iconv.decode(iconv.encode(data, "iso-8859-1"), 'utf-8'));
+                    } else {
+                        data = decode(iconv.decode(iconv.encode(data, "iso-8859-1"), 'gbk'));
+                    }
                     data = message_decode(data);
                     data = data.replace(/(?<![\w+])pyinput.input\(/g, "input(");
                 } catch (e) {
@@ -153,7 +157,11 @@ Mixly.Electron.PythonShell.run = function () {
                     console.log(e);
                 }
                 try {
-                    Mixly.StatusBar.addValue(iconv.decode(iconv.encode(err, "iso-8859-1"), 'gbk'), false);
+                    if (Mixly.Env.currentPlatform === 'drawin') {
+                        Mixly.StatusBar.addValue(iconv.decode(iconv.encode(err, "iso-8859-1"), 'utf-8'), false);
+                    } else {
+                        Mixly.StatusBar.addValue(iconv.decode(iconv.encode(err, "iso-8859-1"), 'gbk'), false);
+                    }
                     err = message_decode(err);
                 } catch (e) {
                     err = message_decode(err);
