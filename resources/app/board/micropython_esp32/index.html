@@ -23,10 +23,10 @@
   <script type="text/javascript" src="../python/blocks/variables.js"></script>
   <script type="text/javascript" src="../python/generators/variables.js"></script>
 
-  <script src="../micropython_common/blocks/esp32_profile.js"></script>
+  <script src="blocks/esp32_profile.js"></script>
   <!-- blocks file -->
-  <script src="../micropython_common/blocks/pins.js"></script>
-  <script src="../micropython_common/blocks/inout.js"></script>
+  <script src="blocks/pins.js"></script>
+  <script src="blocks/inout.js"></script>
   <script src="../python/blocks/control.js"></script>
   <script src="../micropython_common/blocks/system.js"></script>
   <script src="../python/blocks/math.js"></script>
@@ -41,7 +41,8 @@
   <script src="../micropython_common/blocks/network.js"></script>
   <script src="../python/blocks/storage.js"></script>
   <script src="../micropython_common/blocks/actuator.js"></script>
-  <script src="../micropython_common/blocks/display.js"></script>
+  <script src="../micropython_common/blocks/display_onboard.js"></script>
+  <script src="../micropython_common/blocks/display_extern.js"></script>
   <script src="../python/blocks/procedures.js"></script>
   <script src="../micropython_common/blocks/factory.js"></script>
   <script src="../micropython_common/blocks/blynk.js"></script>
@@ -49,8 +50,8 @@
   <script src="../python/blocks/set.js"></script>
   <script src="../python/blocks/html.js"></script>
   <!-- generator file -->
-  <script src="../micropython_common/generators/pins.js"></script>
-  <script src="../micropython_common/generators/inout.js"></script>
+  <script src="generators/pins.js"></script>
+  <script src="generators/inout.js"></script>
   <script src="../python/generators/control.js"></script>
   <script src="../micropython_common/generators/system.js"></script>
   <script src="../python/generators/math.js"></script>
@@ -64,7 +65,8 @@
   <script src="../micropython_common/generators/sensor.js"></script>
   <script src="../python/generators/storage.js"></script>
   <script src="../micropython_common/generators/actuator.js"></script>
-  <script src="../micropython_common/generators/display.js"></script>
+  <script src="../micropython_common/generators/display_onboard.js"></script>
+  <script src="../micropython_common/generators/display_extern.js"></script>
   <script src="../micropython_common/generators/network.js"></script>
   <script src="../python/generators/procedures.js"></script>
   <script src="../micropython_common/generators/factory.js"></script>
@@ -1404,7 +1406,7 @@
       <block type="serial_readstr"></block>
       <block type="serial_readline"></block>
     </category>
-    <category id="catOnBoard" name="catOnBoard" colour="65" m-show="micropython:esp32:mixgo">
+    <category id="catOnBoard" name="catOnBoard" colour="65" m-show="micropython:esp32:mixgo micropython:esp32:rm_e1 micropython:esp32:mPython">
       <category id="catOnBoardSensor" name="catOnBoardSensor" colour="40">
         <block type="sensor_mixgo_button_is_pressed">
           <value name="btn">
@@ -1684,103 +1686,125 @@
       </category>
       <category id="catOnBoardDisplay" name="catOnBoardDisplay" colour="180">
         <block type="display_help"></block>
-        <block type="display_show_image_or_string">
-          <value name="data">
-            <shadow type="pins_builtinimg"></shadow>
-          </value>
-        </block>
-        <block type="display_scroll_string">
-          <value name="data">
-            <shadow type="text">
-              <field name="TEXT">Mixly</field>
-            </shadow>
-          </value>
-        </block>
-        <block type="display_show_image_or_string_delay">
-          <value name="data">
-            <shadow type="pins_builtinimg"></shadow>
-          </value>
-          <value name="time">
-            <shadow type="math_number">
-              <field name="NUM">120</field>
-            </shadow>
-          </value>
-        </block>
-        <block type="display_show_static">
-          <value name="data">
-            <shadow type="text">
-              <field name="TEXT">abc</field>
-            </shadow>
-          </value>
-        </block>
-        <block type="display_scroll_string_delay">
-          <value name="data">
-            <shadow type="text">
-              <field name="TEXT">Mixly</field>
-            </shadow>
-          </value>
-          <value name="time">
-            <shadow type="math_number">
-              <field name="NUM">120</field>
-            </shadow>
-          </value>
-        </block>
-        <block type="display_image_create"></block>
-        <block type="display_image_builtins"></block>
-        <block type="display_animate"></block>
-        <block type="image_arithmetic">
-          <value name="A">
-            <shadow type="pins_builtinimg"></shadow>
-          </value>>
-          <value name="B">
-            <shadow type="pins_builtinimg"></shadow>
-          </value>
-        </block>
-        <block type="image_shift">
-          <value name="val">
-            <shadow type="math_number">
-              <field name="NUM">1</field>
-            </shadow>
-          </value>
-          <value name="img">
-            <shadow type="pins_builtinimg"></shadow>
-          </value>
-        </block>
-        <block type="display_get_pixel">
-          <value name="x">
-            <shadow type="pins_exlcdh"></shadow>
-          </value>
-          <value name="y">
-            <shadow type="pins_exlcdv"></shadow>
-          </value>
-        </block>
-        <block type="display_bright_point">
-          <value name="x">
-            <shadow type="pins_exlcdh"></shadow>
-          </value>
-          <value name="y">
-            <shadow type="pins_exlcdv"></shadow>
-          </value>
-          <value name="STAT">
-            <shadow type="display_onoff">
-            </shadow>
-          </value>
-        </block>
-        <block type="display_bright_screen">
-          <value name="x">
-            <shadow type="pins_exlcdh"></shadow>
-          </value>
-        </block>
-        <block type="display_get_screen_pixel"></block>
-        <block type="display_get_screen_image"></block>
-        <block type="display_blink_rate">
-          <value name="x">
-            <shadow type="math_number">
-              <field name="NUM">2</field>
-            </shadow>
-          </value>
-        </block>
-        <block type="display_clear"></block>
+        <block type="display_show_image">
+        <value name="data">
+          <shadow type="pins_builtinimg"></shadow>
+        </value>
+      </block>
+      <block type="display_show_image_or_string_delay">
+        <value name="data">
+          <shadow type="text">
+            <field name="TEXT">Mixly</field>
+          </shadow>
+        </value>
+        <value name="space">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="display_scroll_string">
+        <value name="data">
+          <shadow type="text">
+            <field name="TEXT">Mixly</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="display_scroll_string_delay">
+        <value name="data">
+          <shadow type="text">
+            <field name="TEXT">Mixly</field>
+          </shadow>
+        </value>
+        <value name="time">
+          <shadow type="math_number">
+            <field name="NUM">50</field>
+          </shadow>
+        </value>
+        <value name="space">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="display_show_frame_string">
+        <value name="data">
+          <shadow type="text">
+            <field name="TEXT">Mixly</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="display_show_frame_string_delay">
+        <value name="data">
+          <shadow type="text">
+            <field name="TEXT">Mixly</field>
+          </shadow>
+        </value>
+        <value name="time">
+          <shadow type="math_number">
+            <field name="NUM">500</field>
+          </shadow>
+        </value>
+      </block>
+      
+      <block type="mixgo_display_image_create_new" m-show='micropython:esp32:mixgo'></block>
+      <block type="display_image_builtins"></block>
+
+      <block type="image_arithmetic">
+        <value name="A">
+          <shadow type="pins_builtinimg"></shadow>
+        </value>>
+        <value name="B">
+          <shadow type="pins_builtinimg"></shadow>
+        </value>
+      </block>
+      <block type="image_invert">
+        <value name="A">
+          <shadow type="pins_builtinimg"></shadow>
+        </value>
+      </block>
+      <block type="display_shift">
+
+        <value name="val">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="display_get_pixel">
+
+        <value name="x">
+          <shadow type="pins_exlcdh"></shadow>
+        </value>
+        <value name="y">
+          <shadow type="pins_exlcdv"></shadow>
+        </value>
+      </block>
+      <block type="display_bright_point">
+        <value name="x">
+          <shadow type="pins_exlcdh"></shadow>
+        </value>
+        <value name="y">
+          <shadow type="pins_exlcdv"></shadow>
+        </value>
+        <value name="STAT">
+          <shadow type="display_onoff">
+          </shadow>
+        </value>
+      </block>
+      
+      <block type="display_bright_screen">
+
+        <value name="x">
+          <shadow type="math_number">
+            <field name="NUM">0.5</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="display_get_screen_pixel">
+
+      </block>
+      <block type="display_clear"></block>
       </category>
     </category>
     <category id="catSensor" colour="40">

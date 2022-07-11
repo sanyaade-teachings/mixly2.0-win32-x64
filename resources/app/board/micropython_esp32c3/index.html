@@ -36,7 +36,7 @@
   <script src="../python/blocks/logic.js"></script>
   <script src="../micropython_common/blocks/serial.js"></script>
   <script src="blocks/communicate.js"></script>
-  <script src="blocks/iot.js"></script>
+  <script src="../micropython_common/blocks/iot.js"></script>
   <script src="../micropython_common/blocks/sensor_onboard.js"></script>
   <script src="../micropython_common/blocks/sensor_extern.js"></script>
   <script src="../micropython_common/blocks/network.js"></script>
@@ -63,7 +63,7 @@
   <script src="../python/generators/dicts.js"></script>
   <script src="../python/generators/logic.js"></script>
   <script src="../micropython_common/generators/serial.js"></script>
-  <script src="generators/iot.js"></script>
+  <script src="../micropython_common/generators/iot.js"></script>
   <script src="generators/communicate.js"></script>
   <script src="../micropython_common/generators/sensor_onboard.js"></script>
   <script src="../micropython_common/generators/sensor_extern.js"></script>
@@ -1480,7 +1480,7 @@
 
       <!-- MixGo Me Onboard_sensor: -->
 
-      <block type="sensor_mixgome_temperature" m-show='micropython:esp32c3:mixgome'></block>
+      <block type="sensor_mixgome_temperature" m-show='micropython:esp32c3:mixgo_me'></block>
 
     </category>
     <category id="catOnBoardActuator" name="catOnBoardActuator" colour="100" m-hide='micropython:esp32c3:generic'>
@@ -1702,8 +1702,8 @@
           </shadow>
         </value>
       </block>
-      <block type="mixgome_display_font" m-show='micropython:esp32c3:mixgome'></block>
-      <block type="mixgome_display_image_create" m-show='micropython:esp32c3:mixgome'></block>
+      <block type="mixgome_display_font" m-show='micropython:esp32c3:mixgo_me'></block>
+      <block type="mixgome_display_image_create" m-show='micropython:esp32c3:mixgo_me'></block>
       <block type="display_image_create" m-show='micropython:esp32c3:mixgo_cc'></block>
       <block type="display_image_builtins"></block>
 
@@ -1767,7 +1767,7 @@
 
     </category>
 
-    <category id="catME_GO" colour="100" m-show='micropython:esp32c3:mixgome'>
+    <category id="catME_GO" colour="100" m-show='micropython:esp32c3:mixgo_me'>
       <block type="me_go_led_bright">
         <value name="led">
           <shadow type="me_go_light_number">

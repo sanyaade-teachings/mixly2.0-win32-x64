@@ -15,19 +15,19 @@ import time,gc
 from machine import Pin,SoftI2C,ADC,PWM
 
 '''i2c-onboard'''
-i2c=SoftI2C(scl = Pin(7), sda = Pin(6), freq = 400000)
+onboard_i2c=SoftI2C(scl = Pin(7), sda = Pin(6), freq = 400000)
 
 '''ACC-Sensor'''    #Including acceleration,temperature
 try :
     import mxc6655xa
-    onboard_mxc6655xa = mxc6655xa.MXC6655XA(i2c)     
+    onboard_mxc6655xa = mxc6655xa.MXC6655XA(onboard_i2c)     
 except Exception as e:
     print(e)
 
 '''ALS_PS-Sensor'''    #Including als_vis,als_ir,ps_nl
 try :
     import ltr553als
-    onboard_ltr553als = ltr553als.LTR_553ALS(i2c)     
+    onboard_ltr553als = ltr553als.LTR_553ALS(onboard_i2c)     
 except Exception as e:
     print(e)
 

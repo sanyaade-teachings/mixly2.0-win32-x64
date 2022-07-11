@@ -313,6 +313,21 @@ Blockly.Blocks['mixgome_display_image_create']= {
   }
 };
 
+Blockly.Blocks['mixgo_display_image_create_new']= {
+  init: function() {
+    this.appendDummyInput('')
+        .appendField(Blockly.MIXLY_MICROBIT_JS_MONITOR_CREATE_IMAGE)    
+    for (let i = 0; i < 8; i++) {
+      let dummyInputObj = this.appendDummyInput();
+      for (let j = 0; j < 16; j++) {
+        dummyInputObj.appendField(new Blockly.FieldColour("#000000"), i + '-' + j);
+      }
+    }
+    this.setOutput(true);
+    this.setColour(Blockly.Blocks.display.HUE);
+    this.setTooltip(Blockly.MIXLY_MICROBIT_Create_image1);
+  }
+};
 
 
 
@@ -331,3 +346,4 @@ Blockly.Blocks['mixgome_display_font'] = {
     
   }
 };
+

@@ -19,6 +19,10 @@
     "upload": {
         "type": "ampy",
         "portSelect": "all",
+        "libPath": [
+                "{indexPath}\\build\\lib",
+                "{indexPath}\\..\\micropython_common\\build\\lib"
+            ],
         "command": "\"{ampy}\" -p {com} -d 1 -r \"{reset}\" put \"{indexPath}\\build\\upload\"",
         "filePath": "{indexPath}\\build\\upload\\main.py",
         "copyLib": true,

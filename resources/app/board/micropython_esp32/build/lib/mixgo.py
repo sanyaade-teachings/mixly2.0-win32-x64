@@ -1,11 +1,11 @@
 """
 MixGo-Onboard resources
 
-Micropython library for the MixGo-Onboard resources
+Micropython    library for the MixGo-Onboard resources
 =======================================================
 
-#Instantiate mixgo onboard resources            20220622
-#Repair brightness adjustment range 0-100%      20220623
+#Instantiate mixgo onboard resources              20220622
+#Repair brightness adjustment range 0-100%         20220623
 
 dahanzimin From the Mixly Team
 """
@@ -14,24 +14,24 @@ import time,gc
 from machine import Pin,SoftI2C,ADC,PWM
 
 '''i2c-onboard'''
-i2c=SoftI2C(scl = Pin(22), sda = Pin(21), freq = 400000)
+onboard_i2c=SoftI2C(scl = Pin(22), sda = Pin(21), freq = 400000)
 
 '''MPU9250'''
 try :
     import mpu9250
-    mpu = mpu9250.MPU9250(i2c)
-    compass = mpu9250.Compass(mpu)  
+    mpu = mpu9250.MPU9250(onboard_i2c)
+    compass = mpu9250.Compass(mpu)    
 except Exception as e:
     print(e)
 
 '''Matrix16x8'''
 try :
     import matrix16x8
-    onboard_matrix = matrix16x8.Matrix(i2c)
+    onboard_matrix = matrix16x8.Matrix(onboard_i2c)
 except Exception as e:
     print(e)
 
-'''2-RGB''' 
+'''2-RGB'''    
 from neopixel import NeoPixel
 rgb = NeoPixel(Pin(2), 2)
 
@@ -79,7 +79,7 @@ class TouchPad:
         self.value = value
         
     def is_touched(self):
-        return self._pin.read() < self.value
+        return self._pin.read()    < self.value
 
 touch1 = TouchPad(32)
 touch2 = TouchPad(33)
@@ -111,15 +111,15 @@ def infrared_left():
     ADCSensor(34).switch(1)
     time.sleep(0.02)
     adc=ADCSensor(34).read()
-    ADCSensor(34).switch(0) 
-    return  adc 
+    ADCSensor(34).switch(0)    
+    return     adc    
 
 def infrared_right():
     ADCSensor(36).switch(1)
     time.sleep(0.02)
     adc=ADCSensor(36).read()
-    ADCSensor(36).switch(0) 
-    return  adc     
+    ADCSensor(36).switch(0)    
+    return     adc        
 
 def get_brightness():
     return ADCSensor(39).read() 
@@ -134,7 +134,7 @@ def get_soundlevel():
         value_d.append(max(values) - min(values))
     return  max(value_d)
 
-'''2-LED'''  #Repair brightness adjustment range 0-100% 
+'''2-LED'''     #Repair brightness adjustment range 0-100%    
 class LED:
     def __init__(self, pin):
         self._pin =PWM(Pin(pin),freq=5000,duty_u16=65535)
