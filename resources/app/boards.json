@@ -25,9 +25,9 @@
         "boardIndex": "./board/micropython_esp32c3_mixgocar/index.html",
         "env": 2
     },{
-        "boardImg": "./board/micropython_esp32c3_mixgocc/media/c3.png",
-        "boardName": "ESP32 C3",
-        "boardIndex": "./board/micropython_esp32c3_mixgocc/index.html",
+        "boardImg": "./board/micropython_esp32c3/media/c3.png",
+        "boardName": "Python ESP32 C3",
+        "boardIndex": "./board/micropython_esp32c3/index.html",
         "env": 2
     },{
         "boardImg": "./board/micropython_esp32_mixgo/media/mixgo.png",
@@ -35,9 +35,9 @@
         "boardIndex": "./board/micropython_esp32_mixgo/index.html",
         "env": 2
     },{
-        "boardImg": "./board/micropython_esp32_mixgo_pe_generic/media/mixgo.png",
+        "boardImg": "./board/micropython_esp32/media/mixgo.png",
         "boardName": "Python ESP32",
-        "boardIndex": "./board/micropython_esp32_mixgo_pe_generic/index.html",
+        "boardIndex": "./board/micropython_esp32/index.html",
         "env": 2
     },{
         "boardImg": "./board/micropython_esp32_mixgope/media/mixgope.png",
