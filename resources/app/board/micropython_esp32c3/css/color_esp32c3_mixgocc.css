@@ -415,27 +415,27 @@ div.blocklyToolboxDiv > div.blocklyToolboxContents > div:nth-child(13) > div.blo
     background:url('../../common/media/mark/act2.png') no-repeat;
     background-size: 100% auto;
 }
-#catSensor.blocklyTreeRow > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
+#catExternSensor.blocklyTreeRow > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
     background:url('../../common/media/mark/sensor.png') no-repeat;
     background-size: 100% auto;
 }
-#catSensor.blocklyTreeRow.blocklyTreeSelected > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
+#catExternSensor.blocklyTreeRow.blocklyTreeSelected > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
     background:url('../../common/media/mark/sensor2.png') no-repeat;
     background-size: 100% auto;
 }
-#catActuator.blocklyTreeRow > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
+#catExternActuator.blocklyTreeRow > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
     background:url('../../common/media/mark/act.png') no-repeat;
     background-size: 100% auto;
 }
-#catActuator.blocklyTreeRow.blocklyTreeSelected > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
+#catExternActuator.blocklyTreeRow.blocklyTreeSelected > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
     background:url('../../common/media/mark/act2.png') no-repeat;
     background-size: 100% auto;
 }
-#catMonitor.blocklyTreeRow > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
+#catExternMonitor.blocklyTreeRow > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
     background:url('../../common/media/mark/monitor.png') no-repeat;
     background-size: 100% auto;
 }
-#catMonitor.blocklyTreeRow.blocklyTreeSelected > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
+#catExternMonitor.blocklyTreeRow.blocklyTreeSelected > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
     background:url('../../common/media/mark/monitor2.png') no-repeat;
     background-size: 100% auto;
 }

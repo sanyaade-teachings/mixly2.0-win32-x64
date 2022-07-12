@@ -1850,8 +1850,8 @@
     </category>
 
     <!--</category>-->
-    <category id="catExtend">
-      <category id="catSensor" colour="40">
+    <!-- <category id="catExtend"> -->
+      <category id="catExternSensor" colour="40">
         <block type="sensor_mixgo_extern_button_is_pressed">
           <value name="PIN">
             <shadow type="pins_digital_pin">
@@ -1994,7 +1994,7 @@
           </value>
         </block>
       </category>
-      <category id="catActuator" colour="100">
+      <category id="catExternActuator" colour="100">
         <!--<block type="actuator_extern_led_bright">
           <value name="PIN">
             <shadow type="pins_pwm_pin">
@@ -2130,7 +2130,7 @@
           </value>
         </block>-->
       </category>
-      <category id="catMonitor" colour="180">
+      <category id="catExternMonitor" colour="180">
         <block type="display_use_i2c_init">
           <value name="SUB">
             <shadow type="variables_get">
@@ -2417,7 +2417,7 @@
           </value>
         </block>
       </category>
-    </category>
+    <!-- </category> -->
     <category id="catFile" colour="0">
       <block type="storage_open_file_with_os">
         <value name="fn">

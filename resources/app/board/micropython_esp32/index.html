@@ -1406,8 +1406,8 @@
       <block type="serial_readstr"></block>
       <block type="serial_readline"></block>
     </category>
-    <category id="catOnBoard" name="catOnBoard" colour="65" m-show="micropython:esp32:mixgo micropython:esp32:rm_e1 micropython:esp32:mPython">
-      <category id="catOnBoardSensor" name="catOnBoardSensor" colour="40">
+    <!-- <category id="catOnBoard" name="catOnBoard" colour="65"> -->
+      <category id="catOnBoardSensor" name="catOnBoardSensor" colour="40"  m-show="micropython:esp32:mixgo micropython:esp32:rm_e1 micropython:esp32:mPython">
         <block type="sensor_mixgo_button_is_pressed">
           <value name="btn">
             <shadow type="pins_button">
@@ -1571,7 +1571,7 @@
           </value>
         </block>
       </category>
-      <category id="catOnBoardActuator" name="catOnBoardActuator" colour="100">
+      <category id="catOnBoardActuator" name="catOnBoardActuator" colour="100"  m-show="micropython:esp32:mixgo micropython:esp32:rm_e1 micropython:esp32:mPython">
         <block type="actuator_led_bright">
           <value name="led">
             <shadow type="number">
@@ -1684,7 +1684,7 @@
         <block type="actuator_onboard_neopixel_write">
         </block>
       </category>
-      <category id="catOnBoardDisplay" name="catOnBoardDisplay" colour="180">
+      <category id="catOnBoardDisplay" name="catOnBoardDisplay" colour="180"  m-show="micropython:esp32:mixgo micropython:esp32:rm_e1 micropython:esp32:mPython">
         <block type="display_help"></block>
         <block type="display_show_image">
         <value name="data">
@@ -1805,9 +1805,9 @@
 
       </block>
       <block type="display_clear"></block>
-      </category>
+      <!-- </category> -->
     </category>
-    <category id="catSensor" colour="40">
+    <category id="catExternSensor" colour="40">
       <block type="sensor_mixgo_extern_button_is_pressed">
         <value name="PIN">
           <shadow type="pins_digital_pin">
@@ -1954,7 +1954,7 @@
         </value>
       </block>
     </category>
-    <category id="catActuator" colour="100">
+    <category id="catExternActuator" colour="100">
       <block type="actuator_extern_led_bright">
         <value name="PIN">
           <shadow type="pins_pwm_pin">
@@ -2090,10 +2090,10 @@
         </value>
       </block>
     </category>
-    <category id="catMonitor" colour="180">
+    <category id="catExternMonitor" colour="180">
 
     <category id="catMatrix" colour="180">
-      <!-- <block type="communicate_i2c_init">
+      <block type="communicate_i2c_init">
           <value name="SUB">
             <shadow type="variables_get">
               <field name="VAR">i2c_extend</field>
@@ -2129,49 +2129,51 @@
             </block>
           </next>
         </block>
-        <block type="display_show_image">
+        <block type="display_matrix_extern_show_image">
           <value name="SUB">
                 <shadow type="variables_get">
                   <field name="VAR">matrix</field>
                 </shadow>
-            </value>
-          <value name="data">
-            <shadow type="pins_builtinimg"></shadow>
-          </value>
-        </block>
-        
-      <block type="display_scroll_string_extern">
+              </value>
+        <value name="data">
+          <shadow type="pins_builtinimg_extern"></shadow>
+        </value>
+      </block>
+      <block type="display_matrix_extern_show_image_or_string_delay">
         <value name="SUB">
                 <shadow type="variables_get">
                   <field name="VAR">matrix</field>
                 </shadow>
-            </value>
+              </value>
         <value name="data">
           <shadow type="text">
             <field name="TEXT">Mixly</field>
           </shadow>
         </value>
-      </block> -->
-      
-      <!--<block type="display_show_static_string">
-          <value name="SUB">
+        <value name="space">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="display_matrix_extern_scroll_string">
+        <value name="SUB">
                 <shadow type="variables_get">
                   <field name="VAR">matrix</field>
                 </shadow>
-            </value>
+              </value>
         <value name="data">
           <shadow type="text">
             <field name="TEXT">Mixly</field>
           </shadow>
         </value>
       </block>
-      
-      <block type="display_scroll_string_delay">
+      <block type="display_matrix_extern_scroll_string_delay">
         <value name="SUB">
                 <shadow type="variables_get">
                   <field name="VAR">matrix</field>
                 </shadow>
-            </value>
+              </value>
         <value name="data">
           <shadow type="text">
             <field name="TEXT">Mixly</field>
@@ -2179,30 +2181,96 @@
         </value>
         <value name="time">
           <shadow type="math_number">
-            <field name="NUM">120</field>
+            <field name="NUM">50</field>
+          </shadow>
+        </value>
+        <value name="space">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
           </shadow>
         </value>
       </block>
+      <block type="display_matrix_extern_show_frame_string">
+        <value name="SUB">
+                <shadow type="variables_get">
+                  <field name="VAR">matrix</field>
+                </shadow>
+              </value>
+        <value name="data">
+          <shadow type="text">
+            <field name="TEXT">Mixly</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="display_matrix_extern_show_frame_string_delay">
+        <value name="SUB">
+                <shadow type="variables_get">
+                  <field name="VAR">matrix</field>
+                </shadow>
+              </value>
+        <value name="data">
+          <shadow type="text">
+            <field name="TEXT">Mixly</field>
+          </shadow>
+        </value>
+        <value name="time">
+          <shadow type="math_number">
+            <field name="NUM">500</field>
+          </shadow>
+        </value>
+      </block>
+      
       <block type="display_image_create"></block>
-      <block type="display_image_builtins"></block>
-      <block type="display_shift">
+      <!-- <block type="mixgo_display_image_create_new"></block> -->
+      <block type="display_matrix_extern_image_builtins">
          <value name="SUB">
                 <shadow type="variables_get">
                   <field name="VAR">matrix</field>
                 </shadow>
-            </value>
+              </value>
+      </block>
+
+      <block type="matrix_extern_image_arithmetic">
+         <value name="SUB">
+                <shadow type="variables_get">
+                  <field name="VAR">matrix</field>
+                </shadow>
+              </value>
+        <value name="A">
+          <shadow type="pins_builtinimg_extern"></shadow>
+        </value>>
+        <value name="B">
+          <shadow type="pins_builtinimg_extern"></shadow>
+        </value>
+      </block>
+      <block type="matrix_extern_image_invert">
+         <value name="SUB">
+                <shadow type="variables_get">
+                  <field name="VAR">matrix</field>
+                </shadow>
+              </value>
+        <value name="A">
+          <shadow type="pins_builtinimg_extern"></shadow>
+        </value>
+      </block>
+      <block type="display_matrix_extern_shift">
+        <value name="SUB">
+                <shadow type="variables_get">
+                  <field name="VAR">matrix</field>
+                </shadow>
+              </value>
         <value name="val">
           <shadow type="math_number">
             <field name="NUM">1</field>
           </shadow>
         </value>
       </block>
-      <block type="display_get_pixel">
+      <block type="display_matrix_extern_get_pixel">
         <value name="SUB">
                 <shadow type="variables_get">
                   <field name="VAR">matrix</field>
                 </shadow>
-            </value>
+              </value>
         <value name="x">
           <shadow type="pins_exlcdh"></shadow>
         </value>
@@ -2210,12 +2278,12 @@
           <shadow type="pins_exlcdv"></shadow>
         </value>
       </block>
-      <block type="display_bright_point">
+      <block type="display_matrix_extern_bright_point">
         <value name="SUB">
                 <shadow type="variables_get">
                   <field name="VAR">matrix</field>
                 </shadow>
-            </value>
+              </value>
         <value name="x">
           <shadow type="pins_exlcdh"></shadow>
         </value>
@@ -2226,37 +2294,38 @@
           <shadow type="display_onoff">
           </shadow>
         </value>
-      </block>
-      <block type="display_bright_screen">
+      </block>      
+      <block type="display_matrix_extern_bright_screen">
         <value name="SUB">
                 <shadow type="variables_get">
                   <field name="VAR">matrix</field>
                 </shadow>
-            </value>
+              </value>
         <value name="x">
-         <shadow type="math_number">
+          <shadow type="math_number">
             <field name="NUM">0.5</field>
           </shadow>
         </value>
       </block>
-      <block type="display_get_screen_pixel">
+      <block type="display_matrix_extern_get_screen_pixel">
         <value name="SUB">
                 <shadow type="variables_get">
                   <field name="VAR">matrix</field>
                 </shadow>
-            </value>
+              </value>
       </block>
-      <block type="display_clear">
+      <block type="display_matrix_extern_clear">
         <value name="SUB">
                 <shadow type="variables_get">
                   <field name="VAR">matrix</field>
                 </shadow>
-            </value>
+              </value>
       </block>
+        
 
 
-
-
+      </category>
+      <category id="cat4Digitdisplay" colour="180">
         <block type="communicate_i2c_init">
           <value name="SUB">
             <shadow type="variables_get">
@@ -2264,12 +2333,12 @@
             </shadow>
           </value>
           <value name="TX">
-            <shadow type="i2c_A_pin">
+            <shadow type="pins_digital_pin">
               <field name="PIN">4</field>
             </shadow>
           </value>
           <value name="RX">
-            <shadow type="i2c_B_pin">
+            <shadow type="pins_digital_pin">
               <field name="PIN">5</field>
             </shadow>
           </value>
@@ -2331,7 +2400,7 @@
               <field name="NUM">1</field>
             </shadow>
           </value>
-        </block>-->
+        </block>
       </category>
       <category id="catOLED" colour="180">
       <block type="display_use_i2c_init">
@@ -2619,7 +2688,7 @@
           </shadow>
         </value>
       </block> -->
-    </category>
+      </category>
     </category>
     <category id="catFile" colour="0">
       <block type="storage_open_file_with_os">
