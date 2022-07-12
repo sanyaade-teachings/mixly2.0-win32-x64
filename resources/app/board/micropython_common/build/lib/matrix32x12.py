@@ -21,7 +21,10 @@ class Matrix(TM1680):
 	"""A single matrix."""
 	_columns = 32
 	_rows = 12
-	_font= uincode_font.Font_B()
+
+	def __init__(self, i2c, font_address=0x3A0000, address=0x72, brightness=0.3):
+		super().__init__(i2c, address, brightness)
+		self._font= uincode_font.Font_B(font_address)
 
 	def __getitem__(self, key):
 		x, y = key
