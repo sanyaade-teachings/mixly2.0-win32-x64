@@ -332,13 +332,13 @@ Drag.EditorBarInit = () => {
                 case 'POSITIVE': // 拖拽元素移动方向：左→右 退出代码编辑器，进入块编辑器
                     $codeArea.removeClass('icon-block').addClass('icon-code-1');
                     $codeArea.parent().attr('m-id', 'code-area');
-                    Editor.blockEditorUpdateCode();
                     const { py2BlockEditor } = Editor;
                     if (py2BlockEditor 
                         && BOARD.pythonToBlockly 
                         && typeof py2BlockEditor.updateBlock === 'function') {
                         py2BlockEditor.updateBlock();
                     }
+                    Editor.blockEditorUpdateCode();
                     break;
                 case 'NEGATIVE': // 拖拽元素移动方向：右→左 侧边代码栏开始显示
                     $vBar.removeClass('icon-show-bar-e').addClass('icon-hide-bar-e');
