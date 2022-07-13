@@ -69,7 +69,18 @@ Blockly.Blocks.sensor_mixgo_button_attachInterrupt = {
 }
 };
 
-
+Blockly.Blocks['sensor_mixgo_pin_pressed'] = {
+    init: function(){
+        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.appendValueInput("button")
+        .appendField(Blockly.MIXLY_ESP32_TOUCH_SENSOR)
+        this.appendDummyInput()
+        .appendField(Blockly.MIXLY_IS_TOUCHED);
+        this.setOutput(true, Boolean);
+        this.setInputsInline(true);
+        this.setTooltip(Blockly.MIXLY_TOOLTIP_sensor_pin_pressed);
+    }
+};
 
 Blockly.Blocks['sensor_distance_hrsc04'] = {
     init: function(){
@@ -182,20 +193,7 @@ Blockly.Blocks.RTC_set_date = {
 }
 };
 
-Blockly.Blocks['sensor_compass_reset'] = {
-  init: function(){
-    this.setColour(Blockly.Blocks.sensor.HUE);
-    this.appendValueInput('SUB')
-    .appendField("MPU9250")
-    .setCheck("var");
-    this.appendDummyInput()
-    .appendField(Blockly.MIXLY_MICROBIT_Reset_COMPASS)
-    this.setPreviousStatement(true);
-    this.setNextStatement(true);
-    this.setInputsInline(true);
-    this.setTooltip(Blockly.MIXLY_MICROBIT_Reset_COMPASS);
-}
-};
+
 
 Blockly.Blocks.HCSR04 = {
     init: function () {
@@ -244,7 +242,7 @@ Blockly.Blocks['number1'] = {
    init: function() {
     this.setColour(Blockly.Blocks.sensor.HUE);
     this.appendDummyInput("")
-    .appendField(new Blockly.FieldDropdown([["1", "touch1"], ["2", "touch2"],["3", "touch3"],["4", "touch4"]]), 'op')
+    .appendField(new Blockly.FieldDropdown([["1", "touch1"], ["2", "touch2"]]), 'op')
     this.setOutput(true);
     this.setTooltip(Blockly.MIXLY_TOOLTIP_INOUT_HIGHLOW);
 }
@@ -265,7 +263,28 @@ Blockly.Blocks['sensor_mixgo_pin_near'] = {
     }
 };
 
-
+Blockly.Blocks['sensor_mixgo_pin_near_double'] = {
+    init: function(){
+        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.appendDummyInput()
+        .appendField(Blockly.MIXLY_MICROBIT_PY_STORAGE_GET)
+        .appendField(new Blockly.FieldDropdown([[Blockly.Msg.TEXT_TRIM_LEFT, "left"], [Blockly.Msg.TEXT_TRIM_RIGHT, "right"]]), "direction")
+        .appendField(Blockly.MIXLY_ESP32_NEAR);
+        this.setOutput(true,Number);
+        this.setInputsInline(true);
+        var thisBlock = this;
+        this.setTooltip(function() {
+            var mode = thisBlock.getFieldValue('direction');
+            var mode0 = Blockly.MIXLY_ESP32_SENSOR_MIXGO_PIN_NEAR_TOOLTIP;
+            var mode1 = Blockly.MIXLY_ESP32_NEAR;
+            var TOOLTIPS = {
+                'left':Blockly.Msg.TEXT_TRIM_LEFT,
+                'right':Blockly.Msg.TEXT_TRIM_RIGHT,
+            };
+            return mode0 +TOOLTIPS[mode] + mode1
+        });
+    }
+};
 
 Blockly.Blocks.RTC_set_datetime = {
  init: function() {    
@@ -454,6 +473,212 @@ Blockly.Blocks['sensor_get_acceleration'] = {
             return mode0 +TOOLTIPS[mode]+mode1+mode2;
         });
     }
+};
+
+Blockly.Blocks.sensor_mpu9250_gesture = {
+    init: function() {
+        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.appendValueInput('SUB')
+        .appendField("MPU9250")
+        .setCheck("var");
+        this.appendDummyInput("")
+        .appendField(Blockly.MIXLY_MICROBIT_JS_CURRENT_GESTURE)
+        .appendField(new Blockly.FieldDropdown([[Blockly.MIXLY_MICROBIT_shake, "shake"], [Blockly.MIXLY_UP, "up"], [Blockly.MIXLY_DOWN, "down"], [Blockly.MIXLY_LEFT, "left"], [Blockly.MIXLY_RIGHT, "right"], [Blockly.MIXLY_MICROBIT_face_up, "face up"], [Blockly.MIXLY_MICROBIT_face_down, "face down"]]), "gesture");
+        this.setOutput(true);
+        var thisBlock = this;
+        this.setTooltip(function() {
+            var mode = thisBlock.getFieldValue('gesture');
+            var mode0 = Blockly.MIXLY_MICROBIT_JS_CURRENT;
+            var mode1 = MSG.catSensor;
+            var mode2 = Blockly.MIXLY_MICROBIT_JS_STATE;
+            var mode3 = Blockly.MIXLY_MICROBIT_PERFORMANCE
+            var TOOLTIPS = {
+                'shake': Blockly.MIXLY_MICROBIT_shake,
+                'up': Blockly.MIXLY_UP,
+                'down':Blockly.MIXLY_DOWN,
+                'left':Blockly.MIXLY_LEFT,
+                'right':Blockly.MIXLY_RIGHT,
+                'face up': Blockly.MIXLY_MICROBIT_face_up,
+                'face down': Blockly.MIXLY_MICROBIT_face_down,
+        // 'freefall':Blockly.MIXLY_MICROBIT_freefall,
+        // '3g': '3g',
+        // '6g': '6g',
+        // '8g': '8g'
+    };
+    return mode0 +mode1+mode2+ TOOLTIPS[mode]+mode3;
+});
+    }
+};
+
+Blockly.Blocks['sensor_mpu9250_get_acceleration'] = {
+    init: function(){
+        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.appendValueInput('SUB')
+        .appendField("MPU9250")
+        .setCheck("var");
+        this.appendDummyInput()
+        .appendField(Blockly.MIXLY_MICROBIT_JS_ACCELERATION)
+        .appendField(new Blockly.FieldDropdown([
+            ["x", "x"],
+            ["y", "y"],
+            ["z", "z"],
+            ["(x,y,z)", "values"]
+            ]), "key");
+        this.setOutput(true, Number);
+        this.setInputsInline(true);
+        this.setTooltip(Blockly.MIXLY_MICROBIT_JS_ACCELERATION);
+        var thisBlock = this;
+        this.setTooltip(function() {
+            var mode = thisBlock.getFieldValue('key');
+            var mode0 = Blockly.MIXLY_MICROBIT_PY_STORAGE_GET;
+            var mode1 = Blockly.MIXLY_MICROBIT_Direction;
+            var mode2 = Blockly.MIXLY_MICROBIT_JS_ACCELERATION1;
+            var TOOLTIPS = {
+                'x': 'x',
+                'y': 'y',
+                'z': 'z',
+                '(x,y,z)':Blockly.MIXLY_MICROBIT_Shiliang_Direction,
+            };
+            return mode0 +TOOLTIPS[mode]+mode1+mode2;
+        });
+    }
+};
+
+Blockly.Blocks['sensor_mpu9250_get_magnetic'] = {
+    init: function(){
+        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.appendValueInput('SUB')
+        .appendField("MPU9250")
+        .setCheck("var");
+        this.appendDummyInput()
+        .appendField(Blockly.MIXLY_MICROBIT_JS_GET+Blockly.MIXLY_MICROBIT_JS_FIELD_STRENGTH)
+        .appendField(new Blockly.FieldDropdown([
+            ["x", "x"],
+            ["y", "y"],
+            ["z", "z"],
+            ["(x,y,z)", "values"]
+            ]), "key");
+        this.setOutput(true, Number);
+        this.setInputsInline(true);
+        var thisBlock = this;
+        this.setTooltip(function() {
+            var mode = thisBlock.getFieldValue('key');
+            var mode0 = Blockly.MIXLY_MICROBIT_PY_STORAGE_GET;
+            var mode1 = Blockly.MIXLY_MICROBIT_Direction;
+            var mode2 = Blockly.MIXLY_MICROBIT_JS_FIELD_STRENGTH;
+            var TOOLTIPS = {
+                'x': 'x',
+                'y': 'y',
+                'z': 'z',
+                '(x,y,z)':Blockly.MIXLY_MICROBIT_Shiliang_Direction,
+            };
+            return mode0 +TOOLTIPS[mode]+mode1+mode2;
+        });
+    }
+};
+
+Blockly.Blocks['sensor_mpu9250_get_gyro'] = {
+    init: function(){
+        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.appendValueInput('SUB')
+        .appendField("MPU9250")
+        .setCheck("var");
+        this.appendDummyInput()
+        .appendField(Blockly.MIXLY_MICROBIT_PY_STORAGE_GET+Blockly.MIXLY_ESP32_SENOR_GYRO)
+        .appendField(new Blockly.FieldDropdown([
+            ["x", "x"],
+            ["y", "y"],
+            ["z", "z"],
+            ["(x,y,z)", "values"]
+            ]), "key");
+        this.setOutput(true, Number);
+        this.setInputsInline(true);
+        var thisBlock = this;
+        this.setTooltip(function() {
+            var mode = thisBlock.getFieldValue('key');
+            var mode0 = Blockly.MIXLY_MICROBIT_PY_STORAGE_GET;
+            var mode1 = Blockly.MIXLY_MICROBIT_Direction;
+            var mode2 = Blockly.MIXLY_ESP32_SENOR_GYRO;
+            var TOOLTIPS = {
+                'x': 'x',
+                'y': 'y',
+                'z': 'z',
+                '(x,y,z)':Blockly.MIXLY_MICROBIT_Shiliang_Direction,
+            };
+            return mode0 +TOOLTIPS[mode]+mode1+mode2;
+        });
+    }
+};
+
+Blockly.Blocks['sensor_mpu9250_calibrate_compass'] = {
+    init: function(){
+        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.appendValueInput('SUB')
+        .appendField("MPU9250")
+        .setCheck("var");
+        this.appendDummyInput()
+        .appendField(Blockly.MIXLY_MICROBIT_JS_CALIBRATE_COMPASS)
+        this.setPreviousStatement(true);
+        this.setNextStatement(true);
+        this.setInputsInline(true);
+        this.setTooltip(Blockly.MIXLY_MICROBIT_JS_CALIBRATE_COMPASS);
+    }
+};
+
+
+Blockly.Blocks['sensor_mpu9250_temperature'] = {
+    init: function(){
+        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.appendValueInput('SUB')
+        .appendField("MPU9250")
+        .setCheck("var");
+        this.appendDummyInput()
+        .appendField(Blockly.MIXLY_GETTEMPERATUE)
+        this.setOutput(true, Number);
+        this.setInputsInline(true);
+
+        this.setTooltip(Blockly.MIXLY_GETTEMPERATUE);
+    }
+};
+
+
+Blockly.Blocks['sensor_mpu9250_field_strength'] = {
+    init: function(){
+        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.appendValueInput('SUB')
+        .appendField("MPU9250")
+        .setCheck("var");
+        this.appendDummyInput()
+        .appendField(Blockly.MIXLY_MICROBIT_JS_GET_COMPASS)
+        .appendField(new Blockly.FieldDropdown([[Blockly.MIXLY_MICROBIT_JS_FIELD_STRENGTH,'strength'],[Blockly.MIXLY_MICROBIT_JS_BY_ANGLE,'heading']]),'compass');
+        this.setOutput(true, Number);
+        this.setInputsInline(true);
+        var thisBlock = this;
+        this.setTooltip(function() {
+            var mode = thisBlock.getFieldValue('compass');
+            var mode0 = Blockly.MIXLY_MICROBIT_JS_GET_COMPASS;
+            var TOOLTIPS = {
+                'strength':Blockly.MIXLY_MICROBIT_JS_FIELD_STRENGTH,
+                'heading':Blockly.MIXLY_MICROBIT_JS_BY_ANGLE
+            };
+            return mode0 +TOOLTIPS[mode];
+        });
+    }
+};
+
+Blockly.Blocks['sensor_compass_reset'] = {
+  init: function(){
+    this.setColour(Blockly.Blocks.sensor.HUE);
+    this.appendValueInput('SUB')
+    .appendField("MPU9250")
+    .setCheck("var");
+    this.appendDummyInput()
+    .appendField(Blockly.MIXLY_MICROBIT_Reset_COMPASS)
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setInputsInline(true);
+    this.setTooltip(Blockly.MIXLY_MICROBIT_Reset_COMPASS);
+}
 };
 
 

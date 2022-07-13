@@ -205,7 +205,7 @@ class LED:
             raise ValueError("Brightness must be in the range: 0-100%")
         self._index_pwm[index-1]=val
         
-    def getrightness(self,index):
+    def getbrightness(self,index):
         return self._index_pwm[index-1]
 
     def setonoff(self,index,val):

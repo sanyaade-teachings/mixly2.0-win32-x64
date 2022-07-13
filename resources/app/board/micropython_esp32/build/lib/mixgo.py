@@ -33,11 +33,11 @@ except Exception as e:
 
 '''2-RGB'''    
 from neopixel import NeoPixel
-rgb = NeoPixel(Pin(2), 2)
+onboard_rgb = NeoPixel(Pin(2), 2)
 
 '''1Buzzer-Music'''
 from music import MIDI
-music =MIDI(27)
+onboard_music =MIDI(27)
 
 '''2-Button'''
 class Button:
@@ -146,7 +146,7 @@ class LED:
         self._brightness=val
         self._pin.duty_u16(65535-val*65535//100)
 
-    def getrightness(self):
+    def getbrightness(self):
         return self._brightness
 
     def setonoff(self,val):
@@ -158,7 +158,7 @@ class LED:
             self.setbrightness(0) 
             
     def getonoff(self):
-        return True if self._brightness>50 else False
+        return True if self._brightness>0 else False
 
 led1 = LED(0)
 led2 = LED(5)

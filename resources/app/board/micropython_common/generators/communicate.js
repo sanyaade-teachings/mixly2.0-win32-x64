@@ -4,8 +4,8 @@ goog.provide('Blockly.Python.communicate');
 goog.require('Blockly.Python');
 
 Blockly.Python.communicate_i2c_init = function () {
-    Blockly.Python.definitions_['import_machine'] = 'import machine';
-    var dropdown_pin1 = Blockly.Python.valueToCode(this, 'RX',Blockly.Python.ORDER_ATOMIC);
+	Blockly.Python.definitions_['import_machine'] = 'import machine';
+	var dropdown_pin1 = Blockly.Python.valueToCode(this, 'RX',Blockly.Python.ORDER_ATOMIC);
     var dropdown_pin2 = Blockly.Python.valueToCode(this, 'TX',Blockly.Python.ORDER_ATOMIC);
     var freq = Blockly.Python.valueToCode(this, 'freq', Blockly.Python.ORDER_ATOMIC);
     var sub = Blockly.Python.valueToCode(this, 'SUB',Blockly.Python.ORDER_ATOMIC);
@@ -54,7 +54,7 @@ Blockly.Python.i2c_slave_onreceive = function () {
     return '';
 }
 Blockly.Python.communicate_spi_init= function(block) {
-    Blockly.Python.definitions_['import_machine'] = 'import machine';   
+	Blockly.Python.definitions_['import_machine'] = 'import machine';	
     var name=Blockly.Python.valueToCode(this, 'VAR', Blockly.Python.ORDER_ATOMIC);
     var freq=Blockly.Python.valueToCode(this, 'freq', Blockly.Python.ORDER_ATOMIC);    
     var mosi = Blockly.Python.valueToCode(this, 'mosi', Blockly.Python.ORDER_ATOMIC);
@@ -165,6 +165,54 @@ Blockly.Python.communicate_ir_recv = function(){
     var pin = Blockly.Python.valueToCode(this, 'PIN',Blockly.Python.ORDER_ATOMIC);
     var sub = Blockly.Python.valueToCode(this, 'SUB',Blockly.Python.ORDER_ATOMIC);
     return "irremote.resume("+pin+", "+sub+")\n"
+};
+
+Blockly.Python.communicate_bluetooth_central_init = function(){
+    Blockly.Python.definitions_['import_ble_central'] = 'import ble_central';   
+    var name = Blockly.Python.valueToCode(this, 'VAR',Blockly.Python.ORDER_ATOMIC);    
+    var code = name+" = ble_central.BLESimpleCentral()\n";
+    return code;
+};
+
+Blockly.Python.communicate_bluetooth_peripheral_init = function(){
+    Blockly.Python.definitions_['import_ble_peripheral'] = 'import ble_peripheral';  
+    var data = Blockly.Python.valueToCode(this, 'data', Blockly.Python.ORDER_ATOMIC); 
+    var name = Blockly.Python.valueToCode(this, 'VAR',Blockly.Python.ORDER_ATOMIC);    
+    var code = name+" = ble_peripheral.BLESimplePeripheral(" + data + ")\n";
+    return code;
+};
+
+Blockly.Python.communicate_bluetooth_scan = function(){
+    var name = Blockly.Python.valueToCode(this, 'VAR',Blockly.Python.ORDER_ATOMIC);
+    var code = name+".scan()";
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python.communicate_bluetooth_connect = function(){
+    var data = Blockly.Python.valueToCode(this, 'data', Blockly.Python.ORDER_ATOMIC);
+    var name = Blockly.Python.valueToCode(this, 'VAR',Blockly.Python.ORDER_ATOMIC);    
+    var code = name+".connect(" + data + ")\n";
+    return code;
+};
+
+Blockly.Python.communicate_bluetooth_is_connected = function(){
+    var name = Blockly.Python.valueToCode(this, 'VAR',Blockly.Python.ORDER_ATOMIC);
+    var code = name+".is_connected()";
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python.communicate_bluetooth_send = function(){
+    var data = Blockly.Python.valueToCode(this, 'data', Blockly.Python.ORDER_ATOMIC);
+    var name = Blockly.Python.valueToCode(this, 'VAR',Blockly.Python.ORDER_ATOMIC);    
+    var code = name+".send(" + data + ")\n";
+    return code;
+};
+
+Blockly.Python.communicate_bluetooth_recv = function (block) {
+    var v = Blockly.Python.valueToCode(this, 'VAR', Blockly.Python.ORDER_ATOMIC);
+    var method = Blockly.Python.valueToCode(this, 'METHOD', Blockly.Python.ORDER_ATOMIC);
+    var code = v + '.recv('+ method +')\n';
+    return code;
 };
 
 Blockly.Blocks['i2c_init'] = Blockly.Blocks['communicate_i2c_init'];

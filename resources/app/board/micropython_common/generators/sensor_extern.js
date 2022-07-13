@@ -38,6 +38,12 @@ Blockly.Python.sensor_mixgo_extern_button_attachInterrupt = function () {
     return code;
 };
 
+Blockly.Python.sensor_mixgo_pin_pressed = function(){
+    Blockly.Python.definitions_['import_mixgo'] = 'import mixgo';
+    var pin = Blockly.Python.valueToCode(this, 'button', Blockly.Python.ORDER_ATOMIC);
+    var code = 'mixgo.'+pin+'.is_touched()';
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
 
 Blockly.Python.sensor_mpu9250_attachGestureInterrupt = function(){
     Blockly.Python.definitions_['import_mpu9250'] = 'import mpu9250';
@@ -52,102 +58,7 @@ Blockly.Python.sensor_mpu9250_attachGestureInterrupt = function(){
     return code;
 }
 
-Blockly.Python.sensor_mpu9250_gesture = function(){
-    Blockly.Python.definitions_['import_mpu9250'] = 'import mpu9250';
-    Blockly.Python.definitions_['import_machine'] = 'import machine';
-    var gesture = this.getFieldValue('gesture');
-    var v = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
-    if (v == "mpu")
-        Blockly.Python.definitions_['import_mixgo_mpu'] = 'from mixgo import mpu';    
-    var code = v+'.mpu9250_is_gesture("' + gesture + '")';
-    return [code, Blockly.Python.ORDER_ATOMIC];
-}
 
-
-//ok
-Blockly.Python.sensor_mpu9250_get_acceleration = function(){
-    Blockly.Python.definitions_['import_mpu9250'] = 'import mpu9250';
-    Blockly.Python.definitions_['import_machine'] = 'import machine';
-    var key = this.getFieldValue('key');
-    var v = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
-    if (v == "mpu")
-        Blockly.Python.definitions_['import_mixgo_mpu'] = 'from mixgo import mpu';    
-    var code = v+'.mpu9250_get_' + key + '()';
-    return [code, Blockly.Python.ORDER_ATOMIC];
-};
-
-Blockly.Python.sensor_adxl345_get_acceleration = function(){
-    Blockly.Python.definitions_['import_adxl345'] = 'import adxl345';
-    // Blockly.Python.definitions_['import_machine'] = 'import machine';
-    var key = this.getFieldValue('key');
-    var v = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
-    var code;
-    if (key=='x') {
-        code = v + '.readX()';
-    }else if (key=='y') {
-        code = v + '.readY()';
-    }else if (key=='z') {
-        code = v + '.readZ()';
-    }else if (key=='values') {
-        code = v + '.readXYZ()';
-    }
-    return [code, Blockly.Python.ORDER_ATOMIC];
-};
-
-Blockly.Python.sensor_mpu9250_get_magnetic = function(){
-    Blockly.Python.definitions_['import_mpu9250'] = 'import mpu9250';
-    Blockly.Python.definitions_['import_machine'] = 'import machine';
-    var key = this.getFieldValue('key');
-    var v = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
-    if (v == "mpu")
-        Blockly.Python.definitions_['import_mixgo_mpu'] = 'from mixgo import mpu';    
-    var code = v+'.mpu9250_magnetic_' + key + '()';
-    return [code, Blockly.Python.ORDER_ATOMIC];
-};
-
-Blockly.Python.sensor_mpu9250_get_gyro = function(){
-    Blockly.Python.definitions_['import_mpu9250'] = 'import mpu9250';
-    Blockly.Python.definitions_['import_machine'] = 'import machine';
-    var key = this.getFieldValue('key');
-    var v = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
-    if (v == "mpu")
-        Blockly.Python.definitions_['import_mixgo_mpu'] = 'from mixgo import mpu';    
-    var code = v+'.mpu9250_gyro_' + key + '()';
-    return [code, Blockly.Python.ORDER_ATOMIC];
-};
-
-Blockly.Python.sensor_mpu9250_calibrate_compass= function(){
-    Blockly.Python.definitions_['import_mpu9250'] = 'import mpu9250';
-    Blockly.Python.definitions_['import_machine'] = 'import machine';
-    Blockly.Python.definitions_['import_mixgo_compass'] = 'from mixgo import compass';
-    var v = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
-    return ''+v+'.calibrate()\n';
-};
-
-Blockly.Python.sensor_mpu9250_temperature = function(){
-    Blockly.Python.definitions_['import_mpu9250'] = 'import mpu9250';
-    Blockly.Python.definitions_['import_machine'] = 'import machine';
-    var v = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
-    if (v == "mpu")
-        Blockly.Python.definitions_['import_mixgo_mpu'] = 'from mixgo import mpu';    
-    return [v+'.mpu9250_get_temperature()', Blockly.Python.ORDER_ATOMIC];
-};
-Blockly.Python.sensor_mpu9250_field_strength= function(){
-    Blockly.Python.definitions_['import_mpu9250'] = 'import mpu9250';
-    Blockly.Python.definitions_['import_machine'] = 'import machine';
-    var v = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
-    if (v == "compass")
-        Blockly.Python.definitions_['import_mixgo_compass'] = 'from mixgo import compass';    
-    var compass = this.getFieldValue('compass');
-    var a;
-    if(compass =='strength'){
-        a = v+'.get_field_strength()';
-    }
-    else if(compass =='heading'){
-        a = v+'.heading()';
-    }
-    return [a, Blockly.Python.ORDER_ATOMIC];
-};
 
 
 Blockly.Python.sensor_distance_hrsc04= function(){
@@ -221,13 +132,6 @@ Blockly.Python.RTC_set_date = function () {
   return code;
 };
 
-Blockly.Python.sensor_compass_reset = function(block) {
-  Blockly.Python.definitions_['import_mpu9250'] = 'import mpu9250';
-  Blockly.Python.definitions_['import_machine'] = 'import machine';
-  Blockly.Python.definitions_['import_mixgo_compass'] = 'from mixgo import compass';
-  var v = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
-  return ''+v+'.reset_calibrate()\n';
-};
 
 
 Blockly.Python.sensor_mixgo_extern_light= function(){

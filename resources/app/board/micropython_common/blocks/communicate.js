@@ -32,7 +32,6 @@ Blockly.Blocks['communicate_i2c_init'] = {
     }
 };
 
-
 Blockly.Blocks['communicate_i2c_read'] = {
     init: function() {
         this.setColour(Blockly.Blocks.communicate.HUE);
@@ -392,6 +391,113 @@ Blockly.Blocks['communicate_ir_recv'] = {
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
         this.setInputsInline(true);
+    }
+};
+
+Blockly.Blocks['communicate_bluetooth_central_init'] = {
+    init: function() {
+        this.setColour(Blockly.Blocks.communicate.HUE);
+        this.appendValueInput('VAR')
+            .appendField(MSG.catBLE)
+            .setCheck("var");
+        this.appendDummyInput()
+            .appendField(MSG.catEthernet_init + Blockly.MIXLY_MICROBIT_PY_STORAGE_AS+MSG.catBLE_UART);        
+        this.setPreviousStatement(true);
+        this.setNextStatement(true);
+        this.setInputsInline(true);
+        //this.setTooltip(Blockly.MIXLY_MICROBIT_JS_I2C_WRITE);
+    }
+}
+
+Blockly.Blocks['communicate_bluetooth_peripheral_init'] = {
+    init: function() {
+        this.setColour(Blockly.Blocks.communicate.HUE);
+        this.appendValueInput('VAR')
+            .appendField(MSG.catBLE)
+            .setCheck("var");
+        this.appendDummyInput()
+            .appendField(MSG.catEthernet_init + Blockly.MIXLY_MICROBIT_PY_STORAGE_AS+MSG.catBLE_HID);  
+        this.appendValueInput('data')
+            .setCheck(String)
+            .appendField(Blockly.Msg.HTML_NAME);                
+        this.setPreviousStatement(true);
+        this.setNextStatement(true);
+        this.setInputsInline(true);
+        //this.setTooltip(Blockly.MIXLY_MICROBIT_JS_I2C_WRITE);
+    }
+}
+
+Blockly.Blocks['communicate_bluetooth_scan'] = {
+    init: function() {
+        this.setColour(Blockly.Blocks.communicate.HUE);
+        this.appendValueInput('VAR')
+            .setCheck("var");
+        this.appendDummyInput()
+            .appendField(Blockly.MIXLY_ESP32_ONEWIRE_SCAN+MSG.catBLE);
+        this.setOutput(true);
+        this.setInputsInline(true);
+        //this.setTooltip(Blockly.MIXLY_MICROBIT_JS_I2C_READ);
+    }
+}
+
+Blockly.Blocks['communicate_bluetooth_connect'] = {
+    init: function() {
+        this.setColour(Blockly.Blocks.communicate.HUE);
+        this.appendValueInput('VAR')
+            .setCheck("var");
+            this.appendDummyInput()
+            .appendField(Blockly.MIXLY_TEXT_JOIN + MSG.catBLE);   
+        this.appendValueInput('data')
+            .setCheck(String)
+            .appendField(Blockly.Msg.HTML_NAME);                 
+        this.setPreviousStatement(true);
+        this.setNextStatement(true);
+        this.setInputsInline(true);
+        //this.setTooltip(Blockly.MIXLY_MICROBIT_JS_I2C_WRITE);
+    }
+}
+
+Blockly.Blocks['communicate_bluetooth_send'] = {
+    init: function() {
+        this.setColour(Blockly.Blocks.communicate.HUE);
+        this.appendValueInput('VAR')
+            .setCheck("var");
+        this.appendDummyInput()
+            .appendField(MSG.catBLE+Blockly.MIXLY_SEND_DATA);   
+        this.appendValueInput('data')
+            .appendField(Blockly.Msg.HTML_BODY);                 
+        this.setPreviousStatement(true);
+        this.setNextStatement(true);
+        this.setInputsInline(true);
+        //this.setTooltip(Blockly.MIXLY_MICROBIT_JS_I2C_WRITE);
+    }
+}
+
+Blockly.Blocks['communicate_bluetooth_is_connected'] = {
+    init: function() {
+        this.setColour(Blockly.Blocks.communicate.HUE);
+        this.appendValueInput('VAR')
+            .setCheck("var");
+        this.appendDummyInput()
+            .appendField(MSG.catBLE+Blockly.MIXLY_EMQX_IS_CONNECT);
+        this.setOutput(true);
+        this.setInputsInline(true);
+        //this.setTooltip(Blockly.MIXLY_MICROBIT_JS_I2C_READ);
+    }
+}
+
+Blockly.Blocks["communicate_bluetooth_recv"] = {
+    init: function () {
+        this.setColour(Blockly.Blocks.communicate.HUE);
+        this.appendValueInput('VAR')
+            .setCheck("var")   
+        this.appendValueInput('METHOD')
+            .appendField(Blockly.MIXLY_MIXGO_ESPNOW_RECV)
+            .appendField(Blockly.Msg.CONTROLS_REPEAT_INPUT_DO+Blockly.MIXLY_ESP32_ONENET_SUB);    
+        this.setInputsInline(true);
+        this.setPreviousStatement(true);
+        this.setNextStatement(true);
+        //this.setTooltip(Blockly.MIXLY_ESP32_IOT_EMQX_SUBSCRIBE_TOOLTIP);
     }
 };
 

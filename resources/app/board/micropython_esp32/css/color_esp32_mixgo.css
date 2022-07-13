@@ -459,11 +459,51 @@ div.blocklyToolboxDiv > div.blocklyToolboxContents > div:nth-child(13) > div.blo
     background:url('../../common/media/mark/file2.png') no-repeat;
     background-size: 100% auto;
 }
-#catGroup.blocklyTreeRow > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
+#catBLE.blocklyTreeRow > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
     background:url('../../common/media/mark/comuni.png') no-repeat;
     background-size: 100% auto;
 }
-#catGroup.blocklyTreeRow.blocklyTreeSelected > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
+#catBLE.blocklyTreeRow.blocklyTreeSelected > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
+    background:url('../../common/media/mark/comuni2.png') no-repeat;
+    background-size: 100% auto;
+}
+#catIR.blocklyTreeRow > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
+    background:url('../../common/media/mark/comuni.png') no-repeat;
+    background-size: 100% auto;
+}
+#catIR.blocklyTreeRow.blocklyTreeSelected > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
+    background:url('../../common/media/mark/comuni2.png') no-repeat;
+    background-size: 100% auto;
+}
+#catI2C.blocklyTreeRow > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
+    background:url('../../common/media/mark/comuni.png') no-repeat;
+    background-size: 100% auto;
+}
+#catI2C.blocklyTreeRow.blocklyTreeSelected > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
+    background:url('../../common/media/mark/comuni2.png') no-repeat;
+    background-size: 100% auto;
+}
+#catSPI.blocklyTreeRow > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
+    background:url('../../common/media/mark/comuni.png') no-repeat;
+    background-size: 100% auto;
+}
+#catSPI.blocklyTreeRow.blocklyTreeSelected > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
+    background:url('../../common/media/mark/comuni2.png') no-repeat;
+    background-size: 100% auto;
+}
+#catOneWire.blocklyTreeRow > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
+    background:url('../../common/media/mark/comuni.png') no-repeat;
+    background-size: 100% auto;
+}
+#catOneWire.blocklyTreeRow.blocklyTreeSelected > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
+    background:url('../../common/media/mark/comuni2.png') no-repeat;
+    background-size: 100% auto;
+}
+#catESPNow.blocklyTreeRow > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
+    background:url('../../common/media/mark/comuni.png') no-repeat;
+    background-size: 100% auto;
+}
+#catESPNow.blocklyTreeRow.blocklyTreeSelected > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
     background:url('../../common/media/mark/comuni2.png') no-repeat;
     background-size: 100% auto;
 }

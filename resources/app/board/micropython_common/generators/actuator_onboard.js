@@ -81,7 +81,7 @@ Blockly.Python.actuator_get_led_bright = function() {
     var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
     var op = Blockly.Python.valueToCode(this,'led', Blockly.Python.ORDER_ATOMIC);
     Blockly.Python.definitions_['import_'+version+'_onboard_led'] = 'from '+version+' import onboard_led';
-    var code = "onboard_led.getrightness(" +op +")";
+    var code = "onboard_led.getbrightness(" +op +")";
     return [code, Blockly.Python.ORDER_ATOMIC];;
 };
 
@@ -102,6 +102,36 @@ Blockly.Python.actuator_led_brightness = function() {
     return code;
 };
 
+Blockly.Python.mixgo_actuator_led_bright = function() {
+    var op = Blockly.Python.valueToCode(this,'led', Blockly.Python.ORDER_ATOMIC);
+    Blockly.Python.definitions_['import_mixgo_onboard_led'+op] = 'from mixgo import led'+op;
+    var bright = Blockly.Python.valueToCode(this,'bright', Blockly.Python.ORDER_ATOMIC);
+    var code = "led"+op+".setonoff("+ bright+")\n";
+    return code;
+};
+
+Blockly.Python.mixgo_actuator_get_led_bright = function() {
+    var op = Blockly.Python.valueToCode(this,'led', Blockly.Python.ORDER_ATOMIC);
+    Blockly.Python.definitions_['import_mixgo_onboard_led'+op] = 'from mixgo import led'+op;
+    var code = "led"+op+".getbrightness()";
+    return [code, Blockly.Python.ORDER_ATOMIC];;
+};
+
+Blockly.Python.mixgo_actuator_get_led_state = function() {
+    var op = Blockly.Python.valueToCode(this,'led', Blockly.Python.ORDER_ATOMIC);
+    Blockly.Python.definitions_['import_mixgo_onboard_led'+op] = 'from mixgo import led'+op;
+    var code = "led" +op +".getonoff()";
+    return [code, Blockly.Python.ORDER_ATOMIC];;
+};
+
+Blockly.Python.mixgo_actuator_led_brightness = function() {    
+    var op = Blockly.Python.valueToCode(this,'led', Blockly.Python.ORDER_ATOMIC);
+    Blockly.Python.definitions_['import_mixgo_onboard_led'+op] = 'from mixgo import led'+op;
+    var flag = Blockly.Python.valueToCode(this,'bright', Blockly.Python.ORDER_ATOMIC);
+    var code = "led" + op + ".setbrightness("+ flag+")\n";
+    return code;
+};
+
 Blockly.Python.actuator_onboard_neopixel_write=function(){
     var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
     Blockly.Python.definitions_['import_'+version+'_onboard_rgb'] = 'from '+version+' import onboard_rgb';
@@ -116,7 +146,7 @@ Blockly.Python.actuator_onboard_neopixel_rgb=function(){
   var value_rvalue = Blockly.Python.valueToCode(this, 'RVALUE', Blockly.Python.ORDER_ATOMIC);
   var value_gvalue = Blockly.Python.valueToCode(this, 'GVALUE', Blockly.Python.ORDER_ATOMIC);
   var value_bvalue = Blockly.Python.valueToCode(this, 'BVALUE', Blockly.Python.ORDER_ATOMIC);
-  var code= 'onboard_rgb['+value_led+'] = ('+value_gvalue+', '+value_rvalue+', '+value_bvalue+')\n';
+  var code= 'onboard_rgb['+value_led+'] = ('+value_rvalue+', '+value_gvalue+', '+value_bvalue+')\n';
   return code;
 };
 
@@ -126,7 +156,7 @@ Blockly.Python.actuator_onboard_neopixel_rgb_all=function(){
   var value_rvalue = Blockly.Python.valueToCode(this, 'RVALUE', Blockly.Python.ORDER_ATOMIC);
   var value_gvalue = Blockly.Python.valueToCode(this, 'GVALUE', Blockly.Python.ORDER_ATOMIC);
   var value_bvalue = Blockly.Python.valueToCode(this, 'BVALUE', Blockly.Python.ORDER_ATOMIC);
-  var code= 'onboard_rgb.fill(('+value_gvalue+', '+value_rvalue+', '+value_bvalue+'))\n';
+  var code= 'onboard_rgb.fill(('+value_rvalue+', '+value_gvalue+', '+value_bvalue+'))\n';
   return code;
 };
 
