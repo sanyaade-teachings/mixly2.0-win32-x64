@@ -206,3 +206,5 @@ profile["mPython"] = {
     one_more:[["ONE_SHOT", "ONE_SHOT"], ["PERIODIC", "PERIODIC"]],
     digital_dot:[["0", "0"], ["1", "1"], ["2", "2"], ["3", "3"]],
 };
+
+profile['default'] = profile["MixGo(ESP32, 4M)"];
