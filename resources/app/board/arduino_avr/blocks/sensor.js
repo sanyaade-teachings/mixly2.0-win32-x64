@@ -626,6 +626,93 @@ Blockly.Blocks['encoder_read1'] = {
   }
 };
 
+// 旋转编码器定义
+Blockly.Blocks.sensor_encoder_init = {
+  init: function() { 
+    this.appendDummyInput()
+        .appendField(Blockly.MIXLY_SETUP)
+        .appendField(new Blockly.FieldDropdown(Encoder_NO), "TYPE");
+    this.appendValueInput("CLK")
+        .setCheck(null)
+        .appendField("CLK#");
+    this.appendValueInput("DT")
+        .setCheck(null)
+        .appendField("DT#");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(Blockly.Blocks.sensor.HUE);
+    this.setTooltip("");
+    this.setHelpUrl("");
+  }
+};
+
+// 旋转编码器读取
+Blockly.Blocks.sensor_encoder_get = {
+  init: function() { 
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldDropdown(Encoder_NO), "TYPE")
+        .appendField(Blockly.MIXLY_MICROBIT_PY_STORAGE_GET)
+        .appendField(new Blockly.FieldDropdown([
+          [ Blockly.MIXLY_GPS_LOCATION, "getPosition" ],
+          [ Blockly.MIXLY_MICROBIT_Direction, "getDirection" ],
+          [ Blockly.MIXLY_INCREMENT, "getIncrement" ],
+          [ Blockly.MIXLY_UPPERBOUND, "getUpperBound" ],
+          [ Blockly.MIXLY_LOWERBOUND, "getLowerBound" ]
+        ]), "OPERATE_TYPE");
+    this.setInputsInline(true);
+    this.setOutput(true, null);
+    this.setColour(Blockly.Blocks.sensor.HUE);
+    this.setTooltip("");
+    this.setHelpUrl("");
+  }
+};
+
+// 旋转编码器设置
+Blockly.Blocks.sensor_encoder_set = {
+  init: function() { 
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldDropdown(Encoder_NO), "TYPE");
+    this.appendValueInput("DATA")
+        .setCheck(null)
+        .appendField(new Blockly.FieldDropdown([
+          [ Blockly.MIXLY_GPS_LOCATION, "resetPosition" ],
+          [ Blockly.MIXLY_INCREMENT, "setIncrement" ],
+          [ Blockly.MIXLY_UPPERBOUND, "setUpperBound" ],
+          [ Blockly.MIXLY_LOWERBOUND, "setLowerBound" ]
+        ]), "OPERATE_TYPE")
+        .appendField(Blockly.MIXLY_STAT);
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(Blockly.Blocks.sensor.HUE);
+    this.setTooltip("");
+    this.setHelpUrl("");
+  }
+};
+
+// 旋转编码器事件
+Blockly.Blocks.sensor_encoder_handle = {
+  init: function() { 
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldDropdown(Encoder_NO), "TYPE")
+        .appendField(new Blockly.FieldDropdown([
+          [ Blockly.MIXLY_ENCODER_CHANGED, "setChangedHandler"],
+          [ Blockly.MIXLY_ENCODER_LEFT_ROTATION, "setLeftRotationHandler" ],
+          [ Blockly.MIXLY_ENCODER_RIGHT_ROTATION, "setRightRotationHandler" ],
+          [ Blockly.MIXLY_ENCODER_UPPER_OVERFLOW, "setUpperOverflowHandler" ],
+          [ Blockly.MIXLY_ENCODER_LOWER_OVERFLOW, "setLowerOverflowHandler" ]
+        ]), "OPERATE_TYPE");
+    this.appendStatementInput("DO")
+        .setCheck(null)
+        .appendField(Blockly.MIXLY_MSTIMER2_DO);
+    this.setInputsInline(true);
+    this.setColour(Blockly.Blocks.sensor.HUE);
+    this.setTooltip("");
+    this.setHelpUrl("");
+  }
+};
+
 //BME280读取
 Blockly.Blocks['BME280_READ'] = {
   init: function() {

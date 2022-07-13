@@ -905,16 +905,29 @@
   </block>
   <block type="PS2_Button"></block>
   <block type="PS2_stk"></block>
-  <block type="encoder_init1">
+  <block type="sensor_encoder_init">
+    <value name="CLK">
+      <shadow type="pins_digital">
+        <field name="PIN">2</field>
+      </shadow>
+    </value>
+    <value name="DT">
+      <shadow type="pins_digital">
+        <field name="PIN">3</field>
+      </shadow>
+    </value>
   </block>
-  <block type="encoder_read1"></block>
-  <block type="encoder_write1">
-    <value name="value">
+  <block type="sensor_encoder_get">
+  </block>
+  <block type="sensor_encoder_set">
+    <value name="DATA">
       <shadow type="math_number">
         <field name="NUM">0</field>
       </shadow>
     </value>
-  </block>      
+  </block>
+  <block type="sensor_encoder_handle">
+  </block>
 </category>
 <category id="catActuator" colour="100">
   <block type="HR8833_Motor_Setup">

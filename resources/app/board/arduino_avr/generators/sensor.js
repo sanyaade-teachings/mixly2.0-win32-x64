@@ -400,6 +400,66 @@ Blockly.Arduino.encoder_init1 = function() {
   return code;
 };
 
+// 旋转编码器初始化
+Blockly.Arduino.sensor_encoder_init = function() {
+  var dropdownType = this.getFieldValue('TYPE');
+  var valueClk = Blockly.Arduino.valueToCode(this, 'CLK', Blockly.Arduino.ORDER_ATOMIC);
+  var valueDt = Blockly.Arduino.valueToCode(this, 'DT', Blockly.Arduino.ORDER_ATOMIC);
+  Blockly.Arduino.definitions_['include_ESPRotary'] ='#include <ESPRotary.h>';
+  Blockly.Arduino.definitions_['var_declare_encoder' + dropdownType] = `ESPRotary encoder${dropdownType};`;
+  Blockly.Arduino.setups_['setup_encoder' + dropdownType] = `encoder${dropdownType}.begin(${valueDt}, ${valueClk});\n  encoder${dropdownType}.setStepsPerClick(2);`;
+  var code = `encoder${dropdownType}.loop();\n`;
+  return code;
+};
+
+// 旋转编码器读取
+Blockly.Arduino.sensor_encoder_get = function() {
+  var dropdownType = this.getFieldValue('TYPE');
+  var dropdownOperateType = this.getFieldValue('OPERATE_TYPE');
+  var code = `encoder${dropdownType}.${dropdownOperateType}()`;
+  return [ code, Blockly.Arduino.ORDER_ATOMIC ];
+};
+
+// 旋转编码器设置
+Blockly.Arduino.sensor_encoder_set = function() {
+  var dropdownType = this.getFieldValue('TYPE');
+  var valueData = Blockly.Arduino.valueToCode(this, 'DATA', Blockly.Arduino.ORDER_ATOMIC);
+  var dropdownOperateType = this.getFieldValue('OPERATE_TYPE');
+  var code = `encoder${dropdownType}.${dropdownOperateType}(${valueData});\n`;
+  return code;
+};
+
+// 旋转编码器事件
+Blockly.Arduino.sensor_encoder_handle = function() {
+  var dropdownType = this.getFieldValue('TYPE');
+  var dropdownOperateType = this.getFieldValue('OPERATE_TYPE');
+  var statementsDo = Blockly.Arduino.statementToCode(this, 'DO');
+  var cbFuncName = 'encoder' + dropdownType;
+  switch (dropdownOperateType) {
+    case 'setChangedHandler':
+      cbFuncName += 'OnChanged';
+      break;
+    case 'setRightRotationHandler':
+      cbFuncName += 'OnRightRotation';
+      break;
+    case 'setLeftRotationHandler':
+      cbFuncName += 'OnLeftRotation';
+      break;
+    case 'setUpperOverflowHandler':
+      cbFuncName += 'OnUpperOverflow';
+      break;
+    case 'setLowerOverflowHandler':
+    default:
+      cbFuncName += 'OnLowerOverflow';
+  }
+  Blockly.Arduino.definitions_['function_' + cbFuncName] = `void ${cbFuncName}(ESPRotary& encoder${dropdownType}) {\n`
+                                                         + `  ${statementsDo}`
+                                                         + `}\n`;
+  Blockly.Arduino.setups_['setup_' + cbFuncName] = `encoder${dropdownType}.${dropdownOperateType}(${cbFuncName});`;
+  var code = '';
+  return code;
+};
+
 //BME280读取
 Blockly.Arduino.BME280_READ = function() {
  var TYPE = this.getFieldValue('TYPE');
