@@ -19,8 +19,8 @@ onboard_i2c=SoftI2C(scl = Pin(22), sda = Pin(21), freq = 400000)
 '''MPU9250'''
 try :
     import mpu9250
-    mpu = mpu9250.MPU9250(onboard_i2c)
-    compass = mpu9250.Compass(mpu)    
+    onboard_mpu = mpu9250.MPU9250(onboard_i2c)
+    onboard_compass = mpu9250.Compass(onboard_mpu)    
 except Exception as e:
     print(e)
 
@@ -112,14 +112,14 @@ def infrared_left():
     time.sleep(0.02)
     adc=ADCSensor(34).read()
     ADCSensor(34).switch(0)    
-    return     adc    
+    return adc    
 
 def infrared_right():
     ADCSensor(36).switch(1)
     time.sleep(0.02)
     adc=ADCSensor(36).read()
     ADCSensor(36).switch(0)    
-    return     adc        
+    return adc        
 
 def get_brightness():
     return ADCSensor(39).read() 
@@ -132,7 +132,7 @@ def get_soundlevel():
             val = ADCSensor(35).read() 
             values.append(val)
         value_d.append(max(values) - min(values))
-    return  max(value_d)
+    return max(value_d)
 
 '''2-LED'''     #Repair brightness adjustment range 0-100%    
 class LED:

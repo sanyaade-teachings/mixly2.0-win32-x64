@@ -209,22 +209,3 @@ Blockly.Python.network_socket_close= function() {
     return code;
 }
 
-Blockly.Python.network_espnow_mac= function() {
-    Blockly.Python.definitions_['import_mixgo_myespnow'] = "from mixgo import myespnow";
-    return ["myespnow.mac", Blockly.Python.ORDER_ATOMIC];
-}
-
-Blockly.Python.network_espnow_recv= function() {
-    Blockly.Python.definitions_['import_mixgo_myespnow'] = "from mixgo import myespnow";
-    var mode=this.getFieldValue('mode');
-    var code = "myespnow.recv()"+mode;
-    return [code, Blockly.Python.ORDER_ATOMIC];
-}
-
-Blockly.Python.network_espnow_send= function() {
-    Blockly.Python.definitions_['import_mixgo_myespnow'] = "from mixgo import myespnow";
-    var mac =Blockly.Python.valueToCode(this, 'mac',Blockly.Python.ORDER_ATOMIC);
-    var content =Blockly.Python.valueToCode(this, 'content',Blockly.Python.ORDER_ATOMIC);
-    var code = "myespnow.send("+mac+","+content+")\n";
-    return code;
-}

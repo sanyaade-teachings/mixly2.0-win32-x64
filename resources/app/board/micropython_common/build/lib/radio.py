@@ -3,7 +3,8 @@ Radio-ESP-NOW
 
 Micropython library for the Radio-ESP-NOW 
 =======================================================
-#Preliminary composition	       20220228
+#Preliminary composition			20220228
+#Upgrade synchronization			20220701
 
 dahanzimin From the Mixly Team 
 """
@@ -13,49 +14,64 @@ from ubinascii import hexlify,unhexlify
 import network
 
 class ESPNow(espnow.ESPNow):
-	def __init__(self):
+	def __init__(self,channel=0):
 		super().__init__()
-		super().init()
-
-		if not network.WLAN().active():
-			network.WLAN().active(True)
-			print("Make network active")
-			
+		self.active(True)
+		self._channel=channel
+		self._nic = network.WLAN(network.AP_IF)
+		self._nic.config(hidden=True,channel=self._channel)
+		self._nic.active(True)
+		
 	def send(self,peer,msg):
-		'''报错有效处理后发送数据'''	
+		'''Send data after error reporting and effective processing'''	
 		try:
 			_peer=unhexlify(peer)
-			return super().send(_peer,str(msg))
+			return super().send(_peer, str(msg))
 		except OSError as err:
 			if len(err.args) < 2:
 				raise err
 			if err.args[1] == 'ESP_ERR_ESPNOW_NOT_INIT':
-				super().init()
+				raise OSError("Radio(ESPNOW) is not activated, unable to transmit data") 
 			elif err.args[1] == 'ESP_ERR_ESPNOW_IF':
-				network.WLAN().active(True)
+				self._nic.active(True)
 			elif err.args[1] == 'ESP_ERR_ESPNOW_NOT_FOUND':
-				super().add_peer(_peer)
+				self.add_peer(_peer,channel=self._channel,ifidx=network.AP_IF)
 				return super().send(_peer, str(msg))
 			elif err.args[1] == 'ESP_ERR_ESPNOW_NO_MEM':
-				raise OSError("internal ESP-NOW buffers are full")    
+				raise OSError("internal ESP-NOW buffers are full")  
+			elif err.args[1] == 'ESP_ERR_ESPNOW_ARG':
+				raise OSError("invalid argument") 				
 			else:
 				raise err  
 				
 	def recv(self):
-		'''接收数据'''
-		if super().poll():
+		'''Receive data'''
+		if self.any():
 			host, msg = super().recv()  
 			return hexlify(host).decode(),msg.decode()
 		else :
 			return None,None
 
+	def _cb_handle(self, event_code,data):
+		'''Callback processing conversion'''
+		if self._on_handle:
+			self._on_handle(hexlify(data[0]).decode(),data[1].decode())
+
 	def recv_cb(self,recv_cb):
-		'''接受回调'''
-		super().config(on_recv=recv_cb)
-		
+		'''Receive callback'''
+		self._on_handle = recv_cb
+		if recv_cb:
+			self.irq(self._cb_handle)
+
+	def info(self):
+		'''Get the paired Mac and rssi'''
+		_info=[]
+		for i in self.peers_table:
+			_info.append((hexlify(i).decode(),self.peers_table[i][0]))
+		return _info
+			
 	@property
 	def mac(self):
-		'''MAC地址'''
-		return hexlify(network.WLAN().config('mac')).decode()
-		
+		'''Get mac address'''
+		return hexlify(self._nic.config('mac')).decode()
 	

@@ -161,10 +161,18 @@ Blockly.Python.communicate_ow_select = function () {
 };
 
 Blockly.Python.communicate_ir_recv = function(){
-    Blockly.Python.definitions_['import_irremote'] = 'import irremote';   
+    Blockly.Python.definitions_['import_ir_remote'] = 'import ir_remote';   
     var pin = Blockly.Python.valueToCode(this, 'PIN',Blockly.Python.ORDER_ATOMIC);
     var sub = Blockly.Python.valueToCode(this, 'SUB',Blockly.Python.ORDER_ATOMIC);
-    return "irremote.resume("+pin+", "+sub+")\n"
+    return "ir_remote.IRrecv("+pin+", "+sub+")\n"
+};
+
+Blockly.Python.communicate_ir_send = function(){
+    Blockly.Python.definitions_['import_ir_remote'] = 'import ir_remote';   
+    var pin = Blockly.Python.valueToCode(this, 'PIN',Blockly.Python.ORDER_ATOMIC);
+    var sub = Blockly.Python.valueToCode(this, 'SUB',Blockly.Python.ORDER_ATOMIC);
+    var addr = Blockly.Python.valueToCode(this, 'ADDR',Blockly.Python.ORDER_ATOMIC);
+    return "ir_remote.IRsend("+pin+", "+addr+", "+sub+")\n"
 };
 
 Blockly.Python.communicate_bluetooth_central_init = function(){
@@ -212,6 +220,46 @@ Blockly.Python.communicate_bluetooth_recv = function (block) {
     var v = Blockly.Python.valueToCode(this, 'VAR', Blockly.Python.ORDER_ATOMIC);
     var method = Blockly.Python.valueToCode(this, 'METHOD', Blockly.Python.ORDER_ATOMIC);
     var code = v + '.recv('+ method +')\n';
+    return code;
+};
+
+//espnow
+Blockly.Python.communicate_espnow_init = function () {
+    Blockly.Python.definitions_['import_radio'] = "import radio";
+    var name = Blockly.Python.valueToCode(this, 'VAR', Blockly.Python.ORDER_ATOMIC);
+    var varName =Blockly.Python.valueToCode(this, 'CHNL',Blockly.Python.ORDER_ATOMIC);
+    var code = ""+name+"=radio.ESPNow(channel="+varName+")\n";
+    return code;
+};
+
+Blockly.Python.network_espnow_mac= function() {
+    Blockly.Python.definitions_['import_radio'] = "import radio";
+    var name = Blockly.Python.valueToCode(this, 'VAR', Blockly.Python.ORDER_ATOMIC);
+    return [name+".info()", Blockly.Python.ORDER_ATOMIC];
+}
+
+Blockly.Python.network_espnow_recv= function() {
+    Blockly.Python.definitions_['import_radio'] = "import radio";
+    var mode=this.getFieldValue('mode');
+    var name = Blockly.Python.valueToCode(this, 'VAR', Blockly.Python.ORDER_ATOMIC);
+    var code = name+".recv()"+mode;
+    return [code, Blockly.Python.ORDER_ATOMIC];
+}
+
+Blockly.Python.network_espnow_send= function() {
+    Blockly.Python.definitions_['import_radio'] = "import radio";
+    var name = Blockly.Python.valueToCode(this, 'VAR', Blockly.Python.ORDER_ATOMIC);
+    var mac =Blockly.Python.valueToCode(this, 'mac',Blockly.Python.ORDER_ATOMIC);
+    var content =Blockly.Python.valueToCode(this, 'content',Blockly.Python.ORDER_ATOMIC);
+    var code = name+".send("+mac+","+content+")\n";
+    return code;
+}
+
+Blockly.Python.network_espnow_recv_handle = function (block) {
+    Blockly.Python.definitions_['import_radio'] = "import radio";
+    var name = Blockly.Python.valueToCode(this, 'VAR', Blockly.Python.ORDER_ATOMIC);
+    var method = Blockly.Python.valueToCode(this, 'METHOD', Blockly.Python.ORDER_ATOMIC);
+    var code = name+".recv_cb("+method+")\n";
     return code;
 };
 

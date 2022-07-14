@@ -287,7 +287,68 @@ Blockly.Python.sensor_compass_reset = function(block) {
   return ''+v+'.reset_calibrate()\n';
 };
 
+Blockly.Python.sensor_onboard_mpu9250_gesture = function(){
+    Blockly.Python.definitions_['import_machine'] = 'import machine';
+    var gesture = this.getFieldValue('gesture');    
+    Blockly.Python.definitions_['import_mixgo_onboard_mpu'] = 'from mixgo import onboard_mpu';    
+    var code = 'onboard_mpu.mpu9250_is_gesture("' + gesture + '")';
+    return [code, Blockly.Python.ORDER_ATOMIC];
+}
 
+Blockly.Python.sensor_onboard_mpu9250_get_acceleration = function(){    
+    Blockly.Python.definitions_['import_machine'] = 'import machine';
+    var key = this.getFieldValue('key');
+    Blockly.Python.definitions_['import_mixgo_onboard_mpu'] = 'from mixgo import onboard_mpu';
+    var code = 'onboard_mpu.mpu9250_get_' + key + '()';
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python.sensor_onboard_mpu9250_get_magnetic = function(){    
+    Blockly.Python.definitions_['import_machine'] = 'import machine';
+    var key = this.getFieldValue('key');
+    Blockly.Python.definitions_['import_mixgo_onboard_mpu'] = 'from mixgo import onboard_mpu'; 
+    var code = 'onboard_mpu.mpu9250_magnetic_' + key + '()';
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python.sensor_onboard_mpu9250_get_gyro = function(){
+    Blockly.Python.definitions_['import_machine'] = 'import machine';
+    var key = this.getFieldValue('key');
+    Blockly.Python.definitions_['import_mixgo_onboard_mpu'] = 'from mixgo import onboard_mpu';
+    var code = 'onboard_mpu.mpu9250_gyro_' + key + '()';
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python.sensor_onboard_mpu9250_calibrate_compass= function(){
+    Blockly.Python.definitions_['import_machine'] = 'import machine';
+    Blockly.Python.definitions_['import_mixgo_onboard_compass'] = 'from mixgo import onboard_compass';    
+    return ''+'onboard_compass.calibrate()\n';
+};
+
+Blockly.Python.sensor_onboard_mpu9250_temperature = function(){
+    Blockly.Python.definitions_['import_machine'] = 'import machine';
+    Blockly.Python.definitions_['import_mixgo_onboard_mpu'] = 'from mixgo import onboard_mpu';
+    return ['onboard_mpu.mpu9250_get_temperature()', Blockly.Python.ORDER_ATOMIC];
+};
+Blockly.Python.sensor_onboard_mpu9250_field_strength= function(){
+    Blockly.Python.definitions_['import_machine'] = 'import machine';
+    Blockly.Python.definitions_['import_mixgo_onboard_compass'] = 'from mixgo import onboard_compass';     
+    var compass = this.getFieldValue('compass');
+    var a;
+    if(compass =='strength'){
+        a = 'onboard_compass.get_field_strength()';
+    }
+    else if(compass =='heading'){
+        a = 'onboard_compass.heading()';
+    }
+    return [a, Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python.sensor_onboard_compass_reset = function(block) {
+  Blockly.Python.definitions_['import_machine'] = 'import machine';
+  Blockly.Python.definitions_['import_mixgo_onboard_compass'] = 'from mixgo import onboard_compass';
+  return ''+'onboard_compass.reset_calibrate()\n';
+};
 
 //mixgo_me onboard_sensor generators:
 

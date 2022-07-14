@@ -405,45 +405,4 @@ Blockly.Blocks['network_socket_close'] = {
     }
 };
 
-Blockly.Blocks['network_espnow_mac'] = {
-    init: function() {
-        this.setColour(Blockly.Blocks.communicate.HUE);
-        this.appendDummyInput()
-            .appendField("ESPNow")
-            .appendField(Blockly.MIXLY_MIXGO_ESPNOW_MAC);
-        this.setOutput(true);
-        this.setInputsInline(true);
-    }
-};
 
-Blockly.Blocks['network_espnow_recv'] = {
-    init: function() {
-        this.setColour(Blockly.Blocks.communicate.HUE);
-        this.appendDummyInput()
-            .appendField("ESPNow")
-            .appendField(Blockly.MIXLY_MIXGO_ESPNOW_RECV);
-        this.appendDummyInput()
-            .appendField(new Blockly.FieldDropdown([
-                ["("+Blockly.MIXLY_ETHERNET_MAC_ADDRESS+", "+Blockly.OLED_STRING+")",""],
-                [Blockly.MIXLY_ETHERNET_MAC_ADDRESS, "[0]"],
-                [Blockly.OLED_STRING, "[1]"]
-            ]), "mode");
-        this.setOutput(true);
-        this.setInputsInline(true);
-    }
-};
-
-Blockly.Blocks['network_espnow_send'] = {
-    init: function() {
-        this.setColour(Blockly.Blocks.communicate.HUE);
-        this.appendValueInput('mac')
-            .appendField("ESPNow")
-            .appendField(Blockly.MIXLY_MIXGO_ESPNOW_SEND_MAC);
-        this.appendValueInput('content')
-            .appendField(Blockly.MIXLY_MIXGO_ESPNOW_SEND);
-        this.setPreviousStatement(true);
-        this.setNextStatement(true);
-        this.setInputsInline(true);
-        this.setTooltip(Blockly.MIXLY_MIXGO_ESPNOW_SEND_TOOLTIP);
-    }
-};
