@@ -22,7 +22,7 @@ Blockly.Arduino.store_sd_init = function() {
 };
 
 Blockly.Arduino.store_sd_write = function() {
-	var file = Blockly.Arduino.quote_(this.getFieldValue('FILE'));
+	var file = Blockly.Arduino.valueToCode(this, 'FILE', Blockly.Arduino.ORDER_ATOMIC) || '\"\"';
 	//file=file.replace(/String/,"");
 	var data = Blockly.Arduino.valueToCode(this, 'DATA', Blockly.Arduino.ORDER_ATOMIC) || '\"\"';
 	//data=data.replace(/String/,"");

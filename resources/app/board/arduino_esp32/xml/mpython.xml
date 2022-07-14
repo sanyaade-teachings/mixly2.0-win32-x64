@@ -2326,7 +2326,6 @@
            <field name="TEXT">fileName.txt</field>
           </shadow>
          </value> 
-          <field name="FILE">fileName.txt</field>
           <value name="DATA">
             <shadow type="text">
               <field name="TEXT">hello world</field>
