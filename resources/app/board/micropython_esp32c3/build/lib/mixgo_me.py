@@ -19,24 +19,24 @@ onboard_i2c=SoftI2C(scl = Pin(7), sda = Pin(6), freq = 400000)
 
 '''ACC-Sensor'''    #Including acceleration,temperature
 try :
-    import mxc6655xa
-    onboard_mxc6655xa = mxc6655xa.MXC6655XA(onboard_i2c)     
+	import mxc6655xa
+	onboard_mxc6655xa = mxc6655xa.MXC6655XA(onboard_i2c)     
 except Exception as e:
-    print(e)
+	print(e)
 
 '''ALS_PS-Sensor'''    #Including als_vis,als_ir,ps_nl
 try :
-    import ltr553als
-    onboard_ltr553als = ltr553als.LTR_553ALS(onboard_i2c)     
+	import ltr553als
+	onboard_ltr553als = ltr553als.LTR_553ALS(onboard_i2c)     
 except Exception as e:
-    print(e)
+	print(e)
 
 '''Matrix8x5'''
 try :
-    import matrix8x5
-    onboard_matrix = matrix8x5.Matrix(8)
+	import matrix8x5
+	onboard_matrix = matrix8x5.Matrix(8)
 except Exception as e:
-    print(e)
+	print(e)
 
 '''2RGB_WS2812'''    #color_chase(),rainbow_cycle()方法移至类里
 from ws2812 import NeoPixel
@@ -48,60 +48,63 @@ onboard_music =MIDI(10)
 
 '''MIC_Sensor'''
 class MICSensor:
-    def __init__(self):
-        self.adc=ADC(Pin(4))
-        self.adc.atten(ADC.ATTN_11DB) 
-        
-    def read(self):
-        maxloudness = 0
-        for i in range(5):
-            loudness = self.sample()  
-            if loudness > maxloudness:
-                maxloudness = loudness
-        return maxloudness  
-        
-    def sample(self):
-        values = []
-        for i in range(50):
-            val = self.adc.read()
-            values.append(val)
-        return max(values) - min(values)
+	def __init__(self):
+		self.adc=ADC(Pin(4))
+		self.adc.atten(ADC.ATTN_11DB) 
+		
+	def read(self):
+		maxloudness = 0
+		for i in range(5):
+			loudness = self.sample()  
+			if loudness > maxloudness:
+				maxloudness = loudness
+		return maxloudness  
+		
+	def sample(self):
+		values = []
+		for i in range(50):
+			val = self.adc.read()
+			values.append(val)
+		return max(values) - min(values)
 
 onboard_sound = MICSensor()
 
 '''5KEY_Sensor'''
 class KEYSensor:
-    def __init__(self,range):
-        self.adc=ADC(Pin(5))
-        self.adc.atten(ADC.ATTN_11DB) 
-        self.range=range
-        self.flag = True
-    
-    def _value(self):
-        values = []
-        for _ in range(20):
-            values.append(self.adc.read())
-            time.sleep(0.001)
-        return (self.range-200) < (sum(sorted(values)[5:15])//10) < (self.range+200)
-    
-    def get_presses(self, delay = 1):
-        last_time,presses = time.time(), 0
-        while time.time() < last_time + delay:
-            time.sleep(0.05)
-            if self.was_pressed():
-                presses += 1
-        return presses
+	def __init__(self,range):
+		self.adc=ADC(Pin(5))
+		self.adc.atten(ADC.ATTN_11DB) 
+		self.range=range
+		self.flag = True
+	
+	def _value(self):
+		values = []
+		for _ in range(20):
+			values.append(self.adc.read())
+			time.sleep(0.001)
+		return (self.range-200) < (sum(sorted(values)[5:15])//10) < (self.range+200)
+	
+	def get_presses(self, delay = 1):
+		last_time,presses = time.time(), 0
+		while time.time() < last_time + delay:
+			time.sleep(0.05)
+			if self.was_pressed():
+				presses += 1
+		return presses
 
-    def is_pressed(self):
-        return self._value()
+	def is_pressed(self):
+		return self._value()
 
-    def was_pressed(self):
-        if(self._value() != self.flag):
-            self.flag = self._value()
-            if self.flag :
-                return True
-            else:
-                return False
+	def was_pressed(self):
+		if(self._value() != self.flag):
+			self.flag = self._value()
+			if self.flag :
+				return True
+			else:
+				return False
+
+	def irq(self, handler, trigger):
+		Pin(5, Pin.IN).irq(handler = handler, trigger = trigger)
 
 B2key = KEYSensor(20)
 A1key = KEYSensor(800)
@@ -111,33 +114,33 @@ A4key = KEYSensor(3500)
 
 '''1KEY_Button'''
 class Button:
-    def __init__(self, pin):
-        self.pin = Pin(pin, Pin.IN)
-        self.flag = True
-        
-    def get_presses(self, delay = 1):
-        last_time,presses = time.time(), 0
-        while time.time() < last_time + delay:
-            time.sleep(0.05)
-            if self.was_pressed():
-                presses += 1
-        return presses
+	def __init__(self, pin):
+		self.pin = Pin(pin, Pin.IN)
+		self.flag = True
+		
+	def get_presses(self, delay = 1):
+		last_time,presses = time.time(), 0
+		while time.time() < last_time + delay:
+			time.sleep(0.05)
+			if self.was_pressed():
+				presses += 1
+		return presses
 
-    def is_pressed(self):
-        return not self.pin.value()
+	def is_pressed(self):
+		return not self.pin.value()
 
-    def was_pressed(self, flag = 0):
-        if(self.pin.value() != self.flag):
-            self.flag = self.pin.value()
-            time.sleep(0.02)
-            if self.flag:
-                return False
-            else:
-                return True
+	def was_pressed(self, flag = 0):
+		if(self.pin.value() != self.flag):
+			self.flag = self.pin.value()
+			time.sleep(0.02)
+			if self.flag:
+				return False
+			else:
+				return True
 
-    def irq(self, handler, trigger):
-        self.pin.irq(handler = handler, trigger = trigger)
-        
+	def irq(self, handler, trigger):
+		self.pin.irq(handler = handler, trigger = trigger)
+		
 B1key = Button(9)
 
 '''Reclaim memory'''
