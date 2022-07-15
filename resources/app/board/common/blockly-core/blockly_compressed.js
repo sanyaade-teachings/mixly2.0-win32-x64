@@ -820,28 +820,28 @@ Blockly.ShortcutRegistry.prototype.removeKeyMapping=function(a,b,c){var d=this.k
 Blockly.ShortcutRegistry.prototype.removeAllKeyMappings=function(a){for(var b in this.keyMap_)this.removeKeyMapping(b,a,!0)};Blockly.ShortcutRegistry.prototype.setKeyMap=function(a){this.keyMap_=a};Blockly.ShortcutRegistry.prototype.getKeyMap=function(){return Blockly.utils.object.deepMerge(Object.create(null),this.keyMap_)};Blockly.ShortcutRegistry.prototype.getRegistry=function(){return Blockly.utils.object.deepMerge(Object.create(null),this.registry_)};
 
 Blockly.ShortcutRegistry.prototype.onKeyDown = function(a, b) {
-  if(b.shiftKey && b.ctrlKey){
+  if((b.shiftKey && b.ctrlKey) || (b.altKey && b.ctrlKey)) {
       if (Blockly.selected &&
-          Blockly.selected.isDeletable() && Blockly.selected.isMovable()) {
-          if (b.keyCode == 67) {
-            // 'c' for copy.
-            let selectedXmlDom = Blockly.Xml.blockToDom(Blockly.selected);
-            navigator.clipboard.writeText(Blockly.Xml.domToText(selectedXmlDom)).then((message) => {
-              console.log('clipboard：复制成功');
-            }).catch((error) => {
-              console.log('clipboard：复制失败');
-            });
-          } 
-      } if (b.keyCode == 86) {
-          // 'v' for paste.
-          navigator.clipboard.readText().then((message) => {
-            let cacheDom = Blockly.Xml.textToDom(message);
-            let cacheBlock = Blockly.Xml.domToBlock(cacheDom, Blockly.mainWorkspace);
-            console.log('clipboard：粘贴成功');
+        Blockly.selected.isDeletable() && Blockly.selected.isMovable()) {
+        if (b.keyCode === 67) {
+          // 'c' for copy.
+          let selectedXmlDom = Blockly.Xml.blockToDom(Blockly.selected);
+          navigator.clipboard.writeText(Blockly.Xml.domToText(selectedXmlDom)).then((message) => {
+            console.log('clipboard：复制成功');
           }).catch((error) => {
-            console.log('clipboard：粘贴失败');
+            console.log('clipboard：复制失败');
           });
-      } 
+        }
+      } if (b.keyCode === 86) {
+        // 'v' for paste.
+        navigator.clipboard.readText().then((message) => {
+          let cacheDom = Blockly.Xml.textToDom(message);
+          let cacheBlock = Blockly.Xml.domToBlock(cacheDom, Blockly.mainWorkspace);
+          console.log('clipboard：粘贴成功');
+        }).catch((error) => {
+          console.log('clipboard：粘贴失败');
+        });
+      }
     }
     var c = this.serializeKeyEvent_(b);
     c = this.getShortcutNamesByKeyCode(c);
