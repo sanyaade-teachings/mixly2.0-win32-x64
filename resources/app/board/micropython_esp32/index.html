@@ -3555,9 +3555,31 @@
         </block>
       </category>
       <category id="catESPNow" colour="140">
-        <block type="network_espnow_mac"></block>
-        <block type="network_espnow_recv"></block>
+        <block type="communicate_espnow_init">
+          <value name="VAR">
+            <shadow type="variables_get">
+              <field name="VAR">my_now</field>
+            </shadow>
+          </value>
+          <value name="CHNL">
+            <shadow type="math_number">
+              <field name="NUM">0</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="network_espnow_mac">
+          <value name="VAR">
+            <shadow type="variables_get">
+              <field name="VAR">my_now</field>
+            </shadow>
+          </value>
+        </block>
         <block type="network_espnow_send">
+          <value name="VAR">
+            <shadow type="variables_get">
+              <field name="VAR">my_now</field>
+            </shadow>
+          </value>
           <value name="mac">
             <shadow type="text">
               <field name="TEXT">FFFFFFFFFFFF</field>
@@ -3568,6 +3590,51 @@
               <field name="TEXT">mixly</field>
             </shadow>
           </value>
+        </block>
+        <block type="network_espnow_recv">
+          <value name="VAR">
+            <shadow type="variables_get">
+              <field name="VAR">my_now</field>
+            </shadow>
+          </value>
+        </block>        
+        <block type="network_espnow_recv_handle">
+          <value name="VAR">
+            <shadow type="variables_get">
+              <field name="VAR">my_now</field>
+            </shadow>
+          </value>          
+          <value name="METHOD">
+            <shadow type="factory_block_return">
+              <field name="VALUE">cb</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="procedures_defnoreturn">
+          <mutation>
+            <arg name="mac"></arg>
+            <arg name="msg"></arg>
+          </mutation>
+          <field name="NAME">cb</field>
+          <statement name="STACK">
+            <block type="controls_if">
+              <value name="IF0">
+                <block type="logic_compare">
+                  <field name="OP">EQ</field>
+                  <value name="A">
+                    <block type="variables_get">
+                      <field name="VAR">msg</field>
+                    </block>
+                  </value>
+                  <value name="B">
+                    <block type="text">
+                      <field name="TEXT">1</field>
+                    </block>
+                  </value>
+                </block>
+              </value>
+            </block>
+          </statement>
         </block>
       </category>
     </category>
