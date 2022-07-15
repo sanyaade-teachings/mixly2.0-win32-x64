@@ -365,7 +365,7 @@ Blockly.Blocks.sensor_use_i2c_init = {
 };
 
 
-Blockly.Blocks['sensor_LTR308'] = {
+Blockly.Blocks['sensor_LTR308_extern'] = {
     init: function(){
         this.setColour(Blockly.Blocks.sensor.HUE);
         this.appendDummyInput()
@@ -380,7 +380,7 @@ Blockly.Blocks['sensor_LTR308'] = {
     }
 };
 
-Blockly.Blocks['sensor_VL530LX'] = {
+Blockly.Blocks['sensor_VL530LX_extern'] = {
     init: function(){
         this.setColour(Blockly.Blocks.sensor.HUE);
         this.appendDummyInput()
@@ -395,7 +395,7 @@ Blockly.Blocks['sensor_VL530LX'] = {
     }
 };
 
-Blockly.Blocks['sensor_shtc3'] = {
+Blockly.Blocks['sensor_shtc3_extern'] = {
     init: function(){
         this.setColour(Blockly.Blocks.sensor.HUE);
         this.appendValueInput('SUB')
@@ -421,7 +421,7 @@ Blockly.Blocks['sensor_shtc3'] = {
     }
 };
 
-Blockly.Blocks['sensor_aht11'] = {
+Blockly.Blocks['sensor_aht11_extern'] = {
     init: function(){
         this.setColour(Blockly.Blocks.sensor.HUE);
         this.appendValueInput('SUB')
@@ -446,7 +446,7 @@ Blockly.Blocks['sensor_aht11'] = {
     }
 };
 
-Blockly.Blocks['sensor_hp203'] = {
+Blockly.Blocks['sensor_hp203_extern'] = {
     init: function(){
         this.setColour(Blockly.Blocks.sensor.HUE);
         this.appendValueInput('SUB')
@@ -463,7 +463,7 @@ Blockly.Blocks['sensor_hp203'] = {
     }
 };
 
-Blockly.Blocks['sensor_QMC5883L'] = {
+Blockly.Blocks['sensor_QMC5883L_extern'] = {
     init: function(){
         this.setColour(Blockly.Blocks.sensor.HUE);
         this.appendValueInput('SUB')

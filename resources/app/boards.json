@@ -6,7 +6,7 @@
         "env": 2
     },{
         "boardImg": "./board/micropython_esp32c3/media/c3.png",
-        "boardName": "Python ESP32 C3",
+        "boardName": "Python ESP32-C3",
         "boardIndex": "./board/micropython_esp32c3/index.html",
         "env": 2
     },{
@@ -15,14 +15,14 @@
         "boardIndex": "./board/micropython_esp32/index.html",
         "env": 2
     },{
-        "boardImg": "./board/python_mixpy/media/py.png",
-        "boardName": "Python 3",
-        "boardIndex": "./board/python_mixpy/index_board_mixpy.html",
-        "env": 1
-    },{
         "boardImg": "./board/arduino_avr/media/uno.png",
         "boardName": "Arduino AVR",
         "boardIndex": "./board/arduino_avr/index.html",
+        "env": 1
+    },{
+        "boardImg": "./board/python_mixpy/media/py.png",
+        "boardName": "Python 3",
+        "boardIndex": "./board/python_mixpy/index_board_mixpy.html",
         "env": 1
     },{
         "boardImg": "./board/micropython_nrf51822_microbit/media/microbit.png",
@@ -48,16 +48,6 @@
         "boardImg": "./board/circuitpython_esp32s2_mixgocar/media/mixgocar1.png",
         "boardName": "MixGo Car",
         "boardIndex": "./board/circuitpython_esp32s2_mixgocar/index.html",
-        "env": 2
-    },{
-        "boardImg": "./board/micropython_esp32_mixgo/media/mixgo.png",
-        "boardName": "MixGo",
-        "boardIndex": "./board/micropython_esp32_mixgo/index.html",
-        "env": 2
-    },{
-        "boardImg": "./board/micropython_esp32_mixgope/media/mixgope.png",
-        "boardName": "MixGo PE",
-        "boardIndex": "./board/micropython_esp32_mixgope/index.html",
         "env": 2
     },{
         "boardImg": "./board/micropython_esp32_handbit/media/handbitv2.png",

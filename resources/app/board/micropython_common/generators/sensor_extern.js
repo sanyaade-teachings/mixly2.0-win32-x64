@@ -242,14 +242,14 @@ Blockly.Python.sensor_use_i2c_init=function(){
     return code;
 };
 
-Blockly.Python.sensor_LTR308 = function(){
+Blockly.Python.sensor_LTR308_extern = function(){
     Blockly.Python.definitions_['import_ltr308al'] = 'import ltr308al';
     var sub = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
     var code = sub + '.getdata()';
     return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
-Blockly.Python.sensor_hp203=function(){
+Blockly.Python.sensor_hp203_extern=function(){
     var sub = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
     var key = this.getFieldValue('key');
     Blockly.Python.definitions_['import_hp203x'] = 'import hp203x';
@@ -257,7 +257,7 @@ Blockly.Python.sensor_hp203=function(){
     return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
-Blockly.Python.sensor_QMC5883L=function(){
+Blockly.Python.sensor_QMC5883L_extern=function(){
     var sub = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
     var key = this.getFieldValue('key');
     Blockly.Python.definitions_['import_qmc5883l'] = 'import qmc5883l';
@@ -265,7 +265,7 @@ Blockly.Python.sensor_QMC5883L=function(){
     return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
-Blockly.Python.sensor_shtc3=function(){
+Blockly.Python.sensor_shtc3_extern=function(){
     var sub = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
     var key = this.getFieldValue('key');
     Blockly.Python.definitions_['import_shtc3'] = 'import shtc3';
@@ -278,7 +278,7 @@ Blockly.Python.sensor_shtc3=function(){
     return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
-Blockly.Python.sensor_aht11=function(){
+Blockly.Python.sensor_aht11_extern=function(){
     var sub = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
     var key = this.getFieldValue('key');
     Blockly.Python.definitions_['import_ahtx0'] = 'import ahtx0';
@@ -286,7 +286,7 @@ Blockly.Python.sensor_aht11=function(){
     return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
-Blockly.Python.sensor_VL530LX=function(){
+Blockly.Python.sensor_VL530LX_extern=function(){
     var sub = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
     var key = this.getFieldValue('key');
     Blockly.Python.definitions_['import_vl53l0x'] = 'import vl53l0x';
