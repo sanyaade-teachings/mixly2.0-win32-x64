@@ -202,20 +202,6 @@ Blockly.Python.display_rect=function(){
      }
 };
 
-Blockly.Python['image_arithmetic'] = function(a) {
-  Blockly.Python.definitions_['import_matrix'] = 'import matrix';
-  var op = a.getFieldValue("OP");
-  var imga = Blockly.Python.valueToCode(a, 'A', Blockly.Python.ORDER_ATOMIC);
-  var imgb = Blockly.Python.valueToCode(a, 'B', Blockly.Python.ORDER_ATOMIC);
-  if (op=='INTERSECTION') {
-    var code = imga + '-(' + imga + '-' + imgb +')';
-  }
-  else{
-    var code = imga + op + imgb;
-  }
-  return [code, Blockly.Python.ORDER_ATOMIC];
-};
-
 
 Blockly.Python.display_line=function(){
   Blockly.Python.definitions_['import_machine'] = 'import machine';

@@ -2201,7 +2201,7 @@
         <block type="PS2_stk"></block>
     </category>
     <category id="catExternActuator" colour="100">
-      <block type="actuator_extern_led_bright">
+      <block type="actuator_extern_led_bright" m-show="micropython:esp32:mixgo">
         <value name="PIN">
           <shadow type="pins_pwm_pin">
           </shadow>
@@ -2211,13 +2211,13 @@
           </shadow>
         </value>
       </block>
-      <block type="actuator_extern_get_led_state">
+      <block type="actuator_extern_get_led_state" m-show="micropython:esp32:mixgo">
         <value name="PIN">
           <shadow type="pins_pwm_pin">
           </shadow>
         </value>
       </block>
-      <block type="actuator_extern_led_brightness">
+      <block type="actuator_extern_led_brightness" m-show="micropython:esp32:mixgo">
         <value name="PIN">
           <shadow type="pins_pwm_pin">
           </shadow>
@@ -2228,7 +2228,7 @@
           </shadow>
         </value>
       </block>
-      <block type="actuator_extern_get_led_bright">
+      <block type="actuator_extern_get_led_bright" m-show="micropython:esp32:mixgo">
         <value name="PIN">
           <shadow type="pins_pwm_pin">
           </shadow>
