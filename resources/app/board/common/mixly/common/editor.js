@@ -149,15 +149,10 @@ Editor.codeEditorInit = () => {
         enableSnippets: true,
         enableLiveAutocompletion: true
     });
-    const { selection } = codeEditor.getSession(); 
-    selection.on('changeCursor', function () {
-        const cursor = selection.getCursor();
-        $('#mixly-footer-row').html(cursor.row + 1);
-        $('#mixly-footer-column').html(cursor.column + 1);
-    });
     Editor.codeEditorAddCommands();
     Editor.codeEditorAddBtn();
     Editor.codeEditorMenuRender();
+    Editor.codeEditorAddEvent();
 }
 
 Editor.py2BlockEditorInit = (editor) => {
@@ -384,6 +379,23 @@ Editor.codeEditorDecFontSize = () => {
 Editor.codeEditorRstFontSize = () => {
     const { codeEditor } = Editor;
     codeEditor.setFontSize(Math.max($('body').width() / 70, $('body').height() / 70, 12));
+}
+
+Editor.codeEditorAddEvent = () => {
+    const { codeEditor } = Editor;
+    $('#mixly-footer-cursor').hide();
+    codeEditor.on('focus', function() {
+        $('#mixly-footer-cursor').show();
+    });
+    codeEditor.on("blur", function() {
+        $('#mixly-footer-cursor').hide();
+    });
+    const { selection } = codeEditor.getSession(); 
+    selection.on('changeCursor', function () {
+        const cursor = selection.getCursor();
+        $('#mixly-footer-row').html(cursor.row + 1);
+        $('#mixly-footer-column').html(cursor.column + 1);
+    });
 }
 
 Editor.blockEditorUpdateCode = () => {

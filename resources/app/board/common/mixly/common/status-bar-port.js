@@ -157,6 +157,24 @@ StatusBarPort.getValue = (portName) => {
 }
 
 /**
+* @function 获取状态栏数据
+* @description 根据所给定的范围获取对应数据
+* @return String
+*/
+StatusBarPort.getValueRange = (portName, startPos, endPos) => {
+    if (!portAce[portName]) return "";
+    if (!startPos || !endPos || typeof startPos !== 'object' || typeof endPos !== 'object')
+        return "";
+    const session = portAce[portName].getSession();
+    return session.getTextRange(new ace.Range(
+        startPos.row,
+        startPos.column,
+        endPos.row,
+        endPos.column
+    ));
+}
+
+/**
 * @function 状态栏追加数据
 * @description 显示数据到状态栏内
 * @param data {String} 需要追加的字符串
@@ -177,6 +195,19 @@ StatusBarPort.addValue = (portName, data, scroll = false) => {
         portAce[portName].gotoLine(portAce[portName].session.getLength());
         selection.moveCursorLineEnd();
     }
+}
+
+/**
+* @function 状态栏获取结尾字符的位置
+* @description 状态栏获取结尾字符的位置
+* @return object { row: number, column: number }
+*/
+StatusBarPort.getEndPos = (portName) => {
+    if (!portAce[portName]) return;
+    const session = portAce[portName].getSession();
+    const row = session.getLength() - 1;
+    const column = session.getLine(row).length;
+    return { row, column };
 }
 
 /**

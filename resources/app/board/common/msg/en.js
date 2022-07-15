@@ -306,7 +306,21 @@ var indexText = {
     "退出代码编辑器": "Exit editor",
     "配置板卡": "Config",
     "恢复默认配置": "Use default configuration",
-    "关闭窗口": "Close the window"
+    "关闭窗口": "Close the window",
+    "关闭串口输出框": "Close the serial output box",
+    "关闭串口工具": "Close the serial port tool",
+    "关闭串口": "Close serial port",
+    "中断": "Interrupt",
+    "复位": "Reset",
+    "发送字符串": "Send string",
+    "帮助": "Help",
+    "退出串口终端": "Exit terminal",
+    "清空": "Empty",
+    "增大字号": "Increase font size",
+    "减小字号": "Decrease font size",
+    "默认字号": "Default font size",
+    "打开串口终端": "Open terminal",
+    "打开串口": "Open serial port"
 };
 
 /* 背包 */
