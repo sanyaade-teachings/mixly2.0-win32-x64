@@ -191,7 +191,8 @@ Serial.TERMINAL_COMMAND = {
  *          "terminalOpend": Boolean,
  *          "cursorCallback": String,
  *          "refreshOutputBoxTimer": Number,
- *          "userOnData": Function
+ *          "userOnData": Function,
+ *          "endPos": Object //结尾文字所在位置
  *      }
  *  }
  **/
@@ -512,21 +513,28 @@ Serial.getSelectedPortName = () => {
 }
 
 Serial.refreshOutputBox = (port) => {
-    if (!Serial.portsOperator[port]) return;
-    const { dom, toolConfig, toolOpened, output } = Serial.portsOperator[port];
+    const portObj = Serial.portsOperator[port];
+    if (!portObj) return;
+    const { dom, toolConfig, toolOpened, output, endPos } = portObj;
     for (let i = output.length; i > Serial.MAX_OUTPUT_LINE; i--) {
         output.shift();
     }
-    const outputStr = output.join('\n');
+    let outputStr = output.join('\n');
     if (toolOpened) {
         Serial.receiveBoxSetValue(port, outputStr, toolConfig.scroll);
     } else {
-        try {
-            //if (StatusBarPort.getValue(port) !== outputStr.replaceAll('\r\n', '\n'))
-            StatusBarPort.setValue(port, outputStr.replaceAll('\r\n', '\n'), toolConfig.scroll);
-        } catch (error) {
-            console.log(error);
+        outputStr = outputStr.replaceAll('\r\n', '\n');
+        if (endPos && typeof endPos === 'object') {
+            const oldOutputStr = StatusBarPort.getValueRange(port, {
+                row: 0,
+                column: 0
+            }, endPos);
+            if (outputStr === oldOutputStr)
+                return;
         }
+        StatusBarPort.setValue(port, outputStr, toolConfig.scroll);
+        portObj.endPos = StatusBarPort.getEndPos(port);
+        portAce[port].setReadOnly(false);
     }
 }
 
@@ -752,12 +760,13 @@ Serial.receiveBoxScrollToTheTop = () => {
 }
 
 Serial.statusBarPortAddHotKey = (port) => {
+    const session = portAce[port].getSession();
     portAce[port].commands.addCommands([
         {
             name: "Empty",
             bindKey: "Ctrl-E",
             exec: (editor) => {
-                StatusBarPort.setValue(port, "");
+                // StatusBarPort.setValue(port, "");
                 const portObj = Serial.portsOperator[port];
                 if (portObj) {
                     portObj.output = [];
@@ -769,8 +778,69 @@ Serial.statusBarPortAddHotKey = (port) => {
             exec: (editor) => {
                 Serial.statusBarPortEnterTerminal(port);
             }
+        }, {
+            name: "ChangeEditor",
+            bindKey: "Delete|Ctrl-X|Backspace",
+            exec: (editor) => {
+                const portObj = Serial.portsOperator[port];
+                if (!portObj || !portObj.portOpened) {
+                    return false;
+                }
+                const { endPos } = portObj;
+                if (!endPos || typeof endPos !== 'object') {
+                    portAce[port].setReadOnly(true);
+                    return false;
+                }
+                const cursor = session.selection.getCursor();
+                if (cursor.row < endPos.row)
+                    return true;
+                else if (cursor.row === endPos.row
+                      && cursor.column <= endPos.column)
+                    return true;
+                return false;
+            }
+        }, {
+            name: "Enter",
+            bindKey: "Enter",
+            exec: (editor) => {
+                const portObj = Serial.portsOperator[port];
+                if (!portObj || !portObj.portOpened) {
+                    return false;
+                }
+                const { endPos } = portObj;
+                if (!endPos || typeof endPos !== 'object') {
+                    return false;
+                }
+                const cursor = session.selection.getCursor();
+                if (cursor.row === endPos.row) {
+                    const newPos = StatusBarPort.getEndPos(port);
+                    const sendStr = StatusBarPort.getValueRange(port, endPos, newPos);
+                    Serial.writeString(port, sendStr, '\r\n');
+                }
+                return false;
+            }
         }
     ]);
+    session.selection.on('changeCursor', function() {
+        const portObj = Serial.portsOperator[port];
+        if (!portObj || !portObj.portOpened) {
+            portAce[port].setReadOnly(false);
+            return;
+        }
+        const { endPos } = portObj;
+        if (!endPos || typeof endPos !== 'object') {
+            portAce[port].setReadOnly(false);
+            return;
+        }
+        const cursor = session.selection.getCursor();
+        if (cursor.row < endPos.row)
+            portAce[port].setReadOnly(true);
+        else if (cursor.row === endPos.row
+              && cursor.column < endPos.column)
+            portAce[port].setReadOnly(true);
+        else
+            portAce[port].setReadOnly(false);
+    });
 
     const portObj = Serial.portsOperator[port];
     if (!portObj) return;
@@ -837,13 +907,18 @@ Serial.refreshTerminalMenu = (port) => {
             } else if (obj.id === `tab-${newPort}-ace-close`) {
                 StatusBarPort.tabDelete(port);
             } else if (obj.id === `tab-${newPort}-ace-empty`) {
-                portAce[port].execCommand('Empty');
+                // portAce[port].execCommand('Empty');
+                portObj.output = [];
+            } else if (obj.id === `tab-${newPort}-serial-send-ctrlc`) {
+                Serial.writeCtrlC(port);
+            } else if (obj.id === `tab-${newPort}-serial-send-ctrld`) {
+                Serial.writeCtrlD(port);
             }
         }
     }
     if (!portObj) {
         terminalMenu.data = [{
-            title: '关闭串口输出框',
+            title: indexText['关闭串口输出框'],
             id: `tab-${newPort}-ace-close`
         }];
         layui.dropdown.render(terminalMenu);
@@ -852,7 +927,7 @@ Serial.refreshTerminalMenu = (port) => {
 
     if (portObj && portObj.toolOpened) {
         terminalMenu.data = [{
-            title: '关闭串口工具',
+            title: indexText['关闭串口工具'],
             id: `tab-${newPort}-tool-close`
         }];
         layui.dropdown.render(terminalMenu);
@@ -862,68 +937,76 @@ Serial.refreshTerminalMenu = (port) => {
     const TERMINAL_MENU_DATA = {
         portOpend: {
             terminalOpend: [{
-                title: XML.render(menuElem, { name: '关闭串口', hotKey: 'port -c' }),
+                title: XML.render(menuElem, { name: indexText['关闭串口'], hotKey: 'port -c' }),
                 id: `tab-${newPort}-ace-terminal-port-close`
             },
             (toolConfig.ctrlCBtn ? {
-                title: XML.render(menuElem, { name: '中断', hotKey: '' }),
+                title: XML.render(menuElem, { name: indexText['中断'], hotKey: '' }),
                 id: `tab-${newPort}-ace-terminal-send-ctrlc`
             } : {}),
             (toolConfig.ctrlDBtn ? {
-                title: XML.render(menuElem, { name: '复位', hotKey: '' }),
+                title: XML.render(menuElem, { name: indexText['复位'], hotKey: '' }),
                 id: `tab-${newPort}-ace-terminal-send-ctrld`
             } : {}), {
-                title: XML.render(menuElem, { name: '发送字符串', hotKey: '' }),
+                title: XML.render(menuElem, { name: indexText['发送字符串'], hotKey: '' }),
                 id: `tab-${newPort}-ace-terminal-send-str`
             }, {
-                title: XML.render(menuElem, { name: '帮助', hotKey: '' }),
+                title: XML.render(menuElem, { name: indexText['帮助'], hotKey: '' }),
                 id: `tab-${newPort}-ace-terminal-help`
             }, {type:'-'}, {
-                title: XML.render(menuElem, { name: '退出串口终端', hotKey: 'exit' }),
+                title: XML.render(menuElem, { name: indexText['退出串口终端'], hotKey: 'exit' }),
                 id: `tab-${newPort}-ace-terminal-exit`
             }],
             terminalClosed: [{
-                title: XML.render(menuElem, { name: '清空', hotKey: 'Ctrl+E' }),
+                title: XML.render(menuElem, { name: indexText['清空'], hotKey: 'Ctrl+E' }),
                 id: `tab-${newPort}-ace-empty`
             }, {type:'-'}, {
-                title: XML.render(menuElem, { name: '增大字号', hotKey: 'Ctrl+=' }),
+                title: XML.render(menuElem, { name: indexText['增大字号'], hotKey: 'Ctrl+=' }),
                 id: `tab-${newPort}-ace-fontsize-increase`
             }, {
-                title: XML.render(menuElem, { name: '减小字号', hotKey: 'Ctrl+-' }),
+                title: XML.render(menuElem, { name: indexText['减小字号'], hotKey: 'Ctrl+-' }),
                 id: `tab-${newPort}-ace-fontsize-decrease`
             }, {
-                title: XML.render(menuElem, { name: '默认字号', hotKey: 'Ctrl+0' }),
+                title: XML.render(menuElem, { name: indexText['默认字号'], hotKey: 'Ctrl+0' }),
                 id: `tab-${newPort}-ace-fontsize-default`
-            }, {type:'-'}, {
-                title: XML.render(menuElem, { name: '打开串口终端', hotKey: 'Ctrl+T' }),
+            }, {type:'-'},
+            (toolConfig.ctrlCBtn ? {
+                title: XML.render(menuElem, { name: indexText['中断'], hotKey: '' }),
+                id: `tab-${newPort}-serial-send-ctrlc`
+            } : {}),
+            (toolConfig.ctrlDBtn ? {
+                title: XML.render(menuElem, { name: indexText['复位'], hotKey: '' }),
+                id: `tab-${newPort}-serial-send-ctrld`
+            } : {}), {
+                title: XML.render(menuElem, { name: indexText['打开串口终端'], hotKey: 'Ctrl+T' }),
                 id: `tab-${newPort}-ace-terminal-open`
             }]
         },
         portClosed: {
             terminalOpend: [{
-                title: XML.render(menuElem, { name: '打开串口', hotKey: 'port -o' }),
+                title: XML.render(menuElem, { name: indexText['打开串口'], hotKey: 'port -o' }),
                 id: `tab-${newPort}-ace-terminal-port-open`
             }, {
-                title: XML.render(menuElem, { name: '帮助', hotKey: '' }),
+                title: XML.render(menuElem, { name: indexText['帮助'], hotKey: '' }),
                 id: `tab-${newPort}-ace-terminal-help`
             }, {type:'-'}, {
-                title: XML.render(menuElem, { name: '退出串口终端', hotKey: 'exit' }),
+                title: XML.render(menuElem, { name: indexText['退出串口终端'], hotKey: 'exit' }),
                 id: `tab-${newPort}-ace-terminal-exit`
             }],
             terminalClosed: [{
-                title: XML.render(menuElem, { name: '清空', hotKey: 'Ctrl+E' }),
+                title: XML.render(menuElem, { name: indexText['清空'], hotKey: 'Ctrl+E' }),
                 id: `tab-${newPort}-ace-empty`
             }, {type:'-'}, {
-                title: XML.render(menuElem, { name: '增大字号', hotKey: 'Ctrl+=' }),
+                title: XML.render(menuElem, { name: indexText['增大字号'], hotKey: 'Ctrl+=' }),
                 id: `tab-${newPort}-ace-fontsize-increase`
             }, {
-                title: XML.render(menuElem, { name: '减小字号', hotKey: 'Ctrl+-' }),
+                title: XML.render(menuElem, { name: indexText['减小字号'], hotKey: 'Ctrl+-' }),
                 id: `tab-${newPort}-ace-fontsize-decrease`
             }, {
-                title: XML.render(menuElem, { name: '默认字号', hotKey: 'Ctrl+0' }),
+                title: XML.render(menuElem, { name: indexText['默认字号'], hotKey: 'Ctrl+0' }),
                 id: `tab-${newPort}-ace-fontsize-default`
             }, {type:'-'}, {
-                title: XML.render(menuElem, { name: '打开串口终端', hotKey: 'Ctrl+T' }),
+                title: XML.render(menuElem, { name: indexText['打开串口终端'], hotKey: 'Ctrl+T' }),
                 id: `tab-${newPort}-ace-terminal-open`
             }]
         }
@@ -1233,7 +1316,7 @@ Serial.connect = function (port = null, baud = null, endFunc = (code) => {}) {
                 }
             });
             StatusBarPort.tabChange(port);
-
+            Serial.refreshTerminalMenu(port);
             Serial.refreshConnectStatus(port);
             StatusBarPort.setValue(port, indexText['已打开串口'] + ': ' + port + '\n', true);
 
@@ -1350,6 +1433,7 @@ Serial.connect = function (port = null, baud = null, endFunc = (code) => {}) {
         //Serial.statusBarPortRemoveCursorEvent(port);
         StatusBarPort.close(port);
         Serial.refreshConnectStatus(port);
+        Serial.refreshTerminalMenu(port);
         portObj.refreshOutputBoxTimer && clearInterval(portObj.refreshOutputBoxTimer);
         portObj.refreshOutputBoxTimer = null;
         Charts.stopRefresh();
