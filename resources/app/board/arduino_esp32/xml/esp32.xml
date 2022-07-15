@@ -927,7 +927,7 @@
     </value>
   </block>
   <block type="sensor_encoder_handle">
-  </block> 
+  </block>
 </category>
 <category id="catActuator" colour="100">
   <block type="HR8833_Motor_Setup">
@@ -3282,5 +3282,14 @@
   <block type="factory_notes"></block>
   <block type="folding_block"></block>
   <block type="asyncelegantota"></block>
-  <block type="esp32_pico_kit_1_pin"></block>
+  <block type="esp32_pin" m-show="esp32 node32s m5stack-fire bpi-bit"></block>
+
+  <!-- esp32 pico kit管脚图 -->
+  <block type="esp32_pico_kit_1_pin" m-show="pico32"></block>
+
+  <!-- esp32 CAM管脚图 -->
+  <block type="esp32_cam_pin" m-show="esp32cam"></block>
+
+  <!-- nodemcu 32s管脚图 -->
+  <block type="nodemcu_32s_pin" m-show="nodemcu-32s"></block>
 </category>

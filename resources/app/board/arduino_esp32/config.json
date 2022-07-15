@@ -1,7 +1,7 @@
 {
     "board": {
         "ESP32 Dev Module": {
-            "xmlPath": "./xml/esp32_dev_module.xml",
+            "xmlPath": "./xml/esp32.xml",
             "key": "esp32:esp32:esp32",
             "config": {
                 "PSRAM": [
@@ -154,7 +154,7 @@
             }
         },
         "ESP32 Pico Kit": {
-            "xmlPath": "./xml/esp32_pico_kit.xml",
+            "xmlPath": "./xml/esp32.xml",
             "key": "esp32:esp32:pico32",
             "config": {
                 "PartitionScheme": [
@@ -184,7 +184,7 @@
             }
         },
         "Node32s": {
-            "xmlPath": "./xml/esp32_dev_module.xml",
+            "xmlPath": "./xml/esp32.xml",
             "key": "esp32:esp32:node32s",
             "config": {
                 "PartitionScheme": [
@@ -223,7 +223,7 @@
             }
         },
         "NodeMCU-32S": {
-            "xmlPath": "./xml/nodemcu_32s.xml",
+            "xmlPath": "./xml/esp32.xml",
             "key": "esp32:esp32:nodemcu-32s",
             "config": {
                 "FlashFreq": [
@@ -250,7 +250,7 @@
             }
         },
         "M5Stack-FIRE": {
-            "xmlPath": "./xml/esp32_dev_module.xml",
+            "xmlPath": "./xml/esp32.xml",
             "key": "esp32:esp32:m5stack-fire",
             "config": {
                 "PSRAM": [
@@ -286,7 +286,7 @@
             }
         },
         "BPI-BIT": {
-            "xmlPath": "./xml/esp32_dev_module.xml",
+            "xmlPath": "./xml/esp32.xml",
             "key": "esp32:esp32:bpi-bit",
             "config": {
                 "FlashFreq": [
@@ -313,7 +313,7 @@
             }
         },
         "AI Thinker ESP32-CAM": {
-            "xmlPath": "./xml/esp32cam.xml",
+            "xmlPath": "./xml/esp32.xml",
             "key": "esp32:esp32:esp32cam",
             "config": {
                 "CPUFreq": [
