@@ -394,7 +394,9 @@ Boards.updateCategories = (boardName, enforce = false) => {
     }
     thirdPartyStr = Boards.selectCategories(boardName, thirdPartyStr);
     const toolboxDom = $('#toolbox');
-    toolboxDom.html(XML.CATEGORIES_STR[boardName] ?? Boards.selectCategories(boardName, Env.defaultXML));
+    toolboxDom.html(
+        Boards.selectCategories(boardName, XML.CATEGORIES_STR[boardName] ?? Env.defaultXML)
+    );
     toolboxDom.append(thirdPartyStr);
     const categoriesDom = toolboxDom.find('category');
     for (let i = 0; categoriesDom[i]; i++) {
@@ -437,15 +439,24 @@ Boards.removeBlocks = (blocksdom, boardKeyList) => {
         const selectList = select.split(' ');
         for (let key of selectList) {
             const keyList = key.split(':');
-            if (keyList.length < 3) continue;
-            const param3 = String(keyList[2]).split(',');
-            if (keyList[0] === boardKeyList[0]
-             && keyList[1] === boardKeyList[1]) {
-                for (let value of param3) {
-                    if (value === boardKeyList[2]) {
-                        needRemove = mShow ? false : true;
-                        break;
+            const len = keyList.length;
+            if (len !== 1 && len !== 3)
+                continue;
+            if (len === 3) {
+                const param3 = String(keyList[2]).split(',');
+                if (keyList[0] === boardKeyList[0]
+                 && keyList[1] === boardKeyList[1]) {
+                    for (let value of param3) {
+                        if (value === boardKeyList[2]) {
+                            needRemove = mShow ? false : true;
+                            break;
+                        }
                     }
+                }
+            } else {
+                if (keyList[0] === boardKeyList[2]) {
+                    needRemove = mShow ? false : true;
+                    break;
                 }
             }
             if ((!needRemove && mShow) || (needRemove && !mShow))
