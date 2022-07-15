@@ -398,11 +398,11 @@ Blockly.Blocks['communicate_ir_send'] = {
     init: function() {
         this.setColour(Blockly.Blocks.communicate.HUE);
         this.appendValueInput('PIN')
-            .appendField(Blockly.MIXLY_IR_RECEIVE);
+            .appendField(Blockly.blynk_IOT_IR_SEND);
         this.appendValueInput('ADDR')
             .appendField(Blockly.MQTT_SERVER_ADD);    
         this.appendValueInput('SUB')
-            .appendField(Blockly.MIXLY_MICROPYTHON_SOCKET_SEND);
+            .appendField(Blockly.OLED_STRING);
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
         this.setInputsInline(true);
@@ -541,6 +541,19 @@ Blockly.Blocks['network_espnow_mac'] = {
             .appendField('ESPnow ');
         this.appendDummyInput()
             .appendField(Blockly.MIXLY_MIXGO_ESPNOW_MAC);
+        this.setOutput(true);
+        this.setInputsInline(true);
+    }
+};
+
+Blockly.Blocks['network_espnow_info'] = {
+    init: function() {
+        this.setColour(Blockly.Blocks.communicate.HUE);
+        this.appendValueInput('VAR')
+            .setCheck('var')
+            .appendField('ESPnow ');
+        this.appendDummyInput()
+            .appendField(Blockly.MIXLY_MIXGO_ESPNOW_INFO);
         this.setOutput(true);
         this.setInputsInline(true);
     }

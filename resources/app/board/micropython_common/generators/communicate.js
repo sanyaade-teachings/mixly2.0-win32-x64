@@ -235,6 +235,12 @@ Blockly.Python.communicate_espnow_init = function () {
 Blockly.Python.network_espnow_mac= function() {
     Blockly.Python.definitions_['import_radio'] = "import radio";
     var name = Blockly.Python.valueToCode(this, 'VAR', Blockly.Python.ORDER_ATOMIC);
+    return [name+".mac", Blockly.Python.ORDER_ATOMIC];
+}
+
+Blockly.Python.network_espnow_info= function() {
+    Blockly.Python.definitions_['import_radio'] = "import radio";
+    var name = Blockly.Python.valueToCode(this, 'VAR', Blockly.Python.ORDER_ATOMIC);
     return [name+".info()", Blockly.Python.ORDER_ATOMIC];
 }
 

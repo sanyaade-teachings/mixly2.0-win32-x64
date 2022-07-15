@@ -3223,18 +3223,6 @@
         </block>
       </category>
       <category id="catIR" colour="140">
-        <block type="communicate_ir_recv">
-          <value name="PIN">
-            <shadow type="pins_digital_pin">
-              <field name="PIN">0</field>
-            </shadow>
-          </value>
-          <value name="SUB">
-            <shadow type="factory_block_return">
-              <field name="VALUE">cb</field>
-            </shadow>
-          </value>
-        </block>
         <block type="communicate_ir_send">
           <value name="PIN">
             <shadow type="pins_digital_pin">
@@ -3247,11 +3235,23 @@
             </shadow>
           </value>
           <value name="SUB">
-            <shadow type="text">
-              <field name="TEXT">mixly</field>
+            <shadow type="math_number">
+              <field name="NUM">0</field>
             </shadow>
           </value>
         </block>
+        <block type="communicate_ir_recv">
+          <value name="PIN">
+            <shadow type="pins_digital_pin">
+              <field name="PIN">0</field>
+            </shadow>
+          </value>
+          <value name="SUB">
+            <shadow type="factory_block_return">
+              <field name="VALUE">cb</field>
+            </shadow>
+          </value>
+        </block>        
         <block type="procedures_defnoreturn">
           <mutation>
             <arg name="addr"></arg>
@@ -3565,12 +3565,19 @@
             </shadow>
           </value>
           <value name="CHNL">
-            <shadow type="math_number">
+            <shadow type="espnow_channel">
               <field name="NUM">0</field>
             </shadow>
           </value>
         </block>
         <block type="network_espnow_mac">
+          <value name="VAR">
+            <shadow type="variables_get">
+              <field name="VAR">my_now</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="network_espnow_info">
           <value name="VAR">
             <shadow type="variables_get">
               <field name="VAR">my_now</field>

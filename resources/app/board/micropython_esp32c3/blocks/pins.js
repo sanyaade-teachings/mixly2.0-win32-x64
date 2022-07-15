@@ -39,6 +39,15 @@ Blockly.Blocks['pins_output_pin'] = {
   }
 };
 
+Blockly.Blocks['espnow_channel'] = {
+   init: function() {
+    this.setColour(Blockly.Blocks.pins.HUE);
+    this.appendDummyInput("")
+        .appendField(new Blockly.FieldDropdown(profile.default.espnow_channel), 'PIN');
+    this.setOutput(true, Number);
+  }
+};
+
 Blockly.Blocks['pwm_input'] = {
    init: function() {
     this.setColour(Blockly.Blocks.pins.HUE);
