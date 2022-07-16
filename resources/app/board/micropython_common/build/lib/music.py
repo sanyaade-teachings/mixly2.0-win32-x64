@@ -6,6 +6,7 @@ Micropython library for the Music buzzer
 
 #Based on Author: qiren123(MIDI Music) 	           	20220618
 #Make changes to instantiation			 			20220622
+#Increase level reversal selection					20220716
 
 dahanzimin From the Mixly Team
 """
@@ -27,9 +28,10 @@ normal_tone = {
 Letter = 'ABCDEFG#R'
 
 class MIDI():
-	def __init__(self,pin,volume=100):
+	def __init__(self,pin,volume=100,invert=0):
 		self.reset()
-		self._pin = PWM(Pin(pin),freq=1,duty=0)
+		self._invert=invert
+		self._pin = PWM(Pin(pin),freq=1,duty=1023) if self._invert else PWM(Pin(pin),freq=1,duty=0)
 		self._volume = volume
 		self.stop()
 
@@ -105,27 +107,27 @@ class MIDI():
 			if tone[0] not in Letter:
 				continue
 			midi = self.midi(tone)
-			self._pin.duty(self._volume)
+			self._pin.duty(1023-self._volume) if self._invert else self._pin.duty(self._volume)
 			self._pin.freq(midi[0])  
 			sleep_ms(midi[1])
 			self._pin.freq(400000)
 			sleep_ms(1)
-		self._pin.duty(0)
+		self._pin.duty(1023) if self._invert else self._pin.duty(0)
 		sleep_ms(10)
 
 	def pitch(self, freq):
-		self._pin.duty(self._volume)
+		self._pin.duty(1023-self._volume) if self._invert else self._pin.duty(self._volume)
 		self._pin.freq(int(freq)) 
 
 	def pitch_time(self, freq, delay):
-		self._pin.duty(self._volume)
+		sself._pin.duty(1023-self._volume) if self._invert else self._pin.duty(self._volume)
 		self._pin.freq(int(freq))  
 		sleep_ms(delay)
-		self._pin.duty(0)
+		self._pin.duty(1023) if self._invert else self._pin.duty(0)
 		sleep_ms(10)
 		
 	def stop(self):
-		self._pin.duty(0)
+		self._pin.duty(1023) if self._invert else self._pin.duty(0)
 		sleep_ms(10)
 		#self._pin.deinit()
 
