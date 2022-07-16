@@ -17,47 +17,41 @@ Blockly.Arduino.ir_recv = function () {
   var branch2 = Blockly.Arduino.statementToCode(this, 'DO2');
   Blockly.Arduino.definitions_['include_IRremote'] = '#include <IRremote.h>\n';
   Blockly.Arduino.definitions_['var_declare_irProtocolList'] = 
-`#if defined(SUPPORT_PULSE_WIDTH_DECODING) && !defined(EXCLUDE_EXOTIC_PROTOCOLS)
-String irProtocolList[26] = {
-  "UNKNOWN",  "PULSE_WIDTH",    "PULSE_DISTANCE", "DENON",        "SHARP",
-  "JVC",      "LG",             "LG2",            "NEC",          "PANASONIC",
-  "KASEIKYO", "KASEIKYO_DENON", "KASEIKYO_SHARP", "KASEIKYO_JVC", "KASEIKYO_MITSUBISHI",
-  "RC5",      "RC6",            "SAMSUNG",        "SAMSUNG_LG",   "SONY",
-  "ONKYO",    "APPLE",          "BOSEWAVE",       "LEGO_PF",      "MAGIQUEST",
+`const String IR_PROTOCOL_TYPE[] = {
+  "UNKNOWN",
+  "PULSE_DISTANCE",
+  "PULSE_WIDTH",
+  "DENON",
+  "DISH",
+  "JVC",
+  "LG",
+  "LG2",
+  "NEC",
+  "PANASONIC",
+  "KASEIKYO",
+  "KASEIKYO_JVC",
+  "KASEIKYO_DENON",
+  "KASEIKYO_SHARP",
+  "KASEIKYO_MITSUBISHI",
+  "RC5",
+  "RC6",
+  "SAMSUNG",
+  "SHARP",
+  "SONY",
+  "ONKYO",
+  "APPLE",
+  "BOSEWAVE",
+  "LEGO_PF",
+  "MAGIQUEST",
   "WHYNTER"
-};
-#elif defined(SUPPORT_PULSE_WIDTH_DECODING) && defined(EXCLUDE_EXOTIC_PROTOCOLS)
-String irProtocolList[25] = {
-  "UNKNOWN",        "PULSE_DISTANCE", "DENON",        "SHARP",               "JVC",
-  "LG",             "LG2",            "NEC",          "PANASONIC",           "KASEIKYO",
-  "KASEIKYO_DENON", "KASEIKYO_SHARP", "KASEIKYO_JVC", "KASEIKYO_MITSUBISHI", "RC5",
-  "RC6",            "SAMSUNG",        "SAMSUNG_LG",   "SONY",                "ONKYO",
-  "APPLE",          "BOSEWAVE",       "LEGO_PF",      "MAGIQUEST",           "WHYNTER"
-};
-#elif !defined(SUPPORT_PULSE_WIDTH_DECODING) && !defined(EXCLUDE_EXOTIC_PROTOCOLS)
-String irProtocolList[22] = {
-  "UNKNOWN",  "PULSE_WIDTH",    "PULSE_DISTANCE", "DENON",        "SHARP",
-  "JVC",      "LG",             "LG2",            "NEC",          "PANASONIC",
-  "KASEIKYO", "KASEIKYO_DENON", "KASEIKYO_SHARP", "KASEIKYO_JVC", "KASEIKYO_MITSUBISHI",
-  "RC5",      "RC6",            "SAMSUNG",        "SAMSUNG_LG",   "SONY",
-  "ONKYO",    "APPLE"
-};
-#else
-String irProtocolList[21] = {
-  "UNKNOWN",        "PULSE_DISTANCE", "DENON",        "SHARP",               "JVC",
-  "LG",             "LG2",            "NEC",          "PANASONIC",           "KASEIKYO",
-  "KASEIKYO_DENON", "KASEIKYO_SHARP", "KASEIKYO_JVC", "KASEIKYO_MITSUBISHI", "RC5",
-  "RC6",            "SAMSUNG",        "SAMSUNG_LG",   "SONY",                "ONKYO",
-  "APPLE"
-};
-#endif`;
+};`;
   Blockly.Arduino.setups_['setup_ir_recv_' + dropdown_pin] = `IrReceiver.begin(${dropdown_pin});`;
   var code = 
 `if (IrReceiver.decode()) {
   struct IRData *pIrData = &IrReceiver.decodedIRData;
   long ir_item = pIrData->decodedRawData;
-  String irProtocolStr = irProtocolList[pIrData->protocol];
-  Serial.print("IR TYPE:" + irProtocolStr + "\\tVALUE:");
+  String irProtocol = IR_PROTOCOL_TYPE[pIrData->protocol];
+  Serial.print("IR TYPE:" + irProtocol + "\\tVALUE:");
   Serial.println(ir_item, HEX);
   IrReceiver.resume();
 ${branch}
