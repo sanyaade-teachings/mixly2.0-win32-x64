@@ -388,11 +388,12 @@ MFile.showParseMixErrorDialog = (xml, undefinedBlocks, endFunc = () => {}) => {
         area: ['50%', '250px'],
         max: ['500px', '250px'],
         min: ['350px', '100px'],
+        shade: LayerExtend.shade,
         content: renderStr,
         borderRadius: '5px',
         success: (layero, index) => {
             $('#parse-mix-error-layer').css('overflow', 'hidden');
-            form.render();
+            form.render(null, 'parse-mix-error-filter');
             layero.find('button').click((event) => {
                 layer.close(index);
                 const mId = $(event.currentTarget).attr('m-id');

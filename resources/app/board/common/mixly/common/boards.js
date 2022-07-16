@@ -121,7 +121,7 @@ Boards.init = () => {
         boardNames.empty();
         for (let board of Boards.NAME)
             boardNames.append(`<option value="${Boards.INFO[board]?.key ?? board}" ${(selectedBoardName && selectedBoardName[0] === board)? ' selected' : ''}>${board}</option>`);
-        form.render();
+        form.render('select', 'boards-type-filter');
     }
     // Boards.onclickBoardSelector();
     $('#mixly-board-config').off().click(function() {
