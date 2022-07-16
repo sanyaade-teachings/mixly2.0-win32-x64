@@ -31,6 +31,7 @@ class MIDI():
 		self.reset()
 		self._pin = PWM(Pin(pin),freq=1,duty=0)
 		self._volume = volume
+		self.stop()
 
 	def set_volume(self,volume):
 		if not 0 <= volume <= 100:

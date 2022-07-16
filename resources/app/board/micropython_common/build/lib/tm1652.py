@@ -29,6 +29,8 @@ class TM1652(framebuf.FrameBuffer):
 		self._brightness = None
 		self.set_brightness(brightness)
 		time.sleep_ms(5)
+		self.fill(0)
+		self.show()
 			
 	def get_brightness(self):
 		return self.brightness

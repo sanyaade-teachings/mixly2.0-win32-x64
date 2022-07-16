@@ -23,8 +23,9 @@ class NeoPixel:
 		self.timing = (
 			((400, 850, 800, 450) if timing else (800, 1700, 1600, 900))
 			if isinstance(timing, int)
-			else timing
-		)
+			else timing)
+		self.fill((0, 0, 0))
+		self.write()
 
 	def __len__(self):
 		return self.n

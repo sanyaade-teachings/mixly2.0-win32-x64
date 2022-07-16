@@ -30,6 +30,7 @@ class HT16K33(framebuf.FrameBuffer):
 		self.blink_rate(0)
 		self.set_brightness(brightness)
 		self.fill(0)
+		self.show()
 		
 	def _write_cmd(self, val):
 		'''I2C write command'''
