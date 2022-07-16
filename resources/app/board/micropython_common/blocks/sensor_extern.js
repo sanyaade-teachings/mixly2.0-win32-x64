@@ -883,3 +883,28 @@ Blockly.Blocks.PS2_stk={
   }
 };
 
+Blockly.Python.RTC_set_datetime= function () {
+  Blockly.Python.definitions_['import_machine'] = 'import machine';
+  var year = Blockly.Python.valueToCode(this, "year", Blockly.Python.ORDER_ASSIGNMENT);
+  var month = Blockly.Python.valueToCode(this, "month",Blockly.Python.ORDER_ASSIGNMENT);
+  var day = Blockly.Python.valueToCode(this, "day",Blockly.Python.ORDER_ASSIGNMENT);
+  var hour = Blockly.Python.valueToCode(this, "hour", Blockly.Python.ORDER_ASSIGNMENT);
+  var minute = Blockly.Python.valueToCode(this, "minute",Blockly.Python.ORDER_ASSIGNMENT);
+  var second = Blockly.Python.valueToCode(this, "second",Blockly.Python.ORDER_ASSIGNMENT);
+  var week = Blockly.Python.valueToCode(this, "weekday", Blockly.Python.ORDER_ASSIGNMENT);
+  var millisecond = Blockly.Python.valueToCode(this, "millisecond",Blockly.Python.ORDER_ASSIGNMENT);
+  var v = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
+  if (v == "rtc")
+    Blockly.Python.definitions_['import_mixgo_rtc'] = 'from mixgo import rtc';  
+  var code = v+'.datetime(('+year+','+month+','+day+','+week+','+hour+','+minute+','+second+','+millisecond+'))\n';
+  return code;
+};
+
+Blockly.Python.RTC_get_time = function () {
+  Blockly.Python.definitions_['import_machine'] = 'import machine';
+  var v = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
+  if (v == "rtc")
+    Blockly.Python.definitions_['import_mixgo_rtc'] = 'from mixgo import rtc';  
+  var code = v+'.datetime()';
+  return [code, Blockly.Python.ORDER_ATOMIC];
+};

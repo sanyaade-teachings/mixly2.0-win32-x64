@@ -1484,12 +1484,7 @@
         <block type="sensor_onboard_mpu9250_calibrate_compass"></block>
         <block type="sensor_onboard_mpu9250_field_strength"></block>
         <block type="sensor_onboard_compass_reset"></block>
-        <!-- <block type="RTC_set_datetime">
-          <value name="SUB">
-            <shadow type="variables_get">
-              <field name="VAR">rtc</field>
-            </shadow>
-          </value>
+        <block type="onboard_RTC_set_datetime">
           <value name="year">
             <shadow type="math_number">
               <field name="NUM">2018</field>
@@ -1531,13 +1526,7 @@
             </shadow>
           </value>
         </block>
-        <block type="RTC_get_time">
-          <value name="SUB">
-            <shadow type="variables_get">
-              <field name="VAR">rtc</field>
-            </shadow>
-          </value>
-        </block> -->
+        <block type="onboard_RTC_get_time"></block>
       </category>
       <category id="catOnBoardActuator" name="catOnBoardActuator" colour="100"  m-show="micropython:esp32:mixgo micropython:esp32:rm_e1 micropython:esp32:mPython">
         <block type="actuator_led_bright" m-show='micropython:esp32:rm_e1 micropython:esp32:mPython'>

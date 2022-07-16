@@ -107,40 +107,7 @@ var RTC_TIME_TYPE = [
 ];
 
 
-//传感器-实时时钟块_获取时间
-Blockly.Blocks.RTC_get_time = {
-  init: function() {
-    this.setColour(Blockly.Blocks.sensor.HUE);
-    this.appendValueInput('SUB')
-    .appendField("RTC")
-    .setCheck("var");
-    this.appendDummyInput()
-    .setAlign(Blockly.ALIGN_RIGHT)
-    .appendField(Blockly.MIXLY_RTCGETTIME);
-    // this.appendDummyInput("").setAlign(Blockly.ALIGN_RIGHT).appendField('myRTC');
-    // this.appendDummyInput("").setAlign(Blockly.ALIGN_RIGHT).appendField(new Blockly.FieldDropdown(RTC_TIME_TYPE), "TIME_TYPE");
-    this.setInputsInline(true);
-    this.setOutput(true, Number);
-    this.setTooltip(Blockly.MIXLY_ESP32_RTC_GET_TIME_TOOLTIP);
-    // var thisBlock = this;
-    //     this.setTooltip(function() {
-    //     var mode = thisBlock.getFieldValue('TIME_TYPE');
-    //     var mode0 = Blockly.MIXLY_RTCGETTIME;
-    //     var TOOLTIPS = {
-    //     'Year':Blockly.MIXLY_YEAR,
-    //     'Month':Blockly.MIXLY_MONTH,
-    //     'Day':Blockly.MIXLY_DAY,
-    //     'Hour':Blockly.MIXLY_HOUR,
-    //     'Minute':Blockly.MIXLY_MINUTE,
-    //     'Second':Blockly.MIXLY_SECOND,
-    //     'Week':Blockly.MIXLY_WEEK,
-    //     'Mix1':Blockly.MIXLY_MIX1,
-    //     'Mix2':Blockly.MIXLY_MIX2
-    //   };
-      // return mode0 +TOOLTIPS[mode];
-    // });
-}
-};
+
 
 Blockly.Blocks.RTC_set_time = {
   init: function() {
@@ -286,14 +253,43 @@ Blockly.Blocks['sensor_mixgo_pin_near_double'] = {
     }
 };
 
-Blockly.Blocks.RTC_set_datetime = {
+//传感器-实时时钟块_获取时间
+Blockly.Blocks.onboard_RTC_get_time = {
+  init: function() {
+    this.setColour(Blockly.Blocks.sensor.HUE);  
+    this.appendDummyInput()
+    .appendField("RTC")  
+    this.appendDummyInput()
+    .setAlign(Blockly.ALIGN_RIGHT)
+    .appendField(Blockly.MIXLY_RTCGETTIME);
+    this.setInputsInline(true);
+    this.setOutput(true, Number);
+    this.setTooltip(Blockly.MIXLY_ESP32_RTC_GET_TIME_TOOLTIP);
+    // var thisBlock = this;
+    //     this.setTooltip(function() {
+    //     var mode = thisBlock.getFieldValue('TIME_TYPE');
+    //     var mode0 = Blockly.MIXLY_RTCGETTIME;
+    //     var TOOLTIPS = {
+    //     'Year':Blockly.MIXLY_YEAR,
+    //     'Month':Blockly.MIXLY_MONTH,
+    //     'Day':Blockly.MIXLY_DAY,
+    //     'Hour':Blockly.MIXLY_HOUR,
+    //     'Minute':Blockly.MIXLY_MINUTE,
+    //     'Second':Blockly.MIXLY_SECOND,
+    //     'Week':Blockly.MIXLY_WEEK,
+    //     'Mix1':Blockly.MIXLY_MIX1,
+    //     'Mix2':Blockly.MIXLY_MIX2
+    //   };
+      // return mode0 +TOOLTIPS[mode];
+    // });
+}
+};
+
+Blockly.Blocks.onboard_RTC_set_datetime = {
  init: function() {    
     this.setColour(Blockly.Blocks.sensor.HUE);
-    // this.appendDummyInput()
-    this.appendValueInput('SUB')
+    this.appendDummyInput()
     .appendField("RTC")
-    .appendField(Blockly.MIXLY_RTC_TIME)
-    .setCheck("var");
     this.appendValueInput('year')
     .setCheck(Number)
     .appendField("         "+Blockly.MIXLY_YEAR);

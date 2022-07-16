@@ -1448,6 +1448,8 @@
       <block type="sensor_mixgo_pin_near"></block>
       <block type="sensor_LTR308"></block>
       <block type="sensor_sound"></block>
+      <!-- MixGo Me Onboard_sensor: -->
+      <block type="sensor_mixgome_temperature" m-show='micropython:esp32c3:mixgo_me'></block>
       <block type="sensor_hp203" m-show='micropython:esp32c3:mixgo_cc'></block>
       <block type="sensor_aht11" m-show='micropython:esp32c3:mixgo_cc'></block>
       <block type="sensor_get_acceleration"></block>
@@ -1477,10 +1479,51 @@
           </shadow>
         </value>
       </block>
+      <block type="onboard_RTC_set_datetime">          
+          <value name="year">
+            <shadow type="math_number">
+              <field name="NUM">2022</field>
+            </shadow>
+          </value>
+          <value name="month">
+            <shadow type="math_number">
+              <field name="NUM">7</field>
+            </shadow>
+          </value>
+          <value name="day">
+            <shadow type="math_number">
+              <field name="NUM">1</field>
+            </shadow>
+          </value>
+          <value name="weekday">
+            <shadow type="math_number">
+              <field name="NUM">5</field>
+            </shadow>
+          </value>
+          <value name="hour">
+            <shadow type="math_number">
+              <field name="NUM">14</field>
+            </shadow>
+          </value>
+          <value name="minute">
+            <shadow type="math_number">
+              <field name="NUM">20</field>
+            </shadow>
+          </value>
+          <value name="second">
+            <shadow type="math_number">
+              <field name="NUM">45</field>
+            </shadow>
+          </value>
+          <value name="millisecond">
+            <shadow type="math_number">
+              <field name="NUM">0</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="onboard_RTC_get_time"></block>
 
-      <!-- MixGo Me Onboard_sensor: -->
-
-      <block type="sensor_mixgome_temperature" m-show='micropython:esp32c3:mixgo_me'></block>
+      
 
     </category>
     <category id="catOnBoardActuator" name="catOnBoardActuator" colour="100" m-hide='micropython:esp32c3:generic'>
