@@ -32,7 +32,7 @@ except Exception as e:
     print(e)
 
 '''2-RGB'''    
-from neopixel import NeoPixel
+from ws2812 import NeoPixel
 onboard_rgb = NeoPixel(Pin(2), 2)
 
 '''1Buzzer-Music'''
