@@ -417,11 +417,12 @@ ArduShell.isMixOrIno = (fileName) => {
 * @return void
 */
 ArduShell.clearDirCppAndHppFiles = (dir) => {
-    if (fs.existsSync(dir)) {
+    if (fs_extend.isdir(dir)) {
         let libDir = fs.readdirSync(dir);
         for (let i = 0; i < libDir.length; i++) {
             if (ArduShell.isCppOrHpp(libDir[i])) {
-                fs.unlinkSync(dir + libDir[i]);
+                const nowPath = path.resolve(dir, libDir[i]);
+                fs.unlinkSync(nowPath);
             }
         }
     }
@@ -435,12 +436,14 @@ ArduShell.clearDirCppAndHppFiles = (dir) => {
 * @return void
 */
 ArduShell.copyHppAndCppFiles = (oldDir, newDir) => {
-    if (fs.existsSync(oldDir) && fs.existsSync(newDir)) {
+    if (fs_extend.isdir(oldDir) && fs_extend.isdir(newDir)) {
         let oldLibDir = fs.readdirSync(oldDir);
         for (let i = 0; i < oldLibDir.length; i++) {
             if (ArduShell.isCppOrHpp(oldLibDir[i])) {
+                const oldPath = path.resolve(oldDir, oldLibDir[i]);
+                const newPath = path.resolve(newDir, oldLibDir[i]);
                 try {
-                    fs.copyFileSync(oldDir + oldLibDir[i], newDir + oldLibDir[i]);
+                    fs.copyFileSync(oldPath, newPath);
                 } catch (e) {
                     console.log(e);
                 }
