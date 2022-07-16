@@ -413,7 +413,7 @@ Serial.refreshUploadPortSelectBox = (ports) => {
         else
             portSelectBoxDom.append($(`<option value="${name}">${name}</option>`));
     });
-    form.render();
+    form.render('select', 'ports-type-filter');
 }
 
 Serial.refreshToolPortSelectBox = (ports) => {
@@ -423,6 +423,7 @@ Serial.refreshToolPortSelectBox = (ports) => {
         const { dom } = Serial.portsOperator[i];
         if (dom) {
             const { selectPortId } = dom.id;
+            const { formFilter } = dom.filter;
             const selectPortDom = $('#' + selectPortId);
             //const selectedPort = selectPortDom.val();
             selectPortDom.empty();
@@ -436,9 +437,9 @@ Serial.refreshToolPortSelectBox = (ports) => {
             });
             */
             selectPortDom.append($(`<option value="${i}" selected>${i}</option>`));
+            form.render('select', formFilter);
         }
     }
-    form.render();
 }
 
 Serial.refreshPortOperator = (ports) => {
@@ -477,9 +478,10 @@ Serial.refreshPortOperator = (ports) => {
                 if (portObj.toolOpened) {
                     const { form } = layui;
                     const { selectPortId } = dom.id;
+                    const { formFilter } = dom.filter;
                     const selectPortDom = $('#' + selectPortId);
                     selectPortDom.empty();
-                    form.render();
+                    form.render('select', formFilter);
                     Serial.deadPortsOperator[i] = { ...portObj };
                 } else {
                     dom.destroy();
