@@ -45,15 +45,16 @@ Blockly.Arduino.ir_recv = function () {
   "MAGIQUEST",
   "WHYNTER"
 };`;
-  Blockly.Arduino.setups_['setup_ir_recv_' + dropdown_pin] = `IrReceiver.begin(${dropdown_pin});`;
+  Blockly.Arduino.definitions_['var_declare_irrecv_' + dropdown_pin] = `IRrecv irrecv_${dropdown_pin}(${dropdown_pin});\n`;
+  Blockly.Arduino.setups_['setup_ir_recv_' + dropdown_pin] = `irrecv_${dropdown_pin}.enableIRIn();`;
   var code = 
-`if (IrReceiver.decode()) {
-  struct IRData *pIrData = &IrReceiver.decodedIRData;
+`if (irrecv_${dropdown_pin}.decode()) {
+  struct IRData *pIrData = &irrecv_${dropdown_pin}.decodedIRData;
   long ir_item = pIrData->decodedRawData;
   String irProtocol = IR_PROTOCOL_TYPE[pIrData->protocol];
   Serial.print("IR TYPE:" + irProtocol + "\\tVALUE:");
   Serial.println(ir_item, HEX);
-  IrReceiver.resume();
+  irrecv_${dropdown_pin}.resume();
 ${branch}
 } else {
 ${branch2}
@@ -62,32 +63,32 @@ ${branch2}
 };
 
 
-  Blockly.Arduino.ir_recv_enable = function () {
-    var xmlDom = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
-    var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
-    if(xmlText.indexOf("type=\"controls_tone\"") == -1 && xmlText.indexOf("type=\"controls_notone\"") == -1)
-    {
-      this.setWarningText(null);
-    }
-    else
-    {
-      this.setWarningText(Blockly.IR_AND_TONE_WARNING);
-    }
-
-    Blockly.Arduino.definitions_['include_IRremote'] = '#include <IRremote.h>';
-    var dropdown_pin = Blockly.Arduino.valueToCode(this, 'PIN', Blockly.Arduino.ORDER_ATOMIC);
-    var code = 'irrecv_' + dropdown_pin + '.enableIRIn();\n';
-    return code;
+Blockly.Arduino.ir_recv_enable = function () {
+  var xmlDom = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
+  var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
+  if(xmlText.indexOf("type=\"controls_tone\"") == -1 && xmlText.indexOf("type=\"controls_notone\"") == -1)
+  {
+    this.setWarningText(null);
+  }
+  else
+  {
+    this.setWarningText(Blockly.IR_AND_TONE_WARNING);
   }
 
-  Blockly.Arduino.ir_send_nec = function () {
-    Blockly.Arduino.definitions_['include_IRremote'] = '#include <IRremote.h>\n';
-    Blockly.Arduino.definitions_['var_declare_ir_send'] = 'IRsend irsend;\n';
-    var data = Blockly.Arduino.valueToCode(this, 'data', Blockly.Arduino.ORDER_ATOMIC) || '0';
-    var bits = Blockly.Arduino.valueToCode(this, 'bits', Blockly.Arduino.ORDER_ATOMIC) || '0';
-    var type = this.getFieldValue('TYPE');
-    var code = 'irsend.send' + type + '(' + data + ',' + bits + ');\n';
-    /*
+  Blockly.Arduino.definitions_['include_IRremote'] = '#include <IRremote.h>';
+  var dropdown_pin = Blockly.Arduino.valueToCode(this, 'PIN', Blockly.Arduino.ORDER_ATOMIC);
+  var code = 'irrecv_' + dropdown_pin + '.enableIRIn();\n';
+  return code;
+}
+
+Blockly.Arduino.ir_send_nec = function () {
+  Blockly.Arduino.definitions_['include_IRremote'] = '#include <IRremote.h>\n';
+  Blockly.Arduino.definitions_['var_declare_ir_send'] = 'IRsend irsend;\n';
+  var data = Blockly.Arduino.valueToCode(this, 'data', Blockly.Arduino.ORDER_ATOMIC) || '0';
+  var bits = Blockly.Arduino.valueToCode(this, 'bits', Blockly.Arduino.ORDER_ATOMIC) || '0';
+  var type = this.getFieldValue('TYPE');
+  var code = 'irsend.send' + type + '(' + data + ',' + bits + ');\n';
+  /*
 	for (var name in Blockly.Arduino.definitions_) {
 		var def = Blockly.Arduino.definitions_[name];
 		if (def.match(/^IRrecv irrecv_/)) {
@@ -113,9 +114,8 @@ Blockly.Arduino.ir_recv_raw = function () {
   var dropdown_pin = Blockly.Arduino.valueToCode(this, 'PIN', Blockly.Arduino.ORDER_ATOMIC);
   Blockly.Arduino.definitions_['include_IRremote'] = '#include <IRremote.h>\n';
   Blockly.Arduino.definitions_['var_declare_ir_recv' + dropdown_pin] = 'IRrecv irrecv_' + dropdown_pin + '(' + dropdown_pin + ');\ndecode_results results_' + dropdown_pin + ';\n';
-  if (Blockly.Arduino.setups_['setup_serial_Serial' + profile.default.serial]) {
-  } else {
-    Blockly.Arduino.setups_['setup_serial_Serial' + profile.default.serial] = 'Serial.begin(' + profile.default.serial + ');';
+  if (!Blockly.Arduino.setups_['setup_serial_Serial']) {
+    Blockly.Arduino.setups_['setup_serial_Serial'] = 'Serial.begin(' + profile.default.serial + ');';
   }
   Blockly.Arduino.setups_['setup_ir_recv_' + dropdown_pin] = 'irrecv_' + dropdown_pin + '.enableIRIn();\n';
   var code = "if (irrecv_" + dropdown_pin + ".decode(&results_" + dropdown_pin + ")) {\n"
