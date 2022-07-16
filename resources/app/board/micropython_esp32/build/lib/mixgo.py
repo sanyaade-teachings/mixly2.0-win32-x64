@@ -11,10 +11,13 @@ dahanzimin From the Mixly Team
 """
 
 import time,gc
-from machine import Pin,SoftI2C,ADC,PWM
+from machine import Pin,SoftI2C,ADC,PWM,RTC
 
 '''i2c-onboard'''
 onboard_i2c=SoftI2C(scl = Pin(22), sda = Pin(21), freq = 400000)
+
+'''RTC'''
+rtc_clock=RTC()
 
 '''MPU9250'''
 try :

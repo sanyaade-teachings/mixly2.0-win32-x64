@@ -11,7 +11,7 @@ dahanzimin From the Mixly Team
 
 import time,gc
 import ble_handle
-from machine import Pin,SoftI2C,ADC,PWM
+from machine import Pin,SoftI2C,ADC,PWM,RTC
 
 '''Bluetooth-handle'''
 handle=ble_handle.Handle()
@@ -19,6 +19,8 @@ handle=ble_handle.Handle()
 '''i2c-onboard'''
 onboard_i2c=SoftI2C(scl = Pin(22), sda = Pin(21), freq = 400000)
 
+'''RTC'''
+rtc_clock=RTC()
 
 '''ACC-Sensor'''
 class ACC:
