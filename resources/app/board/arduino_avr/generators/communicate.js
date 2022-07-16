@@ -7,41 +7,65 @@ goog.require('Blockly.Arduino');
 Blockly.Arduino.ir_recv = function () {
   var xmlDom = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
   var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
-  if(xmlText.indexOf("type=\"controls_tone\"") == -1 && xmlText.indexOf("type=\"controls_notone\"") == -1)
-  {
+  if(xmlText.indexOf("type=\"controls_tone\"") === -1 && xmlText.indexOf("type=\"controls_notone\"") === -1) {
     this.setWarningText(null);
-  }
-  else
-  {
+  } else {
     this.setWarningText(Blockly.IR_AND_TONE_WARNING);
   }
-
-  var variable = Blockly.Arduino.variableDB_.getName(this.getFieldValue('VAR'), Blockly.Variables.NAME_TYPE);
-  Blockly.Arduino.definitions_['var_declare' + variable] = 'long ' + variable + ';';
   var dropdown_pin = Blockly.Arduino.valueToCode(this, 'PIN', Blockly.Arduino.ORDER_ATOMIC);
   var branch = Blockly.Arduino.statementToCode(this, 'DO');
   var branch2 = Blockly.Arduino.statementToCode(this, 'DO2');
-  var varName = Blockly.Arduino.variableDB_.getName(this.getFieldValue('VAR'),
-   Blockly.Variables.NAME_TYPE);
   Blockly.Arduino.definitions_['include_IRremote'] = '#include <IRremote.h>\n';
-    //Blockly.Arduino.definitions_['var_declare'+varName] = 'long '+varName+';\n';
-    Blockly.Arduino.definitions_['var_declare_ir_recv' + dropdown_pin] = 'IRrecv irrecv_' + dropdown_pin + '(' + dropdown_pin + ');\ndecode_results results_' + dropdown_pin + ';\n';
-    Blockly.Arduino.setups_['setup_ir_recv_' + dropdown_pin] = 'irrecv_' + dropdown_pin + '.enableIRIn();';
-    var code = "if (irrecv_" + dropdown_pin + ".decode(&results_" + dropdown_pin + ")) {\n"
-    code += '  ' + variable + '=results_' + dropdown_pin + '.value;\n';
-    code += '  String type="UNKNOWN";\n';
-    code += '  String typelist[18]={"UNUSED", "RC5", "RC6", "NEC", "SONY", "PANASONIC", "JVC", "SAMSUNG", "WHYNTER", "AIWA_RC_T501", "LG", "SANYO", "MITSUBISHI", "DISH", "SHARP", "DENON", "PRONTO", "LEGO_PF"};\n';
-    code += '  if(results_' + dropdown_pin + '.decode_type>=1&&results_' + dropdown_pin + '.decode_type<=17){\n';
-    code += '    type=typelist[results_' + dropdown_pin + '.decode_type];\n'
-    code += '  }\n';
-    code += '  Serial.println("IR TYPE:"+type+"  ");\n';
-    code += branch;
-    code += '  irrecv_' + dropdown_pin + '.resume();\n'
-    code += '} else {\n';
-    code += branch2;
-    code += '}\n';
-    return code;
-  };
+  Blockly.Arduino.definitions_['var_declare_irProtocolList'] = 
+`#if defined(SUPPORT_PULSE_WIDTH_DECODING) && !defined(EXCLUDE_EXOTIC_PROTOCOLS)
+String irProtocolList[26] = {
+  "UNKNOWN",  "PULSE_WIDTH",    "PULSE_DISTANCE", "DENON",        "SHARP",
+  "JVC",      "LG",             "LG2",            "NEC",          "PANASONIC",
+  "KASEIKYO", "KASEIKYO_DENON", "KASEIKYO_SHARP", "KASEIKYO_JVC", "KASEIKYO_MITSUBISHI",
+  "RC5",      "RC6",            "SAMSUNG",        "SAMSUNG_LG",   "SONY",
+  "ONKYO",    "APPLE",          "BOSEWAVE",       "LEGO_PF",      "MAGIQUEST",
+  "WHYNTER"
+};
+#elif defined(SUPPORT_PULSE_WIDTH_DECODING) && defined(EXCLUDE_EXOTIC_PROTOCOLS)
+String irProtocolList[25] = {
+  "UNKNOWN",        "PULSE_DISTANCE", "DENON",        "SHARP",               "JVC",
+  "LG",             "LG2",            "NEC",          "PANASONIC",           "KASEIKYO",
+  "KASEIKYO_DENON", "KASEIKYO_SHARP", "KASEIKYO_JVC", "KASEIKYO_MITSUBISHI", "RC5",
+  "RC6",            "SAMSUNG",        "SAMSUNG_LG",   "SONY",                "ONKYO",
+  "APPLE",          "BOSEWAVE",       "LEGO_PF",      "MAGIQUEST",           "WHYNTER"
+};
+#elif !defined(SUPPORT_PULSE_WIDTH_DECODING) && !defined(EXCLUDE_EXOTIC_PROTOCOLS)
+String irProtocolList[22] = {
+  "UNKNOWN",  "PULSE_WIDTH",    "PULSE_DISTANCE", "DENON",        "SHARP",
+  "JVC",      "LG",             "LG2",            "NEC",          "PANASONIC",
+  "KASEIKYO", "KASEIKYO_DENON", "KASEIKYO_SHARP", "KASEIKYO_JVC", "KASEIKYO_MITSUBISHI",
+  "RC5",      "RC6",            "SAMSUNG",        "SAMSUNG_LG",   "SONY",
+  "ONKYO",    "APPLE"
+};
+#else
+String irProtocolList[21] = {
+  "UNKNOWN",        "PULSE_DISTANCE", "DENON",        "SHARP",               "JVC",
+  "LG",             "LG2",            "NEC",          "PANASONIC",           "KASEIKYO",
+  "KASEIKYO_DENON", "KASEIKYO_SHARP", "KASEIKYO_JVC", "KASEIKYO_MITSUBISHI", "RC5",
+  "RC6",            "SAMSUNG",        "SAMSUNG_LG",   "SONY",                "ONKYO",
+  "APPLE"
+};
+#endif`;
+  Blockly.Arduino.setups_['setup_ir_recv_' + dropdown_pin] = `IrReceiver.begin(${dropdown_pin});`;
+  var code = 
+`if (IrReceiver.decode()) {
+  struct IRData *pIrData = &IrReceiver.decodedIRData;
+  long ir_item = pIrData->decodedRawData;
+  String irProtocolStr = irProtocolList[pIrData->protocol];
+  Serial.print("IR TYPE:" + irProtocolStr + "\\tVALUE:");
+  Serial.println(ir_item, HEX);
+  IrReceiver.resume();
+${branch}
+} else {
+${branch2}
+}\n`;
+  return code;
+};
 
 
   Blockly.Arduino.ir_recv_enable = function () {
