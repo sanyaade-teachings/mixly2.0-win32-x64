@@ -3110,7 +3110,7 @@
     <block type="blynk_iot_syncVirtual">
       <field name="Vpin">V0</field>
     </block>
-    <block type="esp_camera">
+    <block type="esp_camera" m-show="esp32cam">
       <value name="wifi_ssid">
         <shadow type="text">
           <field name="TEXT">wifi_ssid</field>
@@ -3122,7 +3122,7 @@
         </shadow>
       </value>
     </block>
-    <block type="esp_camera_blynk">
+    <block type="esp_camera_blynk" m-show="esp32cam">
       <value name="wifi_ssid">
         <shadow type="text">
           <field name="TEXT">wifi_ssid</field>
@@ -3144,7 +3144,7 @@
         </shadow>
       </value>
     </block>
-    <block type="take_a_photo1"></block>
+    <block type="take_a_photo1" m-show="esp32cam"></block>
   </category>
   <category id="catMQTT" colour="0">
     <block type="MQTT_server">
