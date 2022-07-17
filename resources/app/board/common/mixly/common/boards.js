@@ -392,12 +392,16 @@ Boards.updateCategories = (boardName, enforce = false) => {
     if (Env.isElectron) {
         thirdPartyStr = Env.thirdPartyXML.join('');
     }
+    const searchCategoryStr = '<category id="catSearch" hidden="true" colour="#ff6666"><label text="'
+                             + indexText['无数据']
+                             + '"></label></category>';
     thirdPartyStr = Boards.selectCategories(boardName, thirdPartyStr);
     const toolboxDom = $('#toolbox');
     toolboxDom.html(
         Boards.selectCategories(boardName, XML.CATEGORIES_STR[boardName] ?? Env.defaultXML)
     );
     toolboxDom.append(thirdPartyStr);
+    toolboxDom.append(searchCategoryStr);
     const categoriesDom = toolboxDom.find('category');
     for (let i = 0; categoriesDom[i]; i++) {
         if (categoriesDom[i].hasAttribute('toolboxitemid')) continue;

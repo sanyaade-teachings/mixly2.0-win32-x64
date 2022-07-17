@@ -66,10 +66,7 @@ LibManager.LOCAL_IMPORT_FILTERS = {
 
 LibManager.getDefaultXML = () => {
     let $toolbox = $('#toolbox');
-    return '<category id="catSearch" hidden="true" colour="#ff6666"><label text="'
-         + indexText['无数据']
-         + '"></label></category>'
-         + $toolbox.html();
+    return $toolbox.html();
 }
 
 LibManager.getLibs = (libsDir) => {

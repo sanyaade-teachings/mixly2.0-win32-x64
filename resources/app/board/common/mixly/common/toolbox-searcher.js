@@ -12,7 +12,7 @@ ToolboxSearcher.init = function () {
     }));
 
     const serachDom = XML.TEMPLATE_DOM['SEARCH_DIV'];
-    $('.blocklyToolboxDiv').prepend(serachDom);
+    $('.blocklyToolboxDiv').append(serachDom);
     this.btnDom = serachDom.find('button');
     this.inputDom = serachDom.find('input');
     this.preKeyText = '';
@@ -35,6 +35,7 @@ ToolboxSearcher.init = function () {
             } else {
                 searchCategory.show();
             }
+            $(mainToolbox.HtmlDiv).scrollTop(mainToolbox.HtmlDiv.scrollHeight);
         } catch(error) {
             console.log(error);
         }
@@ -56,12 +57,12 @@ ToolboxSearcher.getCategoryPath = (category) => {
 ToolboxSearcher.searchBlocks = function (keyList) {
     return new Promise((resolve, reject) => {
         const mainToolbox = Blockly.mainWorkspace.getToolbox();
-        const searchCategory = mainToolbox.getToolboxItems()[0];
-
+        const searchCategory = mainToolbox.getToolboxItemById('catSearch');
         let outputXML = [];
         const categories = mainToolbox.getToolboxItems();
-        for (let j = 1; categories[j]; j++) {
+        for (let j = 0; categories[j]; j++) {
             const category = categories[j];
+            if (category.id_ === 'catSearch') continue;
             if (typeof category.getContents !== 'function') continue;
             const blocksList = category.getContents();
             let addLabel = true;
@@ -143,7 +144,8 @@ ToolboxSearcher.searchBlocks = function (keyList) {
         mainToolbox.refreshSelection();
         if (!$(searchCategory.getDiv()).children().first().hasClass('blocklyTreeSelected'))
             searchCategory.getClickTarget().click();
-        mainToolbox.getFlyout().scrollToStart();
+        // mainToolbox.getFlyout().scrollToStart();
+        $(mainToolbox.HtmlDiv).scrollTop(mainToolbox.HtmlDiv.scrollHeight);
         resolve();
     });
 }

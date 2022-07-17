@@ -64,10 +64,7 @@ Interface.init = () => {
         if (typeof WikiManager === 'object' && Nav.CONFIG.setting.wiki)
             WikiManager.registerContextMenu();
     } else {
-        Env.defaultXML = '<category id="catSearch" hidden="true" colour="#ff6666"><label text="'
-                       + indexText['无数据']
-                       + '"></label></category>'
-                       + $('#toolbox').html();
+        Env.defaultXML = $('#toolbox').html();
     }
     const selectedBoardName = Boards.getSelectedBoardName();
     Boards.updateCategories(selectedBoardName);
