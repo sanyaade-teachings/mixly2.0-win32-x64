@@ -288,7 +288,7 @@
                 "Mixly.Web.Esptool",
                 "Mixly.LayerExtend",
                 "Mixly.Config",
-                "Mixly.Tools",
+                "Mixly.MFile",
                 "Mixly.Boards"
             ],
             "provide":[
