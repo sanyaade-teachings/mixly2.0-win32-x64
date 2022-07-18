@@ -39,23 +39,23 @@ class SSD1106(framebuf.FrameBuffer):
 
     def init_display(self):
         for cmd in (
-        	SET_DISP_OFF, # display off
-			SET_DISP_CLK_DIV, 0x80, # timing and driving scheme
-			SET_MUX_RATIO, 0x3f,       #0xa8
-			SET_DISP_OFFSET, 0x00,    #0xd3
-			SET_DISP_START_LINE | 0x00, #start line
-			SET_CHARGE_PUMP, 0x10 if self.external_vcc else 0x14,
-			SET_MEM_ADDR, 0x00, # address setting
-			SET_SEG_REMAP | 0x01, # column addr 127 mapped to SEG0
-			SET_COM_OUT_DIR | 0x08, # scan from COM[N] to COM0
-			SET_COM_PIN_CFG, 0x12,
-			SET_CONTRACT_CTRL, 0xcf,
-			SET_PRECHARGE, 0x22 if self.external_vcc else 0xf1,
-			SET_VCOM_DESEL, 0x40, # 0.83*Vcc
-			SET_ENTIRE_ON, # output follows RAM contents
-			SET_NORM_INV,
-			SET_DISP_ON): # on
-			self.write_cmd(cmd)
+            SET_DISP_OFF, # display off
+            SET_DISP_CLK_DIV, 0x80, # timing and driving scheme
+            SET_MUX_RATIO, 0x3f,       #0xa8
+            SET_DISP_OFFSET, 0x00,    #0xd3
+            SET_DISP_START_LINE | 0x00, #start line
+            SET_CHARGE_PUMP, 0x10 if self.external_vcc else 0x14,
+            SET_MEM_ADDR, 0x00, # address setting
+            SET_SEG_REMAP | 0x01, # column addr 127 mapped to SEG0
+            SET_COM_OUT_DIR | 0x08, # scan from COM[N] to COM0
+            SET_COM_PIN_CFG, 0x12,
+            SET_CONTRACT_CTRL, 0xcf,
+            SET_PRECHARGE, 0x22 if self.external_vcc else 0xf1,
+            SET_VCOM_DESEL, 0x40, # 0.83*Vcc
+            SET_ENTIRE_ON, # output follows RAM contents
+            SET_NORM_INV,
+            SET_DISP_ON): # on
+            self.write_cmd(cmd)
         self.fill(0)
         self.show()
 
@@ -79,6 +79,12 @@ class SSD1106(framebuf.FrameBuffer):
             self.write_cmd(SET_COL_ADDR_H + 0)
             self.write_data(self.buffer[i*128:(i+1)*128])   # send one page display data
 
+    def set_buffer(self, buffer):
+        for i in range(min(len(buffer),len(self.buffer))):
+            self.buffer[i] = self.buffer[i] | buffer[i]
+
+    def get_buffer(self):
+        return self.buffer 
 
 class SSD1106_I2C(SSD1106):
     def __init__(self, width, height, i2c, addr=0x3c, external_vcc=False):
@@ -97,21 +103,13 @@ class SSD1106_I2C(SSD1106):
         self.i2c.writeto(self.addr, tmp+buf)
 
 class SSD1106_SPI(SSD1106):
-    def __init__(self, width, height, spi, dc, res, cs, external_vcc=False):
+    def __init__(self, width, height, spi, dc, cs, external_vcc=False):
         self.rate = 10 * 1024 * 1024
         dc.init(dc.OUT, value=0)
-        res.init(res.OUT, value=0)
         cs.init(cs.OUT, value=1)
         self.spi = spi
         self.dc = dc
-        self.res = res
         self.cs = cs
-        import time
-        self.res(1)
-        time.sleep_ms(1)
-        self.res(0)
-        time.sleep_ms(10)
-        self.res(1)
         super().__init__(width, height, external_vcc)
 
     def write_cmd(self, cmd):
