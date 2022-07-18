@@ -6,15 +6,32 @@ goog.provide('Mixly.WebCompiler');
 goog.provide('Mixly.Url');
 goog.provide('Mixly.Config');
 
-Mixly.get = (path) => {
-    $.ajaxSettings.async = false;
+Mixly.get = (inPath) => {
     let str;
-    $.get(path, (data) => {
-        str = data;
-    }, 'text').fail(() => {
-        console.log(path, '获取失败');
-    });
-    $.ajaxSettings.async = true;
+    if (typeof nw === 'object') {
+        const fs = require('fs');
+        const path = require('path');
+        if (inPath.indexOf(window.location.origin) !== -1) {
+            inPath = inPath.replace(window.location.origin, nw.__dirname);
+        } else {
+            let dirPath;
+            if (fs.existsSync(nw.__filename) && fs.statSync(nw.__filename).isFile()) {
+                dirPath = path.resolve(nw.__filename, '../');
+            } else {
+                dirPath = nw.__filename;
+            }
+            inPath = path.resolve(dirPath, './' + inPath);
+        }
+        str = fs.readFileSync(inPath, 'utf-8');
+    } else {
+        $.ajaxSettings.async = false;
+        $.get(inPath, (data) => {
+            str = data;
+        }, 'text').fail(() => {
+            console.log(inPath, '获取失败');
+        });
+        $.ajaxSettings.async = true;
+    }
     return str;
 }
 

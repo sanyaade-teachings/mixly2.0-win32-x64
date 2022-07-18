@@ -817,23 +817,7 @@ mixlyjs.viewfile = function (type) {
 };
 
 mixlyjs.getCodeContent = function () {
-    if (document.getElementById('tab_blocks').className == 'tabon') {
-        var board = Code.getStringParamFromUrl("board", "Arduino Nano[atmega328]")
-        //	if(mixlyjs.isArduino(board))
-        //			return Blockly.Arduino.workspaceToCode(Blockly.mainWorkspace);
-        //	else if(mixlyjs.isMicrobitjs(board))
-        //	return Blockly.JavaScript.workspaceToCode(Blockly.mainWorkspace);
-        //		else if(mixlyjs.isMicrobitpy(board))
-        try {
-            return Blockly.Python.workspaceToCode(Blockly.mainWorkspace);
-        } catch (e) {
-            return Blockly.Arduino.workspaceToCode(Blockly.mainWorkspace);
-        }
-        //else if(mixlyjs.isMixpy(board))
-        //return Blockly.Mixpy.workspaceToCode(Blockly.mainWorkspace);
-    } else {
-        return editor.getValue();
-    }
+    Mixly.MFile.getCode();
 };
 
 mixlyjs.getXmlContent = function (xmlType) {
