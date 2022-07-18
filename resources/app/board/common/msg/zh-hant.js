@@ -20,6 +20,7 @@ var MSG = {
     catRFID: "RFID",
     catStorage: "存儲",
     catME_GO:"ME GO",
+    catAIOT:"智能物聯",
     catSensor: "感測器",
     catActuator: "執行器",
     catExternSensor: "外接感測器",
@@ -3373,3 +3374,7 @@ Blockly.MIXLY_ENCODER_LEFT_ROTATION = '向左旋轉';
 Blockly.MIXLY_ENCODER_RIGHT_ROTATION = '向右旋轉';
 Blockly.MIXLY_ENCODER_UPPER_OVERFLOW = '高於上限';
 Blockly.MIXLY_ENCODER_LOWER_OVERFLOW = '低於下限';
+Blockly.MIXLY_AI_UNIT = '智慧對話';
+Blockly.MIXLY_AI_LANGUAGE_CHINESE = '中文-普通話';
+Blockly.MIXLY_AI_LANGUAGE_ENGLISH = '英語';
+Blockly.MIXLY_AI_LANGUAGE_CANTONESE = '粵語';

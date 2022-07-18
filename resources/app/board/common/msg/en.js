@@ -23,6 +23,7 @@ var MSG = {
     catStorageSPIFFS: 'SPIFFS',
     catStorageEEPROM: 'EEPROM',
     catME_GO:"ME GO",
+    catAIOT:"Intelligent IOT",
     catSensor: "Sensor",
     catActuator: "Actuator",
     catExternSensor: "External Sensor",
@@ -3399,3 +3400,7 @@ Blockly.MIXLY_ENCODER_LEFT_ROTATION = 'Left rotation';
 Blockly.MIXLY_ENCODER_RIGHT_ROTATION = 'Right rotation';
 Blockly.MIXLY_ENCODER_UPPER_OVERFLOW = 'Upper overflow';
 Blockly.MIXLY_ENCODER_LOWER_OVERFLOW = 'Lower overflow';
+Blockly.MIXLY_AI_UNIT = 'Intelligent dialog';
+Blockly.MIXLY_AI_LANGUAGE_CHINESE = 'Chinese-Mandarin';
+Blockly.MIXLY_AI_LANGUAGE_ENGLISH = 'English';
+Blockly.MIXLY_AI_LANGUAGE_CANTONESE = 'Cantonese';

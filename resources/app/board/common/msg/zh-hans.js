@@ -23,6 +23,7 @@ var MSG = {
     catStorageSPIFFS: 'SPIFFS',
     catStorageEEPROM: 'EEPROM',
     catME_GO:"ME GO",
+    catAIOT:"智能物联",
     catSensor: "传感器",
     catActuator: "执行器",
     catExternSensor: "外接传感",
@@ -3499,3 +3500,8 @@ Blockly.MIXLY_ENCODER_LEFT_ROTATION = '向左旋转';
 Blockly.MIXLY_ENCODER_RIGHT_ROTATION = '向右旋转';
 Blockly.MIXLY_ENCODER_UPPER_OVERFLOW = '高于上限';
 Blockly.MIXLY_ENCODER_LOWER_OVERFLOW = '低于下限';
+Blockly.MIXLY_AI_UNIT = '智能对话';
+Blockly.MIXLY_AI_LANGUAGE_CHINESE = '中文-普通话';
+Blockly.MIXLY_AI_LANGUAGE_ENGLISH = '英语';
+Blockly.MIXLY_AI_LANGUAGE_CANTONESE = '粤语';
+
