@@ -1,0 +1,21 @@
+{
+  "name": "Mixly2.0",
+  "version": "2.0.0",
+  "description": "",
+  "repository": "",
+  "node-main": "./static-server/server.js",
+  "main": "http://localhost:80",
+  "node-remote": "http://localhost:80",
+  "scripts": {
+    "start": "nw ."
+  },
+  "keywords": [
+    "NW.js",
+    "server"
+  ],
+  "author": "Mixly2.0",
+  "license": "MIT",
+  "devDependencies": {
+    "nw": "0.60.0-sdk"
+  }
+}
