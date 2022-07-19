@@ -1807,6 +1807,7 @@ Blockly.MIXLY_RGB_NUM_R_G_B = "設置RGB彩燈模組指定燈的R值,G值,B值�
 Blockly.MIXLY_RGB_NUM_R_G_B_MIXGOCC = "設置RGB彩燈模組指定燈的R值,G值,B值，燈號從0到3";
 Blockly.MIXLY_RGB_ALL_R_G_B_MIXGOCC = "設置全部RGB彩燈模組指定燈的R值,G值,B值";
 Blockly.MIXLY_RGB_NUM_R_G_B_MIXGOME = "設置RGB彩燈模組指定燈的R值,G值,B值，燈號從0到1";
+Blockly.MIXLY_RGB_NUM_R_G_B_MPYTHON = "設置RGB彩燈模組指定燈的R值,G值,B值，燈號從0到2";
 Blockly.MIXLY_MICROBIT_JS_SERIAL_READ_LINE1 = "返回序列中的一行字串";
 Blockly.MIXLY_SERIAL_AVAILABLE1 = "如果序列埠中的資料可讀則返回真";
 Blockly.MIXLY_SERIAL_softserial = "初始化序列埠 輸入,輸出,序列埠傳輸速率";

@@ -40,6 +40,7 @@
   <script src="../micropython_common/blocks/sensor_onboard.js"></script>
   <script src="../micropython_common/blocks/sensor_extern.js"></script>
   <script src="../micropython_common/blocks/network.js"></script>
+  <script src="../micropython_common/blocks/ai.js"></script>
   <script src="../python/blocks/storage.js"></script>
   <script src="../micropython_common/blocks/actuator_onboard.js"></script>
   <script src="../micropython_common/blocks/actuator_extern.js"></script>
@@ -72,6 +73,7 @@
   <script src="../micropython_common/generators/display_onboard.js"></script>
   <script src="../micropython_common/generators/display_extern.js"></script>
   <script src="../micropython_common/generators/network.js"></script>
+  <script src="../micropython_common/generators/ai.js"></script>
   <script src="../python/generators/procedures.js"></script>
   <script src="../micropython_common/generators/factory.js"></script>
   <script src="../micropython_common/generators/blynk.js"></script>
@@ -1472,18 +1474,29 @@
             </shadow>
           </value>
         </block>
-        <block type="sensor_mixgo_pin_near" m-hide="micropython:esp32:mixgo"></block>
+        <block type="sensor_mpython_pin_pressed" m-show="micropython:esp32:mPython">
+          <value name="button">
+            <shadow type="pins_mpython_touch">p
+            </shadow>
+          </value>
+        </block>
+        <!-- <block type="sensor_mixgo_pin_near" m-hide="micropython:esp32:mixgo"></block> -->
         <block type="sensor_mixgo_pin_near_double" m-show="micropython:esp32:mixgo"></block>
-        <block type="sensor_mixgo_light"></block>
-        <block type="sensor_mixgo_sound"></block>
-        <block type="sensor_onboard_mpu9250_gesture"></block>
-        <block type="sensor_onboard_mpu9250_get_acceleration"></block>
-        <block type="sensor_onboard_mpu9250_get_magnetic"></block>
-        <block type="sensor_onboard_mpu9250_get_gyro"></block>
-        <block type="sensor_onboard_mpu9250_temperature"></block>
-        <block type="sensor_onboard_mpu9250_calibrate_compass"></block>
-        <block type="sensor_onboard_mpu9250_field_strength"></block>
-        <block type="sensor_onboard_compass_reset"></block>
+        <block type="sensor_mixgo_light" m-show="micropython:esp32:mixgo micropython:esp32:mPython"></block>
+        <block type="sensor_mixgo_sound" m-show="micropython:esp32:mixgo micropython:esp32:mPython"></block>
+        <block type="sensor_onboard_mpu9250_gesture" m-show="micropython:esp32:mixgo"></block>
+        <block type="sensor_onboard_mpu9250_get_acceleration" m-show="micropython:esp32:mixgo"></block>
+        <block type="sensor_onboard_mpu9250_get_magnetic" m-show="micropython:esp32:mixgo"></block>
+        <block type="sensor_onboard_mpu9250_get_gyro" m-show="micropython:esp32:mixgo"></block>
+        <block type="sensor_onboard_mpu9250_temperature" m-show="micropython:esp32:mixgo"></block>
+        <block type="sensor_onboard_mpu9250_calibrate_compass" m-show="micropython:esp32:mixgo"></block>
+        <block type="sensor_onboard_mpu9250_field_strength" m-show="micropython:esp32:mixgo"></block>
+        <block type="sensor_onboard_compass_reset" m-show="micropython:esp32:mixgo"></block>
+        <block type="sensor_mpython_qmi8658_temperature" m-show="micropython:esp32:mPython"></block>
+        <block type="sensor_mpython_qmi8658_get_acceleration" m-show="micropython:esp32:mPython"></block>
+        <block type="sensor_mpython_qmi8658_get_gyro" m-show="micropython:esp32:mPython"></block>
+        <block type="sensor_mpython_mmc5603_get_magnetic" m-show="micropython:esp32:mPython"></block>
+        <block type="sensor_mpython_mmc5603_get_angle" m-show="micropython:esp32:mPython"></block>
         <block type="onboard_RTC_set_datetime">
           <value name="year">
             <shadow type="math_number">
@@ -1529,7 +1542,7 @@
         <block type="onboard_RTC_get_time"></block>
       </category>
       <category id="catOnBoardActuator" name="catOnBoardActuator" colour="100"  m-show="micropython:esp32:mixgo micropython:esp32:rm_e1 micropython:esp32:mPython">
-        <block type="actuator_led_bright" m-show='micropython:esp32:rm_e1 micropython:esp32:mPython'>
+        <block type="actuator_led_bright" m-show='micropython:esp32:rm_e1'>
         <value name="led">
           <shadow type="number">
           </shadow>
@@ -1539,13 +1552,13 @@
           </shadow>
         </value>
       </block>
-      <block type="actuator_get_led_state" m-show='micropython:esp32:rm_e1 micropython:esp32:mPython'>
+      <block type="actuator_get_led_state" m-show='micropython:esp32:rm_e1'>
         <value name="led">
           <shadow type="number">
           </shadow>
         </value>
       </block>
-      <block type="actuator_led_brightness" m-show='micropython:esp32:rm_e1 micropython:esp32:mPython'>
+      <block type="actuator_led_brightness" m-show='micropython:esp32:rm_e1'>
         <value name="led">
           <shadow type="number">
           </shadow>
@@ -1556,7 +1569,7 @@
           </shadow>
         </value>
       </block>
-      <block type="actuator_get_led_bright" m-show='micropython:esp32:rm_e1 micropython:esp32:mPython'>
+      <block type="actuator_get_led_bright" m-show='micropython:esp32:rm_e1'>
         <value name="led">
           <shadow type="number">
           </shadow>
@@ -2285,6 +2298,60 @@
           </value>
         </block>
       </category>
+      <!-- <category id="catAI" colour="205">      
+      <block type="MICROPYTHON_AI_client">
+        <value name="SUB">
+          <shadow type="variables_get">
+            <field name="VAR">client</field>
+          </shadow>
+        </value>
+        <value name="APP_ID">
+          <shadow type="text">
+            <field name="TEXT">Enter Your APP_ID</field>
+          </shadow>
+        </value>
+        <value name="API_KEY">
+          <shadow type="text">
+            <field name="TEXT">Enter Your API_KEY</field>
+          </shadow>
+        </value>
+        <value name="SECRET_KEY">
+          <shadow type="text">
+            <field name="TEXT">Enter Your SECRET_KEY</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="MICROPYTHON_AI_Speech_synthesis">
+        <value name="SUB">
+          <shadow type="variables_get">
+            <field name="VAR">client</field>
+          </shadow>
+        </value>
+        <value name="STR">
+          <shadow type="text">
+            <field name="TEXT">今天天气真好</field>
+          </shadow>
+        </value>
+        <value name="ATTR">
+          <block type="dicts_create_with_noreturn">
+            <mutation items="0"></mutation>
+          </block>
+        </value>
+      </block>
+      <block type="MICROPYTHON_AI_Speech_asr">
+        <value name="SUB">
+          <shadow type="variables_get">
+            <field name="VAR">client</field>
+          </shadow>
+        </value>
+        <value name="FILE"></value>
+        <value name="ATTR">
+          <block type="dicts_create_with_noreturn">
+            <mutation items="0"></mutation>
+          </block>
+        </value>
+      </block>
+      </category> -->
     </category>
     <category id="catExternSensor" colour="40">
       <!-- 

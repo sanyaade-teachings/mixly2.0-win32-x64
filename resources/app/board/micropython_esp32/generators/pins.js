@@ -13,6 +13,7 @@ Blockly.Python.pins_analog=Blockly.Python.pins_digital;
 Blockly.Python.pins_pwm_pin=Blockly.Python.pins_digital;
 Blockly.Python.pins_pwm=Blockly.Python.pins_digital;
 Blockly.Python.espnow_channel=Blockly.Python.pins_digital;
+Blockly.Python.pins_mpython_touch=Blockly.Python.pins_digital;
 Blockly.Python.pins_dac_pin = Blockly.Python.pins_digital;
 Blockly.Python.pins_dac = Blockly.Python.pins_digital;
 Blockly.Python.pins_touch_pin = Blockly.Python.pins_digital;
