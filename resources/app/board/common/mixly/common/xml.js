@@ -198,7 +198,7 @@ if (layui._typeof(BOARD.board) === 'object') {
          && layui._typeof(boardConfig.xmlPath) === 'string') {
             const categoriesStr = Mixly.get(boardConfig.xmlPath);
             if (categoriesStr)
-                XML.CATEGORIES_STR[i] = '<category id="catSearch" hidden="true" colour="#ff6666"><label text="无数据"></label></category>' + categoriesStr;
+                XML.CATEGORIES_STR[i] = categoriesStr;
         }
     }
 }
