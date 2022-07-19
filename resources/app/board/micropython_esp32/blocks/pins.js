@@ -39,6 +39,16 @@ Blockly.Blocks['pins_output_pin'] = {
   }
 };
 
+Blockly.Blocks['pins_mpython_touch'] = {
+   init: function() {
+    this.setColour(Blockly.Blocks.pins.HUE);
+    this.appendDummyInput("")
+        .appendField(new Blockly.FieldDropdown(profile.default.touch_mpython), 'PIN');
+    this.setOutput(true, Number);
+  }
+};
+
+
 Blockly.Blocks['espnow_channel'] = {
    init: function() {
     this.setColour(Blockly.Blocks.pins.HUE);

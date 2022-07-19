@@ -120,7 +120,7 @@ class MIDI():
 		self._pin.freq(int(freq)) 
 
 	def pitch_time(self, freq, delay):
-		sself._pin.duty(1023-self._volume) if self._invert else self._pin.duty(self._volume)
+		self._pin.duty(1023-self._volume) if self._invert else self._pin.duty(self._volume)
 		self._pin.freq(int(freq))  
 		sleep_ms(delay)
 		self._pin.duty(1023) if self._invert else self._pin.duty(0)

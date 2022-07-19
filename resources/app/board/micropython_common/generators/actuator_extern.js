@@ -79,19 +79,19 @@ Blockly.Python.esp32_music_stop = function(block) {
   return code;
 };
 
-Blockly.Python.esp32_music_set_tempo=function(){
-    Blockly.Python.definitions_['import_music'] = 'import music';
-    var bpm = Blockly.Python.valueToCode(this, 'BPM', Blockly.Python.ORDER_ASSIGNMENT);
-    var ticks = Blockly.Python.valueToCode(this, 'TICKS', Blockly.Python.ORDER_ASSIGNMENT);
-    var code = "music.MIDI().set_tempo("+ ticks +", "+ bpm +")\n";
-    return code;
-};
+// Blockly.Python.esp32_music_set_tempo=function(){
+//     Blockly.Python.definitions_['import_music'] = 'import music';
+//     var bpm = Blockly.Python.valueToCode(this, 'BPM', Blockly.Python.ORDER_ASSIGNMENT);
+//     var ticks = Blockly.Python.valueToCode(this, 'TICKS', Blockly.Python.ORDER_ASSIGNMENT);
+//     var code = "music.MIDI().set_tempo("+ ticks +", "+ bpm +")\n";
+//     return code;
+// };
 
-Blockly.Python.esp32_music_get_tempo=function(){
-    Blockly.Python.definitions_['import_music'] = 'import music';
-    var code =  "music.MIDI().get_tempo()";
-    return [code, Blockly.Python.ORDER_ATOMIC];
-};
+// Blockly.Python.esp32_music_get_tempo=function(){
+//     Blockly.Python.definitions_['import_music'] = 'import music';
+//     var code =  "music.MIDI().get_tempo()";
+//     return [code, Blockly.Python.ORDER_ATOMIC];
+// };
 
 Blockly.Python.esp32_music_play_list=function(){
     Blockly.Python.definitions_['import_music'] = 'import music';
@@ -102,10 +102,10 @@ Blockly.Python.esp32_music_play_list=function(){
     return code;
 };
 
-Blockly.Python.esp32_music_reset=function(){
-    Blockly.Python.definitions_['import_music'] = 'import music';
-    return "music.MIDI().reset()\n";
-};
+// Blockly.Python.esp32_music_reset=function(){
+//     Blockly.Python.definitions_['import_music'] = 'import music';
+//     return "music.MIDI().reset()\n";
+// };
 
 Blockly.Python.servo_move = function() {
   Blockly.Python.definitions_['import_servo'] = 'import servo';

@@ -191,6 +191,11 @@ Blockly.Blocks.actuator_onboard_neopixel_rgb = {
                 this.setTooltip(Blockly.MIXLY_RGB_NUM_R_G_B_MIXGOCC);
                 break;
             case 'micropython:esp32c3:mixgome':
+                this.setTooltip(Blockly.MIXLY_RGB_NUM_R_G_B_MIXGOME);
+                break;
+            case 'micropython:esp32:mPython':
+                this.setTooltip(Blockly.MIXLY_RGB_NUM_R_G_B_MPYTHON);
+                break;    
             default:
                 this.setTooltip(Blockly.MIXLY_RGB_NUM_R_G_B_MIXGOME);
         }

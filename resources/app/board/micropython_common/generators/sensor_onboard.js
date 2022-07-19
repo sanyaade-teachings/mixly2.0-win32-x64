@@ -60,13 +60,30 @@ Blockly.Python.sensor_dht11 = function () {
 };
 
 Blockly.Python.sensor_mixgo_light= function(){
+    var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
+    if (version == "mixgo"){
     Blockly.Python.definitions_['import_mixgo'] = 'import mixgo';
     return ['mixgo.get_brightness()', Blockly.Python.ORDER_ATOMIC];
+    }
+    else if(version == "mPython"){
+    Blockly.Python.definitions_['import_mpython_onboard_light'] = 'from mpython import onboard_light';
+    return ['onboard_light.brightness()', Blockly.Python.ORDER_ATOMIC];
+    }
+    else{return ['', Blockly.Python.ORDER_ATOMIC];}
+    
 };
 
 Blockly.Python.sensor_mixgo_sound= function(){
+    var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
+    if (version == "mixgo"){
     Blockly.Python.definitions_['import_mixgo'] = 'import mixgo';
     return ['mixgo.get_soundlevel()', Blockly.Python.ORDER_ATOMIC];
+    }
+    else if(version == "mPython"){
+    Blockly.Python.definitions_['import_mpython_onboard_sound'] = 'from mpython import onboard_sound';
+    return ['onboard_sound.soundlevel()', Blockly.Python.ORDER_ATOMIC];
+    }
+    else{return ['', Blockly.Python.ORDER_ATOMIC];}
 };
 
 
@@ -203,6 +220,20 @@ Blockly.Python.sensor_mpu9250_get_acceleration = function(){
     if (v == "mpu")
         Blockly.Python.definitions_['import_mixgo_mpu'] = 'from mixgo import mpu';    
     var code = v+'.mpu9250_get_' + key + '()';
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python.sensor_mixgo_pin_pressed = function(){
+    Blockly.Python.definitions_['import_mixgo'] = 'import mixgo';
+    var pin = Blockly.Python.valueToCode(this, 'button', Blockly.Python.ORDER_ATOMIC);
+    var code = 'mixgo.'+pin+'.is_touched()';
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python.sensor_mpython_pin_pressed = function(){
+    Blockly.Python.definitions_['import_mpython'] = 'import mpython';
+    var pin = Blockly.Python.valueToCode(this, 'button', Blockly.Python.ORDER_ATOMIC);
+    var code = 'mpython.touch_'+pin+'.is_touched()';
     return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
@@ -385,7 +416,38 @@ Blockly.Python.sensor_mixgome_temperature=function(){
 };
 
 
+//mpython onboard_sensor:
+Blockly.Python.sensor_mpython_qmi8658_get_acceleration = function(){    
+    var key = this.getFieldValue('key');
+    Blockly.Python.definitions_['import_mpython_motion'] = 'from mpython import motion';
+    var code = 'motion.accelerometer()' + key ;
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
 
+Blockly.Python.sensor_mpython_mmc5603_get_magnetic = function(){   
+    var key = this.getFieldValue('key');
+    Blockly.Python.definitions_['import_mpython_magnetic'] = 'from mpython import magnetic';
+    var code = 'magnetic.getdata()' + key ;
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python.sensor_mpython_qmi8658_get_gyro = function(){
+    var key = this.getFieldValue('key');
+    Blockly.Python.definitions_['import_mpython_motion'] = 'from mpython import motion';
+    var code = 'motion.gyroscope()' + key ;
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python.sensor_mpython_qmi8658_temperature = function(){
+    Blockly.Python.definitions_['import_mpython_motion'] = 'from mpython import motion';
+    return ['motion.temperature()', Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python.sensor_mpython_mmc5603_get_angle = function(){
+    Blockly.Python.definitions_['import_mpython_magnetic'] = 'from mpython import magnetic';
+    var code = 'magnetic.getangle()';
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
 
 Blockly.Python.sensor_button_is_pressed=Blockly.Python.sensor_mixgo_button_is_pressed;
 Blockly.Python.sensor_button_was_pressed=Blockly.Python.sensor_mixgo_button_was_pressed;

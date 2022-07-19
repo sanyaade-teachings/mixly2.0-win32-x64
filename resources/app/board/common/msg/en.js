@@ -1808,6 +1808,7 @@ Blockly.MIXLY_RGB_NUM_R_G_B = "Set RGB light, R value, B value, G value";
 Blockly.MIXLY_RGB_NUM_R_G_B_MIXGOCC = "Set RGB light, R value, B value, G value, NO. from 0 to 3";
 Blockly.MIXLY_RGB_ALL_R_G_B_MIXGOCC = "Set all RGB lights, R value, B value, G value";
 Blockly.MIXLY_RGB_NUM_R_G_B_MIXGOME = "Set RGB light, R value, B value, G value, NO. from 0 to 1";
+Blockly.MIXLY_RGB_NUM_R_G_B_MPYTHON = "Set RGB light, R value, B value, G value, NO. from 0 to 2";
 Blockly.MIXLY_MICROBIT_JS_SERIAL_READ_LINE1 = "Return a string of strings in the serial port";
 Blockly.MIXLY_SERIAL_AVAILABLE1 = "If the data in the serial port is readable, return true";
 Blockly.MIXLY_SERIAL_softserial = "Initialize serial input, output, baud rate";
