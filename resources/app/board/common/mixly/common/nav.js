@@ -18,7 +18,7 @@ const {
 
 const { BOARD, USER } = Config;
 
-const { element } = layui;
+const { element, form } = layui;
 
 Nav.DEFAULT_CONFIG = {
     "burn": false,
@@ -893,6 +893,8 @@ Nav.init = () => {
     };
     showTag();
     element.init();
+    form.render('select', 'boards-type-filter');
+    XML.TEMPLATE_ENV.PORT_SELECTOR && form.render('select', 'ports-type-filter');
     Nav.navItemId = [];
     if (typeof Nav.LEFT_BTN_LIST === "object") {
         let len = Nav.LEFT_BTN_LIST.length;
