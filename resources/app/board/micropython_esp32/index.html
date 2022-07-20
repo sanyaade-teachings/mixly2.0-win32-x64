@@ -3915,6 +3915,37 @@
           </value>
         </block>
         </category>
+        <category id="catRadio" colour="140">
+        
+        <block type="espnow_radio_channel">
+          <value name="CHNL">
+            <shadow type="math_number">
+              <field name="NUM">13</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="espnow_radio_on_off">
+        </block>
+        <block type="espnow_radio_send">
+          <value name="send">
+            <shadow type="text">
+              <field name="TEXT">Mixly</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="espnow_radio_rec">
+        </block>
+        <block type="espnow_radio_recv">
+          <statement name="DO">
+            <block type="system_print">
+              <value name="VAR">
+                <block type="espnow_radio_recv_msg"></block>
+              </value>
+            </block>
+          </statement>
+        </block>
+        <!--<block type="espnow_radio_recv_msg"></block>-->
+      </category>
         <category id="catOneWire" colour="140">
         <block type="communicate_ow_init">
           <value name="VAR">

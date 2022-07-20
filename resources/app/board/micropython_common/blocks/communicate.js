@@ -609,6 +609,86 @@ Blockly.Blocks["network_espnow_recv_handle"] = {
     }
 };
 
+//radio
+Blockly.Blocks['espnow_radio_channel'] = {
+    init: function() {
+        this.setColour(Blockly.Blocks.communicate.HUE);
+        this.appendDummyInput()
+            .appendField(Blockly.MIXLY_MP_ESPNOW_RADIO_INIT);
+        this.appendValueInput('CHNL')
+            .setCheck(Number);
+        this.setPreviousStatement(true);
+        this.setNextStatement(true);
+        this.setInputsInline(true);
+        this.setTooltip(Blockly.MIXLY_MP_ESPNOW_RADIO_INIT_TOOLTIP);
+    }
+};
+
+Blockly.Blocks['espnow_radio_on_off'] = {
+    init: function() {
+        this.setColour(Blockly.Blocks.communicate.HUE);
+        this.appendDummyInput()
+            .appendField(Blockly.MIXLY_MP_ESPNOW_RADIO);
+        this.appendDummyInput()
+            .appendField(new Blockly.FieldDropdown([
+                [Blockly.MIXLY_MICROBIT_PY_COMMUNICATE_ON, "True"],
+                [Blockly.MIXLY_MICROBIT_PY_COMMUNICATE_OFF, "False"]
+            ]), 'on_off')
+        this.setPreviousStatement(true);
+        this.setNextStatement(true);
+        this.setInputsInline(true);
+    }
+};
+
+Blockly.Blocks['espnow_radio_send'] = {
+    init: function() {
+        this.setColour(Blockly.Blocks.communicate.HUE);
+        this.appendDummyInput()
+            .appendField(Blockly.MIXLY_MP_ESPNOW_RADIO)
+            .appendField(Blockly.MIXLY_MICROPYTHON_SOCKET_SEND);
+        this.appendValueInput('send')
+            .setCheck(String);
+        this.setPreviousStatement(true);
+        this.setNextStatement(true);
+        this.setInputsInline(true);
+        this.setTooltip(Blockly.MIXLY_MIXGO_ESPNOW_SEND_TOOLTIP);
+    }
+};
+
+Blockly.Blocks['espnow_radio_rec'] = {
+    init: function() {
+        this.setColour(Blockly.Blocks.communicate.HUE);        
+        this.appendDummyInput()
+            .appendField(Blockly.MIXLY_MP_ESPNOW_RADIO)
+            .appendField(Blockly.MIXLY_MIXGO_ESPNOW_RECV);        
+        this.setOutput(true);
+        this.setInputsInline(true);
+    }
+};
+
+Blockly.Blocks['espnow_radio_recv_msg'] = {
+    init: function() {
+        this.setColour(Blockly.Blocks.communicate.HUE);        
+        this.appendDummyInput()
+            .appendField(Blockly.MIXLY_MP_ESPNOW_RADIO_RECEIVED_MSG);        
+        this.setOutput(true);
+        this.setInputsInline(true);
+    }
+};
+
+Blockly.Blocks['espnow_radio_recv'] = {
+    init: function() {
+        this.setColour(Blockly.Blocks.communicate.HUE);        
+        this.appendDummyInput()
+            .appendField(Blockly.MIXLY_MP_ESPNOW_RADIO_MSG_RECEIVED);  
+        this.appendStatementInput('DO')
+            .appendField(Blockly.MIXLY_DO);          
+        this.setPreviousStatement(false);
+        this.setNextStatement(false);
+    }
+};
+
+
 
 Blockly.Blocks['i2c_init'] = Blockly.Blocks['communicate_i2c_init'];
 Blockly.Blocks['i2c_read'] = Blockly.Blocks['communicate_i2c_read'];
