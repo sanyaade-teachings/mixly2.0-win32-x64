@@ -67,6 +67,7 @@ var MSG = {
     catDS: "Data Structure",
     catOnBoard: 'Board',
     catOnBoardDisplay: 'Board Display',
+    catOnBoardOled: 'Board Display',
     catOnBoardSensor: 'Board Sensor',
     catOnBoardActuator: 'Board Actuator',
     cat4Digitdisplay: '4Digitdisplay',

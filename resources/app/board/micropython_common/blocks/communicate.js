@@ -693,7 +693,9 @@ Blockly.Blocks['espnow_radio_recv_certain_msg'] = {
         this.setColour(Blockly.Blocks.communicate.HUE);        
         this.appendDummyInput()
             .appendField(Blockly.MIXLY_MP_ESPNOW_RADIO_MSG_RECEIVED_CERTAIN)
+            .appendField('"')
             .appendField(new Blockly.FieldTextInput('on'), 'msg') 
+            .appendField('"')
         this.appendStatementInput('DO')
             .appendField(Blockly.MIXLY_DO);          
         this.setPreviousStatement(false);
