@@ -688,6 +688,19 @@ Blockly.Blocks['espnow_radio_recv'] = {
     }
 };
 
+Blockly.Blocks['espnow_radio_recv_certain_msg'] = {
+    init: function() {
+        this.setColour(Blockly.Blocks.communicate.HUE);        
+        this.appendDummyInput()
+            .appendField(Blockly.MIXLY_MP_ESPNOW_RADIO_MSG_RECEIVED_CERTAIN)
+            .appendField(new Blockly.FieldTextInput('on'), 'msg') 
+        this.appendStatementInput('DO')
+            .appendField(Blockly.MIXLY_DO);          
+        this.setPreviousStatement(false);
+        this.setNextStatement(false);
+    }
+};
+
 
 
 Blockly.Blocks['i2c_init'] = Blockly.Blocks['communicate_i2c_init'];

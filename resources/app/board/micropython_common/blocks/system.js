@@ -202,6 +202,20 @@ Blockly.Blocks.system_timer_init = {
     }
 };
 
+Blockly.Blocks.c3_system_timer_init = {
+    init: function () {
+        this.setColour(Blockly.Blocks.loops.HUE);
+        this.appendDummyInput("")
+            .appendField("Timer")
+        this.appendValueInput('SUB')
+            .appendField(Blockly.MIXLY_SETUP)
+        this.setInputsInline(true);
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setTooltip(Blockly.MIXLY_ESP32_SYSTEM_TIMER_INIT_TOOLTIP);
+    }
+};
+
 Blockly.Blocks.system_wdt_init = {
     init: function () {
         this.setColour(Blockly.Blocks.loops.HUE);

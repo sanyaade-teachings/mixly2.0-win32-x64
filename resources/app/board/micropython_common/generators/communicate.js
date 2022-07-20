@@ -308,11 +308,74 @@ Blockly.Python.espnow_radio_recv_msg= function() {
 
 Blockly.Python.espnow_radio_recv= function(block) {
     Blockly.Python.definitions_['import_radio'] = "import radio";
+    Blockly.Python.definitions_['import_ubinascii'] = 'import ubinascii';
     Blockly.Python.definitions_['ESPNow_radio_initialize'] = "ESPNow_radio=radio.ESPNow(channel=0)";
     var doCode = Blockly.Python.statementToCode(block, 'DO') || Blockly.Python.PASS;
     Blockly.Python.definitions_['def_ESPNow_radio_recv'] = 'def ESPNow_radio_recv(mac,ESPNow_radio_msg):\n' + doCode;
-    Blockly.Python.definitions_['ESPNow_radio_recv_cb'] = "ESPNow_radio.recv_cb(ESPNow_radio_recv)\n";
+    Blockly.Python.definitions_['def_ESPNow_radio_recv_all'] = '_radio_msg_list = []\n'+'def ESPNow_radio_recv_callback(mac,ESPNow_radio_msg):\n'+'    global _radio_msg_list\n'+'    try: ESPNow_radio_recv(mac,ESPNow_radio_msg)\n'+'    except: pass\n'+'    if ESPNow_radio_msg in _radio_msg_list:\n'+"        eval('radio_recv_' + bytes.decode(ubinascii.hexlify(ESPNow_radio_msg)) + '()')\n";
+    Blockly.Python.definitions_['ESPNow_radio_recv_callback'] = "ESPNow_radio.recv_cb(ESPNow_radio_recv_callback)\n";
     
+    return '';
+}
+
+var writeUTF = function (str, isGetBytes) {
+    var back = [];
+    var byteSize = 0;
+    for (var i = 0; i < str.length; i++) {
+        var code = str.charCodeAt(i);
+        if (0x00 <= code && code <= 0x7f) {
+            byteSize += 1;
+            back.push(code);
+        } else if (0x80 <= code && code <= 0x7ff) {
+            byteSize += 2;
+            back.push((192 | (31 & (code >> 6))));
+            back.push((128 | (63 & code)))
+        } else if ((0x800 <= code && code <= 0xd7ff) || (0xe000 <= code && code <= 0xffff)) {
+            byteSize += 3;
+            back.push((224 | (15 & (code >> 12))));
+            back.push((128 | (63 & (code >> 6))));
+            back.push((128 | (63 & code)))
+        }
+    }
+    for (i = 0; i < back.length; i++) {
+        back[i] &= 0xff;
+    }
+    if (isGetBytes) {
+        return back;
+    }
+    if (byteSize <= 0xff) {
+        return [0, byteSize].concat(back);
+    } else {
+        return [byteSize >> 8, byteSize & 0xff].concat(back);
+    }
+}
+
+var toUTF8Hex = function (str) {
+    var charBuf = writeUTF(str, true);
+    var re = '';
+    for (var i = 0; i < charBuf.length; i++) {
+        var x = (charBuf[i] & 0xFF).toString(16);
+        if (x.length === 1) {
+            x = '0' + x;
+        }
+        re += x;
+    }
+    return re;
+}
+
+Blockly.Python.espnow_radio_recv_certain_msg= function(block) {
+    var text=this.getFieldValue('msg');
+    Blockly.Python.definitions_['import_radio'] = "import radio";
+    Blockly.Python.definitions_['import_ubinascii'] = 'import ubinascii';
+    Blockly.Python.definitions_['ESPNow_radio_initialize'] = "ESPNow_radio=radio.ESPNow(channel=0)";
+    var doCode = Blockly.Python.statementToCode(block, 'DO') || Blockly.Python.PASS;
+    Blockly.Python.definitions_['def_ESPNow_radio_recv_all'] = '_radio_msg_list = []\n'+'def ESPNow_radio_recv_callback(mac,ESPNow_radio_msg):\n'+'    global _radio_msg_list\n'+'    try: ESPNow_radio_recv(mac,ESPNow_radio_msg)\n'+'    except: pass\n'+'    if ESPNow_radio_msg in _radio_msg_list:\n'+"        eval('radio_recv_' + bytes.decode(ubinascii.hexlify(ESPNow_radio_msg)) + '()')\n";
+    Blockly.Python.definitions_['ESPNow_radio_recv_callback'] = "ESPNow_radio.recv_cb(ESPNow_radio_recv_callback)\n";
+    var message = block.getFieldValue('msg');
+    var message_utf8 = toUTF8Hex(message);
+    Blockly.Python.functions_['def_radio_recv_' + message_utf8] =
+        '_radio_msg_list.append(\'' + message + '\')\n' +
+        'def radio_recv_' + message_utf8 + '():\n' + doCode;
     return '';
 }
 

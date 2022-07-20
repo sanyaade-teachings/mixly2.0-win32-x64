@@ -170,6 +170,13 @@ Blockly.Python.system_timer_init=function(){
     return code;
 };
 
+Blockly.Python.c3_system_timer_init=function(){
+    var v = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
+    Blockly.Python.definitions_['import_machine'] = 'import machine';
+    var code = v + ' = machine.Timer(0)\n';
+    return code;
+};
+
 Blockly.Python.system_wdt_init=function(){
     Blockly.Python.definitions_['import_machine'] = 'import machine';
     var period = Blockly.Python.valueToCode(this, "period", Blockly.Python.ORDER_NONE) || "0";
