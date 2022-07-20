@@ -239,10 +239,6 @@ BU.readConfigAndSet = function () {
     }
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-    BU.readConfigAndSet();
-});
-
 BU.checkNumOfDisks = function (stdout, inpath, pyCode, portSelect, addAllOption) {
     var wmicResult = stdout;
     wmicResult = wmicResult.replace(/\s+/g, "");
