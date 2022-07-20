@@ -1,10 +1,6 @@
 (() => {
 
 Mixly.require({
-    "electron": [
-        "Mixly.Electron",
-        "Mixly.Electron.BU"
-    ],
     "common": [
         "layui",
         "Mixly.LayerExtend",
@@ -382,11 +378,10 @@ Boards.getSelectedBoardConfigParam = (param) => {
 Boards.updateCategories = (boardName, enforce = false) => {
     if (Boards.selected === boardName && !enforce) return;
     Boards.selected = boardName;
-    if (Env.isElectron) {
-        const { Electron } = Mixly;
-        const { BU } = Electron;
-        BU.readConfigAndSet();
-    }
+    if (typeof profile === 'object' && profile[boardName])
+        profile['default'] = profile[boardName];
+    else
+        profile['default'] = profile['Arduino/Genuino Uno'];
     $('#mixly-footer-boardname').html(boardName);
     if (Boards.INFO[boardName] && Boards.INFO[boardName].config) {
         $('#mixly-board-config').css('display', 'inline-flex');

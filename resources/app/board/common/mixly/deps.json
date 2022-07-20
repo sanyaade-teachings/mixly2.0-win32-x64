@@ -211,9 +211,7 @@
                 "Mixly.XML",
                 "Mixly.Env",
                 "Mixly.ToolboxSearcher",
-                "Mixly.Modules",
-                "Mixly.Electron",
-                "Mixly.Electron.BU"
+                "Mixly.Modules"
             ]
         },
         {

@@ -239,11 +239,6 @@ NavEvents.init = () => {
     form.on('select(boards-type)', function (data) {
         const boardName = Boards.getSelectedBoardName();
         if (Boards.selected !== boardName) {
-            if (typeof profile === 'object' && profile[boardName])
-                profile['default'] = profile[boardName];
-            else
-                profile['default'] = profile['Arduino/Genuino Uno'];
-            BU.readConfigAndSet();
             try {
                 var xmlDom = Blockly.Xml.workspaceToDom(Editor.blockEditor);
                 Editor.blockEditor.clear();

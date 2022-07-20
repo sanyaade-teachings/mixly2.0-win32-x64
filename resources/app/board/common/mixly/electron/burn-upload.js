@@ -651,6 +651,7 @@ BU.cancel = function (type) {
 */
 BU.initBurn = function () {
     if (BU.burning) return;
+    BU.readConfigAndSet();
     StatusBar.setValue('', true);
     StatusBarPort.tabChange("output");
     StatusBar.show(1);
@@ -667,6 +668,7 @@ BU.initBurn = function () {
 */
 BU.initUpload = function () {
     if (BU.uploading) return;
+    BU.readConfigAndSet();
     StatusBar.setValue('', true);
     StatusBarPort.tabChange("output");
     StatusBar.show(1);
