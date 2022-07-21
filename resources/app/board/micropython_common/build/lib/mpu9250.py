@@ -5,6 +5,7 @@ from micropython import const
 import ustruct
 import time
 import math
+from machine import Pin,SoftI2C
 
 _GYRO_CONFIG = const(0x1b)
 _ACCEL_CONFIG = const(0x1c)
@@ -489,12 +490,14 @@ class Compass:
 		return int(((atan2(xyz[1], xyz[0]) * Compass.RAD_TO_DEG) + 180) % 360)
 
 	def calibrate(self):
-		import matrix
+		import matrix16x8
+		mp_i2c=SoftI2C(scl = Pin(7), sda = Pin(6), freq = 400000)
+		mp_matrix = matrix32x12.Matrix(mp_i2c) 
 		if self.is_calibrate() is False:
 			# print('The calibration need to shaking in the air (e.g. 8 or 0) and waiting for a moment')
 			print('First write 8 or 0 in the air with the board about 30 seconds, and then try to rotate the board in different direnctions several times.')
-			matrix.set_pixel(7, 3, 1)
-			matrix.blink_rate(2)
+			mp_matrix.pixel(7, 3, 1)
+			#mp_matrix.blink_rate(2)
 			l1=0
 			l2=0
 			l3=0
@@ -527,31 +530,31 @@ class Compass:
 					if x < 0 and y < 0 and a >= 12:
 						l8=l8 + 1
 				if l1 >= 2:
-					matrix.set_pixel(7, 0, 1)
-					matrix.set_pixel(8, 0, 1)
-					matrix.set_pixel(9, 1, 1)
+					mp_matrix.pixel(7, 0, 1)
+					mp_matrix.pixel(8, 0, 1)
+					mp_matrix.pixel(9, 1, 1)
 				if l2 >= 2:
-					matrix.set_pixel(10, 2, 1)
-					matrix.set_pixel(10, 3, 1)
+					mp_matrix.pixel(10, 2, 1)
+					mp_matrix.pixel(10, 3, 1)
 				if l3 >= 2:
-					matrix.set_pixel(10, 4, 1)
-					matrix.set_pixel(10, 5, 1)
+					mp_matrix.pixel(10, 4, 1)
+					mp_matrix.pixel(10, 5, 1)
 				if l4 >= 2:
-					matrix.set_pixel(9, 6, 1)
-					matrix.set_pixel(8, 7, 1)
+					mp_matrix.pixel(9, 6, 1)
+					mp_matrix.pixel(8, 7, 1)
 				if l5 >= 2:
-					matrix.set_pixel(7, 7, 1)
-					matrix.set_pixel(6, 7, 1)
+					mp_matrix.pixel(7, 7, 1)
+					mp_matrix.pixel(6, 7, 1)
 				if l6 >= 2:
-					matrix.set_pixel(5, 6, 1)
-					matrix.set_pixel(4, 5, 1)
+					mp_matrix.pixel(5, 6, 1)
+					mp_matrix.pixel(4, 5, 1)
 				if l7 >= 2:
-					matrix.set_pixel(4, 4, 1)
-					matrix.set_pixel(4, 3, 1)
+					mp_matrix.pixel(4, 4, 1)
+					mp_matrix.pixel(4, 3, 1)
 				if l8 >= 2:
-					matrix.set_pixel(4, 2, 1)
-					matrix.set_pixel(5, 1, 1)
-					matrix.set_pixel(6, 0, 1)
+					mp_matrix.pixel(4, 2, 1)
+					mp_matrix.pixel(5, 1, 1)
+					mp_matrix.pixel(6, 0, 1)
 				if l1>=2 and l2>=2 and l3>=2 and l4>=2 and l5>=2 and l6>=2 and l7>=2 and l8>=2:
 					break    
 				else:

@@ -20,7 +20,7 @@ rtc_clock=RTC()
 '''OLED128X64'''
 try :
     import oled128x64
-    onboard_matrix = oled128x64.OLED(i2c,font_address=0x700000)
+    onboard_oled = oled128x64.OLED(i2c,font_address=0x700000)
 except Exception as e:
     print(e)
 

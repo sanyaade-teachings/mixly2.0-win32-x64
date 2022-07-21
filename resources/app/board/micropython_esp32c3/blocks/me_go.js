@@ -99,9 +99,7 @@ Blockly.Blocks.me_go_stepper_keep = {
             [Blockly.blockpy_forward, "F"],
             [Blockly.blockpy_backward, "B"],
             [Blockly.blockpy_left, "L"],
-            [Blockly.blockpy_right, "R"],
-            [Blockly.MOTOR_P, "P"],
-            [Blockly.MOTOR_N, "N"]
+            [Blockly.blockpy_right, "R"]            
             ]), "VAR");
       this.appendValueInput('speed')
           .setCheck(Number)
@@ -115,6 +113,20 @@ Blockly.Blocks.me_go_stepper_keep = {
     }
 }
 
+Blockly.Blocks.me_go_stepper_stop = {
+    init: function () {
+      this.setColour(Blockly.Blocks.me_go.HUE);
+      this.appendDummyInput()
+          .appendField("ME GO")
+          .appendField(new Blockly.FieldDropdown([           
+            [Blockly.MOTOR_P, "P"],
+            [Blockly.MOTOR_N, "N"]
+            ]), "VAR");      
+      this.setPreviousStatement(true, null);
+      this.setNextStatement(true, null);
+      this.setInputsInline(true);
+    }
+}
 
 Blockly.Blocks.me_go_dc_motor = {
     init: function () {
@@ -169,10 +181,11 @@ Blockly.Blocks['me_go_pin_near_line'] = {
         this.appendDummyInput()
             .appendField(Blockly.MIXLY_MICROBIT_PY_STORAGE_GET)
             .appendField(new Blockly.FieldDropdown([
-                [Blockly.Msg.TEXT_TRIM_LEFT, "0"], 
-                [Blockly.MIXGO_LEFT_MID, "1"],
-                [Blockly.MIXGO_RIGHT_MID, "2"],
-                [Blockly.Msg.TEXT_TRIM_RIGHT, "3"]
+                [Blockly.Msg.TEXT_TRIM_LEFT, "[0]"], 
+                [Blockly.MIXGO_LEFT_MID, "[1]"],
+                [Blockly.MIXGO_RIGHT_MID, "[2]"],
+                [Blockly.Msg.TEXT_TRIM_RIGHT, "[3]"],
+                [Blockly.MIXLY_ALL, ""]
                 ]), "key")
             .appendField(Blockly.MIXGO_LINE_SENSOR_VAL);
         this.setOutput(true,Number);
@@ -192,10 +205,11 @@ Blockly.Blocks['me_go_pin_near'] = {
         this.appendDummyInput()
             .appendField(Blockly.MIXLY_MICROBIT_PY_STORAGE_GET)
             .appendField(new Blockly.FieldDropdown([
-                [Blockly.MIXGO_LEFT_FRONT, "0"], 
-                [Blockly.MIXGO_RIGHT_FRONT, "1"],
-                [Blockly.MIXGO_LEFT_BACK, "3"],
-                [Blockly.MIXGO_RIGHT_BACK, "2"]
+                [Blockly.MIXGO_LEFT_FRONT, "[0]"], 
+                [Blockly.MIXGO_RIGHT_FRONT, "[1]"],
+                [Blockly.MIXGO_LEFT_BACK, "[3]"],
+                [Blockly.MIXGO_RIGHT_BACK, "[2]"],
+                [Blockly.MIXLY_ALL, ""]
                 ]), "key")
             .appendField(Blockly.MIXGO_PROXIMITY_SENSOR);
         this.setOutput(true,Number);
