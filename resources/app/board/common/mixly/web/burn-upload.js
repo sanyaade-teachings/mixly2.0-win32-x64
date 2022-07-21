@@ -36,16 +36,29 @@ let stubLoader = null;
 let closed = null;
 
 BU.readConfigAndSet = () => {
-    const selectedBoard = Boards.getSelectedBoardName();
+    const selectedBoardKey = Boards.getSelectedBoardKey();
     let burn, upload;
-    if (BOARD.burn[selectedBoard])
-        burn = { ...BOARD.burn[selectedBoard] };
-    else
+    if (BOARD.burn[selectedBoardKey]) {
+        burn = { ...BOARD.burn, ...BOARD.burn[selectedBoardKey] };
+    } else {
         burn = { ...BOARD.burn };
-    if (BOARD.upload[selectedBoard])
-        upload = { ...BOARD.upload[selectedBoard] };
-    else
+    }
+    if (BOARD.upload[selectedBoardKey]) {
+        upload = { ...BOARD.upload, ...BOARD.upload[selectedBoardKey] };
+    } else {
         upload = { ...BOARD.upload };
+    }
+    if (BOARD.burn[selectedBoardKey] || BOARD.upload[selectedBoardKey]) {
+        for (let i in Boards.INFO) {
+            const key = Boards.INFO[i].key;
+            if (burn[key]) {
+                delete burn[key];
+            }
+            if (upload[key]) {
+                delete upload[key];
+            }
+        }
+    }
 
     if (upload?.filePath) {
         let uploadFilePath = upload.filePath;
@@ -300,23 +313,29 @@ BU.burn = async function () {
                 document.getElementById('mixly-loader-div').style.display = 'none';
             }
         });
-        const selectedBoard = Boards.getSelectedBoardName();
-        let burn = {};
-        if (BOARD?.web?.burn[selectedBoard])
-            burn = { ...BOARD.web.burn[selectedBoard] };
-        else
-            burn = { ...BOARD.web.burn };
-        StatusBar.addValue("固件读取中... ", true);
+        const selectedBoardKey = Boards.getSelectedBoardKey();
+        let burn = { ...BOARD.web.burn };
+        if (BOARD?.web?.burn[selectedBoardKey]) {
+            burn = { ...BOARD.web.burn[selectedBoardKey] };
+            for (let i in Boards.INFO) {
+                const key = Boards.INFO[i].key;
+                if (burn[key]) {
+                    delete burn[key];
+                }
+            }
+        }
+        StatusBar.addValue("固件读取中...", true);
         if (typeof burn.binFile !== 'object') {
-            StatusBar.addValue("Failed!\n配置文件读取出错！\n", true);
+            StatusBar.addValue(" Failed!\n配置文件读取出错！\n", true);
             await endBurn(true, false);
             return;
         }
         const { binFile } = burn;
         let firmwarePromise = [];
+        StatusBar.addValue("\n", true);
         for (let i of binFile) {
             if (i.path && i.offset) {
-                StatusBar.addValue(`\n读取固件 路径:${i.path}, 偏移:${i.offset}\n`, true);
+                StatusBar.addValue(`读取固件 路径:${i.path}, 偏移:${i.offset}\n`, true);
                 firmwarePromise.push(readBinFile(i.path, i.offset));
             }
         }
@@ -536,8 +555,6 @@ BU.upload = async function () {
 
 BU.interrupt = () => {
     return new Promise(async (resolve, reject) => {
-        /*await Serial.reset();
-        await sleep(1000);*/
         await Serial.writeCtrlC();
         await sleep(100);
         const startTime = Number(new Date());
@@ -557,7 +574,6 @@ BU.interrupt = () => {
             }
             await sleep(100);
         }
-        
     });
 }
 
@@ -623,7 +639,7 @@ BU.uploadWithAmpy = async function () {
         await Serial.writeCtrlD();
         await sleep(500);
         StatusBar.setValue("", true);
-        await Serial.reset();
+        // await Serial.reset();
         await Serial.writeCtrlC();
         await sleep(500);
         StatusBar.setValue("", true);

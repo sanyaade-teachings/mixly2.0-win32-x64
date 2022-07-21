@@ -249,8 +249,7 @@ Serial.openTool = function () {
 
 Serial.setDtrAndRts = async function (dtr, rts) {
     if (espTool.connected()) {
-        await espTool.setDTR(dtr ?? true);
-        await espTool.setRTS(rts ?? true);
+        await espTool.setSignals(dtr ?? true, rts ?? true);
     }
 }
 
@@ -385,7 +384,7 @@ Serial.clearContent = function () {
 }
 
 Serial.dataRefresh = async function () {
-    if (espTool.connected() && !Mixly.Web.BU.burning && !Mixly.Web.BU.uploading) {
+    if (espTool.connected() && !Mixly.Web.BU.burning) {
         const { toolConfig } = portOperator;
         try {
             var result = await espTool.read();
@@ -462,6 +461,7 @@ Serial.reset = async () => {
                 rtsValue = true;
             }
             await Serial.setDtrAndRts(dtrValue, rtsValue);
+            console.log('dtr', dtrValue, 'rts', rtsValue)
         } else if (reset[i]?.sleep) {
             var sleepValue = parseInt(reset[i].sleep) || 100;
             await sleep(sleepValue);
