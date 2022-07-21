@@ -22,21 +22,21 @@ try :
     import oled128x64
     onboard_oled = oled128x64.OLED(i2c,font_address=0x700000)
 except Exception as e:
-    print(e)
+    print("Warning: Failed to communicate with OLED128x64 or",e)
 
 '''Magnetic'''
 try :
     import mmc5603
     magnetic = mmc5603.MMC5603(i2c)
 except Exception as e:
-    print(e)
+    print("Warning: Failed to communicate with MMC5603 or",e)
 
 '''Motion'''    #Including temperature、accelerometer、gyroscope
 try :
     import qmi8658
     motion = qmi8658.QMI8658(i2c)
 except Exception as e:
-    print(e)
+    print("Warning: Failed to communicate with QMI8658 or",e)
 
 '''2-RGB'''    
 from ws2812 import NeoPixel

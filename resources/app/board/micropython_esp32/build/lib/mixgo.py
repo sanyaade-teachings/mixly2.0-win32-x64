@@ -25,14 +25,14 @@ try :
     onboard_mpu = mpu9250.MPU9250(onboard_i2c)
     onboard_compass = mpu9250.Compass(onboard_mpu)    
 except Exception as e:
-    print(e)
+    print("Warning: Failed to communicate with MPU9250 or",e)
 
 '''Matrix16x8'''
 try :
     import matrix16x8
     onboard_matrix = matrix16x8.Matrix(onboard_i2c)
 except Exception as e:
-    print(e)
+    print("Warning: Failed to communicate with Matrix16x8 or",e)
 
 '''2-RGB'''    
 from ws2812 import NeoPixel

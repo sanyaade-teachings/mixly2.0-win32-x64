@@ -10,17 +10,13 @@ dahanzimin From the Mixly Team
 """
 
 import time,gc,math
+from tm1931 import TM1931
 from machine import Pin,SoftI2C,ADC
 
 '''i2c-onboard'''
 i2c=SoftI2C(scl = Pin(7), sda = Pin(6), freq = 400000)
 
 '''TM1931-Expand'''    
-try :
-    from tm1931 import TM1931
-except Exception as e:
-    print(e)
-
 class CAR(TM1931):
     '''Infrared line patrol obstacle avoidance mode'''
     CL=0                    #Turn off infrared to reduce power consumption
@@ -148,7 +144,10 @@ class CAR(TM1931):
     def getonoff(self,index):
         return True if self.getrightness(index)>0 else False
 
-car=CAR(i2c) #Including LED,motor,patrol,obstacle
+try :
+    car=CAR(i2c) #Including LED,motor,patrol,obstacle
+except Exception as e:
+    print("Warning: Failed to communicate with TM1931 or",e)
 
 '''2Hall_HEP'''
 class HALL:

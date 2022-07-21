@@ -303,7 +303,18 @@ Blockly.Python.onboard_oled_show_image = function() {
     var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
     Blockly.Python.definitions_['import_'+version+'_onboard_oled'] = "from "+version+" import onboard_oled";
     var data = Blockly.Python.valueToCode(this, 'data', Blockly.Python.ORDER_ASSIGNMENT);
-    var code = "onboard_oled.shows(" + data + ")\n";
+    var code = "onboard_oled.image(" + data + ")\n";
+    return code;
+}
+
+Blockly.Python.onboard_oled_show_image_xy = function() {
+    var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
+    Blockly.Python.definitions_['import_'+version+'_onboard_oled'] = "from "+version+" import onboard_oled";
+    var data = Blockly.Python.valueToCode(this, 'data', Blockly.Python.ORDER_ASSIGNMENT);
+    var x = Blockly.Python.valueToCode(this, 'x', Blockly.Python.ORDER_ASSIGNMENT);
+    var y = Blockly.Python.valueToCode(this, 'y', Blockly.Python.ORDER_ASSIGNMENT);
+    var size = Blockly.Python.valueToCode(this, 'size', Blockly.Python.ORDER_ASSIGNMENT);
+    var code = "onboard_oled.image(" + data+  ',x = ' + x +',y = ' + y +',size = ' + size + ")\n";
     return code;
 }
 
@@ -319,9 +330,12 @@ Blockly.Python.onboard_oled_show_image_or_string_delay = function() {
     var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
     Blockly.Python.definitions_['import_'+version+'_onboard_oled'] = "from "+version+" import onboard_oled";
     var data = Blockly.Python.valueToCode(this, 'data', Blockly.Python.ORDER_ASSIGNMENT);
+    var x = Blockly.Python.valueToCode(this, 'x', Blockly.Python.ORDER_ASSIGNMENT);
+    var y = Blockly.Python.valueToCode(this, 'y', Blockly.Python.ORDER_ASSIGNMENT);
+    var size = Blockly.Python.valueToCode(this, 'size', Blockly.Python.ORDER_ASSIGNMENT);
     var space = Blockly.Python.valueToCode(this, 'space', Blockly.Python.ORDER_ASSIGNMENT);
     var op = this.getFieldValue('center');
-    var code = "onboard_oled.shows(" + data + ',space = ' + space + ',center = ' + op  + ")\n";
+    var code = "onboard_oled.shows(" + data + ',x = ' + x +',y = ' + y +',size = ' + size +',space = ' + space + ',center = ' + op  + ")\n";
     return code;
 }
 
@@ -337,8 +351,9 @@ Blockly.Python.onboard_oled_show_frame_string_delay = function() {
     var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
     Blockly.Python.definitions_['import_'+version+'_onboard_oled'] = "from "+version+" import onboard_oled";
     var data = Blockly.Python.valueToCode(this, 'data', Blockly.Python.ORDER_ASSIGNMENT);
+    var size = Blockly.Python.valueToCode(this, 'size', Blockly.Python.ORDER_ASSIGNMENT);
     var time = Blockly.Python.valueToCode(this, 'time', Blockly.Python.ORDER_ASSIGNMENT);
-    var code = "onboard_oled.frame(" + data + ',delay = ' + time + ")\n";
+    var code = "onboard_oled.frame(" + data +',size = ' + size + ',delay = ' + time + ")\n";
     return code;
 }
 
@@ -355,8 +370,84 @@ Blockly.Python.onboard_oled_scroll_string_delay = function() {
      var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
      Blockly.Python.definitions_['import_'+version+'_onboard_oled'] = "from "+version+" import onboard_oled";
      var data = Blockly.Python.valueToCode(this, 'data', Blockly.Python.ORDER_ASSIGNMENT);
+     var y = Blockly.Python.valueToCode(this, 'y', Blockly.Python.ORDER_ASSIGNMENT);
+     var size = Blockly.Python.valueToCode(this, 'size', Blockly.Python.ORDER_ASSIGNMENT);
      var time = Blockly.Python.valueToCode(this, 'time', Blockly.Python.ORDER_ASSIGNMENT);
      var space = Blockly.Python.valueToCode(this, 'space', Blockly.Python.ORDER_ASSIGNMENT);
-     var code = "onboard_oled.scroll("+ data + ',speed =' + time  + ',space = '+ space + ")\n";
+     var code = "onboard_oled.scroll("+ data +',y = ' + y +',size = ' + size+ ',speed =' + time  + ',space = '+ space + ")\n";
      return code;
 }
+
+Blockly.Python['onboard_oled_clear'] = function(block) {
+  var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
+     Blockly.Python.definitions_['import_'+version+'_onboard_oled'] = "from "+version+" import onboard_oled";
+  var code = 'onboard_oled.fill(0)\n'+'onboard_oled.show()\n';
+  return code;
+};
+
+Blockly.Python['onboard_oled_shift'] = function(a) {
+  var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
+     Blockly.Python.definitions_['import_'+version+'_onboard_oled'] = "from "+version+" import onboard_oled";
+  var op = a.getFieldValue("OP");
+  var value = Blockly.Python.valueToCode(a, 'val', Blockly.Python.ORDER_ATOMIC);
+  var code = 'onboard_oled.' + op + '(' + value + ')\n';
+  return code;
+};
+
+Blockly.Python['onboard_oled_get_pixel'] = function(block) {
+  var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
+  Blockly.Python.definitions_['import_'+version+'_onboard_oled'] = "from "+version+" import onboard_oled";
+  var value_x = Blockly.Python.valueToCode(block, 'x', Blockly.Python.ORDER_ATOMIC);
+  var value_y = Blockly.Python.valueToCode(block, 'y', Blockly.Python.ORDER_ATOMIC);
+  var code = 'onboard_oled.pixel(int(' + value_x + '), int(' + value_y + '))';
+  return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python.onboard_oled_bright_point= function() {
+  var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
+    Blockly.Python.definitions_['import_'+version+'_onboard_oled'] = "from "+version+" import onboard_oled";
+    var x = Blockly.Python.valueToCode(this, 'x', Blockly.Python.ORDER_ASSIGNMENT);
+    var y = Blockly.Python.valueToCode(this, 'y', Blockly.Python.ORDER_ASSIGNMENT);
+    var dropdown_stat = Blockly.Python.valueToCode(this, 'STAT', Blockly.Python.ORDER_ATOMIC);
+    var code ='onboard_oled.pixel(int(' + x + '), int(' + y + '), '+ dropdown_stat + ")\n"+'onboard_oled.show()\n';
+    return code;
+}
+
+
+
+Blockly.Python['mpython_display_shape_rect'] = function (block) {
+  var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
+  Blockly.Python.definitions_['import_'+version+'_onboard_oled'] = "from "+version+" import onboard_oled";
+  var x = Blockly.Python.valueToCode(block, 'x', Blockly.Python.ORDER_ATOMIC);
+  var y = Blockly.Python.valueToCode(block, 'y', Blockly.Python.ORDER_ATOMIC);
+  var w = Blockly.Python.valueToCode(block, 'w', Blockly.Python.ORDER_ATOMIC);
+  var h = Blockly.Python.valueToCode(block, 'h', Blockly.Python.ORDER_ATOMIC);
+  var state = block.getFieldValue('state');
+  var shape = block.getFieldValue('shape');
+  var code = 'onboard_oled.' + shape + '(' + x + ', ' + y + ', ' + w + ', ' + h + ', ' + state + ')\n'+'onboard_oled.show()\n';
+  return code;
+};
+
+Blockly.Python['mpython_display_hvline'] = function (block) { //水平线
+  var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
+  Blockly.Python.definitions_['import_'+version+'_onboard_oled'] = "from "+version+" import onboard_oled";
+  var x = Blockly.Python.valueToCode(block, 'x', Blockly.Python.ORDER_ATOMIC);
+  var y = Blockly.Python.valueToCode(block, 'y', Blockly.Python.ORDER_ATOMIC);
+  var var_length = Blockly.Python.valueToCode(block, 'length', Blockly.Python.ORDER_ATOMIC);
+  var state = block.getFieldValue('state');
+  var hv = block.getFieldValue('dir_h_v');
+  var code = 'onboard_oled.' + (('0' == hv) ? 'v': 'h') + 'line(' + x + ', ' + y + ', ' + var_length + ', ' + state + ')\n'+'onboard_oled.show()\n';
+  return code;
+};
+
+Blockly.Python['mpython_display_line'] = function (block) {
+  var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
+  Blockly.Python.definitions_['import_'+version+'_onboard_oled'] = "from "+version+" import onboard_oled";
+  var x1 = Blockly.Python.valueToCode(block, 'x1', Blockly.Python.ORDER_ATOMIC);
+  var y1 = Blockly.Python.valueToCode(block, 'y1', Blockly.Python.ORDER_ATOMIC);
+  var x2 = Blockly.Python.valueToCode(block, 'x2', Blockly.Python.ORDER_ATOMIC);
+  var y2 = Blockly.Python.valueToCode(block, 'y2', Blockly.Python.ORDER_ATOMIC);
+  var state = block.getFieldValue('state');
+  var code = 'onboard_oled.line(' + x1 + ', ' + y1 + ', ' + x2 + ', ' + y2 + ', ' + state + ')\n'+'onboard_oled.show()\n';
+  return code;
+};

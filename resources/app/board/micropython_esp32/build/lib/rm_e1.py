@@ -39,7 +39,7 @@ class ACC:
 try :
 	gyro=ACC(onboard_i2c)
 except Exception as e:
-	print(e)
+	print("Warning: Failed to communicate with ACC or",e)
 
 '''2RGB_WS2812'''	#color_chase(),rainbow_cycle()方法移至类里
 from ws2812 import NeoPixel

@@ -25,25 +25,25 @@ try :
     import mxc6655xa
     onboard_mxc6655xa = mxc6655xa.MXC6655XA(onboard_i2c)     
 except Exception as e:
-    print(e)
+    print("Warning: Failed to communicate with MXC6655XA or",e)
 
 '''ALS_PS-Sensor'''    #Including als_vis,als_ir,ps_nl
 try :
     import ltr553als
     onboard_ltr553als = ltr553als.LTR_553ALS(onboard_i2c)     
 except Exception as e:
-    print(e)
+    print("Warning: Failed to communicate with LTR_553ALS or",e)
 
 '''Matrix8x5'''
 try :
     import matrix8x5
     onboard_matrix = matrix8x5.Matrix(8)
 except Exception as e:
-    print(e)
+    print("Warning: Failed to communicate with Matrix8x5 or",e)
 
 '''2RGB_WS2812'''    #color_chase(),rainbow_cycle()方法移至类里
 from ws2812 import NeoPixel
-onboard_rgb = NeoPixel(Pin(9), 2)
+onboard_rgb = NeoPixel(Pin(9), 2, ORDER=(0, 1, 2, 3))
 
 '''1Buzzer-Music'''
 from music import MIDI
