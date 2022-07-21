@@ -355,8 +355,28 @@ Blockly.Blocks.onboard_oled_show_image = {
   init: function() {
     this.setColour(Blockly.Blocks.display.HUE);
   this.appendValueInput('data')
-        .setCheck([String, "esp32_image","List",'Tuple'])
-        .appendField(Blockly.MIXLY_ESP32_SHOW_IMAGE_OR_STRING);
+        .appendField(Blockly.OLED_BITMAP);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setInputsInline(true);
+    this.setTooltip(Blockly.OLED_BITMAP_OR_STRING);
+  }
+};
+
+Blockly.Blocks.onboard_oled_show_image_xy = {
+  init: function() {
+    this.setColour(Blockly.Blocks.display.HUE);
+  this.appendValueInput('data')
+        .appendField(Blockly.OLED_BITMAP);
+     this.appendValueInput("x")
+        .setCheck(Number)
+        .appendField('x');  
+    this.appendValueInput("y")
+        .setCheck(Number)
+        .appendField('y');  
+    this.appendValueInput("size")
+        .setCheck(Number)
+        .appendField(Blockly.MIXLY_MICROBIT_JS_NUMBER);    
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setInputsInline(true);
@@ -383,6 +403,15 @@ Blockly.Blocks.onboard_oled_show_string = {
     this.appendValueInput('data')
         .setCheck(String)
         .appendField(Blockly.OLED_DRAWSTR);
+    this.appendValueInput("x")
+        .setCheck(Number)
+        .appendField('x');  
+    this.appendValueInput("y")
+        .setCheck(Number)
+        .appendField('y');  
+    this.appendValueInput("size")
+        .setCheck(Number)
+        .appendField(Blockly.MIXLY_TURTLE_WRITE_FONT_NUM);              
     this.appendValueInput("space")
         .setCheck(Number)
         .appendField(Blockly.MICROPYTHON_DISPLAY_FONT_SPACE);   
@@ -417,6 +446,12 @@ Blockly.Blocks.onboard_oled_scroll_string_delay = {
      this.appendValueInput('data')
          .setCheck(String)
          .appendField(Blockly.MIXLY_MICROBIT_JS_MONITOR_SCROLL_STRING);
+     this.appendValueInput("y")
+        .setCheck(Number)
+        .appendField('y');  
+    this.appendValueInput("size")
+        .setCheck(Number)
+        .appendField(Blockly.MIXLY_TURTLE_WRITE_FONT_NUM);    
      this.appendValueInput("space")
         .setCheck(Number)
         .appendField(Blockly.MICROPYTHON_DISPLAY_FONT_SPACE);       
@@ -448,6 +483,9 @@ Blockly.Blocks.onboard_oled_show_frame_string_delay = {
     this.appendValueInput('data')
         .setCheck(String)
         .appendField(Blockly.MIXLY_ESP32_MONITOR_SHOW_FRAME);
+    this.appendValueInput("size")
+        .setCheck(Number)
+        .appendField(Blockly.MIXLY_TURTLE_WRITE_FONT_NUM);    
     this.appendValueInput("time")
         .setCheck(Number)
         .appendField(Blockly.MIXLY_MICROBIT_JS_MONITOR_SCROLL_INTERVAL);        
@@ -457,162 +495,395 @@ Blockly.Blocks.onboard_oled_show_frame_string_delay = {
   }
 };
 
+Blockly.Blocks['onboard_oled_shift'] = {
+  init: function() {
+    var OPERATORS =
+        [[Blockly.MIXLY_UP, 'shift_up'],
+         [Blockly.MIXLY_DOWN, 'shift_down'],
+         [Blockly.MIXLY_LEFT, 'shift_left'],
+         [Blockly.MIXLY_RIGHT, 'shift_right'],
+        ];
+    //this.setHelpUrl(Blockly.Msg.MATH_TRIG_HELPURL);
+    this.setColour(Blockly.Blocks.display.HUE);
+    // this.setOutput(true);
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.appendDummyInput('')
+        .appendField(Blockly.Msg.DISPLAY_IMAGE_LET)
+    this.appendDummyInput('')
+        .appendField(Blockly.Msg.DISPLAY_IMAGE_LET2)
+        .appendField(new Blockly.FieldDropdown(OPERATORS), 'OP');
+    this.appendValueInput('val')
+        .appendField(Blockly.Msg.DISPLAY_IMAGE_SHIFT)
+        .setCheck(Number);
+    this.appendDummyInput('')
+        .appendField(Blockly.Msg.DISPLAY_IMAGE_UNIT)
+    var thisBlock = this;
+        this.setTooltip(function() {
+        var mode = thisBlock.getFieldValue('OP');
+        var mode0 = Blockly.Msg.DISPLAY_IMAGE_LET;
+        var mode1 = Blockly.Msg.DISPLAY_IMAGE_LET2;
+        var mode2 = Blockly.Msg.DISPLAY_IMAGE_LET3;
+        var TOOLTIPS = {
+        'up': Blockly.MIXLY_UP,
+        'down':Blockly.MIXLY_DOWN,
+        'left':Blockly.MIXLY_LEFT,
+        'right':Blockly.MIXLY_RIGHT
+      };
+      return mode0 + mode1 +TOOLTIPS[mode]+mode2;
+    });
+  }
+};
 
+Blockly.Blocks.onboard_oled_get_pixel = {
+  init: function() {
+    this.setColour(Blockly.Blocks.display.HUE);
+      this.appendValueInput('x')
+        .setCheck(Number)
+            .appendField(Blockly.MIXLY_MICROBIT_JS_MONITOR_GET_POINT_X);
+      this.appendValueInput('y')
+          .setCheck(Number)
+          .appendField(Blockly.MIXLY_MICROBIT_JS_MONITOR_PLOT_POINT_Y);
+    this.appendDummyInput()
+        .appendField(Blockly.MIXLY_ESP32_JS_MONITOR_GET_POINT);
+    this.setInputsInline(true);
+      this.setOutput(true, Number);
+    this.setTooltip(Blockly.MIXLY_ESP32_JS_MONITOR_BRIGHTNESS);
+  }
+};
+
+Blockly.Blocks.onboard_oled_bright_point = {
+  init: function() {
+    this.setColour(Blockly.Blocks.display.HUE);
+    this.appendValueInput('x')
+        .setCheck(Number)
+        .appendField(Blockly.MIXLY_ESP32_JS_MONITOR_SET_BRIGHTNESS)
+          .appendField(Blockly.MIXLY_MICROBIT_JS_MONITOR_GET_POINT_X);
+    this.appendValueInput('y')
+        .setCheck(Number)
+        .appendField(Blockly.MIXLY_MICROBIT_JS_MONITOR_PLOT_POINT_Y);
+    this.appendValueInput("STAT")        
+        .setCheck([Number,Boolean]);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setInputsInline(true);
+    this.setTooltip(Blockly.MIXLY_ESP32_DISPLAY_SETPIXEL);
+  }
+};
+
+
+
+Blockly.Blocks.onboard_oled_clear = {
+  init: function() {
+    this.setColour(Blockly.Blocks.display.HUE);
+  this.appendDummyInput()
+        .appendField(Blockly.MIXLY_MICROBIT_Clear_display);
+  this.setPreviousStatement(true, null);
+  this.setNextStatement(true, null);
+  this.setInputsInline(true);
+  this.setTooltip(Blockly.MIXLY_MICROBIT_Clear_display);
+  }
+};
+
+Blockly.Blocks['mpython_display_shape_rect'] = {
+  init: function () {
+    this.jsonInit({
+      "colour": Blockly.Blocks.display.HUE,
+      "args0": [
+        {
+          "name": "state",
+          "options": [
+          [Blockly.Msg.MPYTHON_DISPLAY_MODE_1, '1'],
+          [Blockly.Msg.MPYTHON_DISPLAY_MODE_0, '0']
+          ],
+          "type": "field_dropdown"
+        },
+        {
+          "name": "shape",
+          "options": [
+            [Blockly.Msg.MPYTHON_DISPLAY_HOLLOW, 'rect'],
+            [Blockly.Msg.MPYTHON_DISPLAY_SOLID, 'fill_rect']
+          ],
+          "type": "field_dropdown"
+        },
+        {
+          "type": "input_dummy"
+        },
+        {
+          "name": "x",
+          "type": "input_value",
+          //"check": "Number"
+        },
+        {
+          "name": "y",
+          "type": "input_value",
+          //"check": "Number"
+        },
+        {
+          "name": "w",
+          "type": "input_value",
+          //"check": "Number"
+        },
+        {
+          "name": "h",
+          "type": "input_value",
+          //"check": "Number"
+        }
+
+      ],
+      "inputsInline": true,
+      "helpUrl": Blockly.Msg.mpython_HELPURL,
+      "tooltip": Blockly.Msg.MPYTHON_DISPLAY_SHAPE_RECT_TOOLTIP,
+      "message0": Blockly.Msg.MPYTHON_DISPLAY_SHAPE_RECT_MESSAGE0,
+      "nextStatement": null,
+      "previousStatement": null
+    });
+  }
+};
+
+Blockly.Blocks['mpython_display_hvline'] = {
+  init: function () {
+    this.jsonInit({
+      "colour": Blockly.Blocks.display.HUE,
+      "args0": [
+        {
+          "name": "state",
+          "options": [
+          [Blockly.Msg.MPYTHON_DISPLAY_MODE_1, '1'],
+          [Blockly.Msg.MPYTHON_DISPLAY_MODE_0, '0']
+          ],
+          "type": "field_dropdown"
+        },
+        {
+          "name": "dir_h_v",
+          "options": [
+            [Blockly.Msg.mpython_vertical, '0'],
+            [Blockly.Msg.mpython_horizontal, '1']
+          ],
+          "type": "field_dropdown"
+        },
+        {
+          "type": "input_dummy"
+        },
+        {
+          "name": "x",
+          "type": "input_value",
+          //"check": "Number"
+        },
+        {
+          "name": "y",
+          "type": "input_value",
+          //"check": "Number"
+        },
+        {
+          "name": "length",
+          "type": "input_value",
+          //"check": "Number"
+        }
+
+      ],
+      "inputsInline": true,
+      "helpUrl": Blockly.Msg.mpython_HELPURL,
+      "tooltip": Blockly.Msg.MPYTHON_DISPLAY_HVLINE_TOOLTIP,
+      "message0": Blockly.Msg.MPYTHON_DISPLAY_HVLINE_MESSAGE0,
+      "nextStatement": null,
+      "previousStatement": null
+    });
+  }
+};
+
+Blockly.Blocks['mpython_display_line'] = {
+  init: function () {
+    this.jsonInit({
+      "colour": Blockly.Blocks.display.HUE,
+      "args0": [
+        {
+          "name": "state",
+          "options": [[Blockly.Msg.mpython_display_hline_1, '1'], [Blockly.Msg.mpython_display_hline_0, '0']],
+          "type": "field_dropdown"
+        },
+        {
+          "type": "input_dummy"
+        }, {
+          "name": "x1",
+          "type": "input_value",
+          //"check": "Number"
+        },
+        {
+          "name": "y1",
+          "type": "input_value",
+          //"check": "Number"
+        },
+        {
+          "name": "x2",
+          "type": "input_value",
+          //"check": "Number"
+        },
+        {
+          "name": "y2",
+          "type": "input_value",
+          //"check": "Number"
+        }
+
+      ],
+      "inputsInline": true,
+      "helpUrl": Blockly.Msg.mpython_HELPURL,
+      "tooltip": Blockly.Msg.mpython_display_line_TOOLTIP,
+      "message0": Blockly.Msg.mpython_display_line_MESSAGE0,
+      "nextStatement": null,
+      "previousStatement": null
+    });
+  }
+};
 
 Blockly.Blocks['mpython_pbm_image'] = {
   init: function () {
     this.jsonInit({
       "colour": Blockly.Blocks.display.HUE,
       "args0": [
-        /*{
-          "type": "field_image",
-          "name": "file_image",
-          "src": "static/face/1.png",
-          "width": 128,
-          "height": 64,
-          "alt": "*"
-        },*/
-        {
-          "name": "path",
-          "options": [
-            [Blockly.Msg.MPYTHON_FACE_1, 'face/1.pbm'],
-            [Blockly.Msg.MPYTHON_FACE_2, 'face/2.pbm'],
-            [Blockly.Msg.MPYTHON_FACE_3, 'face/3.pbm'],
-            [Blockly.Msg.MPYTHON_FACE_4, 'face/4.pbm'],
-            [Blockly.Msg.MPYTHON_FACE_5, 'face/5.pbm'],
-            [Blockly.Msg.MPYTHON_FACE_6, 'face/6.pbm'],
-            [Blockly.Msg.MPYTHON_FACE_7, 'face/7.pbm'],
-            [Blockly.Msg.MPYTHON_FACE_8, 'face/8.pbm'],
-            [Blockly.Msg.MPYTHON_FACE_9, 'face/9.pbm'],
-            [Blockly.Msg.MPYTHON_FACE_10, 'face/10.pbm'],
-            [Blockly.Msg.MPYTHON_FACE_11, 'face/11.pbm'],
-            [Blockly.Msg.MPYTHON_FACE_12, 'face/12.pbm'],
-            [Blockly.Msg.MPYTHON_FACE_ROCK, 'face/rock.pbm'],
-            [Blockly.Msg.MPYTHON_FACE_ROCK_S, 'face/rock_s.pbm'],
-            [Blockly.Msg.MPYTHON_FACE_PAPER, 'face/paper.pbm'],
-            [Blockly.Msg.MPYTHON_FACE_PAPER_S, 'face/paper_s.pbm'],
-            [Blockly.Msg.MPYTHON_FACE_SCISSORS, 'face/scissors.pbm'],
-            [Blockly.Msg.MPYTHON_FACE_SCISSORS_S, 'face/scissors_s.pbm'],
-            ['Expressions/Big smile.pbm', 'face/Expressions/Big smile.pbm'],
-            ['Expressions/Heart large.pbm', 'face/Expressions/Heart large.pbm'],
-            ['Expressions/Heart small.pbm', 'face/Expressions/Heart small.pbm'],
-            ['Expressions/Mouth 1 open.pbm', 'face/Expressions/Mouth 1 open.pbm'],
-            ['Expressions/Mouth 1 shut.pbm', 'face/Expressions/Mouth 1 shut.pbm'],
-            ['Expressions/Mouth 2 open.pbm', 'face/Expressions/Mouth 2 open.pbm'],
-            ['Expressions/Mouth 2 shut.pbm', 'face/Expressions/Mouth 2 shut.pbm'],
-            ['Expressions/Sad.pbm', 'face/Expressions/Sad.pbm'],
-            ['Expressions/Sick.pbm', 'face/Expressions/Sick.pbm'],
-            ['Expressions/Smile.pbm', 'face/Expressions/Smile.pbm'],
-            ['Expressions/Swearing.pbm', 'face/Expressions/Swearing.pbm'],
-            ['Expressions/Talking.pbm', 'face/Expressions/Talking.pbm'],
-            ['Expressions/Wink.pbm', 'face/Expressions/Wink.pbm'],
-            ['Expressions/ZZZ.pbm', 'face/Expressions/ZZZ.pbm'],
-            ['Eyes/Angry.pbm', 'face/Eyes/Angry.pbm'],
-            ['Eyes/Awake.pbm', 'face/Eyes/Awake.pbm'],
-            ['Eyes/Black eye.pbm', 'face/Eyes/Black eye.pbm'],
-            ['Eyes/Bottom left.pbm', 'face/Eyes/Bottom left.pbm'],
-            ['Eyes/Bottom right.pbm', 'face/Eyes/Bottom right.pbm'],
-            ['Eyes/Crazy 1.pbm', 'face/Eyes/Crazy 1.pbm'],
-            ['Eyes/Crazy 2.pbm', 'face/Eyes/Crazy 2.pbm'],
-            ['Eyes/Disappointed.pbm', 'face/Eyes/Disappointed.pbm'],
-            ['Eyes/Dizzy.pbm', 'face/Eyes/Dizzy.pbm'],
-            ['Eyes/Down.pbm', 'face/Eyes/Down.pbm'],
-            ['Eyes/Evil.pbm', 'face/Eyes/Evil.pbm'],
-            ['Eyes/Hurt.pbm', 'face/Eyes/Hurt.pbm'],
-            ['Eyes/Knocked out.pbm', 'face/Eyes/Knocked out.pbm'],
-            ['Eyes/Love.pbm', 'face/Eyes/Love.pbm'],
-            ['Eyes/Middle left.pbm', 'face/Eyes/Middle left.pbm'],
-            ['Eyes/Middle right.pbm', 'face/Eyes/Middle right.pbm'],
-            ['Eyes/Neutral.pbm', 'face/Eyes/Neutral.pbm'],
-            ['Eyes/Nuclear.pbm', 'face/Eyes/Nuclear.pbm'],
-            ['Eyes/Pinch left.pbm', 'face/Eyes/Pinch left.pbm'],
-            ['Eyes/Pinch middle.pbm', 'face/Eyes/Pinch middle.pbm'],
-            ['Eyes/Pinch right.pbm', 'face/Eyes/Pinch right.pbm'],
-            ['Eyes/Tear.pbm', 'face/Eyes/Tear.pbm'],
-            ['Eyes/Tired left.pbm', 'face/Eyes/Tired left.pbm'],
-            ['Eyes/Tired middle.pbm', 'face/Eyes/Tired middle.pbm'],
-            ['Eyes/Tired right.pbm', 'face/Eyes/Tired right.pbm'],
-            ['Eyes/Toxic.pbm', 'face/Eyes/Toxic.pbm'],
-            ['Eyes/Up.pbm', 'face/Eyes/Up.pbm'],
-            ['Eyes/Winking.pbm', 'face/Eyes/Winking.pbm'],
-            ['Information/Accept.pbm', 'face/Information/Accept.pbm'],
-            ['Information/Backward.pbm', 'face/Information/Backward.pbm'],
-            ['Information/Decline.pbm', 'face/Information/Decline.pbm'],
-            ['Information/Forward.pbm', 'face/Information/Forward.pbm'],
-            ['Information/Left.pbm', 'face/Information/Left.pbm'],
-            ['Information/No go.pbm', 'face/Information/No go.pbm'],
-            ['Information/Question mark.pbm', 'face/Information/Question mark.pbm'],
-            ['Information/Right.pbm', 'face/Information/Right.pbm'],
-            ['Information/Stop 1.pbm', 'face/Information/Stop 1.pbm'],
-            ['Information/Stop 2.pbm', 'face/Information/Stop 2.pbm'],
-            ['Information/Thumbs down.pbm', 'face/Information/Thumbs down.pbm'],
-            ['Information/Thumbs up.pbm', 'face/Information/Thumbs up.pbm'],
-            ['Information/Warning.pbm', 'face/Information/Warning.pbm'],
-            ['Objects/Bomb.pbm', 'face/Objects/Bomb.pbm'],
-            ['Objects/Boom.pbm', 'face/Objects/Boom.pbm'],
-            ['Objects/Fire.pbm', 'face/Objects/Fire.pbm'],
-            ['Objects/Flowers.pbm', 'face/Objects/Flowers.pbm'],
-            ['Objects/Forest.pbm', 'face/Objects/Forest.pbm'],
-            ['Objects/Light off.pbm', 'face/Objects/Light off.pbm'],
-            ['Objects/Light on.pbm', 'face/Objects/Light on.pbm'],
-            ['Objects/Lightning.pbm', 'face/Objects/Lightning.pbm'],
-            ['Objects/Night.pbm', 'face/Objects/Night.pbm'],
-            ['Objects/Pirate.pbm', 'face/Objects/Pirate.pbm'],
-            ['Objects/Snow.pbm', 'face/Objects/Snow.pbm'],
-            ['Objects/Target.pbm', 'face/Objects/Target.pbm'],
-            ['Progress/Bar 0.pbm', 'face/Progress/Bar 0.pbm'],
-            ['Progress/Bar 1.pbm', 'face/Progress/Bar 1.pbm'],
-            ['Progress/Bar 2.pbm', 'face/Progress/Bar 2.pbm'],
-            ['Progress/Bar 3.pbm', 'face/Progress/Bar 3.pbm'],
-            ['Progress/Bar 4.pbm', 'face/Progress/Bar 4.pbm'],
-            ['Progress/Dial 0.pbm', 'face/Progress/Dial 0.pbm'],
-            ['Progress/Dial 1.pbm', 'face/Progress/Dial 1.pbm'],
-            ['Progress/Dial 2.pbm', 'face/Progress/Dial 2.pbm'],
-            ['Progress/Dial 3.pbm', 'face/Progress/Dial 3.pbm'],
-            ['Progress/Dial 4.pbm', 'face/Progress/Dial 4.pbm'],
-            ['Progress/Dots 0.pbm', 'face/Progress/Dots 0.pbm'],
-            ['Progress/Dots 1.pbm', 'face/Progress/Dots 1.pbm'],
-            ['Progress/Dots 2.pbm', 'face/Progress/Dots 2.pbm'],
-            ['Progress/Dots 3.pbm', 'face/Progress/Dots 3.pbm'],
-            ['Progress/Hourglass 0.pbm', 'face/Progress/Hourglass 0.pbm'],
-            ['Progress/Hourglass 1.pbm', 'face/Progress/Hourglass 1.pbm'],
-            ['Progress/Hourglass 2.pbm', 'face/Progress/Hourglass 2.pbm'],
-            ['Progress/Timer 0.pbm', 'face/Progress/Timer 0.pbm'],
-            ['Progress/Timer 1.pbm', 'face/Progress/Timer 1.pbm'],
-            ['Progress/Timer 2.pbm', 'face/Progress/Timer 2.pbm'],
-            ['Progress/Timer 3.pbm', 'face/Progress/Timer 3.pbm'],
-            ['Progress/Timer 4.pbm', 'face/Progress/Timer 4.pbm'],
-            ['Progress/Water level 0.pbm', 'face/Progress/Water level 0.pbm'],
-            ['Progress/Water level 1.pbm', 'face/Progress/Water level 1.pbm'],
-            ['Progress/Water level 2.pbm', 'face/Progress/Water level 2.pbm'],
-            ['Progress/Water level 3.pbm', 'face/Progress/Water level 3.pbm'],
-            ['System/Accept_1.pbm', 'face/System/Accept_1.pbm'],
-            ['System/Accept_2.pbm', 'face/System/Accept_2.pbm'],
-            ['System/Alert.pbm', 'face/System/Alert.pbm'],
-            ['System/Box.pbm', 'face/System/Box.pbm'],
-            ['System/Busy_0.pbm', 'face/System/Busy_0.pbm'],
-            ['System/Busy_1.pbm', 'face/System/Busy_1.pbm'],
-            ['System/Decline_1.pbm', 'face/System/Decline_1.pbm'],
-            ['System/Decline_2.pbm', 'face/System/Decline_2.pbm'],
-            ['System/Dot_empty.pbm', 'face/System/Dot_empty.pbm'],
-            ['System/Dot_full.pbm', 'face/System/Dot_full.pbm'],
-            ['System/Play.pbm', 'face/System/Play.pbm'],
-            ['System/Slider_0.pbm', 'face/System/Slider_0.pbm'],
-            ['System/Slider_1.pbm', 'face/System/Slider_1.pbm'],
-            ['System/Slider_2.pbm', 'face/System/Slider_2.pbm'],
-            ['System/Slider_3.pbm', 'face/System/Slider_3.pbm'],
-            ['System/Slider_4.pbm', 'face/System/Slider_4.pbm'],
-            ['System/Slider_5.pbm', 'face/System/Slider_5.pbm'],
-            ['System/Slider_6.pbm', 'face/System/Slider_6.pbm'],
-            ['System/Slider_7.pbm', 'face/System/Slider_7.pbm'],
-            ['System/Slider_8.pbm', 'face/System/Slider_8.pbm']
-          ],
-          "type": "field_dropdown"
-        },
         {
           "type": "field_label",
           "name": "size_image",
-          "text": "64 * 64"
+          "text": Blockly.MIXLY_MICROBIT_Built_in_image1
+        },
+       
+        {
+          "name": "path",
+          "options": [
+            [Blockly.Msg.MPYTHON_FACE_1, '1.pbm'],
+            [Blockly.Msg.MPYTHON_FACE_2, '2.pbm'],
+            [Blockly.Msg.MPYTHON_FACE_3, '3.pbm'],
+            [Blockly.Msg.MPYTHON_FACE_4, '4.pbm'],
+            [Blockly.Msg.MPYTHON_FACE_5, '5.pbm'],
+            [Blockly.Msg.MPYTHON_FACE_6, '6.pbm'],
+            [Blockly.Msg.MPYTHON_FACE_7, '7.pbm'],
+            [Blockly.Msg.MPYTHON_FACE_8, '8.pbm'],
+            [Blockly.Msg.MPYTHON_FACE_9, '9.pbm'],
+            [Blockly.Msg.MPYTHON_FACE_10, '10.pbm'],
+            [Blockly.Msg.MPYTHON_FACE_11, '11.pbm'],
+            [Blockly.Msg.MPYTHON_FACE_12, '12.pbm'],
+            [Blockly.Msg.MPYTHON_FACE_ROCK, 'rock.pbm'],
+            [Blockly.Msg.MPYTHON_FACE_ROCK_S, 'rock_s.pbm'],
+            [Blockly.Msg.MPYTHON_FACE_PAPER, 'paper.pbm'],
+            [Blockly.Msg.MPYTHON_FACE_PAPER_S, 'paper_s.pbm'],
+            [Blockly.Msg.MPYTHON_FACE_SCISSORS, 'scissors.pbm'],
+            [Blockly.Msg.MPYTHON_FACE_SCISSORS_S, 'scissors_s.pbm'],
+            ['Big smile.pbm', 'Big smile.pbm'],
+            ['Heart large.pbm', 'Heart large.pbm'],
+            ['Heart small.pbm', 'Heart small.pbm'],
+            ['Mouth 1 open.pbm', 'Mouth 1 open.pbm'],
+            ['Mouth 1 shut.pbm', 'Mouth 1 shut.pbm'],
+            ['Mouth 2 open.pbm', 'Mouth 2 open.pbm'],
+            ['Mouth 2 shut.pbm', 'Mouth 2 shut.pbm'],
+            ['Sad.pbm', 'Sad.pbm'],
+            ['Sick.pbm', 'Sick.pbm'],
+            ['Smile.pbm', 'Smile.pbm'],
+            ['Swearing.pbm', 'Swearing.pbm'],
+            ['Talking.pbm', 'Talking.pbm'],
+            ['Wink.pbm', 'Wink.pbm'],
+            ['ZZZ.pbm', 'ZZZ.pbm'],
+            ['Angry.pbm', 'Angry.pbm'],
+            ['Awake.pbm', 'Awake.pbm'],
+            ['Black eye.pbm', 'Black eye.pbm'],
+            ['Bottom left.pbm', 'Bottom left.pbm'],
+            ['Bottom right.pbm', 'Bottom right.pbm'],
+            ['Crazy 1.pbm', 'Crazy 1.pbm'],
+            ['Crazy 2.pbm', 'Crazy 2.pbm'],
+            ['Disappointed.pbm', 'Disappointed.pbm'],
+            ['Dizzy.pbm', 'Dizzy.pbm'],
+            ['Down.pbm', 'Down.pbm'],
+            ['Evil.pbm', 'Evil.pbm'],
+            ['Hurt.pbm', 'Hurt.pbm'],
+            ['Knocked out.pbm', 'Knocked out.pbm'],
+            ['Love.pbm', 'Love.pbm'],
+            ['Middle left.pbm', 'Middle left.pbm'],
+            ['Middle right.pbm', 'Middle right.pbm'],
+            ['Neutral.pbm', 'Neutral.pbm'],
+            ['Nuclear.pbm', 'Nuclear.pbm'],
+            ['Pinch left.pbm', 'Pinch left.pbm'],
+            ['Pinch middle.pbm', 'Pinch middle.pbm'],
+            ['Pinch right.pbm', 'Pinch right.pbm'],
+            ['Tear.pbm', 'Tear.pbm'],
+            ['Tired left.pbm', 'Tired left.pbm'],
+            ['Tired middle.pbm', 'Tired middle.pbm'],
+            ['Tired right.pbm', 'Tired right.pbm'],
+            ['Toxic.pbm', 'Toxic.pbm'],
+            ['Up.pbm', 'Up.pbm'],
+            ['Winking.pbm', 'Winking.pbm'],
+            ['Accept.pbm', 'Accept.pbm'],
+            ['Backward.pbm', 'Backward.pbm'],
+            ['Decline.pbm', 'Decline.pbm'],
+            ['Forward.pbm', 'Forward.pbm'],
+            ['Left.pbm', 'Left.pbm'],
+            ['No go.pbm', 'No go.pbm'],
+            ['Question mark.pbm', 'Question mark.pbm'],
+            ['Right.pbm', 'Right.pbm'],
+            ['Stop 1.pbm', 'Stop 1.pbm'],
+            ['Stop 2.pbm', 'Stop 2.pbm'],
+            ['Thumbs down.pbm', 'Thumbs down.pbm'],
+            ['Thumbs up.pbm', 'Thumbs up.pbm'],
+            ['Warning.pbm', 'Warning.pbm'],
+            ['Bomb.pbm', 'Bomb.pbm'],
+            ['Boom.pbm', 'Boom.pbm'],
+            ['Fire.pbm', 'Fire.pbm'],
+            ['Flowers.pbm', 'Flowers.pbm'],
+            ['Forest.pbm', 'Forest.pbm'],
+            ['Light off.pbm', 'Light off.pbm'],
+            ['Light on.pbm', 'Light on.pbm'],
+            ['Lightning.pbm', 'Lightning.pbm'],
+            ['Night.pbm', 'Night.pbm'],
+            ['Pirate.pbm', 'Pirate.pbm'],
+            ['Snow.pbm', 'Snow.pbm'],
+            ['Target.pbm', 'Target.pbm'],
+            ['Bar 0.pbm', 'Bar 0.pbm'],
+            ['Bar 1.pbm', 'Bar 1.pbm'],
+            ['Bar 2.pbm', 'Bar 2.pbm'],
+            ['Bar 3.pbm', 'Bar 3.pbm'],
+            ['Bar 4.pbm', 'Bar 4.pbm'],
+            ['Dial 0.pbm', 'Dial 0.pbm'],
+            ['Dial 1.pbm', 'Dial 1.pbm'],
+            ['Dial 2.pbm', 'Dial 2.pbm'],
+            ['Dial 3.pbm', 'Dial 3.pbm'],
+            ['Dial 4.pbm', 'Dial 4.pbm'],
+            ['Dots 0.pbm', 'Dots 0.pbm'],
+            ['Dots 1.pbm', 'Dots 1.pbm'],
+            ['Dots 2.pbm', 'Dots 2.pbm'],
+            ['Dots 3.pbm', 'Dots 3.pbm'],
+            ['Hourglass 0.pbm', 'Hourglass 0.pbm'],
+            ['Hourglass 1.pbm', 'Hourglass 1.pbm'],
+            ['Hourglass 2.pbm', 'Hourglass 2.pbm'],
+            ['Timer 0.pbm', 'Timer 0.pbm'],
+            ['Timer 1.pbm', 'Timer 1.pbm'],
+            ['Timer 2.pbm', 'Timer 2.pbm'],
+            ['Timer 3.pbm', 'Timer 3.pbm'],
+            ['Timer 4.pbm', 'Timer 4.pbm'],
+            ['Water level 0.pbm', 'Water level 0.pbm'],
+            ['Water level 1.pbm', 'Water level 1.pbm'],
+            ['Water level 2.pbm', 'Water level 2.pbm'],
+            ['Water level 3.pbm', 'Water level 3.pbm'],
+            ['Accept_1.pbm', 'Accept_1.pbm'],
+            ['Accept_2.pbm', 'Accept_2.pbm'],
+            ['Alert.pbm', 'Alert.pbm'],
+            ['Box.pbm', 'Box.pbm'],
+            ['Busy_0.pbm', 'Busy_0.pbm'],
+            ['Busy_1.pbm', 'Busy_1.pbm'],
+            ['Decline_1.pbm', 'Decline_1.pbm'],
+            ['Decline_2.pbm', 'Decline_2.pbm'],
+            ['Dot_empty.pbm', 'Dot_empty.pbm'],
+            ['Dot_full.pbm', 'Dot_full.pbm'],
+            ['Play.pbm', 'Play.pbm'],
+            ['Slider_0.pbm', 'Slider_0.pbm'],
+            ['Slider_1.pbm', 'Slider_1.pbm'],
+            ['Slider_2.pbm', 'Slider_2.pbm'],
+            ['Slider_3.pbm', 'Slider_3.pbm'],
+            ['Slider_4.pbm', 'Slider_4.pbm'],
+            ['Slider_5.pbm', 'Slider_5.pbm'],
+            ['Slider_6.pbm', 'Slider_6.pbm'],
+            ['Slider_7.pbm', 'Slider_7.pbm'],
+            ['Slider_8.pbm', 'Slider_8.pbm']
+          ],
+          "type": "field_dropdown"
         }
       ],
       "output": "String",

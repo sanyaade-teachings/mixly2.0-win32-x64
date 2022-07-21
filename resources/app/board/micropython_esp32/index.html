@@ -1863,6 +1863,34 @@
       <!-- </category> -->
     </category>
     <category id="catOnBoardOled"  colour="180" m-show="micropython:esp32:mPython">
+      <block type="mpython_pbm_image"></block> 
+      <block type="onboard_oled_show_image">
+        <value name="data">
+          <shadow type="mpython_pbm_image">
+          </shadow>
+        </value>
+      </block>
+      <block type="onboard_oled_show_image_xy">
+        <value name="data">
+          <shadow type="mpython_pbm_image">
+          </shadow>
+        </value>
+        <value name="x">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="y">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="size">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+      </block>      
       <block type="onboard_oled_show_string">
         <value name="data">
           <shadow type="text">
@@ -1874,6 +1902,21 @@
         <value name="data">
           <shadow type="text">
             <field name="TEXT">Mixly</field>
+          </shadow>
+        </value>
+        <value name="x">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="y">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="size">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
           </shadow>
         </value>
         <value name="space">
@@ -1895,9 +1938,19 @@
             <field name="TEXT">Mixly</field>
           </shadow>
         </value>
+        <value name="y">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="size">
+          <shadow type="math_number">
+            <field name="NUM">5</field>
+          </shadow>
+        </value>
         <value name="time">
           <shadow type="math_number">
-            <field name="NUM">50</field>
+            <field name="NUM">5</field>
           </shadow>
         </value>
         <value name="space">
@@ -1919,13 +1972,116 @@
             <field name="TEXT">Mixly</field>
           </shadow>
         </value>
+        <value name="size">
+          <shadow type="math_number">
+            <field name="NUM">5</field>
+          </shadow>
+        </value>
         <value name="time">
           <shadow type="math_number">
             <field name="NUM">500</field>
           </shadow>
         </value>
       </block>
+      <block type="mpython_display_hvline">
+        <value name="x">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="y">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="length">
+          <shadow type="math_number">
+            <field name="NUM">20</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="mpython_display_line">
+        <value name="x1">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="y1">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="x2">
+          <shadow type="math_number">
+            <field name="NUM">50</field>
+          </shadow>
+        </value>
+        <value name="y2">
+          <shadow type="math_number">
+            <field name="NUM">50</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="mpython_display_shape_rect">
+        <value name="x">
+          <shadow type="math_number">
+            <field name="NUM">20</field>
+          </shadow>
+        </value>
+        <value name="y">
+          <shadow type="math_number">
+            <field name="NUM">20</field>
+          </shadow>
+        </value>
+        <value name="w">
+          <shadow type="math_number">
+            <field name="NUM">20</field>
+          </shadow>
+        </value>
+        <value name="h">
+          <shadow type="math_number">
+            <field name="NUM">15</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="onboard_oled_shift">
 
+        <value name="val">
+          <shadow type="math_number">
+            <field name="NUM">1</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="onboard_oled_get_pixel">
+
+        <value name="x">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="y">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="onboard_oled_bright_point">
+        <value name="x">
+         <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="y">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="STAT">
+          <shadow type="display_onoff">
+          </shadow>
+        </value>
+      </block>
+      <block type="onboard_oled_clear"></block>
     </category>
     <category id="catIot">
       <category id="catBlynk" colour="#2FAD7A">

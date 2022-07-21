@@ -86,6 +86,7 @@ class OLED(SSD1106_I2C):
 		if width > self.columns or height > self.rows:
 			raise ValueError("Image must be less than display ({0}x{1}).".format(self.columns, self.rows))
 		self.bitmap((buffer_info,(width, height)), x, y, size)	
+		self.show()
 
 	def bitmap(self,buffer, x=0, y=0,size=1):
 		"""Graphic model display(buffer,(width,height))"""	
@@ -174,7 +175,7 @@ class OLED(SSD1106_I2C):
 				self.show()
 				time.sleep_ms(delay) 
 
-	def scroll(self, data, y=0, size=1, space=0, speed=10):
+	def scroll(self, data, y=0, size=1, space=0, speed=5):
 		"""Scrolling characters"""
 		size=max(round(size),1)
 		font_len,font_buffer=self._take_buffer(str(data),space,size)
