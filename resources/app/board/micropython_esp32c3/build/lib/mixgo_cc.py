@@ -24,14 +24,14 @@ try :
     import mxc6655xa
     onboard_mxc6655xa = mxc6655xa.MXC6655XA(onboard_i2c)     
 except Exception as e:
-    print(e)
+    print("Warning: Failed to communicate with MXC6655XA or",e)
     
 '''ALS_PS-Sensor'''    #Including als_vis,als_ir,ps_nl
 try :
     import ltr553als
     onboard_ltr553als = ltr553als.LTR_553ALS(onboard_i2c)     
 except Exception as e:
-    print(e)
+    print("Warning: Failed to communicate with TR_553ALS or",e)
 
 
 '''Atmos_Sensor'''    #Including pressure,altitude,temperature
@@ -39,28 +39,28 @@ try :
     import hp203x
     onboard_hp203x = hp203x.HP203X(onboard_i2c)     
 except Exception as e:
-    print(e)
+    print("Warning: Failed to communicate with HP203X or",e)
 
 '''T&H_Sensor'''    #Including temperature,humidity
 try :
     import ahtx0
     onboard_ahtx0 = ahtx0.AHTx0(onboard_i2c)     
 except Exception as e:
-    print(e)
+    print("Warning: Failed to communicate with AHTx0 or",e)
 
 '''RFID_Sensor'''    #Including read_card,write_card
 try :
     import rc522
     onboard_rc522 = rc522.RC522(onboard_i2c)     
 except Exception as e:
-    print(e)
+    print("Warning: Failed to communicate with RC522 or",e)
 
 '''matrix32x12'''    #Including read_card,write_card
 try :
     import matrix32x12
     onboard_matrix = matrix32x12.Matrix(onboard_i2c)     
 except Exception as e:
-    print(e)
+    print("Warning: Failed to communicate with Matrix32X12 or",e)
 
 '''2RGB_WS2812'''    #color_chase(),rainbow_cycle()方法移至类里
 from ws2812 import NeoPixel
