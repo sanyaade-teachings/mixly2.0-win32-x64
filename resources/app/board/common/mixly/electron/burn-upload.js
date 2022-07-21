@@ -194,6 +194,22 @@ BU.readConfigAndSet = function () {
                 BU.burnCommand = replaceWithReg(BU.burnCommand, Env.python3Path + " " + pyToolPath + pyToolName[i] + ".py", pyToolName[i]);
             }
         }
+        if (Env.currentPlatform == "darwin" || Env.currentPlatform == "linux") {
+            BU.burnCommand = replaceWithReg(BU.burnCommand, Env.python3Path + "\" \"{path}/pyTools/ampy/cli.py", "ampy");
+        } else {
+            BU.burnCommand = replaceWithReg(BU.burnCommand, Env.python3Path + "\" \"{path}/mixpyBuild/win_python3/Lib/site-packages/ampy/cli.py", "ampy");
+        }
+        if (BOARD.upload?.reset) {
+            let resetStr = '{}';
+            try {
+                resetStr = JSON.stringify(BOARD.upload.reset);
+                resetStr = resetStr.replaceAll('\"', '\\\"')
+            } catch (e) {
+                console.log(e);
+            }
+            // console.log('复位指令:', resetStr)
+            BU.burnCommand = replaceWithReg(BU.burnCommand, resetStr, "reset");
+        }
         BU.burnCommand = replaceWithReg(BU.burnCommand, Env.clientPath, "path");
         BU.burnCommand = replaceWithReg(BU.burnCommand, Env.indexPath, "indexPath");
         // console.log('烧录指令:', BU.burnCommand);
@@ -912,6 +928,7 @@ BU.runCmd = function (layerNum, type, port, command, sucFunc) {
             layer.msg((type === 'burn' ? indexText['烧录成功'] + '！' : indexText['上传成功'] + '！'), {
                 time: 1000
             });
+            StatusBar.addValue((type === 'burn' ? indexText['烧录成功'] + '！' : indexText['上传成功'] + '！') + '\n', true);
             if (type === 'upload') {
                 StatusBar.show(1);
                 Serial.connect(port, null, (opened) => {
