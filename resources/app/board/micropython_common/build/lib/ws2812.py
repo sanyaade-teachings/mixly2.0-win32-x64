@@ -14,11 +14,11 @@ from time import sleep
 from machine import bitstream
 
 class NeoPixel:
-	ORDER = (1, 0, 2, 3)
-	def __init__(self, pin, n, bpp=3, timing=1):
+	def __init__(self, pin, n, bpp=3, timing=1,ORDER=(1, 0, 2, 3)):
 		self.pin = pin
 		self.n = n
 		self.bpp = bpp
+		self.ORDER=ORDER
 		self.buf = bytearray(n * bpp)
 		self.timing = (
 			((400, 850, 800, 450) if timing else (800, 1700, 1600, 900))
@@ -56,9 +56,8 @@ class NeoPixel:
 		self.pin.init(self.pin.IN)
 
 	def color_chase(self,R, G, B, wait):
-		color1 = (G, R, B)
 		for i in range(self.n):
-			self.__setitem__(i,color1)
+			self.__setitem__(i,(R, G, B))
 			self.write()
 			sleep(wait/1000)
 
