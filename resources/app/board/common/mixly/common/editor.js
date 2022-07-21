@@ -140,7 +140,7 @@ Editor.blockEditorInit = () => {
 Editor.codeEditorInit = () => {
     Editor.codeEditor = ace.edit(Editor.DIV_NAME.CODE);
     const { codeEditor } = Editor;
-    codeEditor.setFontSize(Math.max($('body').width() / 70, $('body').height() / 70, 12));
+    codeEditor.setFontSize(Math.max($('body').width() / 85, $('body').height() / 85, 12));
     codeEditor.setShowPrintMargin(false);
     codeEditor.setReadOnly(true);
     codeEditor.setScrollSpeed(0.8);
@@ -203,7 +203,7 @@ Editor.codeEditorAddCommands = () => {
         name: "resetFontSize",
         bindKey: "Ctrl+0|Ctrl-Numpad0",
         exec: function (editor) {
-            editor.setFontSize(Math.max($('body').width() / 70, $('body').height() / 70, 12));
+            editor.setFontSize(Math.max($('body').width() / 85, $('body').height() / 85, 12));
         }
     }, {
         name: "exitCodeEditor",
@@ -378,7 +378,7 @@ Editor.codeEditorDecFontSize = () => {
 
 Editor.codeEditorRstFontSize = () => {
     const { codeEditor } = Editor;
-    codeEditor.setFontSize(Math.max($('body').width() / 70, $('body').height() / 70, 12));
+    codeEditor.setFontSize(Math.max($('body').width() / 85, $('body').height() / 85, 12));
 }
 
 Editor.codeEditorAddEvent = () => {
