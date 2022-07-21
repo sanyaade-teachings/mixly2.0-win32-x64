@@ -48,6 +48,13 @@ Blockly.Python.me_go_stepper_keep=function(){
     return code;
 };
 
+Blockly.Python.me_go_stepper_stop=function(){
+    var v = this.getFieldValue('VAR');
+    Blockly.Python.definitions_['import_me_go_car'] = 'from me_go import car';
+    var code = 'car.move("'+ v + '")\n';
+    return code;
+};
+
 Blockly.Python.me_go_dc_motor=function(){
     var wheel = this.getFieldValue('wheel');
     Blockly.Python.definitions_['import_me_go_hall'] = 'from me_go import car';
@@ -69,14 +76,14 @@ Blockly.Python.me_go_hall_attachInterrupt = function () {
 Blockly.Python.me_go_pin_near_line = function(){
     var key = this.getFieldValue('key');
     Blockly.Python.definitions_['import_me_go_hall'] = 'from me_go import car';
-    var code = 'car.patrol()['+key+']';
+    var code = 'car.patrol()'+key+'';
     return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
 Blockly.Python.me_go_pin_near = function(){
     var key = this.getFieldValue('key');
     Blockly.Python.definitions_['import_me_go_hall'] = 'from me_go import car';
-    var code = 'car.obstacle()['+key+']';
+    var code = 'car.obstacle()'+key+'';
     return [code, Blockly.Python.ORDER_ATOMIC];
 };
 

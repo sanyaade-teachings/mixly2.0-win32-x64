@@ -104,7 +104,7 @@ class CAR(TM1931):
         else:
             raise ValueError('Invalid input, valid are "N","P","CW","CCW"')
             
-    def move(self,action,speed):
+    def move(self,action,speed=100):
         if action=="N":
             self.motor(self.MOTO[0],"N")
             self.motor(self.MOTO[1],"N")
