@@ -156,12 +156,12 @@ class HALL:
         self._pin = Pin(pin, Pin.IN)
         self._pulse = 0
         self.turns = 0
-        self.distance=0
+        self.distance = 0
         
     def _receive_cb(self, event_source):
             if self._on_receive:
                 self._pulse+=1
-                self.turns=round(self._pulse/400,2)
+                self.turns=round(self._pulse/400,3)
                 self.distance=round(self._pulse/400*math.pi*4.4,2)
                 self._on_receive(self.turns,self.distance)
     
@@ -173,6 +173,11 @@ class HALL:
     def irq(self, handler, trigger=(Pin.IRQ_RISING | Pin.IRQ_FALLING)):
         self._pin.irq(handler = handler, trigger = trigger)
         
+    def zeroing(self):
+        self._pulse = 0
+        self.turns = 0
+        self.distance = 0
+
 hall_A = HALL(20)
 hall_B = HALL(21)
 
