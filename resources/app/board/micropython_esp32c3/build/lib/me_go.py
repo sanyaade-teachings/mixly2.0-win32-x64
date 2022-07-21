@@ -152,18 +152,20 @@ car=CAR(i2c) #Including LED,motor,patrol,obstacle
 
 '''2Hall_HEP'''
 class HALL:
+    
+    _pulse_turns=1/400
+    _pulse_distance=1/400*math.pi*4.4
+
     def __init__(self, pin):
         self._pin = Pin(pin, Pin.IN)
-        self._pulse = 0
         self.turns = 0
         self.distance = 0
         
     def _receive_cb(self, event_source):
             if self._on_receive:
-                self._pulse+=1
-                self.turns=round(self._pulse/400,3)
-                self.distance=round(self._pulse/400*math.pi*4.4,2)
-                self._on_receive(self.turns,self.distance)
+                self.turns += self._pulse_turns
+                self.distance += self._pulse_distance
+                self._on_receive(round(self.turns,2),round(self.distance,2))
     
     def irq_cb(self, callback):
         self._on_receive = callback
@@ -173,10 +175,11 @@ class HALL:
     def irq(self, handler, trigger=(Pin.IRQ_RISING | Pin.IRQ_FALLING)):
         self._pin.irq(handler = handler, trigger = trigger)
         
-    def zeroing(self):
-        self._pulse = 0
-        self.turns = 0
-        self.distance = 0
+    def initial(self,turns=None,distance=None):
+        if not (turns is None):
+            self.turns = turns
+        if not (distance  is None):
+            self.distance = distance
 
 hall_A = HALL(20)
 hall_B = HALL(21)
