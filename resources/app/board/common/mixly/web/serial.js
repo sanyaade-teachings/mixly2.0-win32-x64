@@ -255,6 +255,32 @@ Serial.setDtrAndRts = async function (dtr, rts) {
 
 /**
 * @ function 串口发送
+* @ description 串口发送Ctrl + A
+* @ return void
+*/
+Serial.writeCtrlA = async function () {
+    if (espTool.connected()) {
+        var serialArray = [1, 13, 10];
+        var arrayBuffer = new Int8Array(serialArray).buffer;
+        await espTool.writeArrayBuffer(arrayBuffer);
+    }
+}
+
+/**
+* @ function 串口发送
+* @ description 串口发送Ctrl + B
+* @ return void
+*/
+Serial.writeCtrlB = async function () {
+    if (espTool.connected()) {
+        var serialArray = [2, 13, 10];
+        var arrayBuffer = new Int8Array(serialArray).buffer;
+        await espTool.writeArrayBuffer(arrayBuffer);
+    }
+}
+
+/**
+* @ function 串口发送
 * @ description 串口发送Ctrl + C
 * @ return void
 */
