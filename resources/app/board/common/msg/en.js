@@ -27,6 +27,7 @@ var MSG = {
     catSensor: "Sensor",
     catActuator: "Actuator",
     catExternSensor: "External Sensor",
+    catExternAI: "External AI",
     catExternActuator: "External Actuator",
     catExternMonitor: "External Monitor",
     catActuator_motor: "Motor",
@@ -3414,3 +3415,41 @@ Blockly.MIXLY_AI_UNIT = 'Intelligent dialog';
 Blockly.MIXLY_AI_LANGUAGE_CHINESE = 'Chinese-Mandarin';
 Blockly.MIXLY_AI_LANGUAGE_ENGLISH = 'English';
 Blockly.MIXLY_AI_LANGUAGE_CANTONESE = 'Cantonese';
+Blockly.MICROPYTHON_HUSKYLENS_CHANGE_ALGORTHIM ="Switch to algorithm";
+Blockly.MICROPYTHON_HUSKYLENS_UNTIL_SUCCESS ="Until success";
+Blockly.MICROPYTHON_HUSKYLENS_ALGORITHM_OBJECT_TRACKING ="Object tracking";
+Blockly.MICROPYTHON_HUSKYLENS_ALGORITHM_OBJECT_RECOGNITION ="Object recognition";
+Blockly.MICROPYTHON_HUSKYLENS_ALGORITHM_LINE_TRACKING ="Line patrol";
+Blockly.MICROPYTHON_HUSKYLENS_ALGORITHM_TAG_RECOGNITION ="Label identification";
+Blockly.MICROPYTHON_HUSKYLENS_ALGORITHM_OBJECT_CLASSIFICATION ="Object classification";
+Blockly.MICROPYTHON_HUSKYLENS_ALGORITHM_QR_CODE_RECOGNTITION ="QR code recognition";
+Blockly.MICROPYTHON_HUSKYLENS_ALGORITHM_BARCODE_RECOGNTITION ="ShopSavvy Barcode Scanner";
+Blockly.MICROPYTHON_HUSKYLENS_COMMAND_REQUEST ="Request primary data storage results";
+Blockly.MICROPYTHON_HUSKYLENS_READ_LEART_ID_COUNT ="Total learned IDS";
+Blockly.MICROPYTHON_HUSKYLENS_GET_FROM_RESULT ="Get from results";
+Blockly.MICROPYTHON_HUSKYLENS_IS_APPEAR ="Is it in the picture";
+Blockly.MICROPYTHON_HUSKYLENS_IS_LEARNED ="Have you learned";
+Blockly.MICROPYTHON_HUSKYLENS_NEAR_CENTERED ="Near the center";
+Blockly.MICROPYTHON_HUSKYLENS_X_CENTERED ="X Center";
+Blockly.MICROPYTHON_HUSKYLENS_Y_CENTERED ="Y Center";
+Blockly.MICROPYTHON_HUSKYLENS_X_ORIGIN ="X starting point";
+Blockly.MICROPYTHON_HUSKYLENS_Y_ORIGIN="Y starting point";
+Blockly.MICROPYTHON_HUSKYLENS_X_TARGET ="X end point";
+Blockly.MICROPYTHON_HUSKYLENS_Y_TARGET ="Y end point";
+Blockly.MICROPYTHON_HUSKYLENS_ORDER ="NO.";
+Blockly.MICROPYTHON_HUSKYLENS_ORDER_END =" ";
+Blockly.MICROPYTHON_HUSKYLENS_SUM ="total";
+Blockly.MICROPYTHON_HUSKYLENS_LEARN_ONCE ="Automatic learning once";
+Blockly.MICROPYTHON_HUSKYLENS_FORGET ="Forget all learning data of the current algorithm";
+Blockly.MICROPYTHON_HUSKYLENS_SET_CURRENT ="Set current algorithm";
+Blockly.MICROPYTHON_HUSKYLENS_NAME ="Name is";
+Blockly.MICROPYTHON_HUSKYLENS_SCREEN_TEXT ="Screen overlay display text";
+Blockly.MICROPYTHON_HUSKYLENS_SCREEN_CLEAR ="Clear the text displayed on the screen";
+Blockly.MICROPYTHON_HUSKYLENS_TRIGGER ="trigger";
+Blockly.MICROPYTHON_HUSKYLENS_SAVE_SDCARD ="Save to SD card";
+Blockly.MICROPYTHON_HUSKYLENS_PHOTO ="photograph";
+Blockly.MICROPYTHON_HUSKYLENS_SCREENSHOT ="Screenshot";
+Blockly.MICROPYTHON_HUSKYLENS_SAVE_AS ="preservation";
+Blockly.MICROPYTHON_HUSKYLENS_LOAD ="load";
+Blockly.MICROPYTHON_HUSKYLENS_SDCARD_MODEL ="Current algorithm data is SD card";
+Blockly.MICROPYTHON_HUSKYLENS_MODEL_NUM ="Model No";

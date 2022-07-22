@@ -58,6 +58,15 @@ Blockly.Blocks['espnow_channel'] = {
   }
 };
 
+Blockly.Blocks['haskylens_model'] = {
+   init: function() {
+    this.setColour(Blockly.Blocks.pins.HUE);
+    this.appendDummyInput("")
+        .appendField(new Blockly.FieldDropdown(profile.default.haskylens_model), 'PIN');
+    this.setOutput(true, Number);
+  }
+};
+
 Blockly.Blocks['pwm_input'] = {
    init: function() {
     this.setColour(Blockly.Blocks.pins.HUE);

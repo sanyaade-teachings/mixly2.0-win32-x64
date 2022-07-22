@@ -185,7 +185,7 @@ Blockly.Blocks.me_go_hall_initialize = {
     this.appendDummyInput("")
         .appendField(Blockly.MIXLY_SETUP)
     this.appendDummyInput("")
-      .appendField(new Blockly.FieldDropdown([[Blockly.ME_GO_HALL_SENSOR_TURN, "turns"], [Blockly.ME_GO_HALL_SENSOR_DISTANCE, "distance"]]), "args");    
+      .appendField(new Blockly.FieldDropdown([['turns', "turns"], ['distance', "distance"],['turns,distance','all']]), "args");    
     this.appendValueInput('num')
           .setCheck(Number)    
     this.setPreviousStatement(true);

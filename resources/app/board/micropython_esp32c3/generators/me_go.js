@@ -78,8 +78,14 @@ Blockly.Python.me_go_hall_initialize = function () {
     var args = this.getFieldValue('args');
     Blockly.Python.definitions_['import_me_go_hall_'+dropdown_mode] = 'from me_go import hall_'+dropdown_mode;
     var num = Blockly.Python.valueToCode(this,'num', Blockly.Python.ORDER_ATOMIC);
+    if(args=='all'){
+    var code = 'hall_' + dropdown_mode + '.initial(' + 'turns' + '=' + num + ',distance=' + num + ')\n'
+    return code;
+    }
+    else{
     var code = 'hall_' + dropdown_mode + '.initial(' + args + '=' + num +  ')\n'
     return code;
+    }
 };
 
 Blockly.Python.me_go_pin_near_line = function(){
