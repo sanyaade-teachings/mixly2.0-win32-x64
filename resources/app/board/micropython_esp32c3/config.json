@@ -98,7 +98,7 @@
                 "binFile": [
                     {
                         "offset": "0x0000",
-                        "path": "./build/MixGo_ME-0x0-V1.19.1-220701.bin"
+                        "path": "./build/MixGo_ME-0x0-V1.19.1-220722-lib.bin"
                     }
                 ]
             },

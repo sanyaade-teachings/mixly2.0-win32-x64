@@ -616,23 +616,48 @@ BU.uploadWithAmpy = async function () {
         }
     });
 
-    //StatusBar.setValue("", true);
+    /*
+    const Encoder = new TextEncoder();
+
+    const exec_ = async (command) => {
+        let commandBytes;
+        commandBytes = Encoder.encode(command);
+
+        for (let i = 0; i < commandBytes.length; i += 256) {
+            await espTool.writeArrayBuffer(commandBytes.slice(i, Math.min(i + 256, commandBytes.length)));
+            await sleep(100);
+        }
+        await espTool.writeArrayBuffer([4]);
+    }
+    */
+
+    StatusBar.setValue("", true);
     BU.interrupt()
     .then(async () => {
         let textEncoder = new TextEncoder();
         await Serial.writeCtrlA();
         await espTool.write("file = open('main.py', 'w')\r\n");
         await sleep(100);
-        let writeData = MFile.getCode().replace(/\n/g, "\\n");
+        let writeData = MFile.getCode();
         writeData = ch2Unicode(writeData) ?? '';
         for (let i = 0; i < writeData.length / 50; i++) {
             await espTool.write("file.write('''" + writeData.substring(i * 50, (i + 1) * 50) + "''')\r\n");
             await sleep(100);
             StatusBar.setValue("", true);
         }
+        /*
+        await exec_("f = open('main.py', 'wb')\r\n");
+        var size = writeData.length;
+        for (let i = 0; i < size; i += 32) {
+            let chunkSize = Math.min(32, size - i);
+            let chunk = "b\'" + writeData.substring(i, chunkSize) + "\'";
+            await exec_("f.write(" + chunk + ")");
+        }
+        await exec_("f.close()\r\n");
+        */
         await sleep(100);
         await espTool.write("file.close()\r\n");
-        await sleep(100);
+        await sleep(500);
         await espTool.writeArrayBuffer(new Int8Array([4]).buffer);
         await sleep(500);
         await Serial.writeCtrlB();
