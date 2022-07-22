@@ -27,7 +27,7 @@ var MSG = {
     catSensor: "Sensor",
     catActuator: "Actuator",
     catExternSensor: "External Sensor",
-    catExternAI: "External AI",
+    catExternAI: "Machine vision",
     catExternActuator: "External Actuator",
     catExternMonitor: "External Monitor",
     catActuator_motor: "Motor",

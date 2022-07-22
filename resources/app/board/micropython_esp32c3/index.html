@@ -3253,8 +3253,195 @@
         <block type="PS2_Buttons"></block>
         <block type="PS2_State"></block>
         <block type="PS2_stk"></block>
+    </category>    
+    <category id="catExternActuator" colour="100">      
+      <block type="esp32_music_pitch">
+        <value name="PIN">
+          <shadow type="pins_pwm_pin">
+            <field name="PIN">0</field>
+          </shadow>
+        </value>
+        <value name="pitch">
+          <shadow type="pins_tone_notes">
+            <field name="PIN">440</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="esp32_music_pitch_with_time">
+        <value name="PIN">
+          <shadow type="pins_pwm_pin">
+            <field name="PIN">0</field>
+          </shadow>
+        </value>
+        <value name="pitch">
+          <shadow type="pins_tone_notes">
+            <field name="PIN">440</field>
+          </shadow>
+        </value>
+        <value name="time">
+          <shadow type="math_number">
+            <field name="NUM">1000</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="esp32_music_stop">
+        <value name="PIN">
+          <shadow type="pins_pwm_pin">
+            <field name="PIN">0</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="esp32_music_play_list">
+        <value name="LIST">
+          <shadow type="pins_playlist"></shadow>
+        </value>
+        <value name="PIN">
+          <shadow type="pins_pwm_pin">
+            <field name="PIN">0</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="actuator_neopixel_init">
+        <value name="SUB">
+          <shadow type="variables_get">
+            <field name="VAR">rgb</field>
+          </shadow>
+        </value>
+        <value name="PIN">
+          <shadow type="pins_digital_pin">
+            <field name="PIN">0</field>
+          </shadow>
+        </value>
+        <value name="LEDCOUNT">
+          <shadow type="math_number">
+            <field name="NUM">4</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="actuator_neopixel_rgb">
+        <value name="SUB">
+          <shadow type="variables_get">
+            <field name="VAR">rgb</field>
+          </shadow>
+        </value>
+        <value name="_LED_">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="RVALUE">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="GVALUE">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="BVALUE">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="actuator_neopixel_rgb_all">
+        <value name="SUB">
+          <shadow type="variables_get">
+            <field name="VAR">rgb</field>
+          </shadow>
+        </value>
+        <value name="RVALUE">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="GVALUE">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+        <value name="BVALUE">
+          <shadow type="math_number">
+            <field name="NUM">0</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="actuator_neopixel_write">
+        <value name="SUB">
+          <shadow type="variables_get">
+            <field name="VAR">rgb</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="communicate_i2c_init">
+        <value name="SUB">
+          <shadow type="variables_get">
+            <field name="VAR">i2c_extend</field>
+          </shadow>
+        </value>
+        <value name="TX">
+          <shadow type="pins_digital_pin">
+            <field name="PIN">4</field>
+          </shadow>
+        </value>
+        <value name="RX">
+          <shadow type="pins_digital_pin">
+            <field name="PIN">5</field>
+          </shadow>
+        </value>
+        <value name="freq">
+          <shadow type="math_number">
+            <field name="NUM">400000</field>
+          </shadow>
+        </value>
+        <next>
+         <block type="actuator_ms32006_init">
+          <value name="SUB">
+              <shadow type="variables_get">
+                <field name="VAR">Motor</field>
+              </shadow>
+            </value>
+            <value name="SUB1">
+              <shadow type="variables_get">
+                <field name="VAR">i2c_extend</field>
+              </shadow>
+            </value>
+          </block>
+        </next>
+        </block>
+        <block type="actuator_ms32006_dcmotor">
+      <value name="SUB">
+          <shadow type="variables_get">
+            <field name="VAR">Motor</field>
+          </shadow>
+        </value>
+        <value name="speed">
+          <shadow type="math_number">
+            <field name="NUM">100</field>
+          </shadow>
+        </value>
+      </block>
+
+      <block type="actuator_ms32006_stepper">
+      <value name="SUB">
+          <shadow type="variables_get">
+            <field name="VAR">Motor</field>
+          </shadow>
+        </value>
+        <value name="speed">
+          <shadow type="math_number">
+            <field name="NUM">1024</field>
+          </shadow>
+        </value>
+        <value name="steps">
+          <shadow type="math_number">
+            <field name="NUM">1024</field>
+          </shadow>
+        </value>
+      </block>
     </category>
-    <category id="catExternAI" colour="#ff9f06">
+    <category id="catExternAI" colour="#df9f06">
       <block type="communicate_i2c_init">
         <value name="SUB">
           <shadow type="variables_get">
@@ -3475,193 +3662,6 @@
           </shadow>
         </value>         
        </block>
-    </category>
-    <category id="catExternActuator" colour="100">      
-      <block type="esp32_music_pitch">
-        <value name="PIN">
-          <shadow type="pins_pwm_pin">
-            <field name="PIN">0</field>
-          </shadow>
-        </value>
-        <value name="pitch">
-          <shadow type="pins_tone_notes">
-            <field name="PIN">440</field>
-          </shadow>
-        </value>
-      </block>
-      <block type="esp32_music_pitch_with_time">
-        <value name="PIN">
-          <shadow type="pins_pwm_pin">
-            <field name="PIN">0</field>
-          </shadow>
-        </value>
-        <value name="pitch">
-          <shadow type="pins_tone_notes">
-            <field name="PIN">440</field>
-          </shadow>
-        </value>
-        <value name="time">
-          <shadow type="math_number">
-            <field name="NUM">1000</field>
-          </shadow>
-        </value>
-      </block>
-      <block type="esp32_music_stop">
-        <value name="PIN">
-          <shadow type="pins_pwm_pin">
-            <field name="PIN">0</field>
-          </shadow>
-        </value>
-      </block>
-      <block type="esp32_music_play_list">
-        <value name="LIST">
-          <shadow type="pins_playlist"></shadow>
-        </value>
-        <value name="PIN">
-          <shadow type="pins_pwm_pin">
-            <field name="PIN">0</field>
-          </shadow>
-        </value>
-      </block>
-      <block type="actuator_neopixel_init">
-        <value name="SUB">
-          <shadow type="variables_get">
-            <field name="VAR">rgb</field>
-          </shadow>
-        </value>
-        <value name="PIN">
-          <shadow type="pins_digital_pin">
-            <field name="PIN">0</field>
-          </shadow>
-        </value>
-        <value name="LEDCOUNT">
-          <shadow type="math_number">
-            <field name="NUM">4</field>
-          </shadow>
-        </value>
-      </block>
-      <block type="actuator_neopixel_rgb">
-        <value name="SUB">
-          <shadow type="variables_get">
-            <field name="VAR">rgb</field>
-          </shadow>
-        </value>
-        <value name="_LED_">
-          <shadow type="math_number">
-            <field name="NUM">0</field>
-          </shadow>
-        </value>
-        <value name="RVALUE">
-          <shadow type="math_number">
-            <field name="NUM">0</field>
-          </shadow>
-        </value>
-        <value name="GVALUE">
-          <shadow type="math_number">
-            <field name="NUM">0</field>
-          </shadow>
-        </value>
-        <value name="BVALUE">
-          <shadow type="math_number">
-            <field name="NUM">0</field>
-          </shadow>
-        </value>
-      </block>
-      <block type="actuator_neopixel_rgb_all">
-        <value name="SUB">
-          <shadow type="variables_get">
-            <field name="VAR">rgb</field>
-          </shadow>
-        </value>
-        <value name="RVALUE">
-          <shadow type="math_number">
-            <field name="NUM">0</field>
-          </shadow>
-        </value>
-        <value name="GVALUE">
-          <shadow type="math_number">
-            <field name="NUM">0</field>
-          </shadow>
-        </value>
-        <value name="BVALUE">
-          <shadow type="math_number">
-            <field name="NUM">0</field>
-          </shadow>
-        </value>
-      </block>
-      <block type="actuator_neopixel_write">
-        <value name="SUB">
-          <shadow type="variables_get">
-            <field name="VAR">rgb</field>
-          </shadow>
-        </value>
-      </block>
-      <block type="communicate_i2c_init">
-        <value name="SUB">
-          <shadow type="variables_get">
-            <field name="VAR">i2c_extend</field>
-          </shadow>
-        </value>
-        <value name="TX">
-          <shadow type="pins_digital_pin">
-            <field name="PIN">4</field>
-          </shadow>
-        </value>
-        <value name="RX">
-          <shadow type="pins_digital_pin">
-            <field name="PIN">5</field>
-          </shadow>
-        </value>
-        <value name="freq">
-          <shadow type="math_number">
-            <field name="NUM">400000</field>
-          </shadow>
-        </value>
-        <next>
-         <block type="actuator_ms32006_init">
-          <value name="SUB">
-              <shadow type="variables_get">
-                <field name="VAR">Motor</field>
-              </shadow>
-            </value>
-            <value name="SUB1">
-              <shadow type="variables_get">
-                <field name="VAR">i2c_extend</field>
-              </shadow>
-            </value>
-          </block>
-        </next>
-        </block>
-        <block type="actuator_ms32006_dcmotor">
-      <value name="SUB">
-          <shadow type="variables_get">
-            <field name="VAR">Motor</field>
-          </shadow>
-        </value>
-        <value name="speed">
-          <shadow type="math_number">
-            <field name="NUM">100</field>
-          </shadow>
-        </value>
-      </block>
-
-      <block type="actuator_ms32006_stepper">
-      <value name="SUB">
-          <shadow type="variables_get">
-            <field name="VAR">Motor</field>
-          </shadow>
-        </value>
-        <value name="speed">
-          <shadow type="math_number">
-            <field name="NUM">1024</field>
-          </shadow>
-        </value>
-        <value name="steps">
-          <shadow type="math_number">
-            <field name="NUM">1024</field>
-          </shadow>
-        </value>
-      </block>
     </category>
     <category id="catExternMonitor" colour="180">
 

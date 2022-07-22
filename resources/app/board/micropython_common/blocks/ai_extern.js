@@ -4,7 +4,7 @@ goog.provide('Blockly.Blocks.ai_extern');
 
 goog.require('Blockly.Blocks');
 
-Blockly.Blocks.ai_extern.HUE = '#ff9f06';
+Blockly.Blocks.ai_extern.HUE = '#df9f06';
 
 Blockly.Blocks.huskylens_use_i2c_init = {
     init: function () {

@@ -27,7 +27,7 @@ var MSG = {
     catSensor: "传感器",
     catActuator: "执行器",
     catExternSensor: "外接传感",
-    catExternAI: "外接AI",
+    catExternAI: "机器视觉",
     catExternActuator: "外接执行",
     catExternMonitor: "外接显示",
     catActuator_motor: "电机",
