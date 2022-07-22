@@ -359,15 +359,14 @@ ArduShell.upload = (boardType, port) => {
 */
 ArduShell.cancel = function () {
     if (ArduShell.shell) {
-        try {
-            ArduShell.shell.stdout.end();
-            //download_shell.stdin.end();
-            //var kill = spawn('kill', [arduinoShell.pid]);
-            process.kill(ArduShell.shell.pid, 'SIGKILL');
-            ArduShell.shell = null;
-        } catch (e) {
-            ArduShell.shell = null;
+        ArduShell.shell.stdin.end();
+        ArduShell.shell.stdout.end();
+        if (Env.currentPlatform === 'win32') {
+            child_process.exec('taskkill /pid ' + ArduShell.shell.pid + ' /f /t');
+        } else {
+            BU.shell.kill("SIGTERM");
         }
+        ArduShell.shell = null;
     }
 }
 

@@ -642,8 +642,12 @@ BU.uploadWithDropdownBox = async function (inPath, pyCode, portSelect) {
 BU.cancel = function (type) {
     if (BU.shell) {
         BU.shell.stdout.end();
-        //downloadShell.stdin.end();
-        BU.shell.kill("SIGTERM");
+        BU.shell.stdin.end();
+        if (Env.currentPlatform === 'win32') {
+            child_process.exec('taskkill /pid ' + BU.shell.pid + ' /f /t');
+        } else {
+            BU.shell.kill("SIGTERM");
+        }
         BU.shell = null;
     } else {
         if (BU.uploading) {
@@ -917,6 +921,10 @@ BU.runCmd = function (layerNum, type, port, command, sucFunc) {
         BU.burning = false;
         BU.uploading = false;
         BU.shell = null;
+        const text = StatusBar.getValue();
+        if (text.lastIndexOf('\n') !== text.length - 1) {
+            StatusBar.addValue('\n', true);
+        }
         if (error) {
             try {
                 error = decode(iconv_lite.decode(iconv_lite.encode(error, "iso-8859-1"), 'gbk'));
