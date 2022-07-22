@@ -8,7 +8,7 @@
                 "productId": "0002"
             }
         ],
-        "command": "\"{esptool}\" --chip esp32s2 --port {com} --baud 460800 --after=no_reset_stub erase_flash && \"{esptool}\" --chip esp32s2 --port {com} --baud 460800 --after=no_reset write_flash 0x0000 \"{indexPath}\\build\\mixgoce.bin\""
+        "command": "\"{esptool}\" --chip esp32s2 --port {com} --baud 460800 --after=no_reset_stub erase_flash && \"{esptool}\" --chip esp32s2 --port {com} --baud 460800 --after=no_reset write_flash 0x0000 \"{indexPath}/build/mixgoce.bin\""
     },
     "upload": {
         "type": "volumeLabel",
@@ -20,7 +20,7 @@
                 "productId": "80A8"
             }
         ],
-        "filePath": "{indexPath}\\build\\upload\\code.py"
+        "filePath": "{indexPath}/build/upload/code.py"
     },
     "nav": {
         "burn": true,

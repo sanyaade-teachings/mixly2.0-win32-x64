@@ -12,15 +12,15 @@
             }
         ],
         "MixGo CE(Serial)": {
-            "command": "\"{esptool}\" --chip esp32s2 --port {com} --baud 460800 --after=no_reset_stub erase_flash && \"{esptool}\" --chip esp32s2 --port {com} --baud 460800 --after=no_reset write_flash 0x0000 \"{indexPath}\\build\\mixgo_ce_serial.bin\""
+            "command": "\"{esptool}\" --chip esp32s2 --port {com} --baud 460800 --after=no_reset_stub erase_flash && \"{esptool}\" --chip esp32s2 --port {com} --baud 460800 --after=no_reset write_flash 0x0000 \"{indexPath}/build/mixgo_ce_serial.bin\""
         },
         "MixGo CE(UDisk)": {
-            "command": "\"{esptool}\" --chip esp32s2 --port {com} --baud 460800 --after=no_reset_stub erase_flash && \"{esptool}\" --chip esp32s2 --port {com} --baud 460800 --after=no_reset write_flash 0x0000 \"{indexPath}\\build\\mixgo_ce_udisk.bin\""
+            "command": "\"{esptool}\" --chip esp32s2 --port {com} --baud 460800 --after=no_reset_stub erase_flash && \"{esptool}\" --chip esp32s2 --port {com} --baud 460800 --after=no_reset write_flash 0x0000 \"{indexPath}/build/mixgo_ce_udisk.bin\""
         },
         "special": [
             {
                 "name": "ESP-AT-mode",
-                "command": "\"{esptool}\" --chip esp32s2 --port {com} --baud 460800 --after=no_reset_stub erase_flash && \"{esptool}\" --chip esp32s2 --port {com} --baud 460800 --after=no_reset write_flash 0x0000 \"{indexPath}\\build\\MixGo-CE_AT-T17_R18.bin\""
+                "command": "\"{esptool}\" --chip esp32s2 --port {com} --baud 460800 --after=no_reset_stub erase_flash && \"{esptool}\" --chip esp32s2 --port {com} --baud 460800 --after=no_reset write_flash 0x0000 \"{indexPath}/build/MixGo-CE_AT-T17_R18.bin\""
             }
         ]
     },
@@ -49,15 +49,15 @@
         ],
         "MixGo CE(Serial)": {
             "type": "ampy",
-            "command": "\"{ampy}\" -p {com} -d 1 -r \"{reset}\" put \"{indexPath}\\build\\upload\"",
-            "filePath": "{indexPath}\\build\\upload\\main.py",
+            "command": "\"{ampy}\" -p {com} -d 1 -r \"{reset}\" put \"{indexPath}/build/upload\"",
+            "filePath": "{indexPath}/build/upload/main.py",
             "copyLib": true
         },
         "MixGo CE(UDisk)": {
             "type": "volumeLabel",
             "volumeName": "CIRCUITPY",
             "copyLib": true,
-            "filePath": "{indexPath}\\build\\upload\\code.py"
+            "filePath": "{indexPath}/build/upload/code.py"
         }
     },
     "nav": {

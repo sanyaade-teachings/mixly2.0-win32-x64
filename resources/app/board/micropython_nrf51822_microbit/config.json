@@ -10,7 +10,7 @@
                 "productId": "0204"
             }
         ],
-        "filePath": "{path}\\hexbuild\\firmware.hex"
+        "filePath": "{path}/hexbuild/firmware.hex"
     },
     "nav": {
         "upload": true,

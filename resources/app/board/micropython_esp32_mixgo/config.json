@@ -5,13 +5,13 @@
     },
     "burn": {
         "portSelect": "all",
-        "command": "\"{esptool}\" --chip esp32 --port {com} --baud 460800 erase_flash && \"{esptool}\" --port {com} --baud 460800 write_flash 0x1000 \"{indexPath}\\build\\esp32.bin\" 0x200000 \"{indexPath}\\build\\Noto_Sans_CJK_SC_Light16.bin\""
+        "command": "\"{esptool}\" --chip esp32 --port {com} --baud 460800 erase_flash && \"{esptool}\" --port {com} --baud 460800 write_flash 0x1000 \"{indexPath}/build/esp32.bin\" 0x200000 \"{indexPath}/build/Noto_Sans_CJK_SC_Light16.bin\""
     },
     "upload": {
         "type": "ampy",
         "portSelect": "all",
-        "command": "\"{ampy}\" -p {com} -d 1 -r \"{reset}\" put \"{indexPath}\\build\\upload\"",
-        "filePath": "{indexPath}\\build\\upload\\main.py",
+        "command": "\"{ampy}\" -p {com} -d 1 -r \"{reset}\" put \"{indexPath}/build/upload\"",
+        "filePath": "{indexPath}/build/upload/main.py",
         "copyLib": true,
         "reset": [
             {
