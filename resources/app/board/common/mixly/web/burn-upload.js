@@ -316,7 +316,7 @@ BU.burn = async function () {
         const selectedBoardKey = Boards.getSelectedBoardKey();
         let burn = { ...BOARD.web.burn };
         if (BOARD?.web?.burn[selectedBoardKey]) {
-            burn = { ...BOARD.web.burn[selectedBoardKey] };
+            burn = { ...burn, ...BOARD.web.burn[selectedBoardKey] };
             for (let i in Boards.INFO) {
                 const key = Boards.INFO[i].key;
                 if (burn[key]) {
@@ -555,6 +555,8 @@ BU.upload = async function () {
 
 BU.interrupt = () => {
     return new Promise(async (resolve, reject) => {
+        await Serial.reset();
+        await sleep(100);
         await Serial.writeCtrlC();
         await sleep(100);
         const startTime = Number(new Date());
@@ -562,6 +564,7 @@ BU.interrupt = () => {
         while (nowTime - startTime < 10000) {
             const nowTime = Number(new Date());
             if (StatusBar.getValue().lastIndexOf('>>>') !== -1) {
+                StatusBar.setValue("", true);
                 resolve();
                 return;
             }
@@ -613,35 +616,29 @@ BU.uploadWithAmpy = async function () {
         }
     });
 
-    StatusBar.setValue("", true);
+    //StatusBar.setValue("", true);
     BU.interrupt()
     .then(async () => {
-        await espTool.write("file = open('main.py', 'w')\r\n");
-        await sleep(100);
-        await espTool.write("file.write('')\r\n");
-        await sleep(100);
-        await espTool.write("file.close()\r\n");
-        await sleep(100);
-        await Serial.writeCtrlD();
-        await sleep(500);
-        StatusBar.setValue("", true);
-        return BU.interrupt();
-    })
-    .then(async () => {
+        let textEncoder = new TextEncoder();
+        await Serial.writeCtrlA();
         await espTool.write("file = open('main.py', 'w')\r\n");
         await sleep(100);
         let writeData = MFile.getCode().replace(/\n/g, "\\n");
         writeData = ch2Unicode(writeData) ?? '';
-        await espTool.write("file.write('''" + writeData + "''')\r\n");
+        for (let i = 0; i < writeData.length / 50; i++) {
+            await espTool.write("file.write('''" + writeData.substring(i * 50, (i + 1) * 50) + "''')\r\n");
+            await sleep(100);
+            StatusBar.setValue("", true);
+        }
         await sleep(100);
         await espTool.write("file.close()\r\n");
         await sleep(100);
-        await Serial.writeCtrlD();
+        await espTool.writeArrayBuffer(new Int8Array([4]).buffer);
         await sleep(500);
-        StatusBar.setValue("", true);
-        // await Serial.reset();
-        await Serial.writeCtrlC();
+        await Serial.writeCtrlB();
         await sleep(500);
+        await Serial.reset();
+        await sleep(100);
         StatusBar.setValue("", true);
         await Serial.writeCtrlD();
         layer.closeAll('page');
@@ -708,6 +705,9 @@ BU.uploadWithEsptool = async (endType, firmwareData, layerType) => {
         StatusBar.addValue("Done!\n即将开始烧录...\n", true);
         if (espTool.connected()) {
             if (await clickSync()) {
+                if (burn.erase) {
+                    await clickErase();
+                }
                 for (let i of firmwareList)
                     await clickProgram(i.offset, i.binBuf);
             }
