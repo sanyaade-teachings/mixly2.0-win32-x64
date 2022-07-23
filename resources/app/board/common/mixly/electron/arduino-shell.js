@@ -28,7 +28,7 @@ const {
     Config
 } = Mixly;
 
-const { BOARD, SOFTWARE } = Config;
+const { BOARD, SOFTWARE, USER } = Config;
 
 const {
     fs,
@@ -465,7 +465,7 @@ ArduShell.runCmd = (layerNum, type, cmd, sucFunc) => {
         const testArduinoDirPath = path.resolve(Env.clientPath, './testArduino');
         ArduShell.clearDirCppAndHppFiles(testArduinoDirPath);
         const nowFilePath = Title.getFilePath();
-        if (fs_extend.isfile(nowFilePath) && ArduShell.isMixOrIno(nowFilePath)) {
+        if (USER.compileCAndH === 'true' && fs_extend.isfile(nowFilePath) && ArduShell.isMixOrIno(nowFilePath)) {
             const nowDirPath = path.dirname(nowFilePath);
             ArduShell.copyHppAndCppFiles(nowDirPath, testArduinoDirPath);
         }
