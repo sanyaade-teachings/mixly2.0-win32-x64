@@ -168,11 +168,11 @@ Blockly.Blocks['sensor_light_level'] = {
 
 Blockly.Blocks.sensor_dht11 = {
     init: function () {
-        var WHAT = [[Blockly.MIXLY_GETTEMPERATUE, 'temperature'], [Blockly.MIXLY_GETHUMIDITY, 'relative_humidity'], [Blockly.MIXLY_DHT11_T_H, 'tempandhum']];
+        var WHAT = [[Blockly.MIXLY_GETTEMPERATUE, 'temperature'], [Blockly.MIXLY_GETHUMIDITY, 'humidity']];
         this.setColour(Blockly.Blocks.sensor.HUE);
         this.appendValueInput("PIN", Number)
-        .appendField(new Blockly.FieldDropdown([['DHT11', 'dht11']
-                , ['DHT22', 'dht22']//, ['DHT21', '21'], ['DHT33', '33'], ['DHT44', '44']
+        .appendField(new Blockly.FieldDropdown([['DHT11', 'DHT11']
+                , ['DHT22', 'DHT22']//, ['DHT21', '21'], ['DHT33', '33'], ['DHT44', '44']
                 ]), 'TYPE')
         .appendField(Blockly.MIXLY_PIN)
         .setCheck(Number);
@@ -355,7 +355,9 @@ Blockly.Blocks.sensor_use_i2c_init = {
                 ["SHTC3", "SHTC3"],                
                 ["AHT21", "AHT21"],
                 ["VL53L0X","VL53L0X"],
-                ["QMC5883L","QMC5883L"]
+                ["QMC5883L","QMC5883L"],
+                ["MAX30102","MAX30102"],
+                ["APDS9960","APDS9960"]
                 ]), "key");
         this.setInputsInline(true);
         this.setPreviousStatement(true, null);
@@ -364,6 +366,45 @@ Blockly.Blocks.sensor_use_i2c_init = {
     }
 };
 
+Blockly.Blocks['sensor_MAX30102_extern'] = {
+    init: function(){
+        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.appendDummyInput()
+            .appendField(Blockly.MIXLY_ESP32_MAX30102+" MAX30102");
+        this.appendValueInput('SUB')
+            //.appendField("BMP280")
+            .setCheck("var");  
+        this.appendDummyInput()
+            .appendField(Blockly.MIXLY_GET)
+            .appendField(new Blockly.FieldDropdown([
+            [Blockly.MIXLY_ESP32_MAX30102_IR, "[0]"],
+            [Blockly.MIXLY_ESP32_MAX30102_RED, "[1]"],
+            [Blockly.MIXLY_ESP32_MAX30102_IR+','+Blockly.MIXLY_ESP32_MAX30102_RED, ""],
+            ]), "key")     
+        this.setOutput(true, Number);
+        this.setInputsInline(true);
+    }
+};
+
+Blockly.Blocks['sensor_APDS9960_extern'] = {
+    init: function(){
+        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.appendDummyInput()
+            .appendField(Blockly.MIXLY_ESP32_APDS9960+" APDS9960");
+        this.appendValueInput('SUB')
+            //.appendField("BMP280")
+            .setCheck("var");  
+        this.appendDummyInput()
+            .appendField(Blockly.MIXLY_GET)
+            .appendField(new Blockly.FieldDropdown([
+            [Blockly.MIXLY_ESP32_APDS9960_COLOR, "color"],
+            [Blockly.MIXLY_ESP32_APDS9960_GESTURE, "gesture"],
+            [Blockly.MIXLY_ESP32_APDS9960_APPROACH, "proximity"],
+            ]), "key")     
+        this.setOutput(true, Number);
+        this.setInputsInline(true);
+    }
+};
 
 Blockly.Blocks['sensor_LTR308_extern'] = {
     init: function(){
@@ -883,28 +924,5 @@ Blockly.Blocks.PS2_stk={
   }
 };
 
-Blockly.Python.RTC_set_datetime= function () {
-  Blockly.Python.definitions_['import_machine'] = 'import machine';
-  var year = Blockly.Python.valueToCode(this, "year", Blockly.Python.ORDER_ASSIGNMENT);
-  var month = Blockly.Python.valueToCode(this, "month",Blockly.Python.ORDER_ASSIGNMENT);
-  var day = Blockly.Python.valueToCode(this, "day",Blockly.Python.ORDER_ASSIGNMENT);
-  var hour = Blockly.Python.valueToCode(this, "hour", Blockly.Python.ORDER_ASSIGNMENT);
-  var minute = Blockly.Python.valueToCode(this, "minute",Blockly.Python.ORDER_ASSIGNMENT);
-  var second = Blockly.Python.valueToCode(this, "second",Blockly.Python.ORDER_ASSIGNMENT);
-  var week = Blockly.Python.valueToCode(this, "weekday", Blockly.Python.ORDER_ASSIGNMENT);
-  var millisecond = Blockly.Python.valueToCode(this, "millisecond",Blockly.Python.ORDER_ASSIGNMENT);
-  var v = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
-  if (v == "rtc")
-    Blockly.Python.definitions_['import_mixgo_rtc'] = 'from mixgo import rtc';  
-  var code = v+'.datetime(('+year+','+month+','+day+','+week+','+hour+','+minute+','+second+','+millisecond+'))\n';
-  return code;
-};
 
-Blockly.Python.RTC_get_time = function () {
-  Blockly.Python.definitions_['import_machine'] = 'import machine';
-  var v = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
-  if (v == "rtc")
-    Blockly.Python.definitions_['import_mixgo_rtc'] = 'from mixgo import rtc';  
-  var code = v+'.datetime()';
-  return [code, Blockly.Python.ORDER_ATOMIC];
-};
+

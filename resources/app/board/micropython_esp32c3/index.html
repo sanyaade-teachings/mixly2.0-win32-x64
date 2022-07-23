@@ -3111,6 +3111,20 @@
             </shadow>
           </value>
         </block>
+        <block type="sensor_MAX30102_extern">
+          <value name="SUB">
+            <shadow type="variables_get">
+              <field name="VAR">xsensor</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="sensor_APDS9960_extern">
+          <value name="SUB">
+            <shadow type="variables_get">
+              <field name="VAR">xsensor</field>
+            </shadow>
+          </value>
+        </block>
         <block type="communicate_spi_init">
           <value name="VAR">
             <shadow type="variables_get">
@@ -3208,7 +3222,11 @@
           </value>
         </block> 
        
-
+        <block type="sensor_dht11">
+        <value name="PIN">
+          <shadow type="pins_digital_pin"></shadow>
+        </value>
+      </block>
         <block type="weather_data">
           <value name="SUB">
             <shadow type="variables_get">

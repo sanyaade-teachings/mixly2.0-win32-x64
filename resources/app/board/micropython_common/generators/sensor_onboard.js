@@ -50,14 +50,7 @@ Blockly.Python.HCSR04 = function () {
     return [code, Blockly.Python.ORDER_ATOMIC];
 }
 
-Blockly.Python.sensor_dht11 = function () {
-    Blockly.Python.definitions_['import_dhtx'] = 'import dhtx';
-    var sensor_type = this.getFieldValue('TYPE');
-    var dropdown_pin = Blockly.Python.valueToCode(this, 'PIN', Blockly.Python.ORDER_ATOMIC);
-    var what = this.getFieldValue('WHAT');
-    var code ='dhtx.get_dht_'+what+"('"+sensor_type+"', "+dropdown_pin+')';
-    return [code, Blockly.Python.ORDER_ATOMIC];
-};
+
 
 Blockly.Python.sensor_mixgo_light= function(){
     var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]

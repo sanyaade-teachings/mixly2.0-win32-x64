@@ -232,7 +232,31 @@ Blockly.Python.sensor_use_i2c_init=function(){
       Blockly.Python.definitions_['import_qmc5883l'] = 'import qmc5883l';
       code = v + ' = qmc5883l.Compass('+ iv+ ')\n';
     }
+    else if (key=='MAX30102') {
+      Blockly.Python.definitions_['import_max30102'] = 'import max30102';
+      code = v + ' = max30102.MAX30102('+ iv+ ')\n';
+    }
+    else if (key=='APDS9960') {
+      Blockly.Python.definitions_['import_apds9960'] = 'import apds9960';
+      code = v + ' = apds9960.APDS9960('+ iv+ ')\n';
+    }
     return code;
+};
+
+Blockly.Python.sensor_MAX30102_extern = function(){
+    Blockly.Python.definitions_['import_max30102'] = 'import max30102';
+    var key = this.getFieldValue('key');
+    var sub = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
+    var code = sub + '.heartrate()'+key;
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python.sensor_APDS9960_extern = function(){
+    Blockly.Python.definitions_['import_apds9960'] = 'import apds9960';
+    var key = this.getFieldValue('key');
+    var sub = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
+    var code = sub + '.'+key+'()';
+    return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
 Blockly.Python.sensor_LTR308_extern = function(){
@@ -470,3 +494,38 @@ Blockly.Python.PS2_stk = function() {
   return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
+Blockly.Python.RTC_set_datetime= function () {
+  Blockly.Python.definitions_['import_machine'] = 'import machine';
+  var year = Blockly.Python.valueToCode(this, "year", Blockly.Python.ORDER_ASSIGNMENT);
+  var month = Blockly.Python.valueToCode(this, "month",Blockly.Python.ORDER_ASSIGNMENT);
+  var day = Blockly.Python.valueToCode(this, "day",Blockly.Python.ORDER_ASSIGNMENT);
+  var hour = Blockly.Python.valueToCode(this, "hour", Blockly.Python.ORDER_ASSIGNMENT);
+  var minute = Blockly.Python.valueToCode(this, "minute",Blockly.Python.ORDER_ASSIGNMENT);
+  var second = Blockly.Python.valueToCode(this, "second",Blockly.Python.ORDER_ASSIGNMENT);
+  var week = Blockly.Python.valueToCode(this, "weekday", Blockly.Python.ORDER_ASSIGNMENT);
+  var millisecond = Blockly.Python.valueToCode(this, "millisecond",Blockly.Python.ORDER_ASSIGNMENT);
+  var v = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
+  if (v == "rtc")
+    Blockly.Python.definitions_['import_mixgo_rtc'] = 'from mixgo import rtc';  
+  var code = v+'.datetime(('+year+','+month+','+day+','+week+','+hour+','+minute+','+second+','+millisecond+'))\n';
+  return code;
+};
+
+Blockly.Python.RTC_get_time = function () {
+  Blockly.Python.definitions_['import_machine'] = 'import machine';
+  var v = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
+  if (v == "rtc")
+    Blockly.Python.definitions_['import_mixgo_rtc'] = 'from mixgo import rtc';  
+  var code = v+'.datetime()';
+  return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+
+Blockly.Python.sensor_dht11 = function () {
+    Blockly.Python.definitions_['import_dhtx'] = 'import dhtx';
+    var sensor_type = this.getFieldValue('TYPE');
+    var dropdown_pin = Blockly.Python.valueToCode(this, 'PIN', Blockly.Python.ORDER_ATOMIC);
+    var what = this.getFieldValue('WHAT');
+    var code ='dhtx.'+sensor_type+"(Pin("+dropdown_pin+')).'+what+'()';
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
