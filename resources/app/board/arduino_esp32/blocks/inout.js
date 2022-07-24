@@ -102,3 +102,26 @@ Blockly.Blocks['inout_esp32_dac'] = {
     this.setHelpUrl("");
   }
 };
+
+Blockly.Blocks['esp32_led_pwm'] = {
+  init: function() {
+    this.appendValueInput("PIN")
+        .setCheck(null)
+        .appendField(Blockly.MICROBIT_ACTUATOR_ticks)
+        .appendField(new Blockly.FieldTextInput("8"), "resolution")
+        .appendField(Blockly.MIXLY_FREQUENCY)
+        .appendField(new Blockly.FieldTextInput("5000"), "freq")
+        .appendField(Blockly.MIXLY_CHANNEL)
+        .appendField(new Blockly.FieldDropdown([["0","0"], ["1","1"], ["2","2"], ["3","3"], ["4","4"], ["5","5"], ["6","6"], ["7","7"], ["8","8"], ["9","9"], ["10","10"], ["11","11"], ["12","12"], ["13","13"], ["14","14"], ["15","15"]]), "ledChannel")
+        .appendField(Blockly.MIXLY_ANALOGWRITE_PIN);
+    this.appendValueInput("val")
+        .setCheck(null)
+        .appendField(Blockly.MIXLY_VALUE2);
+    this.appendDummyInput();
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(20);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};

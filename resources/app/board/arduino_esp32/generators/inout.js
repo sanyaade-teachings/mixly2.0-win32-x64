@@ -87,9 +87,22 @@ Blockly.Arduino.touchAttachInterrupt = function () {
     Blockly.Arduino.definitions_[funcName] = code2;
     return code;
 };
+
 Blockly.Arduino.inout_esp32_dac = function() {
     var PIN= this.getFieldValue('PIN');
     var value= Blockly.Arduino.valueToCode(this, 'value', Blockly.Arduino.ORDER_ATOMIC);
     var code='dacWrite('+PIN+', '+value+');\n';
+    return code;
+};
+
+Blockly.Arduino.esp32_led_pwm = function () {
+    var dropdown_pin = Blockly.Arduino.valueToCode(this, 'PIN', Blockly.Arduino.ORDER_ATOMIC);
+    var val = Blockly.Arduino.valueToCode(this, 'val', Blockly.Arduino.ORDER_ATOMIC);
+    var resolution = this.getFieldValue('resolution');
+    var freq = this.getFieldValue('freq');
+    var ledChannel= this.getFieldValue('ledChannel');  
+    Blockly.Arduino.setups_['ledChannel' + ledChannel] = 'ledcSetup('+ledChannel+', '+freq+', '+resolution+');';
+    Blockly.Arduino.setups_['ledChannel' + dropdown_pin] = 'ledcAttachPin('+dropdown_pin+', '+ledChannel+');';
+    var code = 'ledcWrite('+ledChannel+', '+val+');\n';
     return code;
 };

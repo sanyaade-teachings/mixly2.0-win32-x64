@@ -4468,9 +4468,9 @@ Blockly.Arduino.asyncelegantota = function() {
     } 
     Blockly.Arduino.definitions_['include_ESPAsyncWebServer'] ='#include <ESPAsyncWebServer.h>';
     Blockly.Arduino.definitions_['include_AsyncElegantOTA'] ='#include <AsyncElegantOTA.h>\n';
-    Blockly.Arduino.definitions_['var_declare_PubSubClient'] = 'AsyncWebServer server(80);\n';    
-    Blockly.Arduino.setups_['setups_PubSubClient'] ='AsyncElegantOTA.begin(&server);\n'
+    Blockly.Arduino.definitions_['var_AsyncWebServer'] = 'AsyncWebServer server(80);\n';    
+    Blockly.Arduino.setups_['setups_AsyncWebServer'] ='AsyncElegantOTA.begin(&server);\n'
                                                    +'server.begin();\n';    
     var code='';                                                                                                             
     return code;
-};
+};22
