@@ -91,3 +91,16 @@ Blockly.Blocks.controls_hw_timer_stop = {
     this.setTooltip(Blockly.MIXLY_TOOLTIP_CONTROL_MSTIMER2_STOP);
 }
 };
+
+Blockly.Blocks['esp32_deep_sleep'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField(Blockly.DFPLAYER_MINI_SLEEP)
+        .appendField(new Blockly.FieldTextInput("5"), "time")
+        .appendField(Blockly.MIXLY_SECOND);
+    this.setPreviousStatement(true, null);
+    this.setColour(Blockly.Blocks.loops.HUE);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};

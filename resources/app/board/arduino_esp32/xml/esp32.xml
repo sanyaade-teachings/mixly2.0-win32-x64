@@ -246,6 +246,7 @@
     </shadow>
   </value>
   </block>
+  <block type="esp32_deep_sleep"></block>
 </category>
 <category id="catMath" colour="230">
   <block type="math_number">

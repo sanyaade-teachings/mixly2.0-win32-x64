@@ -60,4 +60,10 @@ Blockly.Arduino.controls_interrupts = function () {
 Blockly.Arduino.controls_nointerrupts = function () {
     return 'noInterrupts();\n';
 };
+
+Blockly.Arduino.esp32_deep_sleep = function () {
+    var time = this.getFieldValue('time');
+    var code = 'esp_sleep_enable_timer_wakeup('+time+' * 1000000);\nesp_deep_sleep_start();\n';
+    return code;
+};
 Blockly.Arduino.base_delay=Blockly.Arduino.controls_delay;
