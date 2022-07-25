@@ -21,9 +21,9 @@ Blockly.Python.IOT_EMQX_INIT_AND_CONNECT_BY_SHARE_CODE = function(block) {
   var ssl_context = 'ssl.create_default_context()'
   var code = 'sk = analyse_sharekey(\'http://mixio.mixly.org/mixio-php/sharekey.php?sk=' + share_code + '\')\n'+
              'MQTT_USR_PRJ = sk[0]+\'/\'+sk[1]+\'/\'\n'+
-             'mqtt_client = adafruit_minimqtt.MQTT(broker='+ server +', port='+ port +', username=sk[0], password=sk[2], client_id='+ mac_address +', socket_pool='+ socket_pool +', ssl_context='+ ssl_context+')\n'+
+             'mqtt_client = adafruit_minimqtt.MQTT(broker='+ server +', port='+ port +', keep_alive=600, username=sk[0], password=sk[2], client_id='+ mac_address +', socket_pool='+ socket_pool +', ssl_context='+ ssl_context+')\n'+
              "mqtt_client.will_set(topic=MQTT_USR_PRJ+WILL_TOPIC, payload=mqtt_client.client_id, qos=2)\n"+
-             "if mqtt_client.connect(keep_alive=60)==0:\n"+
+             "if mqtt_client.connect(keep_alive=600)==0:\n"+
              "    mqtt_client.publish(MQTT_USR_PRJ+ADDITIONAL_TOPIC, mqtt_client.client_id, qos=1)\n";  
   return code;
 };
@@ -46,9 +46,9 @@ Blockly.Python.IOT_EMQX_INIT_AND_CONNECT_BY_MIXLY_CODE = function(block) {
   var socket_pool = 'socketpool.SocketPool(wifi.radio)'
   var ssl_context = 'ssl.create_default_context()'
   var code = 'MQTT_USR_PRJ = '+ a +'\n'+
-             'mqtt_client = adafruit_minimqtt.MQTT(broker='+ server +', port='+ port +', username='+ username +', password='+ password +', client_id='+ mac_address +', socket_pool='+ socket_pool +', ssl_context='+ ssl_context+')\n'+
+             'mqtt_client = adafruit_minimqtt.MQTT(broker='+ server +', port='+ port +', keep_alive=600, username='+ username +', password='+ password +', client_id='+ mac_address +', socket_pool='+ socket_pool +', ssl_context='+ ssl_context+')\n'+
              "mqtt_client.will_set(topic=MQTT_USR_PRJ+WILL_TOPIC, payload=mqtt_client.client_id, qos=2)\n"+
-             "if mqtt_client.connect(keep_alive=60)==0:\n"+
+             "if mqtt_client.connect(keep_alive=600)==0:\n"+
              "    mqtt_client.publish(MQTT_USR_PRJ+ADDITIONAL_TOPIC, mqtt_client.client_id, qos=1)\n";  
   return code;
 };
@@ -76,9 +76,9 @@ Blockly.Python.IOT_EMQX_INIT_AND_CONNECT = function(block) {
   var socket_pool = 'socketpool.SocketPool(wifi.radio)'
   var ssl_context = 'ssl.create_default_context()'
   var code = 'MQTT_USR_PRJ = '+ a +'\n'+
-             'mqtt_client = adafruit_minimqtt.MQTT(broker='+ server +', port='+ port +', username='+ username +', password='+ password +', client_id='+ mac_address +', socket_pool='+ socket_pool +', ssl_context='+ ssl_context+')\n'+
+             'mqtt_client = adafruit_minimqtt.MQTT(broker='+ server +', port='+ port +', keep_alive=600, username='+ username +', password='+ password +', client_id='+ mac_address +', socket_pool='+ socket_pool +', ssl_context='+ ssl_context+')\n'+
              "mqtt_client.will_set(topic=MQTT_USR_PRJ+WILL_TOPIC, payload=mqtt_client.client_id, qos=2)\n"+
-             "if mqtt_client.connect(keep_alive=60)==0:\n"+
+             "if mqtt_client.connect(keep_alive=600)==0:\n"+
              "    mqtt_client.publish(MQTT_USR_PRJ+ADDITIONAL_TOPIC, mqtt_client.client_id, qos=1)\n";  
 
   return code;
@@ -176,7 +176,7 @@ Blockly.Python.IOT_EMQX_RECONNECT = function(block) {
   Blockly.Python.definitions_['import_mixgoce_ADDITIONAL_TOPIC'] = "from mixgoce import ADDITIONAL_TOPIC";
   Blockly.Python.definitions_['import_mixgoce_WILL_TOPIC'] = "from mixgoce import WILL_TOPIC";
   var code = "mqtt_client.will_set(topic=MQTT_USR_PRJ+WILL_TOPIC, payload=mqtt_client.client_id, qos=2)\n"+
-             "if mqtt_client.reconnect(keep_alive=60)==0:\n"+
+             "if mqtt_client.reconnect(keep_alive=600)==0:\n"+
              "    mqtt_client.publish(MQTT_USR_PRJ+ADDITIONAL_TOPIC, mqtt_client.client_id, qos=1)\n"; 
   return code;
 };
@@ -187,7 +187,7 @@ Blockly.Python.IOT_EMQX_CONNECT = function(block) {
   Blockly.Python.definitions_['import_mixgoce_ADDITIONAL_TOPIC'] = "from mixgoce import ADDITIONAL_TOPIC";
   Blockly.Python.definitions_['import_mixgoce_WILL_TOPIC'] = "from mixgoce import WILL_TOPIC";
   var code = "mqtt_client.will_set(topic=MQTT_USR_PRJ+WILL_TOPIC, payload=mqtt_client.client_id, qos=2)\n"+
-             "if mqtt_client.connect(keep_alive=60)==0:\n"+
+             "if mqtt_client.connect(keep_alive=600)==0:\n"+
              "    mqtt_client.publish(MQTT_USR_PRJ+ADDITIONAL_TOPIC, mqtt_client.client_id, qos=1)\n";   
   return code;
 };
