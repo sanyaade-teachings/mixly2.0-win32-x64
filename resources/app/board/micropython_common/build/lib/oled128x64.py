@@ -141,52 +141,55 @@ class OLED(SSD1106_I2C):
 
 	def shows(self,data,x=0,y=0,size=1,space=0,center=False):
 		"""Display character"""
-		if type(data) in [list,bytes,tuple,bytearray]:
-			self.fill(0)
-			self.set_buffer(data)
-			self.show()	
-		else:
-			size=max(round(size),1)
-			font_len,font_buffer=self._take_buffer(str(data),space,size)
-			x=(self.columns-font_len+space)//2 if center else 0
-			self.fill_rect(x,y,font_len,font_buffer[0][1][1]*size,0)
-			for buffer in font_buffer:	#Display character
-				self.bitmap(buffer,x,y,size)
-				x=buffer[1][0]*size+x+space
-			self.show()
+		if data:
+			if type(data) in [list,bytes,tuple,bytearray]:
+				self.fill(0)
+				self.set_buffer(data)
+				self.show()	
+			else:
+				size=max(round(size),1)
+				font_len,font_buffer=self._take_buffer(str(data),space,size)
+				x=(self.columns-font_len+space)//2 if center else 0
+				self.fill_rect(x,y,font_len,font_buffer[0][1][1]*size,0)
+				for buffer in font_buffer:	#Display character
+					self.bitmap(buffer,x,y,size)
+					x=buffer[1][0]*size+x+space
+				self.show()
 		
 	def frame(self, data, delay=500, size=5):
 		"""Display one frame per character"""
-		if type(data) in [list,tuple]:
-			for dat in data:
-				if type(dat) in [list,bytes,tuple,bytearray]:
-					self.fill(0)
-					self.set_buffer(dat)
-					self.show()	
-					time.sleep_ms(delay)
-		else:
-			size=max(round(size),1)
-			_,font_buffer=self._take_buffer(str(data),0)
-			for buffer in font_buffer:
-				x=(self.columns - buffer[1][0]*size)//2 
-				y=(self.rows - buffer[1][1]*size)//2 
-				self.fill_rect(x,y,buffer[1][0]*size,buffer[1][1]*size,0)
-				self.bitmap(buffer,x,y,size=size)
-				self.show()
-				time.sleep_ms(delay) 
+		if data:
+			if type(data) in [list,tuple]:
+				for dat in data:
+					if type(dat) in [list,bytes,tuple,bytearray]:
+						self.fill(0)
+						self.set_buffer(dat)
+						self.show()	
+						time.sleep_ms(delay)
+			else:
+				size=max(round(size),1)
+				_,font_buffer=self._take_buffer(str(data),0)
+				for buffer in font_buffer:
+					x=(self.columns - buffer[1][0]*size)//2 
+					y=(self.rows - buffer[1][1]*size)//2 
+					self.fill_rect(x,y,buffer[1][0]*size,buffer[1][1]*size,0)
+					self.bitmap(buffer,x,y,size=size)
+					self.show()
+					time.sleep_ms(delay) 
 
 	def scroll(self, data, y=0, size=1, space=0, speed=5):
 		"""Scrolling characters"""
-		size=max(round(size),1)
-		font_len,font_buffer=self._take_buffer(str(data),space,size)
-		for i in range(font_len-space+self.columns):	
-			x=-i+self.columns
-			self.fill_rect(x,y,self.columns-x,font_buffer[0][1][1]*size,0)
-			for buffer in font_buffer:
-				self.bitmap(buffer,x,y,size)
-				x=buffer[1][0]*size+x+space
-			self.show() 
-			time.sleep_ms(speed)
+		if data:
+			size=max(round(size),1)
+			font_len,font_buffer=self._take_buffer(str(data),space,size)
+			for i in range(font_len-space+self.columns):	
+				x=-i+self.columns
+				self.fill_rect(x,y,self.columns-x,font_buffer[0][1][1]*size,0)
+				for buffer in font_buffer:
+					self.bitmap(buffer,x,y,size)
+					x=buffer[1][0]*size+x+space
+				self.show() 
+				time.sleep_ms(speed)
 
 	@property
 	def columns(self):
