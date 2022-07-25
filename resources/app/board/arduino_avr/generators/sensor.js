@@ -403,11 +403,12 @@ Blockly.Arduino.encoder_init1 = function() {
 // 旋转编码器初始化
 Blockly.Arduino.sensor_encoder_init = function() {
   var dropdownType = this.getFieldValue('TYPE');
+  var mode = this.getFieldValue('mode');
   var valueClk = Blockly.Arduino.valueToCode(this, 'CLK', Blockly.Arduino.ORDER_ATOMIC);
   var valueDt = Blockly.Arduino.valueToCode(this, 'DT', Blockly.Arduino.ORDER_ATOMIC);
   Blockly.Arduino.definitions_['include_ESPRotary'] ='#include <ESPRotary.h>';
   Blockly.Arduino.definitions_['var_declare_encoder' + dropdownType] = `ESPRotary encoder${dropdownType};`;
-  Blockly.Arduino.setups_['setup_encoder' + dropdownType] = `encoder${dropdownType}.begin(${valueDt}, ${valueClk});\n  encoder${dropdownType}.setStepsPerClick(2);`;
+  Blockly.Arduino.setups_['setup_encoder' + dropdownType] = `encoder${dropdownType}.begin(${valueDt}, ${valueClk});\n  encoder${dropdownType}.setStepsPerClick(${mode});`;
   var code = `encoder${dropdownType}.loop();\n`;
   return code;
 };

@@ -631,7 +631,9 @@ Blockly.Blocks.sensor_encoder_init = {
   init: function() { 
     this.appendDummyInput()
         .appendField(Blockly.MIXLY_SETUP)
-        .appendField(new Blockly.FieldDropdown(Encoder_NO), "TYPE");
+        .appendField(new Blockly.FieldDropdown(Encoder_NO), "TYPE")
+        .appendField(Blockly.MIXLY_MICROBIT_PY_STORAGE_MODE)
+        .appendField(new Blockly.FieldDropdown([["1","2"], ["2","4"]]), "mode");       
     this.appendValueInput("CLK")
         .setCheck(null)
         .appendField("CLK#");
