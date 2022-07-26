@@ -140,6 +140,24 @@ Blockly.Blocks['sensor_mixgoce_pin_near'] = {
     }
 };
 
+Blockly.Blocks['sensor_mixgoce_pin_near_bool'] = {
+    init: function(){
+        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.appendDummyInput()
+            .appendField(Blockly.MIXLY_MICROBIT_PY_STORAGE_GET)
+            .appendField(new Blockly.FieldDropdown([[Blockly.Msg.TEXT_TRIM_LEFT, "left"], [Blockly.Msg.TEXT_TRIM_RIGHT, "right"]]), "key")
+            .appendField(Blockly.MIXLY_ESP32_NEAR_BOOL);
+        this.setOutput(true,Number);
+        this.setInputsInline(true);
+        var thisBlock = this;
+        this.setTooltip(function() {
+            var mode0 = Blockly.MIXLY_ESP32_SENSOR_MIXGO_PIN_NEAR_TOOLTIP;
+            var mode1 = Blockly.MIXLY_ESP32_NEAR_BOOL;
+            return mode0 + mode1
+        });
+    }
+};
+
 Blockly.Blocks['sensor_mixgoce_pin_near_more'] = {
     init: function(){
         this.setColour(Blockly.Blocks.sensor.HUE);

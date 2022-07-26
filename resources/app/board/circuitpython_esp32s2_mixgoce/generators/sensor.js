@@ -66,6 +66,13 @@ Blockly.Python.sensor_mixgoce_pin_pressed = function(){
 };
 
 Blockly.Python.sensor_mixgoce_pin_near = function(){
+    Blockly.Python.definitions_['import_infrared_near_value'] = 'from infrared import near_value';
+    var key = this.getFieldValue('key');
+    var code = 'near_value("'+key+'")';
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python.sensor_mixgoce_pin_near_bool = function(){
     Blockly.Python.definitions_['import_infrared_near'] = 'from infrared import near';
     var key = this.getFieldValue('key');
     var code = 'near("'+key+'")';
