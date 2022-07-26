@@ -2128,6 +2128,7 @@ Blockly.MIXLY_MICROBIT_JS_I2C = "I2C";
 Blockly.MIXLY_ESP32_TOUCH = "觸摸";
 Blockly.MIXLY_ESP32_TOUCH_SENSOR = "觸摸感測器";
 Blockly.MIXLY_ESP32_NEAR = "紅外反射接近感測器數值";
+Blockly.MIXLY_ESP32_NEAR_BOOL = "紅外反射接近感測器是否被遮擋";
 Blockly.MIXLY_ESP32_INTERRUPT = "中斷";
 Blockly.MIXLY_ESP32_PITCH = "音高";
 Blockly.MIXLY_ESP32_DUTY = "音調";
