@@ -378,10 +378,12 @@ Boards.getSelectedBoardConfigParam = (param) => {
 Boards.updateCategories = (boardName, enforce = false) => {
     if (Boards.selected === boardName && !enforce) return;
     Boards.selected = boardName;
-    if (typeof profile === 'object' && profile[boardName])
+    if (typeof profile === 'object' && profile[boardName]) {
         profile['default'] = profile[boardName];
-    else
-        profile['default'] = profile['Arduino/Genuino Uno'];
+    } else {
+        profile = typeof profile === 'object' ? profile : {};
+        profile['default'] = {};
+    }
     $('#mixly-footer-boardname').html(boardName);
     if (Boards.INFO[boardName] && Boards.INFO[boardName].config) {
         $('#mixly-board-config').css('display', 'inline-flex');
