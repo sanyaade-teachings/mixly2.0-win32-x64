@@ -207,6 +207,52 @@ Blockly.Blocks.system_timer_init = {
     }
 };
 
+
+Blockly.Blocks.system_wdt_init = {
+    init: function () {
+        this.setColour(Blockly.Blocks.loops.HUE);
+        this.appendDummyInput("")
+            .appendField(Blockly.MIXLY_MACHINE_WDT)
+            .appendField(Blockly.MIXLY_SETUP)
+        this.appendValueInput('period')
+            .setAlign(Blockly.ALIGN_RIGHT)
+            .appendField(Blockly.MIXLY_MACHINE_WDT_TIMEOUT)
+            .setCheck(Number);
+        this.appendDummyInput("")
+            .appendField(Blockly.MIXLY_SECOND)
+        this.setInputsInline(true);
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setTooltip(Blockly.MIXLY_MACHINE_WDT_INIT_TOOLTIP);
+    }
+};
+
+Blockly.Blocks.system_wdt_feed = {
+    init: function () {
+        this.setColour(Blockly.Blocks.loops.HUE);
+        this.appendDummyInput("")
+            .appendField(Blockly.MIXLY_MACHINE_WDT)
+        this.appendDummyInput("")
+            .appendField(Blockly.MIXLY_MACHINE_FEED)
+        this.setInputsInline(true);
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setTooltip(Blockly.MIXLY_MACHINE_WDT_FEED_TOOLTIP);
+    }
+};
+
+Blockly.Blocks.system_machine_reset = {
+    init: function () {
+        this.setColour(Blockly.Blocks.loops.HUE);
+        this.appendDummyInput("")
+            .appendField(Blockly.MIXLY_MACHINE_RESET)
+        this.setInputsInline(true);
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setTooltip(Blockly.MIXLY_MACHINE_RESET_TOOLTIP);
+    }
+};
+
 Blockly.Blocks.Timer_init=Blockly.Blocks.system_timer_init;
 Blockly.Blocks.timer2=Blockly.Blocks.system_timer;
 Blockly.Blocks.time_ticks_diff=Blockly.Blocks.system_ticks_diff;

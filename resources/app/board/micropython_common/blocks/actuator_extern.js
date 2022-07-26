@@ -1,14 +1,14 @@
 'use strict';
 
-goog.provide('Blockly.Blocks.actuator');
+goog.provide('Blockly.Blocks.actuator_extern');
 goog.require('Blockly.Blocks');
 
-Blockly.Blocks.actuator.HUE = 100
+Blockly.Blocks.actuator_extern.HUE = '#74A55B'
 
 //music
 Blockly.Blocks.esp32_music_pitch = {
     init: function() {
-        this.setColour(Blockly.Blocks.actuator.HUE);
+        this.setColour(Blockly.Blocks.actuator_extern.HUE);
         this.appendValueInput("PIN", Number)
             .appendField(Blockly.MIXLY_TONE)
             .appendField(Blockly.MIXLY_PIN )
@@ -25,7 +25,7 @@ Blockly.Blocks.esp32_music_pitch = {
 
 Blockly.Blocks.esp32_music_pitch_with_time = {
     init: function() {
-        this.setColour(Blockly.Blocks.actuator.HUE);
+        this.setColour(Blockly.Blocks.actuator_extern.HUE);
         this.appendValueInput("PIN", Number)
             .appendField(Blockly.MIXLY_TONE)
             .appendField(Blockly.MIXLY_PIN )
@@ -45,7 +45,7 @@ Blockly.Blocks.esp32_music_pitch_with_time = {
 
 Blockly.Blocks.esp32_music_play_list = {
     init: function () {
-        this.setColour(Blockly.Blocks.actuator.HUE);
+        this.setColour(Blockly.Blocks.actuator_extern.HUE);
         this.appendValueInput('LIST')
             .appendField(Blockly.MIXLY_ESP32_MUSIC_PLAY_LISTS)
         this.appendValueInput('PIN')
@@ -61,7 +61,7 @@ Blockly.Blocks.esp32_music_play_list = {
 
 // Blockly.Blocks.esp32_music_set_tempo = {
 //     init: function () {
-//         this.setColour(Blockly.Blocks.actuator.HUE);
+//         this.setColour(Blockly.Blocks.actuator_extern.HUE);
 //         this.appendValueInput('TICKS')
 //             .setCheck(Number)
 //             .appendField(Blockly.MIXLY_MICROBIT_JS_SET_TEMPO)
@@ -78,7 +78,7 @@ Blockly.Blocks.esp32_music_play_list = {
 
 // Blockly.Blocks.esp32_music_get_tempo = {
 //     init: function () {
-//         this.setColour(Blockly.Blocks.actuator.HUE);
+//         this.setColour(Blockly.Blocks.actuator_extern.HUE);
 //         this.appendDummyInput()
 //             .appendField(Blockly.MIXLY_MICROBIT_Get_current_tempo)
 //         this.setOutput(true);
@@ -89,7 +89,7 @@ Blockly.Blocks.esp32_music_play_list = {
 
 // Blockly.Blocks.esp32_music_reset = {
 //     init: function () {
-//         this.setColour(Blockly.Blocks.actuator.HUE);
+//         this.setColour(Blockly.Blocks.actuator_extern.HUE);
 //         this.appendDummyInput()
 //             .appendField(Blockly.MIXLY_MICROBIT_Reset_music)
 //         this.setPreviousStatement(true);
@@ -101,7 +101,7 @@ Blockly.Blocks.esp32_music_play_list = {
 
 Blockly.Blocks.esp32_music_stop = {
     init: function() {
-        this.setColour(Blockly.Blocks.actuator.HUE);
+        this.setColour(Blockly.Blocks.actuator_extern.HUE);
         this.appendValueInput("PIN", Number)
             .appendField(Blockly.MIXLY_NOTONE)
             .appendField(Blockly.MIXLY_PIN)
@@ -114,7 +114,7 @@ Blockly.Blocks.esp32_music_stop = {
 
 Blockly.Blocks.actuator_extern_led_bright = {
   init: function() {
-    this.setColour(Blockly.Blocks.actuator.HUE);
+    this.setColour(Blockly.Blocks.actuator_extern.HUE);
     this.appendDummyInput()
         .appendField(Blockly.MIXLY_SETTING)
         .appendField(Blockly.MIXLY_EXTERN_LED)
@@ -132,7 +132,7 @@ Blockly.Blocks.actuator_extern_led_bright = {
 
 Blockly.Blocks.actuator_extern_get_led_bright = {
   init: function() {
-    this.setColour(Blockly.Blocks.actuator.HUE);
+    this.setColour(Blockly.Blocks.actuator_extern.HUE);
     this.appendDummyInput()
         .appendField(Blockly.MIXLY_MICROBIT_PY_STORAGE_GET)
         .appendField(Blockly.MIXLY_EXTERN_LED)
@@ -149,7 +149,7 @@ Blockly.Blocks.actuator_extern_get_led_bright = {
 
 Blockly.Blocks.actuator_extern_get_led_state = {
   init: function() {
-    this.setColour(Blockly.Blocks.actuator.HUE);
+    this.setColour(Blockly.Blocks.actuator_extern.HUE);
     this.appendDummyInput()
         .appendField(Blockly.MIXLY_MICROBIT_PY_STORAGE_GET)
         .appendField(Blockly.MIXLY_EXTERN_LED)
@@ -166,7 +166,7 @@ Blockly.Blocks.actuator_extern_get_led_state = {
 
 Blockly.Blocks.actuator_extern_led_brightness = {
   init: function() {
-    this.setColour(Blockly.Blocks.actuator.HUE);
+    this.setColour(Blockly.Blocks.actuator_extern.HUE);
     this.appendDummyInput()
         .appendField(Blockly.MIXLY_SETTING)
         .appendField(Blockly.MIXLY_EXTERN_LED)
@@ -187,7 +187,7 @@ Blockly.Blocks.actuator_extern_led_brightness = {
 //Servo
 Blockly.Blocks.servo_init = {
     init: function() {
-        this.setColour(Blockly.Blocks.actuator.HUE);
+        this.setColour(Blockly.Blocks.actuator_extern.HUE);
         this.appendValueInput("VAR")
             .appendField(Blockly.MIXLY_SETUP+Blockly.MIXLY_SERVO)
         this.appendValueInput("PIN", Number)
@@ -200,7 +200,7 @@ Blockly.Blocks.servo_init = {
 
 Blockly.Blocks.servo_move = {
     init: function() {
-        this.setColour(Blockly.Blocks.actuator.HUE);
+        this.setColour(Blockly.Blocks.actuator_extern.HUE);
         this.appendValueInput("VAR")
             .appendField(Blockly.MIXLY_SERVO)
         this.appendValueInput("DEGREE", Number)
@@ -216,7 +216,7 @@ Blockly.Blocks.servo_move = {
 
 Blockly.Blocks.servo_speed_360 = {
     init: function() {
-        this.setColour(Blockly.Blocks.actuator.HUE);
+        this.setColour(Blockly.Blocks.actuator_extern.HUE);
         this.appendValueInput("VAR")
             .appendField("360°"+Blockly.MIXLY_SERVO)
         this.appendValueInput("SPEED", Number)
@@ -232,7 +232,7 @@ Blockly.Blocks.servo_speed_360 = {
 
 Blockly.Blocks.actuator_ms32006_init = {
     init: function () {
-        this.setColour(Blockly.Blocks.actuator.HUE);
+        this.setColour(Blockly.Blocks.actuator_extern.HUE);
         this.appendValueInput('SUB')
             .appendField("初始化")
             .setCheck("var");
@@ -254,7 +254,7 @@ Blockly.Blocks.actuator_ms32006_init = {
 
 Blockly.Blocks.actuator_ms32006_dcmotor = {
   init: function() {
-    this.setColour(Blockly.Blocks.actuator.HUE);
+    this.setColour(Blockly.Blocks.actuator_extern.HUE);
     this.appendValueInput('SUB')
         .appendField("直流电机")
         .setCheck("var");
@@ -281,7 +281,7 @@ Blockly.Blocks.actuator_ms32006_dcmotor = {
 
 Blockly.Blocks.actuator_ms32006_stepper = {
   init: function() {
-    this.setColour(Blockly.Blocks.actuator.HUE);
+    this.setColour(Blockly.Blocks.actuator_extern.HUE);
     this.appendValueInput('SUB')
         .appendField("步进电机")
         .setCheck("var");
@@ -312,7 +312,7 @@ Blockly.Blocks.actuator_ms32006_stepper = {
 //rgb
 Blockly.Blocks.actuator_neopixel_init = {
     init: function () {
-        this.setColour(Blockly.Blocks.actuator.HUE);
+        this.setColour(Blockly.Blocks.actuator_extern.HUE);
         this.appendDummyInput("")
             .appendField(Blockly.MIXLY_RGB)
         this.appendValueInput('SUB')
@@ -335,7 +335,7 @@ Blockly.Blocks.actuator_neopixel_init = {
 
 Blockly.Blocks.actuator_neopixel_rgb = {
     init: function () {
-        this.setColour(Blockly.Blocks.actuator.HUE);
+        this.setColour(Blockly.Blocks.actuator_extern.HUE);
         this.appendDummyInput("")
             .appendField(Blockly.MIXLY_RGB)
         this.appendValueInput('SUB')
@@ -367,7 +367,7 @@ Blockly.Blocks.actuator_neopixel_rgb = {
 
 Blockly.Blocks.actuator_neopixel_rgb_all = {
     init: function () {
-        this.setColour(Blockly.Blocks.actuator.HUE);
+        this.setColour(Blockly.Blocks.actuator_extern.HUE);
         this.appendDummyInput("")
             .appendField(Blockly.MIXLY_RGB)
         this.appendValueInput('SUB')
@@ -394,7 +394,7 @@ Blockly.Blocks.actuator_neopixel_rgb_all = {
 
 Blockly.Blocks.actuator_neopixel_write = {
     init: function () {
-        this.setColour(Blockly.Blocks.actuator.HUE);
+        this.setColour(Blockly.Blocks.actuator_extern.HUE);
         this.appendDummyInput("")
             .appendField(Blockly.MIXLY_RGB)
          // this.appendValueInput("PIN", Number)

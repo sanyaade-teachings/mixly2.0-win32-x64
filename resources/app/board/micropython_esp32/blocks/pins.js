@@ -250,7 +250,7 @@ Blockly.Blocks['pins_serial'] = {
 
 Blockly.Blocks['pins_builtinimg'] = {
     init: function() {
-        this.setColour(Blockly.Blocks.display.HUE);
+        this.setColour(Blockly.Blocks.display_onboard.HUE);
         this.appendDummyInput("")
             .appendField(new Blockly.FieldDropdown(profile.default.builtinimg), 'PIN');
         this.setOutput(true, "esp32_image");
@@ -259,7 +259,7 @@ Blockly.Blocks['pins_builtinimg'] = {
 
 Blockly.Blocks['pins_builtinimg_extern'] = {
     init: function() {
-        this.setColour(Blockly.Blocks.display.HUE);
+        this.setColour(Blockly.Blocks.display_extern.HUE);
         this.appendDummyInput("")
             .appendField(new Blockly.FieldDropdown(profile.default.builtinimg_extern), 'PIN');
         this.setOutput(true, "esp32_image");

@@ -1,14 +1,14 @@
 'use strict';
 
-goog.provide('Blockly.Blocks.sensor');
+goog.provide('Blockly.Blocks.sensor_onboard');
 
 goog.require('Blockly.Blocks');
 
-Blockly.Blocks.sensor.HUE = 40//'#9e77c9'//40;
+Blockly.Blocks.sensor_onboard.HUE = '#B4AA78'//'#9e77c9'//40;
 
 Blockly.Blocks['sensor_mixgo_button_is_pressed'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendValueInput('btn')
         .appendField(Blockly.MIXLY_BUTTON)
         .setCheck(Number);
@@ -22,7 +22,7 @@ Blockly.Blocks['sensor_mixgo_button_is_pressed'] = {
 
 Blockly.Blocks['sensor_mixgo_button_was_pressed'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendValueInput('btn')
         .appendField(Blockly.MIXLY_BUTTON)
         .setCheck(Number);
@@ -36,7 +36,7 @@ Blockly.Blocks['sensor_mixgo_button_was_pressed'] = {
 
 Blockly.Blocks['sensor_mixgo_button_get_presses'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendValueInput('btn')
         .appendField(Blockly.MIXLY_BUTTON)
         .setCheck(Number);        
@@ -53,7 +53,7 @@ Blockly.Blocks['sensor_mixgo_button_get_presses'] = {
 
 Blockly.Blocks.sensor_mixgo_button_attachInterrupt = {
   init: function() {
-    this.setColour(Blockly.Blocks.sensor.HUE);
+    this.setColour(Blockly.Blocks.sensor_onboard.HUE);
     this.appendValueInput("btn")
     .appendField(Blockly.MIXLY_ESP32_INTERRUPT)
     .appendField(Blockly.MIXLY_BUTTON)
@@ -71,7 +71,7 @@ Blockly.Blocks.sensor_mixgo_button_attachInterrupt = {
 
 Blockly.Blocks['sensor_mixgo_pin_pressed'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendValueInput("button")
         .appendField(Blockly.MIXLY_ESP32_TOUCH_SENSOR)
         this.appendDummyInput()
@@ -84,7 +84,7 @@ Blockly.Blocks['sensor_mixgo_pin_pressed'] = {
 
 Blockly.Blocks['sensor_mpython_pin_pressed'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendValueInput("button")
         .appendField(Blockly.MIXLY_ESP32_TOUCH_SENSOR)
         this.appendDummyInput()
@@ -98,7 +98,7 @@ Blockly.Blocks['sensor_mpython_pin_pressed'] = {
 
 Blockly.Blocks['sensor_distance_hrsc04'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput()
         .appendField(Blockly.MIXLY_CHAOSHENGBO)
         this.setOutput(true, Number);
@@ -125,7 +125,7 @@ var RTC_TIME_TYPE = [
 
 Blockly.Blocks.RTC_set_time = {
   init: function() {
-    this.setColour(Blockly.Blocks.sensor.HUE);
+    this.setColour(Blockly.Blocks.sensor_onboard.HUE);
     this.appendDummyInput("")
     .setAlign(Blockly.ALIGN_RIGHT)
     .appendField(Blockly.MIXLY_RTCSETTIME)
@@ -151,7 +151,7 @@ Blockly.Blocks.RTC_set_time = {
 
 Blockly.Blocks.RTC_set_date = {
   init: function() {
-    this.setColour(Blockly.Blocks.sensor.HUE);
+    this.setColour(Blockly.Blocks.sensor_onboard.HUE);
     this.appendDummyInput("")
     .setAlign(Blockly.ALIGN_RIGHT)
     .appendField(Blockly.MIXLY_RTCSETDATE)
@@ -178,7 +178,7 @@ Blockly.Blocks.RTC_set_date = {
 
 Blockly.Blocks.HCSR04 = {
     init: function () {
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput("")
         .appendField(Blockly.MIXLY_CHAOSHENGBO);
         this.appendValueInput("PIN1", Number)
@@ -198,7 +198,7 @@ Blockly.Blocks.HCSR04 = {
 
 Blockly.Blocks['sensor_mixgo_light'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput()
         .appendField(Blockly.MIXLY_ESP32_LIGHT);
         this.setOutput(true, Number);
@@ -209,7 +209,7 @@ Blockly.Blocks['sensor_mixgo_light'] = {
 
 Blockly.Blocks['sensor_mixgo_sound'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput()
         .appendField(Blockly.MIXLY_ESP32_SOUND);
         this.setOutput(true, Number);
@@ -221,7 +221,7 @@ Blockly.Blocks['sensor_mixgo_sound'] = {
 
 Blockly.Blocks['number1'] = {
    init: function() {
-    this.setColour(Blockly.Blocks.sensor.HUE);
+    this.setColour(Blockly.Blocks.sensor_onboard.HUE);
     this.appendDummyInput("")
     .appendField(new Blockly.FieldDropdown([["1", "touch1"], ["2", "touch2"]]), 'op')
     this.setOutput(true);
@@ -233,7 +233,7 @@ Blockly.Blocks['number1'] = {
 
 Blockly.Blocks['sensor_mixgo_pin_near'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput()
             .appendField(Blockly.MIXLY_ESP32_EXTERN_NEAR);       
         this.appendDummyInput()
@@ -246,7 +246,7 @@ Blockly.Blocks['sensor_mixgo_pin_near'] = {
 
 Blockly.Blocks['sensor_mixgo_pin_near_double'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput()
         .appendField(Blockly.MIXLY_MICROBIT_PY_STORAGE_GET)
         .appendField(new Blockly.FieldDropdown([[Blockly.Msg.TEXT_TRIM_LEFT, "left"], [Blockly.Msg.TEXT_TRIM_RIGHT, "right"]]), "direction")
@@ -270,7 +270,7 @@ Blockly.Blocks['sensor_mixgo_pin_near_double'] = {
 //传感器-实时时钟块_获取时间
 Blockly.Blocks.onboard_RTC_get_time = {
   init: function() {
-    this.setColour(Blockly.Blocks.sensor.HUE);  
+    this.setColour(Blockly.Blocks.sensor_onboard.HUE);  
     this.appendDummyInput()
     .appendField("RTC")  
     this.appendDummyInput()
@@ -301,7 +301,7 @@ Blockly.Blocks.onboard_RTC_get_time = {
 
 Blockly.Blocks.onboard_RTC_set_datetime = {
  init: function() {    
-    this.setColour(Blockly.Blocks.sensor.HUE);
+    this.setColour(Blockly.Blocks.sensor_onboard.HUE);
     this.appendDummyInput()
     .appendField("RTC")
     this.appendValueInput('year')
@@ -338,7 +338,7 @@ Blockly.Blocks.onboard_RTC_set_datetime = {
 
 Blockly.Blocks.sensor_rtc_init = {
     init: function () {
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput("")
         .appendField("RTC")
         this.appendValueInput('SUB')
@@ -354,7 +354,7 @@ Blockly.Blocks.sensor_rtc_init = {
 
 Blockly.Blocks['sensor_LTR308'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput()
             .appendField(Blockly.MIXLY_ESP32_LIGHT);
         this.setOutput(true, Number);
@@ -364,7 +364,7 @@ Blockly.Blocks['sensor_LTR308'] = {
 
 Blockly.Blocks['sensor_sound'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput()
             .appendField(Blockly.MIXLY_ESP32_SOUND);
         this.setOutput(true, Number);
@@ -375,7 +375,7 @@ Blockly.Blocks['sensor_sound'] = {
 
 Blockly.Blocks['sensor_aht11'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput("")
             .appendField(Blockly.MIXLY_TEM_HUM+" ")            
         this.appendDummyInput("")
@@ -399,7 +399,7 @@ Blockly.Blocks['sensor_aht11'] = {
 
 Blockly.Blocks['sensor_hp203'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput("")
             .appendField(Blockly.MIXLY_Altitude+MSG.catSensor+" ")
         this.appendDummyInput("")
@@ -415,7 +415,7 @@ Blockly.Blocks['sensor_hp203'] = {
 
 Blockly.Blocks['rfid_readid'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput()
             .appendField("RFID"+Blockly.MIXLY_RFID_READ_CARD);
         this.appendDummyInput("")
@@ -427,7 +427,7 @@ Blockly.Blocks['rfid_readid'] = {
 
 Blockly.Blocks['rfid_readcontent'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput()
             .appendField("RFID"+Blockly.MIXLY_RFID_READ_CARD);        
         this.appendValueInput('SECTOR')
@@ -441,7 +441,7 @@ Blockly.Blocks['rfid_readcontent'] = {
 
 Blockly.Blocks['rfid_write'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput()
             .appendField(Blockly.MIXLY_COMMUNICATION_RFID_WRITE);        
         this.appendValueInput('SECTOR')
@@ -456,7 +456,7 @@ Blockly.Blocks['rfid_write'] = {
 
 Blockly.Blocks['sensor_get_acceleration'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput()
         .appendField(Blockly.MIXLY_MICROBIT_JS_ACCELERATION)
         .appendField(new Blockly.FieldDropdown([
@@ -485,215 +485,11 @@ Blockly.Blocks['sensor_get_acceleration'] = {
     }
 };
 
-Blockly.Blocks.sensor_mpu9250_gesture = {
-    init: function() {
-        this.setColour(Blockly.Blocks.sensor.HUE);
-        this.appendValueInput('SUB')
-        .appendField("MPU9250")
-        .setCheck("var");
-        this.appendDummyInput("")
-        .appendField(Blockly.MIXLY_MICROBIT_JS_CURRENT_GESTURE)
-        .appendField(new Blockly.FieldDropdown([[Blockly.MIXLY_MICROBIT_shake, "shake"], [Blockly.MIXLY_UP, "up"], [Blockly.MIXLY_DOWN, "down"], [Blockly.MIXLY_LEFT, "left"], [Blockly.MIXLY_RIGHT, "right"], [Blockly.MIXLY_MICROBIT_face_up, "face up"], [Blockly.MIXLY_MICROBIT_face_down, "face down"]]), "gesture");
-        this.setOutput(true);
-        var thisBlock = this;
-        this.setTooltip(function() {
-            var mode = thisBlock.getFieldValue('gesture');
-            var mode0 = Blockly.MIXLY_MICROBIT_JS_CURRENT;
-            var mode1 = MSG.catSensor;
-            var mode2 = Blockly.MIXLY_MICROBIT_JS_STATE;
-            var mode3 = Blockly.MIXLY_MICROBIT_PERFORMANCE
-            var TOOLTIPS = {
-                'shake': Blockly.MIXLY_MICROBIT_shake,
-                'up': Blockly.MIXLY_UP,
-                'down':Blockly.MIXLY_DOWN,
-                'left':Blockly.MIXLY_LEFT,
-                'right':Blockly.MIXLY_RIGHT,
-                'face up': Blockly.MIXLY_MICROBIT_face_up,
-                'face down': Blockly.MIXLY_MICROBIT_face_down,
-        // 'freefall':Blockly.MIXLY_MICROBIT_freefall,
-        // '3g': '3g',
-        // '6g': '6g',
-        // '8g': '8g'
-    };
-    return mode0 +mode1+mode2+ TOOLTIPS[mode]+mode3;
-});
-    }
-};
 
-Blockly.Blocks['sensor_mpu9250_get_acceleration'] = {
-    init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
-        this.appendValueInput('SUB')
-        .appendField("MPU9250")
-        .setCheck("var");
-        this.appendDummyInput()
-        .appendField(Blockly.MIXLY_MICROBIT_JS_ACCELERATION)
-        .appendField(new Blockly.FieldDropdown([
-            ["x", "x"],
-            ["y", "y"],
-            ["z", "z"],
-            ["(x,y,z)", "values"]
-            ]), "key");
-        this.setOutput(true, Number);
-        this.setInputsInline(true);
-        this.setTooltip(Blockly.MIXLY_MICROBIT_JS_ACCELERATION);
-        var thisBlock = this;
-        this.setTooltip(function() {
-            var mode = thisBlock.getFieldValue('key');
-            var mode0 = Blockly.MIXLY_MICROBIT_PY_STORAGE_GET;
-            var mode1 = Blockly.MIXLY_MICROBIT_Direction;
-            var mode2 = Blockly.MIXLY_MICROBIT_JS_ACCELERATION1;
-            var TOOLTIPS = {
-                'x': 'x',
-                'y': 'y',
-                'z': 'z',
-                '(x,y,z)':Blockly.MIXLY_MICROBIT_Shiliang_Direction,
-            };
-            return mode0 +TOOLTIPS[mode]+mode1+mode2;
-        });
-    }
-};
-
-Blockly.Blocks['sensor_mpu9250_get_magnetic'] = {
-    init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
-        this.appendValueInput('SUB')
-        .appendField("MPU9250")
-        .setCheck("var");
-        this.appendDummyInput()
-        .appendField(Blockly.MIXLY_MICROBIT_JS_GET+Blockly.MIXLY_MICROBIT_JS_FIELD_STRENGTH)
-        .appendField(new Blockly.FieldDropdown([
-            ["x", "x"],
-            ["y", "y"],
-            ["z", "z"],
-            ["(x,y,z)", "values"]
-            ]), "key");
-        this.setOutput(true, Number);
-        this.setInputsInline(true);
-        var thisBlock = this;
-        this.setTooltip(function() {
-            var mode = thisBlock.getFieldValue('key');
-            var mode0 = Blockly.MIXLY_MICROBIT_PY_STORAGE_GET;
-            var mode1 = Blockly.MIXLY_MICROBIT_Direction;
-            var mode2 = Blockly.MIXLY_MICROBIT_JS_FIELD_STRENGTH;
-            var TOOLTIPS = {
-                'x': 'x',
-                'y': 'y',
-                'z': 'z',
-                '(x,y,z)':Blockly.MIXLY_MICROBIT_Shiliang_Direction,
-            };
-            return mode0 +TOOLTIPS[mode]+mode1+mode2;
-        });
-    }
-};
-
-Blockly.Blocks['sensor_mpu9250_get_gyro'] = {
-    init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
-        this.appendValueInput('SUB')
-        .appendField("MPU9250")
-        .setCheck("var");
-        this.appendDummyInput()
-        .appendField(Blockly.MIXLY_MICROBIT_PY_STORAGE_GET+Blockly.MIXLY_ESP32_SENOR_GYRO)
-        .appendField(new Blockly.FieldDropdown([
-            ["x", "x"],
-            ["y", "y"],
-            ["z", "z"],
-            ["(x,y,z)", "values"]
-            ]), "key");
-        this.setOutput(true, Number);
-        this.setInputsInline(true);
-        var thisBlock = this;
-        this.setTooltip(function() {
-            var mode = thisBlock.getFieldValue('key');
-            var mode0 = Blockly.MIXLY_MICROBIT_PY_STORAGE_GET;
-            var mode1 = Blockly.MIXLY_MICROBIT_Direction;
-            var mode2 = Blockly.MIXLY_ESP32_SENOR_GYRO;
-            var TOOLTIPS = {
-                'x': 'x',
-                'y': 'y',
-                'z': 'z',
-                '(x,y,z)':Blockly.MIXLY_MICROBIT_Shiliang_Direction,
-            };
-            return mode0 +TOOLTIPS[mode]+mode1+mode2;
-        });
-    }
-};
-
-Blockly.Blocks['sensor_mpu9250_calibrate_compass'] = {
-    init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
-        this.appendValueInput('SUB')
-        .appendField("MPU9250")
-        .setCheck("var");
-        this.appendDummyInput()
-        .appendField(Blockly.MIXLY_MICROBIT_JS_CALIBRATE_COMPASS)
-        this.setPreviousStatement(true);
-        this.setNextStatement(true);
-        this.setInputsInline(true);
-        this.setTooltip(Blockly.MIXLY_MICROBIT_JS_CALIBRATE_COMPASS);
-    }
-};
-
-
-Blockly.Blocks['sensor_mpu9250_temperature'] = {
-    init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
-        this.appendValueInput('SUB')
-        .appendField("MPU9250")
-        .setCheck("var");
-        this.appendDummyInput()
-        .appendField(Blockly.MIXLY_GETTEMPERATUE)
-        this.setOutput(true, Number);
-        this.setInputsInline(true);
-
-        this.setTooltip(Blockly.MIXLY_GETTEMPERATUE);
-    }
-};
-
-
-Blockly.Blocks['sensor_mpu9250_field_strength'] = {
-    init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
-        this.appendValueInput('SUB')
-        .appendField("MPU9250")
-        .setCheck("var");
-        this.appendDummyInput()
-        .appendField(Blockly.MIXLY_MICROBIT_JS_GET_COMPASS)
-        .appendField(new Blockly.FieldDropdown([[Blockly.MIXLY_MICROBIT_JS_FIELD_STRENGTH,'strength'],[Blockly.MIXLY_MICROBIT_JS_BY_ANGLE,'heading']]),'compass');
-        this.setOutput(true, Number);
-        this.setInputsInline(true);
-        var thisBlock = this;
-        this.setTooltip(function() {
-            var mode = thisBlock.getFieldValue('compass');
-            var mode0 = Blockly.MIXLY_MICROBIT_JS_GET_COMPASS;
-            var TOOLTIPS = {
-                'strength':Blockly.MIXLY_MICROBIT_JS_FIELD_STRENGTH,
-                'heading':Blockly.MIXLY_MICROBIT_JS_BY_ANGLE
-            };
-            return mode0 +TOOLTIPS[mode];
-        });
-    }
-};
-
-Blockly.Blocks['sensor_compass_reset'] = {
-  init: function(){
-    this.setColour(Blockly.Blocks.sensor.HUE);
-    this.appendValueInput('SUB')
-    .appendField("MPU9250")
-    .setCheck("var");
-    this.appendDummyInput()
-    .appendField(Blockly.MIXLY_MICROBIT_Reset_COMPASS)
-    this.setPreviousStatement(true);
-    this.setNextStatement(true);
-    this.setInputsInline(true);
-    this.setTooltip(Blockly.MIXLY_MICROBIT_Reset_COMPASS);
-}
-};
 
 Blockly.Blocks.sensor_onboard_mpu9250_gesture = {
     init: function() {
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput("")
         .appendField("MPU9250")
         this.appendDummyInput("")
@@ -728,7 +524,7 @@ Blockly.Blocks.sensor_onboard_mpu9250_gesture = {
 
 Blockly.Blocks['sensor_onboard_mpu9250_get_acceleration'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput("")
         .appendField("MPU9250")
         this.appendDummyInput()
@@ -761,7 +557,7 @@ Blockly.Blocks['sensor_onboard_mpu9250_get_acceleration'] = {
 
 Blockly.Blocks['sensor_onboard_mpu9250_get_magnetic'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput("")
         .appendField("MPU9250")
         this.appendDummyInput()
@@ -793,7 +589,7 @@ Blockly.Blocks['sensor_onboard_mpu9250_get_magnetic'] = {
 
 Blockly.Blocks['sensor_onboard_mpu9250_get_gyro'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput("")
         .appendField("MPU9250")
         this.appendDummyInput()
@@ -825,7 +621,7 @@ Blockly.Blocks['sensor_onboard_mpu9250_get_gyro'] = {
 
 Blockly.Blocks['sensor_onboard_mpu9250_calibrate_compass'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput("")
         .appendField("MPU9250")
         this.appendDummyInput()
@@ -840,7 +636,7 @@ Blockly.Blocks['sensor_onboard_mpu9250_calibrate_compass'] = {
 
 Blockly.Blocks['sensor_onboard_mpu9250_temperature'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput("")
         .appendField("MPU9250")
         this.appendDummyInput()
@@ -855,7 +651,7 @@ Blockly.Blocks['sensor_onboard_mpu9250_temperature'] = {
 
 Blockly.Blocks['sensor_onboard_mpu9250_field_strength'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput("")
         .appendField("MPU9250")
         this.appendDummyInput()
@@ -878,7 +674,7 @@ Blockly.Blocks['sensor_onboard_mpu9250_field_strength'] = {
 
 Blockly.Blocks['sensor_onboard_compass_reset'] = {
   init: function(){
-    this.setColour(Blockly.Blocks.sensor.HUE);
+    this.setColour(Blockly.Blocks.sensor_onboard.HUE);
     this.appendDummyInput("")
     .appendField("MPU9250")
     this.appendDummyInput()
@@ -896,7 +692,7 @@ Blockly.Blocks['sensor_onboard_compass_reset'] = {
 
 Blockly.Blocks['sensor_mixgome_temperature'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput("")
             .appendField(Blockly.MIXLY_GETTEMPERATUE)            
         this.appendDummyInput("")        
@@ -909,7 +705,7 @@ Blockly.Blocks['sensor_mixgome_temperature'] = {
 //mpython onboard_sensor:
 Blockly.Blocks['sensor_mpython_qmi8658_get_acceleration'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput()
         .appendField(Blockly.MIXLY_MICROBIT_JS_ACCELERATION)
         .appendField(new Blockly.FieldDropdown([
@@ -940,7 +736,7 @@ Blockly.Blocks['sensor_mpython_qmi8658_get_acceleration'] = {
 
 Blockly.Blocks['sensor_mpython_mmc5603_get_magnetic'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput()
         .appendField(Blockly.MIXLY_MICROBIT_JS_GET+Blockly.MIXLY_MICROBIT_JS_FIELD_STRENGTH)
         .appendField(new Blockly.FieldDropdown([
@@ -970,7 +766,7 @@ Blockly.Blocks['sensor_mpython_mmc5603_get_magnetic'] = {
 
 Blockly.Blocks['sensor_mpython_qmi8658_get_gyro'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput()
         .appendField(Blockly.MIXLY_MICROBIT_PY_STORAGE_GET+Blockly.MIXLY_ESP32_SENOR_GYRO)
         .appendField(new Blockly.FieldDropdown([
@@ -1000,7 +796,7 @@ Blockly.Blocks['sensor_mpython_qmi8658_get_gyro'] = {
 
 Blockly.Blocks['sensor_mpython_qmi8658_temperature'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput()
         .appendField(Blockly.MIXLY_GETTEMPERATUE)
         this.setOutput(true, Number);
@@ -1012,7 +808,7 @@ Blockly.Blocks['sensor_mpython_qmi8658_temperature'] = {
 
 Blockly.Blocks['sensor_mpython_mmc5603_get_angle'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput()
         .appendField(Blockly.MIXLY_MICROBIT_JS_GET_COMPASS+Blockly.MIXLY_MICROBIT_JS_BY_ANGLE)
         this.setOutput(true, Number);

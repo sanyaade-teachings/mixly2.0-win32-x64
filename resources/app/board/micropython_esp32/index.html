@@ -1424,7 +1424,7 @@
       <block type="serial_readline"></block>
     </category>
     <!-- <category id="catOnBoard" name="catOnBoard" colour="65"> -->
-      <category id="catOnBoardSensor" name="catOnBoardSensor" colour="40"  m-show="micropython:esp32:mixgo micropython:esp32:rm_e1 micropython:esp32:mPython">
+      <category id="catOnBoardSensor" name="catOnBoardSensor" colour="#B4AA78"  m-show="micropython:esp32:mixgo micropython:esp32:rm_e1 micropython:esp32:mpython">
         <block type="sensor_mixgo_button_is_pressed">
           <value name="btn">
             <shadow type="pins_button">
@@ -1474,7 +1474,7 @@
             </shadow>
           </value>
         </block>
-        <block type="sensor_mpython_pin_pressed" m-show="micropython:esp32:mPython">
+        <block type="sensor_mpython_pin_pressed" m-show="micropython:esp32:mpython">
           <value name="button">
             <shadow type="pins_mpython_touch">p
             </shadow>
@@ -1482,8 +1482,8 @@
         </block>
         <!-- <block type="sensor_mixgo_pin_near" m-hide="micropython:esp32:mixgo"></block> -->
         <block type="sensor_mixgo_pin_near_double" m-show="micropython:esp32:mixgo"></block>
-        <block type="sensor_mixgo_light" m-show="micropython:esp32:mixgo micropython:esp32:mPython"></block>
-        <block type="sensor_mixgo_sound" m-show="micropython:esp32:mixgo micropython:esp32:mPython"></block>
+        <block type="sensor_mixgo_light" m-show="micropython:esp32:mixgo micropython:esp32:mpython"></block>
+        <block type="sensor_mixgo_sound" m-show="micropython:esp32:mixgo micropython:esp32:mpython"></block>
         <block type="sensor_onboard_mpu9250_gesture" m-show="micropython:esp32:mixgo"></block>
         <block type="sensor_onboard_mpu9250_get_acceleration" m-show="micropython:esp32:mixgo"></block>
         <block type="sensor_onboard_mpu9250_get_magnetic" m-show="micropython:esp32:mixgo"></block>
@@ -1492,11 +1492,11 @@
         <block type="sensor_onboard_mpu9250_calibrate_compass" m-show="micropython:esp32:mixgo"></block>
         <block type="sensor_onboard_mpu9250_field_strength" m-show="micropython:esp32:mixgo"></block>
         <block type="sensor_onboard_compass_reset" m-show="micropython:esp32:mixgo"></block>
-        <block type="sensor_mpython_qmi8658_temperature" m-show="micropython:esp32:mPython"></block>
-        <block type="sensor_mpython_qmi8658_get_acceleration" m-show="micropython:esp32:mPython"></block>
-        <block type="sensor_mpython_qmi8658_get_gyro" m-show="micropython:esp32:mPython"></block>
-        <block type="sensor_mpython_mmc5603_get_magnetic" m-show="micropython:esp32:mPython"></block>
-        <block type="sensor_mpython_mmc5603_get_angle" m-show="micropython:esp32:mPython"></block>
+        <block type="sensor_mpython_qmi8658_temperature" m-show="micropython:esp32:mpython"></block>
+        <block type="sensor_mpython_qmi8658_get_acceleration" m-show="micropython:esp32:mpython"></block>
+        <block type="sensor_mpython_qmi8658_get_gyro" m-show="micropython:esp32:mpython"></block>
+        <block type="sensor_mpython_mmc5603_get_magnetic" m-show="micropython:esp32:mpython"></block>
+        <block type="sensor_mpython_mmc5603_get_angle" m-show="micropython:esp32:mpython"></block>
         <block type="onboard_RTC_set_datetime">
           <value name="year">
             <shadow type="math_number">
@@ -1541,7 +1541,7 @@
         </block>
         <block type="onboard_RTC_get_time"></block>
       </category>
-      <category id="catOnBoardActuator" name="catOnBoardActuator" colour="100"  m-show="micropython:esp32:mixgo micropython:esp32:rm_e1 micropython:esp32:mPython">
+      <category id="catOnBoardActuator" name="catOnBoardActuator" colour="#8CB478"  m-show="micropython:esp32:mixgo micropython:esp32:rm_e1 micropython:esp32:mpython">
         <block type="actuator_led_bright" m-show='micropython:esp32:rm_e1'>
         <value name="led">
           <shadow type="number">
@@ -1739,7 +1739,7 @@
       <block type="actuator_onboard_neopixel_write">
       </block>
       </category>
-      <category id="catOnBoardDisplay" name="catOnBoardDisplay" colour="180"  m-show="micropython:esp32:mixgo">
+      <category id="catOnBoardDisplay" name="catOnBoardDisplay" colour='#78B5B4'  m-show="micropython:esp32:mixgo">
         <block type="display_help"></block>
         <block type="display_show_image">
         <value name="data">
@@ -1862,7 +1862,7 @@
       <block type="display_clear"></block>
       <!-- </category> -->
     </category>
-    <category id="catOnBoardOled"  colour="180" m-show="micropython:esp32:mPython">
+    <category id="catOnBoardOled"  colour='#78B5B4' m-show="micropython:esp32:mpython">
       <block type="mpython_pbm_image"></block> 
       <block type="onboard_oled_show_image">
         <value name="data">
@@ -3128,7 +3128,7 @@
         </block>
       </category>
     </category>
-    <category id="catExternSensor" colour="40">
+    <category id="catExternSensor" colour='#A58C5B'>
       <!-- 
       <block type="sensor_lm35">
         <value name="PIN">
@@ -3443,7 +3443,7 @@
         <block type="PS2_stk"></block>
     </category>
     
-    <category id="catExternActuator" colour="100">      
+    <category id="catExternActuator" colour='#74A55B'>      
       <block type="esp32_music_pitch">
         <value name="PIN">
           <shadow type="pins_pwm_pin">
@@ -3630,9 +3630,9 @@
         </value>
       </block>
     </category>
-    <category id="catExternMonitor" colour="180">
+    <category id="catExternMonitor" colour='5BA5A5'>
 
-    <category id="catMatrix" colour="180">
+    <category id="catMatrix" colour='5BA5A5'>
       <block type="communicate_i2c_init">
           <value name="SUB">
             <shadow type="variables_get">
@@ -3871,7 +3871,7 @@
 
 
       </category>
-      <category id="cat4Digitdisplay" colour="180">
+      <category id="cat4Digitdisplay" colour='5BA5A5'>
         <block type="communicate_i2c_init">
           <value name="SUB">
             <shadow type="variables_get">
@@ -3948,7 +3948,7 @@
           </value>
         </block>
       </category>
-      <category id="catOLED" colour="180">
+      <category id="catOLED" colour='5BA5A5'>
       <block type="display_use_i2c_init">
         <value name="SUB">
           <shadow type="variables_get">

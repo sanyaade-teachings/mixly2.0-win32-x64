@@ -158,4 +158,23 @@ Blockly.Python.time_localtime= function() {
   }
 }
 
+Blockly.Python.system_wdt_init=function(){
+    Blockly.Python.definitions_['import_microcontroller'] = 'import microcontroller';
+    Blockly.Python.definitions_['import_watchdog_WatchDogMode'] = 'from watchdog import WatchDogMode';
+    var period = Blockly.Python.valueToCode(this, "period", Blockly.Python.ORDER_NONE) || "0";
+    var code ='wdt = microcontroller.watchdog\n'+'wdt.timeout =  '+ period +'\n'+'wdt.mode = WatchDogMode.RESET\n';
+    return code;
+};
+
+Blockly.Python.system_wdt_feed=function(){
+    Blockly.Python.definitions_['import_microcontroller'] = 'import microcontroller';
+    var code ='wdt.feed()\n';
+    return code;
+};
+
+Blockly.Python.system_machine_reset=function(){
+    Blockly.Python.definitions_['import_microcontroller'] = 'import microcontroller';
+    var code ='microcontroller.reset()\n';
+    return code;
+};
 

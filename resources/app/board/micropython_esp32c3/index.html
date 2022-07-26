@@ -1403,7 +1403,7 @@
       <block type="serial_readline"></block>
     </category>
     <!--<category id="catOnBoard" name="catOnBoard" colour="65">-->
-    <category id="catOnBoardSensor" name="catOnBoardSensor" colour="40" m-hide='micropython:esp32c3:generic'>
+    <category id="catOnBoardSensor" name="catOnBoardSensor" colour="#B4AA78" m-hide='micropython:esp32c3:generic'>
       <block type="sensor_mixgo_button_is_pressed">
         <value name="btn">
           <shadow type="pins_button">
@@ -1528,7 +1528,7 @@
       
 
     </category>
-    <category id="catOnBoardActuator" name="catOnBoardActuator" colour="100" m-hide='micropython:esp32c3:generic'>
+    <category id="catOnBoardActuator" name="catOnBoardActuator" colour="#8CB478" m-hide='micropython:esp32c3:generic'>
       <block type="actuator_led_bright" m-show='micropython:esp32c3:mixgo_cc'>
         <value name="led">
           <shadow type="number">
@@ -1686,7 +1686,7 @@
 
 
     </category>
-    <category id="catOnBoardDisplay" name="catOnBoardDisplay" colour="180" m-hide='micropython:esp32c3:generic'>
+    <category id="catOnBoardDisplay" name="catOnBoardDisplay" colour='#78B5B4' m-hide='micropython:esp32c3:generic'>
       <block type="display_show_image">
         <value name="data">
           <shadow type="pins_builtinimg"></shadow>
@@ -2952,7 +2952,7 @@
         </block>
       </category>
     </category>
-      <category id="catExternSensor" colour="40">
+      <category id="catExternSensor" colour='#A58C5B'>
       <!-- 
       <block type="sensor_lm35">
         <value name="PIN">
@@ -3270,7 +3270,7 @@
         <block type="PS2_State"></block>
         <block type="PS2_stk"></block>
     </category>    
-    <category id="catExternActuator" colour="100">      
+    <category id="catExternActuator" colour='#74A55B'>      
       <block type="esp32_music_pitch">
         <value name="PIN">
           <shadow type="pins_pwm_pin">
@@ -3457,8 +3457,8 @@
         </value>
       </block>
     </category>
-    <category id="catExternMonitor" colour="180">
-    <category id="catMatrix" colour="180">
+    <category id="catExternMonitor" colour='5BA5A5'>
+    <category id="catMatrix" colour='5BA5A5'>
       <block type="communicate_i2c_init">
           <value name="SUB">
             <shadow type="variables_get">
@@ -3697,7 +3697,7 @@
 
 
       </category>
-      <category id="cat4Digitdisplay" colour="180">
+      <category id="cat4Digitdisplay" colour='5BA5A5'>
         <block type="communicate_i2c_init">
           <value name="SUB">
             <shadow type="variables_get">
@@ -3774,7 +3774,7 @@
           </value>
         </block>
       </category>
-      <category id="catOLED" colour="180">
+      <category id="catOLED" colour='5BA5A5'>
       <block type="display_use_i2c_init">
         <value name="SUB">
           <shadow type="variables_get">
