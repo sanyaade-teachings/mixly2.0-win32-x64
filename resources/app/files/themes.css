@@ -38,6 +38,10 @@
     background-color: #989998;
 }
 
+.light ::-webkit-scrollbar-corner {
+    background-color: #fff;
+}
+
 .dark ::-webkit-scrollbar-thumb {
     background-color: #989998;
     border-radius: 4px;
@@ -49,6 +53,10 @@
 
 .dark ::-webkit-scrollbar-thumb:active {
     background-color: #C3C1C1;
+}
+
+.dark ::-webkit-scrollbar-corner {
+    background-color: #8d8888;
 }
 
 div.layui-form.layui-border-box.layui-table-view {

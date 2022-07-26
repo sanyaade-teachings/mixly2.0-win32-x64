@@ -1107,3 +1107,21 @@ body[class="light"] {
     background: url('../../common/media/mark/search2.png') no-repeat;
     background-size: 100% auto;
 }
+
+.light ::-webkit-resizer {
+    background: url('../../common/media/resize-dark.png') no-repeat;
+    background-size: 100% auto;
+}
+
+.dark ::-webkit-resizer {
+    background: url('../../common/media/resize-light.png') no-repeat;
+    background-size: 100% auto;
+}
+
+.light ::-webkit-scrollbar-corner {
+    background-color: #fff;
+}
+
+.dark ::-webkit-scrollbar-corner {
+    background-color: #8d8888;
+}
