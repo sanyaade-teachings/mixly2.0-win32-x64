@@ -50,11 +50,6 @@
         "boardIndex": "./board/circuitpython_esp32s2_mixgocar/index.html",
         "env": 2
     },{
-        "boardImg": "./board/micropython_esp32_handbit/media/handbitv2.png",
-        "boardName": "mPython",
-        "boardIndex": "./board/micropython_esp32_handbit/index.html",
-        "env": 2
-    },{
         "boardImg": "./board/python_skulpt/media/webpy.png",
         "boardName": "Python 3 Lite",
         "boardIndex": "./board/python_skulpt/index_skulpt_board_mixpy.html",
