@@ -442,6 +442,26 @@ Blockly.Python.sensor_mpython_mmc5603_get_angle = function(){
     return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
+Blockly.Python.sensor_rm_pin_near_double = function(){
+    var direction = this.getFieldValue('direction');
+    Blockly.Python.definitions_['import_rm_e1_adc'+direction] = 'from rm_e1 import adc'+direction;    
+    var code = 'adc'+ direction+'.read()';
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python.sensor_rm_battery_left = function(){
+    Blockly.Python.definitions_['import_rm_e1_battery'] = 'from rm_e1 import battery';
+    var code =  'battery.voltage()';
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python.sensor_rm_acc = function(){    
+    var key = this.getFieldValue('key');
+    Blockly.Python.definitions_['import_rm_e1_gyro'] = 'from rm_e1 import gyro';
+    var code = 'gyro.acceleration()' + key ;
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
 Blockly.Python.sensor_button_is_pressed=Blockly.Python.sensor_mixgo_button_is_pressed;
 Blockly.Python.sensor_button_was_pressed=Blockly.Python.sensor_mixgo_button_was_pressed;
 Blockly.Python.sensor_button_get_presses=Blockly.Python.sensor_mixgo_button_get_presses;

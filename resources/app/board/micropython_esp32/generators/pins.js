@@ -8,6 +8,8 @@ Blockly.Python.pins_digital = function() {
 };
 Blockly.Python.pins_button=Blockly.Python.pins_digital;
 Blockly.Python.pins_digital_pin=Blockly.Python.pins_digital;
+Blockly.Python.pins_input_pin=Blockly.Python.pins_digital;
+Blockly.Python.pins_output_pin=Blockly.Python.pins_digital;
 Blockly.Python.pins_analog_pin=Blockly.Python.pins_digital;
 Blockly.Python.pins_analog=Blockly.Python.pins_digital;
 Blockly.Python.pins_pwm_pin=Blockly.Python.pins_digital;

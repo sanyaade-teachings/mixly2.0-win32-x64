@@ -3461,3 +3461,5 @@ Blockly.MIXLY_ESP32_APDS9960 = "gesture sensor";
 Blockly.MIXLY_ESP32_APDS9960_COLOR = "color recognition";
 Blockly.MIXLY_ESP32_APDS9960_GESTURE = "gesture recognition";
 Blockly.MIXLY_ESP32_APDS9960_APPROACH = "proximity recognition";
+Blockly.MIXLY_BLE_HANDLE = "bluetooth handle";
+Blockly.MIXLY_ACC_SHAKE = "shake";

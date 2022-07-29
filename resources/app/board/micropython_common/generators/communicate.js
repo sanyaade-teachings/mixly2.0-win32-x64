@@ -223,6 +223,14 @@ Blockly.Python.communicate_bluetooth_recv = function (block) {
     return code;
 };
 
+Blockly.Python.communicate_bluetooth_handle = function (block) {
+    Blockly.Python.definitions_['import_ble_handle'] = 'import ble_handle'; 
+    var v = Blockly.Python.valueToCode(this, 'VAR', Blockly.Python.ORDER_ATOMIC);
+    var method = Blockly.Python.valueToCode(this, 'METHOD', Blockly.Python.ORDER_ATOMIC);
+    var code = v + '=ble_handle.Handle()\n'+v+'.recv('+ method +')\n';
+    return code;
+};
+
 //espnow
 Blockly.Python.communicate_espnow_init = function () {
     Blockly.Python.definitions_['import_radio'] = "import radio";

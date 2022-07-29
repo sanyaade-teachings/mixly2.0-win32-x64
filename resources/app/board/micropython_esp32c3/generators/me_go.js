@@ -57,7 +57,7 @@ Blockly.Python.me_go_stepper_stop=function(){
 
 Blockly.Python.me_go_dc_motor=function(){
     var wheel = this.getFieldValue('wheel');
-    Blockly.Python.definitions_['import_me_go_hall'] = 'from me_go import car';
+    Blockly.Python.definitions_['import_me_go_car'] = 'from me_go import car';
     var v = this.getFieldValue('direction');
     var speed = Blockly.Python.valueToCode(this, 'speed', Blockly.Python.ORDER_ATOMIC);
     var code = "car.motor(car.MOTO["+wheel+'],"'+ v + '",' + speed+")\n";

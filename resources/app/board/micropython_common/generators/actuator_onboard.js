@@ -132,6 +132,40 @@ Blockly.Python.mixgo_actuator_led_brightness = function() {
     return code;
 };
 
+Blockly.Python.rm_actuator_led_bright = function() {
+    var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
+    var op = this.getFieldValue('color');
+    Blockly.Python.definitions_['import_'+version+'_'+op+'led'] = 'from '+version+' import '+op+'led';
+    var bright = Blockly.Python.valueToCode(this,'bright', Blockly.Python.ORDER_ATOMIC);
+    var code = op+"led.setonoff(" + bright+")\n";
+    return code;
+};
+
+Blockly.Python.rm_actuator_get_led_bright = function() {
+    var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
+    var op = this.getFieldValue('color');
+    Blockly.Python.definitions_['import_'+version+'_'+op+'led'] = 'from '+version+' import '+op+'led';
+    var code = op+"led.getbrightness()";
+    return [code, Blockly.Python.ORDER_ATOMIC];;
+};
+
+Blockly.Python.rm_actuator_get_led_state = function() {
+    var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
+    var op = this.getFieldValue('color');
+    Blockly.Python.definitions_['import_'+version+'_'+op+'led'] = 'from '+version+' import '+op+'led';
+    var code = op+"led.getonoff()";
+    return [code, Blockly.Python.ORDER_ATOMIC];;
+};
+
+Blockly.Python.rm_actuator_led_brightness = function() {
+    var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
+    var op = this.getFieldValue('color');
+    Blockly.Python.definitions_['import_'+version+'_'+op+'led'] = 'from '+version+' import '+op+'led';
+    var flag = Blockly.Python.valueToCode(this,'bright', Blockly.Python.ORDER_ATOMIC);
+    var code = op+"led.setbrightness("+ flag+")\n";
+    return code;
+};
+
 Blockly.Python.actuator_onboard_neopixel_write=function(){
     var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
     Blockly.Python.definitions_['import_'+version+'_onboard_rgb'] = 'from '+version+' import onboard_rgb';
@@ -180,3 +214,44 @@ Blockly.Python.actuator_onboard_neopixel_rgb_show_all_rainbow = function(){
 };
 
 
+
+Blockly.Python.actuator_rm_onboard_neopixel_rgb=function(){
+    var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
+    Blockly.Python.definitions_['import_'+version+'_onboard_rgb'] = 'from '+version+' import onboard_rgb';
+  var value_led = Blockly.Python.valueToCode(this, '_LED_', Blockly.Python.ORDER_ATOMIC);
+  var value_rvalue = Blockly.Python.valueToCode(this, 'RVALUE', Blockly.Python.ORDER_ATOMIC);
+  var value_gvalue = Blockly.Python.valueToCode(this, 'GVALUE', Blockly.Python.ORDER_ATOMIC);
+  var value_bvalue = Blockly.Python.valueToCode(this, 'BVALUE', Blockly.Python.ORDER_ATOMIC);
+  var code= 'onboard_rgb['+value_led+'] = ((255-'+value_rvalue+'), (255-'+value_gvalue+'), (255-'+value_bvalue+'))\n';
+  return code;
+};
+
+Blockly.Python.actuator_rm_onboard_neopixel_rgb_all=function(){
+  var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
+    Blockly.Python.definitions_['import_'+version+'_onboard_rgb'] = 'from '+version+' import onboard_rgb';
+  var value_rvalue = Blockly.Python.valueToCode(this, 'RVALUE', Blockly.Python.ORDER_ATOMIC);
+  var value_gvalue = Blockly.Python.valueToCode(this, 'GVALUE', Blockly.Python.ORDER_ATOMIC);
+  var value_bvalue = Blockly.Python.valueToCode(this, 'BVALUE', Blockly.Python.ORDER_ATOMIC);
+  var code= 'onboard_rgb.fill(((255-'+value_rvalue+'), (255-'+value_gvalue+'), (255-'+value_bvalue+')))\n';
+  return code;
+};
+
+Blockly.Python.actuator_rm_onboard_neopixel_rgb_show_all_chase = function(){
+  var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
+    Blockly.Python.definitions_['import_'+version+'_onboard_rgb'] = 'from '+version+' import onboard_rgb';
+  var value_rvalue = Blockly.Python.valueToCode(this, 'RVALUE', Blockly.Python.ORDER_ATOMIC);
+  var value_gvalue = Blockly.Python.valueToCode(this, 'GVALUE', Blockly.Python.ORDER_ATOMIC);
+  var value_bvalue = Blockly.Python.valueToCode(this, 'BVALUE', Blockly.Python.ORDER_ATOMIC);
+  var number_time = Blockly.Python.valueToCode(this, 'time', Blockly.Python.ORDER_ATOMIC);
+  var code= 'onboard_rgb.color_chase((255-'+value_rvalue+'), (255-'+value_gvalue+'), (255-'+value_bvalue+'), '+number_time+')\n';
+  return code;
+};
+
+Blockly.Python.rm_motor=function(){
+    var wheel = this.getFieldValue('wheel');
+    Blockly.Python.definitions_['import_rm_e1_motor'+wheel] = 'from rm_e1 import motor'+wheel;
+    var v = this.getFieldValue('direction');
+    var speed = Blockly.Python.valueToCode(this, 'speed', Blockly.Python.ORDER_ATOMIC);
+    var code = "motor"+wheel+'.motion("'+ v + '",' + speed+")\n";
+    return code;
+};

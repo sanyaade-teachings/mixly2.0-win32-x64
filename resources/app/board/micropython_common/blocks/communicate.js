@@ -516,6 +516,22 @@ Blockly.Blocks["communicate_bluetooth_recv"] = {
     }
 };
 
+Blockly.Blocks["communicate_bluetooth_handle"] = {
+    init: function () {
+        this.setColour(Blockly.Blocks.communicate.HUE);
+        this.appendValueInput('VAR')
+            .setCheck("var")   
+            .appendField(Blockly.MIXLY_BLE_HANDLE)
+        this.appendValueInput('METHOD')
+            .appendField(Blockly.MIXLY_MIXGO_ESPNOW_RECV)
+            .appendField(Blockly.Msg.CONTROLS_REPEAT_INPUT_DO+Blockly.MIXLY_ESP32_ONENET_SUB);    
+        this.setInputsInline(true);
+        this.setPreviousStatement(true);
+        this.setNextStatement(true);
+        //this.setTooltip(Blockly.MIXLY_ESP32_IOT_EMQX_SUBSCRIBE_TOOLTIP);
+    }
+};
+
 //espnow
 Blockly.Blocks['communicate_espnow_init'] = {
     init: function() {

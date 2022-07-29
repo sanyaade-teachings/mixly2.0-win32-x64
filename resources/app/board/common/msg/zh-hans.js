@@ -3561,3 +3561,5 @@ Blockly.MIXLY_ESP32_APDS9960 = "手势传感器";
 Blockly.MIXLY_ESP32_APDS9960_COLOR = "颜色识别";
 Blockly.MIXLY_ESP32_APDS9960_GESTURE = "手势识别";
 Blockly.MIXLY_ESP32_APDS9960_APPROACH = "接近识别";
+Blockly.MIXLY_BLE_HANDLE = "蓝牙手柄";
+Blockly.MIXLY_ACC_SHAKE = "晃动值";

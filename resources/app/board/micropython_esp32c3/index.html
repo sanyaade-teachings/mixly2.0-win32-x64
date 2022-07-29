@@ -2494,6 +2494,52 @@
             </block>
           </statement>
         </block>
+        <block type="communicate_bluetooth_handle">
+          <value name="VAR">
+            <shadow type="variables_get">
+              <field name="VAR">handle</field>
+            </shadow>
+          </value>
+          <value name="METHOD">
+            <shadow type="factory_block_return">
+              <field name="VALUE">handle_method</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="procedures_defnoreturn">
+          <mutation>
+            <arg name="key1"></arg>
+            <arg name="key2"></arg>
+            <arg name="key3"></arg>
+            <arg name="keyx"></arg>
+          </mutation>
+          <field name="NAME">handle_method</field>
+          <statement name="STACK">
+            <block type="system_print_many">
+              <mutation items="4"></mutation>
+              <value name="ADD0">
+                <block type="variables_get">
+                  <field name="VAR">key1</field>
+                </block>
+              </value>
+              <value name="ADD1">
+                <block type="variables_get">
+                  <field name="VAR">key2</field>
+                </block>
+              </value>
+              <value name="ADD2">
+                <block type="variables_get">
+                  <field name="VAR">key3</field>
+                </block>
+              </value>
+              <value name="ADD3">
+                <block type="variables_get">
+                  <field name="VAR">keyx</field>
+                </block>
+              </value>
+            </block>
+          </statement>
+        </block>
       </category>
       <category id="catIR" colour="140">
         <block type="communicate_ir_send">

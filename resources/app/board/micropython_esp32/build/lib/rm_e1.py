@@ -10,11 +10,11 @@ dahanzimin From the Mixly Team
 """
 
 import time,gc
-import ble_handle
+#import ble_handle
 from machine import Pin,SoftI2C,ADC,PWM,RTC
 
 '''Bluetooth-handle'''
-handle=ble_handle.Handle()
+#handle=ble_handle.Handle()
 
 '''i2c-onboard'''
 onboard_i2c=SoftI2C(scl = Pin(22), sda = Pin(21), freq = 400000)
@@ -44,6 +44,9 @@ except Exception as e:
 '''2RGB_WS2812'''	#color_chase(),rainbow_cycle()方法移至类里
 from ws2812 import NeoPixel
 onboard_rgb = NeoPixel(Pin(12), 2)
+onboard_rgb.fill((255,255,255))
+onboard_rgb.write()
+
 
 '''3-Button'''
 class Button:
@@ -109,7 +112,7 @@ class LED:
 		self._brightness=val
 		self._pin.duty_u16(val*65535//100)
 
-	def getrightness(self):
+	def getbrightness(self):
 		return self._brightness
 
 	def setonoff(self,val):
@@ -121,10 +124,10 @@ class LED:
 			self.setbrightness(0) 
 			
 	def getonoff(self):
-		return True if self._brightness>50 else False
+		return True if self._brightness>0 else False
 		
 rled = LED(2)
-#gled = LED(4)
+gled = LED(4)
 
 '''3-Motor'''
 class Motor:

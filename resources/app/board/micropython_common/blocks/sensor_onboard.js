@@ -817,6 +817,57 @@ Blockly.Blocks['sensor_mpython_mmc5603_get_angle'] = {
     }
 };
 
+Blockly.Blocks['sensor_rm_pin_near_double'] = {
+    init: function(){
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
+        this.appendDummyInput()
+        .appendField(Blockly.MIXLY_MICROBIT_PY_STORAGE_GET)
+        .appendField(new Blockly.FieldDropdown([[Blockly.Msg.TEXT_TRIM_LEFT, "1"], [Blockly.Msg.TEXT_TRIM_RIGHT, "2"]]), "direction")
+        .appendField(Blockly.MIXLY_ESP32_NEAR);
+        this.setOutput(true,Number);
+        this.setInputsInline(true);
+        var thisBlock = this;
+        this.setTooltip(function() {
+            var mode = thisBlock.getFieldValue('direction');
+            var mode0 = Blockly.MIXLY_ESP32_SENSOR_MIXGO_PIN_NEAR_TOOLTIP;
+            var mode1 = Blockly.MIXLY_ESP32_NEAR;
+            var TOOLTIPS = {
+                'left':Blockly.Msg.TEXT_TRIM_LEFT,
+                'right':Blockly.Msg.TEXT_TRIM_RIGHT,
+            };
+            return mode0 +TOOLTIPS[mode] + mode1
+        });
+    }
+};
+
+Blockly.Blocks['sensor_rm_battery_left'] = {
+    init: function(){
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
+        this.appendDummyInput()
+        .appendField(Blockly.MIXLY_MIXGO_CAR_BATTERY_LEFT);
+        this.setOutput(true);
+        this.setInputsInline(true);
+    }
+};
+
+Blockly.Blocks['sensor_rm_acc'] = {
+    init: function(){
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
+        this.appendDummyInput()
+        .appendField("acc"+Blockly.MIXLY_MICROBIT_JS_GET)
+        .appendField(new Blockly.FieldDropdown([
+            [Blockly.MIXLY_ADXL345_XA, "[0]"],
+            [Blockly.MIXLY_ADXL345_YA, "[1]"],
+            [Blockly.MIXLY_ACC_SHAKE, "[2]"],
+            [Blockly.MIXLY_ADXL345_XA+','+Blockly.MIXLY_ADXL345_YA+','+Blockly.MIXLY_ACC_SHAKE, ""]
+            ]), "key");
+        this.setOutput(true, Number);
+        this.setInputsInline(true);
+        this.setTooltip(Blockly.MIXLY_MICROBIT_JS_ACCELERATION);
+        
+    }
+};
+
 Blockly.Blocks['sensor_button_is_pressed']=Blockly.Blocks['sensor_mixgo_button_is_pressed'];
 Blockly.Blocks['sensor_button_was_pressed']=Blockly.Blocks['sensor_mixgo_button_was_pressed'];
 Blockly.Blocks['sensor_button_get_presses']=Blockly.Blocks['sensor_mixgo_button_get_presses'];
