@@ -8,5 +8,6 @@
             "img": true,
             "py": true
         }
-    }
+    },
+    "saveMixWithCode": false
 }

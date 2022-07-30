@@ -8,8 +8,8 @@ goog.require('Mixly.Modules');
 
 goog.provide('Mixly.Deps');
 
-let { Env, Url, Modules, Config, Deps } = Mixly;
-let { BOARD, SOFTWARE } = Config;
+const { Env, Url, Modules, Config, Deps } = Mixly;
+const { BOARD } = Config;
 
 let { fs } = Modules;
 
@@ -21,12 +21,6 @@ if (Env.isElectron && BOARD?.filePath && BOARD?.filePath !== "None") {
     }
     history.replaceState({}, "", Url.changeURLArg(window.location.href, "filePath", "None"));
 }
-
-Env = {
-    ...Env,
-    hasSocketServer: SOFTWARE?.socketServer?.enabled ?? false,
-    hasCompiler: SOFTWARE?.webCompiler?.enabled ?? false
-};
 
 Deps.DEPENDENCY = {
     "electron": [],
@@ -197,15 +191,13 @@ Deps.initDependency = (dependency) => {
             Deps.addDependency(config["electron"]);
         }
     } else {
+        Deps.addDependency(config["web"]);
         if (Env.hasSocketServer) {
             Deps.addDependency(config["web-socket"]["common"]);
             Deps.addDependency(config["web-socket"]["web"]);
         } else if (Env.hasCompiler) {
-            Deps.addDependency(config["web"]);
             Deps.addDependency(config["web-compiler"]["common"]);
             Deps.addDependency(config["web-compiler"]["web"]);
-        } else {
-            Deps.addDependency(config["web"]);
         }
     }
 }

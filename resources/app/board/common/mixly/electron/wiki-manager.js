@@ -61,6 +61,7 @@ class WikiPage {
             this.reload();
         });
     }
+    
     addReceiveCommandEvent() {
         ipcMain.on('command', (event, command) => {
             if (typeof command !== 'object') return;

@@ -259,7 +259,8 @@ Config.init = () => {
         "burn": "None",
         "upload": "None",
         "nav": "None",
-        "serial": "None"
+        "serial": "None",
+        "saveMixWithCode": true
     }
     const swDefaultConfig = {
         "version": "Mixly2.0"
