@@ -32,7 +32,7 @@ function backup_blocks() {
 
     if ('localStorage' in window && window['localStorage'] != null) {
         window.localStorage.setItem(Mixly.Config.BOARD.boardName, xml);
-        window.localStorage.setItem(Mixly.Config.BOARD.boardName + ".filePath", Mixly.Title.getFilePath());
+        window.localStorage.setItem(Mixly.Config.BOARD.boardName + ".openedPath", Mixly.Title.getFilePath());
     } else {
         //当同时打开打开两个以上（含两个）的Mixly窗口时，只有第一个打开的窗口才有window.localStorage对象，怀疑是javafx的bug.
         //其他的窗口得通过java写cache文件来实现，否则这些窗口在普通、高级视图中进行切换时，无法加载切换之前的块
@@ -63,68 +63,63 @@ function clear_blocks_from_storage() {
  * Restore code blocks from localStorage.
  */
 function restore_blocks() {
-    var xml;
-    if ('localStorage' in window && window['localStorage'] != null && window.localStorage[Mixly.Config.BOARD.boardName]) {
+    const {
+        Config,
+        Electron = {},
+        Web = {},
+        Modules,
+        Env,
+        Drag,
+        Editor,
+        Boards,
+        Title
+    } = Mixly;
+    const { BOARD } = Config;
+    if (!('localStorage' in window && window['localStorage'] != null)) {
+        return;
+    }
+    if (window.localStorage[BOARD.boardName + '.filePath'] && Env.isElectron) {
+        const { File } = Electron;
+        File.openFile(window.localStorage[BOARD.boardName + '.filePath']);
+        window.localStorage[BOARD.boardName + '.filePath'] = '';
+    } else if (window.localStorage[BOARD.boardName]) {
+        let xml;
         try {
             xml = Blockly.Xml.textToDom(window.localStorage[Mixly.Config.BOARD.boardName]);
             if (document.getElementById("boards-type")) {
                 var boardType = window.localStorage[Mixly.Config.BOARD.boardName].match(/(?<=board[\s]*=[\s]*\")[^\n\"]+(?=\")/g);
                 console.log(boardType);
-                var form = layui.form;
-                var count = $("#boards-type option").length;
-                for (var i = 0; i < count; i++) {
-                    if ($("#boards-type").get(0).options[i].text == boardType[0]) {
-                        $("#boards-type").get(0).options[i].selected = true;
-                        break;
-                    }
+                Boards.setSelectedBoard(boardType);
+                profile['default'] = profile[boardType] ?? profile['default'];
+                if (Electron?.BU) {
+                    Electron.BU.readConfigAndSet();
+                } else if (Web?.BU) {
+                    Web.BU.readConfigAndSet();
                 }
-                form.render();
-                if (typeof profile === 'object' && profile[$("#boards-type").find("option:selected").text()] != undefined) {
-                    profile['default'] = profile[$("#boards-type").find("option:selected").text()];
-                }
-                if (Mixly?.Electron?.BU)
-                    Mixly.Electron.BU.readConfigAndSet();
-                else if (Mixly?.Web?.BU)
-                    Mixly.Web.BU.readConfigAndSet();
             }
+            Blockly.Xml.domToWorkspace(xml, Blockly.mainWorkspace);
+            Blockly.mainWorkspace.scrollCenter();
         } catch (e) {
+            Blockly.mainWorkspace.clear();
             console.log(e);
             clear_blocks_from_storage();
         }
-    }
-
-    console.log(window.localStorage);
-    try {
-        Blockly.Xml.domToWorkspace(xml, Blockly.mainWorkspace);
-        Blockly.mainWorkspace.scrollCenter();
-    } catch (e) {
-        Blockly.mainWorkspace.clear();
-        console.log(e);
-        clear_blocks_from_storage();
-    }
-    if ('localStorage' in window && window['localStorage'] != null
-        && window.localStorage[Mixly.Config.BOARD.boardName + ".loadCode"]
-        && window.localStorage[Mixly.Config.BOARD.boardName + ".loadCode"] == "true") {
-        if ('localStorage' in window && window['localStorage'] != null
-            && window.localStorage[Mixly.Config.BOARD.boardName + ".code"]) {
-            try {
-                Mixly.Drag.items.vDrag.full('NEGATIVE'); // 完全显示代码编辑器
-                Mixly.Editor.codeEditor.setValue(window.localStorage[Mixly.Config.BOARD.boardName + ".code"], -1);
-            } catch (e) {
-                console.log(e);
+        if (window.localStorage[BOARD.boardName + ".loadCode"]
+            && window.localStorage[BOARD.boardName + ".loadCode"] == "true") {
+            if (window.localStorage[BOARD.boardName + ".code"]) {
+                Drag.items.vDrag.full('NEGATIVE'); // 完全显示代码编辑器
+                Editor.codeEditor.setValue(window.localStorage[BOARD.boardName + ".code"], -1);
             }
         }
-    }
-    if ('localStorage' in window && window['localStorage'] != null
-        && window.localStorage[Mixly.Config.BOARD.boardName + ".filePath"]
-        && Mixly.Env.isElectron) {
-        var loadPath = window.localStorage[Mixly.Config.BOARD.boardName + ".filePath"];
-        if (Mixly.Modules.fs.existsSync(loadPath)) {
-            Mixly.Electron.File.openedFilePath = loadPath;
-            Mixly.Electron.File.workingPath = Mixly.Modules.path.dirname(loadPath);
-            Mixly.Title.updeteFilePath(loadPath);
-            Mixly.Electron.BU.readConfigAndSet();
-            // Mixly.Electron.File.openFile(loadPath);
+        if (window.localStorage[BOARD.boardName + ".openedPath"]
+            && window.localStorage[BOARD.boardName + ".openedPath"] !== 'null'
+            && Env.isElectron) {
+            const filePath = window.localStorage[BOARD.boardName + ".openedPath"];
+            const { File } = Electron;
+            const { path } = Modules;
+            File.openedFilePath = filePath;
+            File.workingPath = path.dirname(filePath);
+            Title.updeteFilePath(File.openedFilePath);
         }
     }
     const $loading = $('.loading');

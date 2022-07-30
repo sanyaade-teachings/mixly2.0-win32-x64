@@ -536,7 +536,7 @@ Serial.refreshOutputBox = (port) => {
         }
         StatusBarPort.setValue(port, outputStr, toolConfig.scroll);
         portObj.endPos = StatusBarPort.getEndPos(port);
-        portAce[port].setReadOnly(false);
+        portAce[port] && portAce[port].setReadOnly(false);
     }
 }
 
