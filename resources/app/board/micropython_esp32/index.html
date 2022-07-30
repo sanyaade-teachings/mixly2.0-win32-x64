@@ -175,13 +175,13 @@
           </shadow>
         </value>
       </block>
-      <block type="inout_pin_pressed_init">
+      <block type="inout_pin_pressed_init" m-show='micropython:esp32:mixgo'>
         <value name="PIN">
           <shadow type="pins_touch_pin">
           </shadow>
         </value>
       </block>
-      <block type="inout_pin_pressed">
+      <block type="inout_pin_pressed" m-show='micropython:esp32:mixgo'>
         <value name="pin">
           <shadow type="pins_touch">
           </shadow>
@@ -206,12 +206,12 @@
           <block type="controls_pass"></block>
         </statement>
       </block>
-      <block type="inout_analog_write_init">
+      <block type="inout_analog_write_init" m-show='micropython:esp32:mixgo'>
         <value name="PIN">
           <shadow type="pins_dac_pin"></shadow>
         </value>
       </block>
-      <block type="inout_analog_write">
+      <block type="inout_analog_write" m-show='micropython:esp32:mixgo'>
         <value name="PIN">
           <shadow type="pins_dac"></shadow>
         </value>
