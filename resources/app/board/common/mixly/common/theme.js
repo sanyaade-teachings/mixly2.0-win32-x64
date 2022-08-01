@@ -3,38 +3,39 @@
 goog.require('Blockly');
 goog.require('Mixly.StatusBar');
 goog.require('Mixly.StatusBarPort');
+goog.require('Mixly.Editor');
 goog.provide('Mixly.Theme');
 
-const { Theme, StatusBar, StatusBarPort } = Mixly;
+const { Theme, StatusBar, StatusBarPort, Editor } = Mixly;
 
-Theme.changeEditorTheme_light = function () {
-    $("#nav").removeClass("layui-nav layui-bg-cyan");
-    $("#nav").addClass("layui-nav layui-bg-green");
-    $("body").removeClass("dark");
-    $("body").addClass("light");
-    Blockly.mainWorkspace.setTheme(Blockly.Themes.Classic);
-    var theme = "ace/theme/crimson_editor";
-    if (Blockly.Arduino) {
-        theme = "ace/theme/xcode";
+Theme.changeTo = function (type) {
+    const { blockEditor, codeEditor } = Editor;
+    let blockEditorTheme, codeEditorTheme, statusBarTheme;
+    if (type === 'dark') {
+        $("#nav").removeClass("layui-bg-green").addClass("layui-bg-cyan");
+        $("body").removeClass("light").addClass("dark");
+        blockEditorTheme = Blockly.Themes.Dark;
+        codeEditorTheme = 'ace/theme/dracula';
+        statusBarTheme = 'ace/theme/terminal';
+    } else {
+        $("#nav").removeClass("layui-bg-cyan").addClass("layui-bg-green");
+        $("body").removeClass("dark").addClass("light");
+        blockEditorTheme = Blockly.Themes.Classic;
+        codeEditorTheme = "ace/theme/crimson_editor";
+        if (Blockly.Arduino) {
+            codeEditorTheme = "ace/theme/xcode";
+        }
+        statusBarTheme = 'ace/theme/xcode';
     }
-    if (editor != null) {
-        editor.setOption("theme", theme);
-        $("#content_arduino").css("background-color", "#fff");
+    blockEditor.setTheme(blockEditorTheme);
+    codeEditor.setOption("theme", codeEditorTheme);
+    if (StatusBar.Ace) {
+        StatusBar.Ace.setOption("theme", statusBarTheme);
     }
-    try {
-        if (editor_side_code != null) {
-            editor_side_code.setOption("theme", theme);
+    if (StatusBarPort?.portNames) {
+        for (let i = 0, length = StatusBarPort.portNames.length; i < length; i++) {
+            StatusBarPort.portAce[StatusBarPort.portNames[i]].setOption("theme", statusBarTheme);
         }
-        if (StatusBar.Ace != null) {
-            StatusBar.Ace.setOption("theme", "ace/theme/xcode");
-        }
-        if (StatusBarPort?.portNames) {
-            for (let i = 0, length = StatusBarPort.portNames.length; i < length; i++) {
-                StatusBarPort.portAce[StatusBarPort.portNames[i]].setOption("theme", "ace/theme/xcode");
-            }
-        }
-    } catch (e) {
-
     }
 }
 
@@ -43,7 +44,7 @@ Theme.changeEditorTheme_dark = function () {
     $("#nav").addClass("layui-nav layui-bg-cyan");
     $("body").removeClass("light");
     $("body").addClass("dark");
-    Blockly.mainWorkspace.setTheme(Blockly.Themes.Dark);
+    
     var theme = "ace/theme/dracula";
     if (editor != null) {
         editor.setOption("theme", theme);
@@ -65,5 +66,14 @@ Theme.changeEditorTheme_dark = function () {
 
     }
 }
+
+const themeMedia = window.matchMedia("(prefers-color-scheme: light)");
+themeMedia.addListener(e => {
+    if (e.matches) {
+        Theme.changeTo('light');
+    } else {
+        Theme.changeTo('dark');
+    }
+});
 
 })();
