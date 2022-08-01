@@ -74,10 +74,7 @@
         "pointNum": 100,
         "rts": false,
         "dtr": false
-    },
-    "langFileDir": [
-        "./language"
-    ],
+    },    
     "lib": {
         "mixly": {
             "url": [

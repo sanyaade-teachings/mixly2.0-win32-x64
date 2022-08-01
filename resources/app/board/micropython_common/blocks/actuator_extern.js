@@ -6,13 +6,32 @@ goog.require('Blockly.Blocks');
 Blockly.Blocks.actuator_extern.HUE = '#74A55B'
 
 //music
+Blockly.Blocks.esp32_music_pitch_init = {
+    init: function () {
+        this.setColour(Blockly.Blocks.actuator_extern.HUE);
+        this.appendDummyInput("")
+            .appendField(Blockly.MIXLY_MIDI)
+        this.appendValueInput('SUB')
+            .appendField(Blockly.MIXLY_SETUP)
+            .setCheck("var");
+        this.appendValueInput("PIN", Number)
+           .setCheck(Number)
+           .setAlign(Blockly.ALIGN_RIGHT)
+           .appendField(Blockly.MIXLY_PIN);
+        
+        this.setInputsInline(true);
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setTooltip(Blockly.MIXLY_RGB_PIN_COUNT);
+    }
+};
+
 Blockly.Blocks.esp32_music_pitch = {
     init: function() {
         this.setColour(Blockly.Blocks.actuator_extern.HUE);
-        this.appendValueInput("PIN", Number)
+        this.appendValueInput('SUB')
+        this.appendDummyInput("")
             .appendField(Blockly.MIXLY_TONE)
-            .appendField(Blockly.MIXLY_PIN )
-            .setCheck(Number);
         this.appendValueInput('pitch')
             .setCheck(Number)
             .appendField(Blockly.MIXLY_FREQUENCY);
@@ -26,10 +45,9 @@ Blockly.Blocks.esp32_music_pitch = {
 Blockly.Blocks.esp32_music_pitch_with_time = {
     init: function() {
         this.setColour(Blockly.Blocks.actuator_extern.HUE);
-        this.appendValueInput("PIN", Number)
+        this.appendValueInput('SUB')
+        this.appendDummyInput("")
             .appendField(Blockly.MIXLY_TONE)
-            .appendField(Blockly.MIXLY_PIN )
-            .setCheck(Number);
         this.appendValueInput('pitch')
             .setCheck(Number)
             .appendField(Blockly.MIXLY_FREQUENCY);
@@ -46,11 +64,9 @@ Blockly.Blocks.esp32_music_pitch_with_time = {
 Blockly.Blocks.esp32_music_play_list = {
     init: function () {
         this.setColour(Blockly.Blocks.actuator_extern.HUE);
+        this.appendValueInput('SUB')
         this.appendValueInput('LIST')
             .appendField(Blockly.MIXLY_ESP32_MUSIC_PLAY_LISTS)
-        this.appendValueInput('PIN')
-            .setCheck(Number)
-            .appendField(Blockly.MIXLY_PIN );
         this.setPreviousStatement(true);
         this.setNextStatement(true);
         this.setInputsInline(true);
@@ -59,53 +75,55 @@ Blockly.Blocks.esp32_music_play_list = {
     }
 }
 
-// Blockly.Blocks.esp32_music_set_tempo = {
-//     init: function () {
-//         this.setColour(Blockly.Blocks.actuator_extern.HUE);
-//         this.appendValueInput('TICKS')
-//             .setCheck(Number)
-//             .appendField(Blockly.MIXLY_MICROBIT_JS_SET_TEMPO)
-//             .appendField(Blockly.MICROBIT_ACTUATOR_ticks);
-//         this.appendValueInput('BPM')
-//             .setCheck(Number)
-//             .appendField(Blockly.MIXLY_SPEED);
-//         this.setPreviousStatement(true);
-//         this.setNextStatement(true);
-//         this.setInputsInline(true);
-//         this.setTooltip(Blockly.MIXLY_ESP32_MUSIC_SET_TEMPO);
-//     }
-// }
+Blockly.Blocks.esp32_music_set_tempo_extern = {
+    init: function () {
+        this.setColour(Blockly.Blocks.actuator_extern.HUE);
+        this.appendValueInput('SUB')
+        this.appendValueInput('TICKS')
+            .setCheck(Number)
+            .appendField(Blockly.MIXLY_MICROBIT_JS_SET_TEMPO)
+            .appendField(Blockly.MICROBIT_ACTUATOR_ticks);
+        this.appendValueInput('BPM')
+            .setCheck(Number)
+            .appendField(Blockly.MIXLY_SPEED);
+        this.setPreviousStatement(true);
+        this.setNextStatement(true);
+        this.setInputsInline(true);
+        this.setTooltip(Blockly.MIXLY_ESP32_MUSIC_SET_TEMPO);
+    }
+}
 
-// Blockly.Blocks.esp32_music_get_tempo = {
-//     init: function () {
-//         this.setColour(Blockly.Blocks.actuator_extern.HUE);
-//         this.appendDummyInput()
-//             .appendField(Blockly.MIXLY_MICROBIT_Get_current_tempo)
-//         this.setOutput(true);
-//         this.setInputsInline(true);
-//         this.setTooltip(Blockly.MIXLY_ESP32_MUSIC_GET_TEMPO);
-//     }
-// }
+Blockly.Blocks.esp32_music_get_tempo_extern = {
+    init: function () {
+        this.setColour(Blockly.Blocks.actuator_extern.HUE);
+        this.appendValueInput('SUB')
+        this.appendDummyInput()
+            .appendField(Blockly.MIXLY_MICROBIT_Get_current_tempo)
+        this.setOutput(true);
+        this.setInputsInline(true);
+        this.setTooltip(Blockly.MIXLY_ESP32_MUSIC_GET_TEMPO);
+    }
+}
 
-// Blockly.Blocks.esp32_music_reset = {
-//     init: function () {
-//         this.setColour(Blockly.Blocks.actuator_extern.HUE);
-//         this.appendDummyInput()
-//             .appendField(Blockly.MIXLY_MICROBIT_Reset_music)
-//         this.setPreviousStatement(true);
-//         this.setNextStatement(true);
-//         this.setInputsInline(true);
-//         this.setTooltip(Blockly.MIXLY_ESP32_MUSIC_RESET);
-//     }
-// }
+Blockly.Blocks.esp32_music_reset_extern = {
+    init: function () {
+        this.setColour(Blockly.Blocks.actuator_extern.HUE);
+        this.appendValueInput('SUB')
+        this.appendDummyInput()
+            .appendField(Blockly.MIXLY_MICROBIT_Reset_music)
+        this.setPreviousStatement(true);
+        this.setNextStatement(true);
+        this.setInputsInline(true);
+        this.setTooltip(Blockly.MIXLY_ESP32_MUSIC_RESET);
+    }
+}
 
 Blockly.Blocks.esp32_music_stop = {
     init: function() {
         this.setColour(Blockly.Blocks.actuator_extern.HUE);
-        this.appendValueInput("PIN", Number)
+        this.appendValueInput('SUB')
+        this.appendDummyInput("")
             .appendField(Blockly.MIXLY_NOTONE)
-            .appendField(Blockly.MIXLY_PIN)
-            .setCheck(Number);
         this.setInputsInline(true);
         this.setPreviousStatement(true);
         this.setNextStatement(true);

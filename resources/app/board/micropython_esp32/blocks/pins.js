@@ -284,6 +284,15 @@ Blockly.Blocks['pins_playlist'] = {
     }
 };
 
+Blockly.Blocks['pins_playlist_extern'] = {
+    init: function() {
+        this.setColour(Blockly.Blocks.pins.HUE);
+        this.appendDummyInput("")
+            .appendField(new Blockly.FieldDropdown(profile.default.playlist_extern), 'PIN');
+        this.setOutput(true);
+    }
+};
+
 Blockly.Blocks['pins_exlcdh'] = {
     init: function() {
         this.setColour(Blockly.Blocks.pins.HUE);

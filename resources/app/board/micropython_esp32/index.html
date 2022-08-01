@@ -3485,16 +3485,12 @@
         <block type="extern_rfid_status">
           <value name="SUB">
             <shadow type="variables_get">
-              <field name="VAR">rfid</field>
+              <field name="VAR">xsensor</field>
             </shadow>
           </value>
         </block> 
        
-        <block type="sensor_dht11">
-        <value name="PIN">
-          <shadow type="pins_digital_pin"></shadow>
-        </value>
-      </block>
+        
         <block type="weather_data">
           <value name="SUB">
             <shadow type="variables_get">
@@ -3514,6 +3510,11 @@
             </shadow>
           </value>
         </block>    
+        <block type="sensor_dht11">
+        <value name="PIN">
+          <shadow type="pins_digital_pin"></shadow>
+        </value>
+      </block>
         <block type="HCSR04">
           <value name="PIN1">
             <shadow type="pins_digital_pin">
@@ -3541,11 +3542,23 @@
         <block type="PS2_stk"></block>
     </category>
     
-    <category id="catExternActuator" colour='#74A55B'>      
-      <block type="esp32_music_pitch">
+    <category id="catExternActuator" colour='#74A55B'>   
+      <block type="esp32_music_pitch_init">
+        <value name="SUB">
+          <shadow type="variables_get">
+            <field name="VAR">midi</field>
+          </shadow>
+        </value>
         <value name="PIN">
-          <shadow type="pins_pwm_pin">
+          <shadow type="pins_digital_pin">
             <field name="PIN">0</field>
+          </shadow>
+        </value>        
+      </block>   
+      <block type="esp32_music_pitch">
+        <value name="SUB">
+          <shadow type="variables_get">
+            <field name="VAR">midi</field>
           </shadow>
         </value>
         <value name="pitch">
@@ -3555,9 +3568,9 @@
         </value>
       </block>
       <block type="esp32_music_pitch_with_time">
-        <value name="PIN">
-          <shadow type="pins_pwm_pin">
-            <field name="PIN">0</field>
+        <value name="SUB">
+          <shadow type="variables_get">
+            <field name="VAR">midi</field>
           </shadow>
         </value>
         <value name="pitch">
@@ -3572,22 +3585,53 @@
         </value>
       </block>
       <block type="esp32_music_stop">
-        <value name="PIN">
-          <shadow type="pins_pwm_pin">
-            <field name="PIN">0</field>
+        <value name="SUB">
+          <shadow type="variables_get">
+            <field name="VAR">midi</field>
           </shadow>
         </value>
       </block>
       <block type="esp32_music_play_list">
         <value name="LIST">
-          <shadow type="pins_playlist"></shadow>
+          <shadow type="pins_playlist_extern"></shadow>
         </value>
-        <value name="PIN">
-          <shadow type="pins_pwm_pin">
-            <field name="PIN">0</field>
+        <value name="SUB">
+          <shadow type="variables_get">
+            <field name="VAR">midi</field>
           </shadow>
         </value>
       </block>
+      <block type="esp32_music_set_tempo_extern">
+        <value name="SUB">
+          <shadow type="variables_get">
+            <field name="VAR">midi</field>
+          </shadow>
+        </value>
+          <value name="TICKS">
+            <shadow type="math_number">
+              <field name="NUM">4</field>
+            </shadow>
+          </value>
+          <value name="BPM">
+            <shadow type="math_number">
+              <field name="NUM">120</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="esp32_music_get_tempo_extern">
+          <value name="SUB">
+          <shadow type="variables_get">
+            <field name="VAR">midi</field>
+          </shadow>
+        </value>
+        </block>
+        <block type="esp32_music_reset_extern">
+          <value name="SUB">
+          <shadow type="variables_get">
+            <field name="VAR">midi</field>
+          </shadow>
+        </value>
+        </block>
       <block type="actuator_neopixel_init">
         <value name="SUB">
           <shadow type="variables_get">

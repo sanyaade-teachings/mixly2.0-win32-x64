@@ -37,6 +37,7 @@ Blockly.Python.pins_builtinimg=Blockly.Python.pins_digital;
 Blockly.Python.pins_builtinimg_extern=Blockly.Python.pins_digital;
 Blockly.Python.pins_imglist=Blockly.Python.pins_digital;
 Blockly.Python.pins_playlist=Blockly.Python.pins_digital;
+Blockly.Python.pins_playlist_extern=Blockly.Python.pins_digital;
 Blockly.Python.pins_axis=Blockly.Python.pins_digital;
 Blockly.Python.pins_exlcdh = Blockly.Python.pins_digital;
 Blockly.Python.pins_exlcdv = Blockly.Python.pins_digital;

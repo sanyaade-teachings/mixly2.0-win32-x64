@@ -3463,3 +3463,17 @@ Blockly.MIXLY_ESP32_APDS9960_GESTURE = "gesture recognition";
 Blockly.MIXLY_ESP32_APDS9960_APPROACH = "proximity recognition";
 Blockly.MIXLY_BLE_HANDLE = "bluetooth handle";
 Blockly.MIXLY_ACC_SHAKE = "shake";
+
+Blockly.Msg.MPYTHON_DISPLAY_MODE_0 = 'erase';
+Blockly.Msg.MPYTHON_DISPLAY_MODE_1 = 'draw';
+Blockly.Msg.MPYTHON_DISPLAY_HOLLOW = 'hollow';
+Blockly.Msg.MPYTHON_DISPLAY_SOLID = 'solid';
+Blockly.Msg.MPYTHON_DISPLAY_SHAPE_RECT_MESSAGE0 = '%1 %2 rectangle %3 x %4 y %5 width %6 height %7';
+Blockly.Msg.MPYTHON_DISPLAY_SHAPE_RECT_TOOLTIP = '';
+Blockly.Msg.mpython_horizontal = 'horizontal';
+Blockly.Msg.mpython_vertical = 'vertical';
+Blockly.Msg.MPYTHON_DISPLAY_HVLINE_MESSAGE0 = '%1 %2 line %3 x %4 y %5 length %6';
+Blockly.Msg.MPYTHON_DISPLAY_HVLINE_TOOLTIP = '';
+Blockly.Msg.mpython_display_hline_0 = 'erase';
+Blockly.Msg.mpython_display_hline_1 = 'draw';
+Blockly.MIXLY_MIDI = 'buzzer';
