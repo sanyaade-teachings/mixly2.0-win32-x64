@@ -40,17 +40,17 @@
                 "dtr": false,
                 "rts": false
             }, {
-                "sleep": 100
+                "sleep": 500
             }, {
                 "dtr": false,
                 "rts": true
             }, {
-                "sleep": 100
+                "sleep": 500
             }, {
                 "dtr": false,
                 "rts": false
             }, {
-                "sleep": 100
+                "sleep": 500
             }
         ]
     },
