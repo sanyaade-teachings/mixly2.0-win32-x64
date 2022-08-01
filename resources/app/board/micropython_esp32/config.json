@@ -90,7 +90,7 @@
                 "binFile": [
                     {
                         "offset": "0x1000",
-                        "path": "./build/MixGo-0x1000-V1.19.1-220701.bin"
+                        "path": "./build/MixGo-0x1000-V1.19.1-220801-lib.bin"
                     }
                 ]
             },
@@ -98,7 +98,7 @@
                 "binFile": [
                     {
                         "offset": "0x1000",
-                        "path": "./build/MixGo_PE-0x1000-V1.19.1-220701.bin"
+                        "path": "./build/MixGo_PE-0x1000-V1.19.1-220801-lib.bin"
                     },
                     {
                         "offset": "0x700000",
@@ -110,7 +110,7 @@
                 "binFile": [
                     {
                         "offset": "0x1000",
-                        "path": "./build/MixGo_PE-0x1000-V1.19.1-220701.bin"
+                        "path": "./build/MixGo_PE-0x1000-V1.19.1-220801-lib.bin"
                     }
                 ]
             },
@@ -118,7 +118,7 @@
                 "binFile": [
                     {
                         "offset": "0x1000",
-                        "path": "./build/RM_E1-0x1000-V1.19.1-220705.bin"
+                        "path": "./build/RM_E1-0x1000-V1.19.1-220801-Slib.bin"
                     }
                 ]
             },
