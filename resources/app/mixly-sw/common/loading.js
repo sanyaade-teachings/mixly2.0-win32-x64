@@ -32,6 +32,30 @@ if (userConfig)
         ...userConfig
     };
 
+if (!Env.isElectron) {
+    const themeMedia = window.matchMedia("(prefers-color-scheme: light)");
+    themeMedia.addListener(e => {
+        if (e.matches) {
+            $('body').removeClass('dark').addClass('light');
+        } else {
+            $('body').removeClass('light').addClass('dark');
+        }
+    });
+    Config.USER.theme = themeMedia.matches ? 'light' : 'dark';
+    switch (navigator.language) {
+        case 'zh-CN':
+            Config.USER.language = 'zh-hans';
+            break;
+        case 'zh-HK':
+        case 'zh-SG':
+        case 'zh-TW':
+            Config.USER.language = 'zh-hant';
+            break;
+        default:
+            Config.USER.language = 'en';
+    }
+}
+
 console.log('Config.USER', Config.USER);
 
 Loading.COMMON_CSS = `

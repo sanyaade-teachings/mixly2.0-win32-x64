@@ -32,6 +32,23 @@ if (userConfig)
         ...userConfig
     };
 
+if (!Env.isElectron) {
+    const themeMedia = window.matchMedia("(prefers-color-scheme: light)");
+    Config.USER.theme = themeMedia.matches ? 'light' : 'dark';
+    switch (navigator.language) {
+        case 'zh-CN':
+            Config.USER.language = 'zh-hans';
+            break;
+        case 'zh-HK':
+        case 'zh-SG':
+        case 'zh-TW':
+            Config.USER.language = 'zh-hant';
+            break;
+        default:
+            Config.USER.language = 'en';
+    }
+}
+
 console.log('Config.USER', Config.USER);
 
 Loading.LIGHT_CSS = `
