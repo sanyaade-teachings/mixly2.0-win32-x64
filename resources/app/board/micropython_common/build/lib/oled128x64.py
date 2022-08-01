@@ -82,7 +82,13 @@ class OLED(SSD1106_I2C):
     def image(self, path, x=0, y=0,  size=1, invert=0):
         """Set buffer to value of Python Imaging Library image"""
         size=max(round(size),1)
-        buffer_info,(width, height) = self._image.load(path,invert)
+        if type(path) ==str :
+            buffer_info,(width, height) = self._image.load(path,invert) 
+        elif type(path) ==bytes:
+            buffer_info,(width, height) =  self._image.load_py(path,invert)
+        else:
+            raise ValueError("invalid input")
+            
         if width > self.columns or height > self.rows:
             raise ValueError("Image must be less than display ({0}x{1}).".format(self.columns, self.rows))
         self.bitmap((buffer_info,(width, height)), x, y, size)    
@@ -150,12 +156,12 @@ class OLED(SSD1106_I2C):
                 size=max(round(size),1)
                 font_len,font_buffer=self._take_buffer(str(data),space,size)
                 x=(self.columns-font_len+space)//2 if center else x
-                self.fill_rect(x-1,y-1,font_len+1,font_buffer[0][1][1]*size+1,0)
+                self.fill_rect(x-1,y-1,font_len+2,font_buffer[0][1][1]*size+2,0)
                 for buffer in font_buffer:    #Display character
                     self.bitmap(buffer,x,y,size)
                     x=buffer[1][0]*size+x+space
                 self.show()
-        
+
     def frame(self, data, delay=500, size=5):
         """Display one frame per character"""
         if data:
@@ -172,7 +178,7 @@ class OLED(SSD1106_I2C):
                 for buffer in font_buffer:
                     x=(self.columns - buffer[1][0]*size)//2 
                     y=(self.rows - buffer[1][1]*size)//2 
-                    self.fill_rect(x-2,y-2,buffer[1][0]*size+2,buffer[1][1]*size+2,0)
+                    self.fill_rect(x-1,y-1,buffer[1][0]*size+2,buffer[1][1]*size+2,0)
                     self.bitmap(buffer,x,y,size=size)
                     self.show()
                     time.sleep_ms(delay) 
@@ -184,7 +190,7 @@ class OLED(SSD1106_I2C):
             font_len,font_buffer=self._take_buffer(str(data),space,size)
             for i in range(font_len-space+self.columns):    
                 x=-i+self.columns
-                self.fill_rect(x-1,y-1,self.columns-x+1,font_buffer[0][1][1]*size+1,0)
+                self.fill_rect(x-1,y-1,self.columns-x+2,font_buffer[0][1][1]*size+2,0)
                 for buffer in font_buffer:
                     self.bitmap(buffer,x,y,size)
                     x=buffer[1][0]*size+x+space

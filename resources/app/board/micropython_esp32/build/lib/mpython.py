@@ -46,6 +46,32 @@ onboard_rgb = NeoPixel(Pin(17), 3)
 from music import MIDI
 onboard_music =MIDI(16, invert=1)
 
+class PIN:
+    P0=33
+    P1=32
+    P2=35
+    P3=34
+    P4=39
+    P5=0
+    P6=16
+    P7=17
+    P8=26
+    P9=25
+    P10=36
+    P11=2
+    P13=18
+    P14=19
+    P15=21
+    P16=5
+    P19=22
+    P20=23
+    P23=27
+    P24=14
+    P25=12
+    P26=13
+    P27=15
+    P28=4
+
 '''2-Button'''
 class Button:
     def __init__(self, pin):
