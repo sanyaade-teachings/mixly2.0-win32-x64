@@ -58,7 +58,7 @@ Blockly.Python.sensor_mixgo_light= function(){
     Blockly.Python.definitions_['import_mixgo'] = 'import mixgo';
     return ['mixgo.get_brightness()', Blockly.Python.ORDER_ATOMIC];
     }
-    else if(version == "mPython"){
+    else if(version == "mpython"){
     Blockly.Python.definitions_['import_mpython_onboard_light'] = 'from mpython import onboard_light';
     return ['onboard_light.brightness()', Blockly.Python.ORDER_ATOMIC];
     }
@@ -72,7 +72,7 @@ Blockly.Python.sensor_mixgo_sound= function(){
     Blockly.Python.definitions_['import_mixgo'] = 'import mixgo';
     return ['mixgo.get_soundlevel()', Blockly.Python.ORDER_ATOMIC];
     }
-    else if(version == "mPython"){
+    else if(version == "mpython"){
     Blockly.Python.definitions_['import_mpython_onboard_sound'] = 'from mpython import onboard_sound';
     return ['onboard_sound.soundlevel()', Blockly.Python.ORDER_ATOMIC];
     }
