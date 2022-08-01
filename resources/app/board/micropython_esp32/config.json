@@ -22,7 +22,7 @@
             "command": "\"{esptool}\" --chip esp32 --port {com} --baud 460800 erase_flash && \"{esptool}\" --port {com} --baud 460800 write_flash 0x1000 \"{indexPath}/build/RM_E1-0x1000-V1.19.1-220705.bin\""
         },
         "micropython:esp32:mpython": {
-            "command": "\"{esptool}\" --chip esp32 --port {com} --baud 460800 erase_flash && \"{esptool}\" --port {com} --baud 460800 write_flash 0x1000 \"{indexPath}/build/mPython-0x1000-V1.19.1-220801-lib.bin\" 0x700000 \"{indexPath}/build/HZK12.bin\""
+            "command": "\"{esptool}\" --chip esp32 --port {com} --baud 460800 erase_flash && \"{esptool}\" --port {com} --baud 460800 write_flash 0x1000 \"{indexPath}/build/mPython-0x1000-V1.19.1-220715.bin\" 0x700000 \"{indexPath}/build/HZK12.bin\" && \"{ampy}\" -p {com} -d 1 -r \"{reset}\" put \"{indexPath}/build/face\""
         }
     },
     "upload": {
