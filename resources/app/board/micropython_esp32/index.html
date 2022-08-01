@@ -3527,7 +3527,12 @@
           </value>
         </block>
 
-        <block type="PS2_init"></block>
+        <block type="PS2_init">
+          <field name="PS2_CLK">2</field>
+          <field name="PS2_DOU">4</field>
+          <field name="PS2_DIN">5</field>
+          <field name="PS2_CS">7</field>
+        </block>
         <block type="PS2_vibration">
           <value name="AMP">
             <shadow type="math_number">
