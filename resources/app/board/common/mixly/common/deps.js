@@ -73,11 +73,15 @@ Deps.DEPENDENCY = {
             "require": []
         },{
             "path": '/../blockly-core/field_grid_dropdown.js',
-            "provide": ['FieldGridDropdown'],
+            "provide": ['Blockly.FieldGridDropdown'],
             "require": ['Blockly']
         },{
             "path": '/../blockly-core/field_slider.js',
-            "provide": ['FieldSlider'],
+            "provide": ['Blockly.FieldSlider'],
+            "require": ['Blockly']
+        },{
+            "path": '/../blockly-core/field_bitmap.js',
+            "provide": ['Blockly.FieldBitmap'],
             "require": ['Blockly']
         }/*,{
             "path": '/../blockly-core/continuous_toolbox.js',
@@ -207,9 +211,9 @@ Deps.initDependency(Deps.DEPENDENCY);
 goog.require('Mixly.Loading');
 goog.require('Mixly.JSFuncs');
 goog.require('Mixly.Interface');
-goog.require('Blockly');
-goog.require('FieldGridDropdown');
-goog.require('FieldSlider');
+goog.require('Blockly.FieldGridDropdown');
+goog.require('Blockly.FieldSlider');
+goog.require('Blockly.FieldBitmap');
 
 if (Env.isElectron) {
     goog.require('Mixly.Electron.Loader');

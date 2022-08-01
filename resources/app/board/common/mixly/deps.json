@@ -1017,7 +1017,8 @@
             "require":[
                 "Blockly",
                 "Mixly.StatusBar",
-                "Mixly.StatusBarPort"
+                "Mixly.StatusBarPort",
+                "Mixly.Editor"
             ],
             "provide":[
                 "Mixly.Theme"
