@@ -1792,7 +1792,6 @@
       </block>
       </category>
       <category id="catOnBoardDisplay" name="catOnBoardDisplay" colour='#78B5B4'  m-show="micropython:esp32:mixgo">
-        <block type="display_help"></block>
         <block type="display_show_image">
         <value name="data">
           <shadow type="pins_builtinimg"></shadow>
@@ -3226,7 +3225,7 @@
         </block>
       </category>
     </category>
-    <category id="catExternSensor" colour='#A58C5B'>
+    <category id="catExternSensor" colour='#A58C5B' m-hide="micropython:esp32:rm_e1">
       <!-- 
       <block type="sensor_lm35">
         <value name="PIN">
@@ -3542,7 +3541,7 @@
         <block type="PS2_stk"></block>
     </category>
     
-    <category id="catExternActuator" colour='#74A55B'>   
+    <category id="catExternActuator" colour='#74A55B' m-hide="micropython:esp32:rm_e1">   
       <block type="esp32_music_pitch_init">
         <value name="SUB">
           <shadow type="variables_get">
@@ -3772,7 +3771,7 @@
         </value>
       </block>
     </category>
-    <category id="catExternMonitor" colour='5BA5A5'>
+    <category id="catExternMonitor" colour='5BA5A5' m-hide="micropython:esp32:rm_e1">
 
     <category id="catMatrix" colour='5BA5A5'>
       <block type="communicate_i2c_init">
