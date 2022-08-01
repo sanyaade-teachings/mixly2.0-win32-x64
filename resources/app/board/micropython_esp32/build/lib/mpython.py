@@ -9,7 +9,7 @@ Micropython    library for the mPython-Onboard resources
 dahanzimin From the Mixly Team
 """
 import time,gc
-from machine import Pin,SoftI2C,ADC,PWM,RTC
+from machine import Pin,SoftI2C,ADC,PWM,RTC,TouchPad
 
 '''i2c-onboard'''
 i2c=SoftI2C(scl = Pin(22), sda = Pin(23), freq = 400000)
@@ -46,6 +46,7 @@ onboard_rgb = NeoPixel(Pin(17), 3)
 from music import MIDI
 onboard_music =MIDI(16, invert=1)
 
+'''Port mapping'''
 class PIN:
     P0=33
     P1=32
@@ -105,24 +106,23 @@ button_a = Button(0)
 button_b = Button(2)
 
 '''2-TouchPad'''
-class TouchPad:
+class Touch_Pad:
     def __init__(self, pin,value=220):
-        from machine import TouchPad
         self._pin = TouchPad(Pin(pin))
         self.value = value
         
     def is_touched(self):
-        return self._pin.read()    < self.value
+        return self._pin.read() < self.value
 
     def raw_value(self):
         return self._pin.read()
 
-touch_p = TouchPad(27)
-touch_y = TouchPad(14)
-touch_t = TouchPad(12)
-touch_h = TouchPad(13)
-touch_o = TouchPad(15)
-touch_n = TouchPad(4)
+touch_p = Touch_Pad(27)
+touch_y = Touch_Pad(14)
+touch_t = Touch_Pad(12)
+touch_h = Touch_Pad(13)
+touch_o = Touch_Pad(15)
+touch_n = Touch_Pad(4)
 
 '''2-ADCSensor'''
 class ADCSensor:

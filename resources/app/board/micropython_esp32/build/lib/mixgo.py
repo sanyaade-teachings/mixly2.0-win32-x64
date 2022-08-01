@@ -11,7 +11,7 @@ dahanzimin From the Mixly Team
 """
 
 import time,gc
-from machine import Pin,SoftI2C,ADC,PWM,RTC
+from machine import Pin,SoftI2C,ADC,PWM,RTC,TouchPad
 
 '''i2c-onboard'''
 onboard_i2c=SoftI2C(scl = Pin(22), sda = Pin(21), freq = 400000)
@@ -75,17 +75,19 @@ button_a = Button(17)
 button_b = Button(16)
 
 '''2-TouchPad'''
-class TouchPad:
+class Touch_Pad:
     def __init__(self, pin,value=220):
-        from machine import TouchPad
         self._pin = TouchPad(Pin(pin))
         self.value = value
         
     def is_touched(self):
-        return self._pin.read()    < self.value
+        return self._pin.read() < self.value
 
-touch1 = TouchPad(32)
-touch2 = TouchPad(33)
+    def raw_value(self):
+        return self._pin.read()
+
+touch1 = Touch_Pad(32)
+touch2 = Touch_Pad(33)
 
 '''4-ADCSensor'''
 class ADCSensor:
