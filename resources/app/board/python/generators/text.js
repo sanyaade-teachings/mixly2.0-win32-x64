@@ -15,7 +15,7 @@ Blockly.Python.text = function() {
 Blockly.Python.text_textarea = function() {
   // Text value.
     //var code = 'String('+Blockly.Python.quote_(this.getFieldValue('TEXT'))+')';
-  var code = "'''" + (this.getFieldValue('VALUE')) + "'''";
+  var code = '"""' + (this.getFieldValue('VALUE')) + '"""';
   return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
