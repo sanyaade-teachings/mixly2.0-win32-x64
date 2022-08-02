@@ -15,6 +15,7 @@ var MSG = {
     catGroup: "通信",
     catIR: "红外通信",
     catESPNow: "ESPNow通信",
+    catLora: "Lora通信",
     catI2C: "I2C通信",
     catSPI: "SPI通信",
     catRFID: "RFID",
@@ -3455,3 +3456,10 @@ Blockly.Msg.mpython_display_line_TOOLTIP = '';
 Blockly.Msg.mpython_display_line_MESSAGE0 = '%1 line %2 x1 %3 y1 %4 to x2 %5 y2 %6';
 Blockly.Msg.mpython_display_line_TOOLTIP = '';
 Blockly.MIXLY_MIDI = '蜂鳴器';
+Blockly.MIXLY_CODE_RATE = '編碼率';
+Blockly.MIXLY_SPREADING_FACTOR = '擴頻因數';
+Blockly.MIXLY_TX_POWER = '發射功率';
+Blockly.MIXLY_SIGNAL_BANDWIDTH = '頻寬';
+Blockly.MIXLY_PACKAGE = '包';
+Blockly.MIXLY_SIGNAL_STRENGTH = '信號強度';
+Blockly.MIXLY_SIGNAL_NOISE_RATE = '信噪比';

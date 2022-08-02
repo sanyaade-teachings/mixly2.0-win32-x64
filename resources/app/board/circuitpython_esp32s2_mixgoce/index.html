@@ -2398,7 +2398,7 @@
               </value>
               <value name="SUB">
                 <shadow type="variables_get">
-                  <field name="VAR">rfid</field>
+                  <field name="VAR">ysensor</field>
                 </shadow>
               </value>
             </block>
@@ -2407,14 +2407,14 @@
         <block type="rfid_readid">
           <value name="SUB">
             <shadow type="variables_get">
-              <field name="VAR">rfid</field>
+              <field name="VAR">ysensor</field>
             </shadow>
           </value>
         </block>
         <block type="rfid_readcontent">
           <value name="SUB">
             <shadow type="variables_get">
-              <field name="VAR">rfid</field>
+              <field name="VAR">ysensor</field>
             </shadow>
           </value>
           <value name="SECTOR">
@@ -2426,7 +2426,7 @@
         <block type="rfid_write">
           <value name="SUB">
             <shadow type="variables_get">
-              <field name="VAR">rfid</field>
+              <field name="VAR">ysensor</field>
             </shadow>
           </value>
           <value name="SECTOR">
@@ -2449,6 +2449,25 @@
           </value>
         </block> 
         -->
+        <block type="weather_data">
+          <value name="SUB">
+            <shadow type="variables_get">
+              <field name="VAR">ysensor</field>
+            </shadow>
+          </value>
+        </block> 
+        <block type="weather_uart_mixio">
+          <value name="SUB">
+            <shadow type="variables_get">
+              <field name="VAR">ysensor</field>
+            </shadow>
+          </value>
+          <value name="BASE">
+            <shadow type="text">
+              <field name="TEXT">station</field>
+            </shadow>
+          </value>
+        </block>    
         <block type="sensor_mixgoce_hot_wheel_is_touched"></block>
         <block type="sensor_mixgoce_hot_wheel_degrees"></block>
         <block type="HCSR04">

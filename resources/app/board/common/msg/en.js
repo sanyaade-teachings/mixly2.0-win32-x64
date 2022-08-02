@@ -15,6 +15,7 @@ var MSG = {
     catGroup: "Communicate",
     catIR: "IR Communicate",
     catESPNow: "ESPNow Communicate",
+    catLora: "Lora Communicate",
     catI2C: "I2C",
     catSPI: "SPI",
     catRFID: "RFID",
@@ -3477,3 +3478,10 @@ Blockly.Msg.MPYTHON_DISPLAY_HVLINE_TOOLTIP = '';
 Blockly.Msg.mpython_display_hline_0 = 'erase';
 Blockly.Msg.mpython_display_hline_1 = 'draw';
 Blockly.MIXLY_MIDI = 'buzzer';
+Blockly.MIXLY_CODE_RATE = 'coding rate';
+Blockly.MIXLY_SPREADING_FACTOR = 'spreading factor';
+Blockly.MIXLY_TX_POWER = 'tx power';
+Blockly.MIXLY_SIGNAL_BANDWIDTH = 'signal bandwidth';
+Blockly.MIXLY_PACKAGE = 'package';
+Blockly.MIXLY_SIGNAL_STRENGTH = 'signal intensity';
+Blockly.MIXLY_SIGNAL_NOISE_RATE = 'signal to noise ratio';
