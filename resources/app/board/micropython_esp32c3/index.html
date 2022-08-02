@@ -2997,6 +2997,98 @@
           </statement>
         </block>
       </category>
+      <category id="catLora" colour="140">
+        <block type="communicate_spi_init">
+          <value name="VAR">
+            <shadow type="variables_get">
+              <field name="VAR">spi</field>
+            </shadow>
+          </value>
+          <value name="freq">
+            <shadow type="math_number">
+              <field name="NUM">1000000</field>
+            </shadow>
+          </value>
+          <value name="sck">
+            <shadow type="pins_digital_pin">
+              <field name="PIN">4</field>
+            </shadow>
+          </value>
+          <value name="mosi">
+            <shadow type="pins_digital_pin">
+              <field name="PIN">5</field>
+            </shadow>
+          </value>
+          <value name="miso">
+            <shadow type="pins_output_pin">
+              <field name="PIN">7</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="lora_init">
+          <value name="SPISUB">
+            <shadow type="variables_get">
+              <field name="VAR">spi</field>
+                </shadow>
+          </value>
+          <value name="PINSUB">
+            <shadow type="pins_output_pin">
+              <field name="PIN">8</field>
+            </shadow>
+          </value>
+          <value name="SUB">
+            <shadow type="variables_get">
+              <field name="VAR">my_lora</field>
+            </shadow>
+          </value>
+          <value name="frequency">
+            <shadow type="math_number">
+              <field name="NUM">433.92</field>
+            </shadow>
+          </value>
+          <value name="rate">
+            <shadow type="math_number">
+              <field name="NUM">5</field>
+            </shadow>
+          </value>
+          <value name="factor">
+            <shadow type="math_number">
+              <field name="NUM">7</field>
+            </shadow>
+          </value>
+          <value name="power">
+            <shadow type="math_number">
+              <field name="NUM">16</field>
+            </shadow>
+          </value>
+        </block>
+         <block type="lora_packet">
+          <value name="VAR">
+            <shadow type="variables_get">
+              <field name="VAR">my_lora</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="lora_recv">
+          <value name="VAR">
+            <shadow type="variables_get">
+              <field name="VAR">my_lora</field>
+            </shadow>
+          </value>
+        </block>
+        <block type="lora_send">
+          <value name="VAR">
+            <shadow type="variables_get">
+              <field name="VAR">my_lora</field>
+            </shadow>
+          </value>
+          <value name="data">
+            <shadow type="text">
+              <field name="TEXT">Mixly</field>
+            </shadow>
+          </value>
+        </block>
+      </category>
     </category>
       <category id="catExternSensor" colour='#A58C5B'>
       <!-- 
@@ -3209,7 +3301,7 @@
               </value>
               <value name="SUB">
                 <shadow type="variables_get">
-                  <field name="VAR">xsensor</field>
+                  <field name="VAR">ysensor</field>
                 </shadow>
               </value>
             </block>
@@ -3219,7 +3311,7 @@
         <block type="extern_rfid_readcontent">
           <value name="SUB">
             <shadow type="variables_get">
-              <field name="VAR">xsensor</field>
+              <field name="VAR">ysensor</field>
             </shadow>
           </value>
           <value name="SECTOR">
@@ -3231,7 +3323,7 @@
         <block type="extern_rfid_readid">
           <value name="SUB">
             <shadow type="variables_get">
-              <field name="VAR">xsensor</field>
+              <field name="VAR">ysensor</field>
             </shadow>
           </value>
           <value name="SECTOR">
@@ -3243,7 +3335,7 @@
         <block type="extern_rfid_write">
           <value name="SUB">
             <shadow type="variables_get">
-              <field name="VAR">xsensor</field>
+              <field name="VAR">ysensor</field>
             </shadow>
           </value>
           <value name="SECTOR">
@@ -3261,7 +3353,7 @@
         <block type="extern_rfid_status">
           <value name="SUB">
             <shadow type="variables_get">
-              <field name="VAR">xsensor</field>
+              <field name="VAR">ysensor</field>
             </shadow>
           </value>
         </block> 
@@ -3270,14 +3362,14 @@
         <block type="weather_data">
           <value name="SUB">
             <shadow type="variables_get">
-              <field name="VAR">xsensor</field>
+              <field name="VAR">ysensor</field>
             </shadow>
           </value>
         </block> 
         <block type="weather_uart_mixio">
           <value name="SUB">
             <shadow type="variables_get">
-              <field name="VAR">xsensor</field>
+              <field name="VAR">ysensor</field>
             </shadow>
           </value>
           <value name="BASE">

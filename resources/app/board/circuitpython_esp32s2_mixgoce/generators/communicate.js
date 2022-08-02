@@ -185,6 +185,43 @@ Blockly.Python.communicate_ir_recv = function(){
     return "irremote.resume("+pin+", "+sub+")\n"
 };
 
+Blockly.Python.lora_init=function(){
+    var v = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
+    var sv = Blockly.Python.valueToCode(this, 'SPISUB', Blockly.Python.ORDER_ATOMIC);
+    var pv = Blockly.Python.valueToCode(this, 'PINSUB', Blockly.Python.ORDER_ATOMIC);
+    var fr = Blockly.Python.valueToCode(this, 'frequency', Blockly.Python.ORDER_ATOMIC);
+    var r = Blockly.Python.valueToCode(this, 'rate', Blockly.Python.ORDER_ATOMIC);
+    var f = Blockly.Python.valueToCode(this, 'factor', Blockly.Python.ORDER_ATOMIC);
+    var p = Blockly.Python.valueToCode(this, 'power', Blockly.Python.ORDER_ATOMIC);
+    var bandwidth = this.getFieldValue('bandwidth');
+    var code;    
+    Blockly.Python.definitions_['import_rfm98'] = 'import rfm98';
+    Blockly.Python.definitions_['import_digitalio'] = 'import digitalio';
+    Blockly.Python.definitions_['import_board_*'] = "from board import *";
+    var code = v + ' = rfm98.RFM98('+ sv + ',cs_pin=digitalio.DigitalInOut('+ pv + '),frequency_mhz='+ fr + ',signal_bandwidth='+ bandwidth +',coding_rate='+ r +',spreading_factor='+ f +',tx_power='+ p + ')\n';    
+    return code;
+};
+
+Blockly.Python.lora_packet= function() {
+    Blockly.Python.definitions_['import_rfm98'] = 'import rfm98';
+    var key = this.getFieldValue('key');
+    var name = Blockly.Python.valueToCode(this, 'VAR', Blockly.Python.ORDER_ATOMIC);
+    return [name+"."+key+'()', Blockly.Python.ORDER_ATOMIC];
+}
+
+Blockly.Python.lora_send = function(){
+    Blockly.Python.definitions_['import_rfm98'] = 'import rfm98';
+    var data = Blockly.Python.valueToCode(this, 'data', Blockly.Python.ORDER_ATOMIC);
+    var name = Blockly.Python.valueToCode(this, 'VAR',Blockly.Python.ORDER_ATOMIC);    
+    var code = name+".send(" + data + ")\n";
+    return code;
+};
+
+Blockly.Python.lora_recv= function() {
+    Blockly.Python.definitions_['import_rfm98'] = 'import rfm98';
+    var name = Blockly.Python.valueToCode(this, 'VAR', Blockly.Python.ORDER_ATOMIC);
+    return [name+'.recv()', Blockly.Python.ORDER_ATOMIC];
+}
 /*
 Blockly.Blocks['i2c_init'] = Blockly.Blocks['communicate_i2c_init'];
 Blockly.Blocks['i2c_read'] = Blockly.Blocks['communicate_i2c_read'];

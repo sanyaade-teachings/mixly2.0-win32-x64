@@ -215,38 +215,6 @@ Blockly.Python.actuator_onboard_neopixel_rgb_show_all_rainbow = function(){
 
 
 
-Blockly.Python.actuator_rm_onboard_neopixel_rgb=function(){
-    var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
-    Blockly.Python.definitions_['import_'+version+'_onboard_rgb'] = 'from '+version+' import onboard_rgb';
-  var value_led = Blockly.Python.valueToCode(this, '_LED_', Blockly.Python.ORDER_ATOMIC);
-  var value_rvalue = Blockly.Python.valueToCode(this, 'RVALUE', Blockly.Python.ORDER_ATOMIC);
-  var value_gvalue = Blockly.Python.valueToCode(this, 'GVALUE', Blockly.Python.ORDER_ATOMIC);
-  var value_bvalue = Blockly.Python.valueToCode(this, 'BVALUE', Blockly.Python.ORDER_ATOMIC);
-  var code= 'onboard_rgb['+value_led+'] = ((255-'+value_rvalue+'), (255-'+value_gvalue+'), (255-'+value_bvalue+'))\n';
-  return code;
-};
-
-Blockly.Python.actuator_rm_onboard_neopixel_rgb_all=function(){
-  var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
-    Blockly.Python.definitions_['import_'+version+'_onboard_rgb'] = 'from '+version+' import onboard_rgb';
-  var value_rvalue = Blockly.Python.valueToCode(this, 'RVALUE', Blockly.Python.ORDER_ATOMIC);
-  var value_gvalue = Blockly.Python.valueToCode(this, 'GVALUE', Blockly.Python.ORDER_ATOMIC);
-  var value_bvalue = Blockly.Python.valueToCode(this, 'BVALUE', Blockly.Python.ORDER_ATOMIC);
-  var code= 'onboard_rgb.fill(((255-'+value_rvalue+'), (255-'+value_gvalue+'), (255-'+value_bvalue+')))\n';
-  return code;
-};
-
-Blockly.Python.actuator_rm_onboard_neopixel_rgb_show_all_chase = function(){
-  var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
-    Blockly.Python.definitions_['import_'+version+'_onboard_rgb'] = 'from '+version+' import onboard_rgb';
-  var value_rvalue = Blockly.Python.valueToCode(this, 'RVALUE', Blockly.Python.ORDER_ATOMIC);
-  var value_gvalue = Blockly.Python.valueToCode(this, 'GVALUE', Blockly.Python.ORDER_ATOMIC);
-  var value_bvalue = Blockly.Python.valueToCode(this, 'BVALUE', Blockly.Python.ORDER_ATOMIC);
-  var number_time = Blockly.Python.valueToCode(this, 'time', Blockly.Python.ORDER_ATOMIC);
-  var code= 'onboard_rgb.color_chase((255-'+value_rvalue+'), (255-'+value_gvalue+'), (255-'+value_bvalue+'), '+number_time+')\n';
-  return code;
-};
-
 Blockly.Python.rm_motor=function(){
     var wheel = this.getFieldValue('wheel');
     Blockly.Python.definitions_['import_rm_e1_motor'+wheel] = 'from rm_e1 import motor'+wheel;

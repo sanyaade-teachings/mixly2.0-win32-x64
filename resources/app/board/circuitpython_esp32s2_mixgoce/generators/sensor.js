@@ -237,11 +237,19 @@ Blockly.Python.rfid_use_spi_init=function(){
     var v = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
     var sv = Blockly.Python.valueToCode(this, 'SPISUB', Blockly.Python.ORDER_ATOMIC);
     var pv = Blockly.Python.valueToCode(this, 'PINSUB', Blockly.Python.ORDER_ATOMIC);
-    Blockly.Python.definitions_['import_rc522'] = 'import rc522';
+    var key = this.getFieldValue('key');
     Blockly.Python.definitions_['import_digitalio'] = 'import digitalio';
     Blockly.Python.definitions_['import_board_*'] = 'from board import *';
+    
+    if (key=='RFID') {
+      Blockly.Python.definitions_['import_rc522'] = 'import rc522';    
     var code = v + ' = rc522.RC522('+ sv + ',digitalio.DigitalInOut('+ pv + '))\n';
-    return code;
+    }else if (key=='Weather') {
+      Blockly.Python.definitions_['import_ws_lora'] = 'import ws_lora';
+      var code = v + ' = ws_lora.Weather('+ sv + ',digitalio.DigitalInOut('+ pv + '))\n';
+    }
+    return code;    
+    
 };
 
 Blockly.Python.rfid_read=function(){
@@ -382,4 +390,20 @@ Blockly.Python.PS2_stk = function() {
   var stk=this.getFieldValue('psstk');
   var code= "mixgoce_ps.PS2_keydata()[1]["+stk+"]";
   return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python.weather_data=function(){
+    var sub = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
+    var key = this.getFieldValue('key');
+    Blockly.Python.definitions_['import_ws_lora'] = 'import ws_lora';
+    var code = sub + '.' + key;
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python.weather_uart_mixio=function(){
+    var sub = Blockly.Python.valueToCode(this, 'SUB', Blockly.Python.ORDER_ATOMIC);
+    var base = Blockly.Python.valueToCode(this, 'BASE', Blockly.Python.ORDER_ATOMIC);
+    Blockly.Python.definitions_['import_ws_lora'] = 'import ws_lora';
+    var code = sub + '.uart_mixio(topic=' + base +')\n';
+    return code;
 };

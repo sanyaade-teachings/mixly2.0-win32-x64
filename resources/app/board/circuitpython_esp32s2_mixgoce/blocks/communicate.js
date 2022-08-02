@@ -471,6 +471,94 @@ Blockly.Blocks['communicate_ir_recv'] = {
     }
 };
 
+Blockly.Blocks.lora_init = {
+    init: function () {
+        this.setColour(Blockly.Blocks.communicate.HUE);
+        this.appendValueInput('SUB')
+            .appendField('Lora'+Blockly.MIXLY_SETUP)
+            .setCheck("var");
+        this.appendValueInput('SPISUB')
+            .appendField(Blockly.Msg.CONTROLS_FOR_INPUT_WITH+"SPI")
+            .setCheck("var");
+        this.appendValueInput('PINSUB')
+            .appendField("CS")
+        this.appendValueInput('frequency')
+            .appendField(Blockly.MIXLY_FREQUENCY)    
+        this.appendValueInput('rate')
+            .appendField(Blockly.MIXLY_CODE_RATE)
+        this.appendValueInput('factor')
+            .appendField(Blockly.MIXLY_SPREADING_FACTOR)
+        this.appendValueInput('power')
+            .appendField(Blockly.MIXLY_TX_POWER)    
+        this.appendDummyInput()
+            .appendField(Blockly.MIXLY_SIGNAL_BANDWIDTH)
+            .appendField(new Blockly.FieldDropdown([
+                ['7800','7800'],
+                ['10400','10400'],
+                ['15600','15600'],
+                ['20800','20800'],
+                ['31250','31250'],
+                ['41700','41700'],
+                ['62500','62500'],
+                ['125000','125000'],
+                ['250000','250000'],
+                ['500000','500000']
+            ]), 'bandwidth')    
+        this.setInputsInline(true);
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setTooltip(Blockly.MIXLY_LORA_INIT_TOOLTIP);
+    }
+};
+
+Blockly.Blocks['lora_packet'] = {
+    init: function() {
+        this.setColour(Blockly.Blocks.communicate.HUE);
+        this.appendValueInput('VAR')
+            .setCheck('var')
+            .appendField('Lora ');        
+        this.appendDummyInput()
+            .appendField(Blockly.MIXLY_GET+Blockly.MIXLY_PACKAGE)
+            .appendField(new Blockly.FieldDropdown([
+                [Blockly.MIXLY_SIGNAL_STRENGTH,'packet_rssi'],
+                [Blockly.MIXLY_SIGNAL_NOISE_RATE,'packet_snr']               
+            ]), 'key')        
+        this.setOutput(true);
+        this.setInputsInline(true);
+    }
+};
+
+Blockly.Blocks['lora_send'] = {
+    init: function() {
+        this.setColour(Blockly.Blocks.communicate.HUE);
+        this.appendValueInput('VAR')
+            .setCheck("var")
+            .appendField('Lora ');
+        this.appendDummyInput()
+            .appendField(Blockly.MIXLY_SEND_DATA);   
+        this.appendValueInput('data')
+            .setCheck(String)
+            .appendField(Blockly.MIXLY_MICROPYTHON_SOCKET_SEND);                 
+        this.setPreviousStatement(true);
+        this.setNextStatement(true);
+        this.setInputsInline(true);
+        //this.setTooltip(Blockly.MIXLY_MICROBIT_JS_I2C_WRITE);
+    }
+}
+
+Blockly.Blocks['lora_recv'] = {
+    init: function() {
+        this.setColour(Blockly.Blocks.communicate.HUE);
+        this.appendValueInput('VAR')
+            .setCheck('var')
+            .appendField('Lora ');        
+        this.appendDummyInput()
+            .appendField(Blockly.MIXLY_MIXGO_ESPNOW_RECV)
+        this.setOutput(true,String);
+        this.setInputsInline(true);
+    }
+};
+
 /*
 Blockly.Blocks['i2c_init'] = Blockly.Blocks['communicate_i2c_init'];
 Blockly.Blocks['i2c_read'] = Blockly.Blocks['communicate_i2c_read'];

@@ -504,8 +504,14 @@ Blockly.Blocks.rfid_use_spi_init = {
         this.appendValueInput('PINSUB')
             .appendField("CS")
         this.appendValueInput('SUB')
-            .appendField(Blockly.MIXLY_MICROPYTHON_SOCKET_MAKE + "RFID")
-            .setCheck("var");
+            .appendField(Blockly.MIXLY_MICROPYTHON_SOCKET_MAKE)
+            .setCheck("var");    
+        this.appendDummyInput("")
+            .appendField(Blockly.MIXLY_SETUP + Blockly.Msg.LISTS_SET_INDEX_INPUT_TO)
+            .appendField(new Blockly.FieldDropdown([
+                ["RFID", "RFID"],
+                ["WS-LoRa", "Weather"]
+                ]), "key");
         this.appendDummyInput("")
             .appendField(Blockly.MIXLY_SETUP);
         this.setInputsInline(true);
@@ -825,4 +831,49 @@ Blockly.Blocks.PS2_stk={
     this.setOutput(true, Number);
     this.setTooltip('');
   }
+};
+
+Blockly.Blocks['weather_data'] = {
+    init: function(){
+        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.appendValueInput('SUB')
+            .appendField("无线气象站"+" WS-LoRa")
+            .setCheck("var");
+        this.appendDummyInput("")
+        .appendField(Blockly.MIXLY_MICROBIT_JS_GET)
+        .appendField(new Blockly.FieldDropdown([
+            ["全部", "data()"],
+            ["编号", "data()[0]"],
+            ["电量", "data()[1]"],
+            ["风速", "data()[2]"],
+            ["阵风", "data()[3]"],
+            ["风向", "data()[4]"],
+            ["雨量", "data()[5]"],
+            ["温度", "data()[6]"],
+            ["湿度", "data()[7]"],
+            ["光照", "data()[8]"],
+            ["紫外线", "data()[9]"],
+            ["信号强度", "data()[10]"],
+            ["信噪比", "data()[11]"],            
+            ]), "key");
+        this.setOutput(true, Number);
+        this.setInputsInline(true);
+        this.setTooltip("返回气象数据元组 data= (设备id,电池状态,风速m/s,阵风m/s,风向°,雨量mm,温度℃,湿度%,光照Lux,UVI,信号强度dB,信噪比dB)");
+    }
+};
+
+Blockly.Blocks['weather_uart_mixio'] = {
+    init: function(){
+        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.appendValueInput('SUB')
+            .appendField("无线气象站"+" WS-LoRa")
+            .setCheck("var");
+        this.appendValueInput('BASE')
+            .appendField("以主题")
+        this.appendDummyInput("")
+            .appendField("串口发送至MixIO")
+        this.setInputsInline(true);
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+    }
 };

@@ -1021,10 +1021,6 @@ Blockly.Blocks.PS2_init={
    this.setPreviousStatement(true);
    this.setNextStatement(true);
    this.setTooltip('');
-   this.setFieldValue("IO1","PS2_CLK");
-   this.setFieldValue("IO2","PS2_DOU");
-   this.setFieldValue("IO4","PS2_DIN");
-   this.setFieldValue("IO5","PS2_CS");
  }
 };
 
