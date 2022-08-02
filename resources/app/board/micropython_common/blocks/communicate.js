@@ -755,6 +755,7 @@ Blockly.Blocks.lora_init = {
         this.setInputsInline(true);
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
+        this.setTooltip(Blockly.MIXLY_LORA_INIT_TOOLTIP);
     }
 };
 

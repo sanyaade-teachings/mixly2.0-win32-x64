@@ -18,6 +18,7 @@ var MSG = {
     catLora: "Lora通信",
     catI2C: "I2C通信",
     catSPI: "SPI通信",
+    catSocket: "无线插座",
     catRFID: "RFID",
     catStorage: "存储",
     catStorageSD: 'SD',
@@ -3587,3 +3588,4 @@ Blockly.MIXLY_SIGNAL_BANDWIDTH = '带宽';
 Blockly.MIXLY_PACKAGE = '包';
 Blockly.MIXLY_SIGNAL_STRENGTH = '信号强度';
 Blockly.MIXLY_SIGNAL_NOISE_RATE = '信噪比';
+Blockly.MIXLY_LORA_INIT_TOOLTIP = '频率433±20, 编码率5~8, 扩频因子6~12, 发射功率5~23';

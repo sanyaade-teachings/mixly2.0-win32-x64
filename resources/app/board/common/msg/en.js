@@ -18,6 +18,7 @@ var MSG = {
     catLora: "Lora Communicate",
     catI2C: "I2C",
     catSPI: "SPI",
+    catSocket: "Wireless socket",
     catRFID: "RFID",
     catStorage: "Storage",
     catStorageSD: 'SD',
@@ -3485,3 +3486,4 @@ Blockly.MIXLY_SIGNAL_BANDWIDTH = 'signal bandwidth';
 Blockly.MIXLY_PACKAGE = 'package';
 Blockly.MIXLY_SIGNAL_STRENGTH = 'signal intensity';
 Blockly.MIXLY_SIGNAL_NOISE_RATE = 'signal to noise ratio';
+Blockly.MIXLY_LORA_INIT_TOOLTIP = 'frequency:433±20, coding rate:5~8, spreading factor:6~12, tx power:5~23';
