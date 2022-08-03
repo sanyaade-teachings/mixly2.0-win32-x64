@@ -2869,15 +2869,28 @@
       </block>
     -->
 	<category id="catMixIO" colour="#526FC3">
-        <block type="iot_wifi_connect">
-        <value name="WIFINAME">
-          <shadow type="text">
-            <field name="TEXT">wifiname</field>
+      <block type="network_init">
+        <value name="RX">
+          <shadow type="pins_digital_pin">
+            <field name="PIN">8</field>
           </shadow>
         </value>
-        <value name="PASSWORD">
+        <value name="TX">
+          <shadow type="pins_digital_pin">
+            <field name="PIN">9</field>
+          </shadow>
+        </value>
+      </block>
+
+      <block type="network_connect">
+        <value name="account">
           <shadow type="text">
-            <field name="TEXT">wifipassword</field>
+            <field name="TEXT">MixGo AI</field>
+          </shadow>
+        </value>
+        <value name="password">
+          <shadow type="text">
+            <field name="TEXT">12345</field>
           </shadow>
         </value>
       </block>
