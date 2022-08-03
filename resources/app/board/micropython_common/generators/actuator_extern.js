@@ -26,6 +26,15 @@ Blockly.Python.servo_speed_360 = function() {
   return code;
 };
 
+Blockly.Python.servo_move_old = function() {
+  Blockly.Python.definitions_['import_servo'] = 'import servo';
+  Blockly.Python.definitions_['import_machine'] = 'import machine';
+  var dropdown_pin = Blockly.Python.valueToCode(this, 'PIN',Blockly.Python.ORDER_ATOMIC);
+  var value_degree = Blockly.Python.valueToCode(this, 'DEGREE', Blockly.Python.ORDER_ATOMIC);
+  var code = 'servo.servo_write_angle('+dropdown_pin+','+value_degree+')\n';
+  return code;
+};
+
 Blockly.Python.actuator_ms32006_init = function () {
   Blockly.Python.definitions_['import ms32006'] = 'import ms32006';
   var address =this.getFieldValue('mode')

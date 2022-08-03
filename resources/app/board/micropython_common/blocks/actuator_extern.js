@@ -248,6 +248,26 @@ Blockly.Blocks.servo_speed_360 = {
     }
 };
 
+//Servo
+Blockly.Blocks.servo_move_old = {
+    init: function() {
+        this.setColour(Blockly.Blocks.actuator_extern.HUE);
+        this.appendValueInput("PIN", Number)
+            .appendField(Blockly.MIXLY_SERVO)
+            .appendField(Blockly.MIXLY_PIN )
+            .setCheck(Number);
+        this.appendValueInput("DEGREE", Number)
+            .setCheck(Number)
+            .setAlign(Blockly.ALIGN_RIGHT)
+            .appendField(Blockly.MIXLY_DEGREE_0_180);
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setInputsInline(true);
+        this.setTooltip(Blockly.MIXLY_ESP32_SERVO_MOVE);
+    }
+};
+
+
 Blockly.Blocks.actuator_ms32006_init = {
     init: function () {
         this.setColour(Blockly.Blocks.actuator_extern.HUE);
