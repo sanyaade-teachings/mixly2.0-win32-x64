@@ -3589,3 +3589,5 @@ Blockly.MIXLY_PACKAGE = '包';
 Blockly.MIXLY_SIGNAL_STRENGTH = '信号强度';
 Blockly.MIXLY_SIGNAL_NOISE_RATE = '信噪比';
 Blockly.MIXLY_LORA_INIT_TOOLTIP = '频率433±20, 编码率5~8, 扩频因子6~12, 发射功率5~23';
+Blockly.Msg.ROTATION_FORWARD = "正转";
+Blockly.Msg.ROTATION_BACKWARD = "反转";

@@ -142,8 +142,8 @@ Blockly.Blocks.me_go_dc_motor = {
       this.appendDummyInput()
           .appendField(Blockly.MIXLY_MICROBIT_Direction)
                   .appendField(new Blockly.FieldDropdown([
-            [Blockly.Msg.CLOCKWISE, "CW"],
-            [Blockly.Msg.ANTI_CLOCKWISE, "CCW"],
+            [Blockly.Msg.ROTATION_FORWARD, "CW"],
+            [Blockly.Msg.ROTATION_BACKWARD, "CCW"],
             [Blockly.MOTOR_P, "P"],
             [Blockly.MOTOR_N, "N"]
             ]), "direction");

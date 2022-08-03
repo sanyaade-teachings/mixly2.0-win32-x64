@@ -410,7 +410,7 @@ Blockly.Blocks['storage_file_write'] = {
          .appendField(Blockly.MIXLY_MICROBIT_PY_STORAGE_RENAME);
     this.appendValueInput("NEWFILE")
         .setCheck(String)
-        .appendField(Blockly.MIXLY_MICROBIT_PY_STORAGE_TO);
+        .appendField(Blockly.MIXLY_AS);
      this.setInputsInline(true);
      this.setPreviousStatement(true);
      this.setNextStatement(true);
