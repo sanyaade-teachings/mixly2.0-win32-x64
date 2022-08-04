@@ -4,7 +4,7 @@ goog.provide('Blockly.Blocks.sensor_onboard');
 
 goog.require('Blockly.Blocks');
 
-Blockly.Blocks.sensor_onboard.HUE = '#B4AA78'//'#9e77c9'//40;
+Blockly.Blocks.sensor_onboard.HUE = '#947C54'//'#9e77c9'//40;
 
 Blockly.Blocks['sensor_mixgo_button_is_pressed'] = {
     init: function(){
