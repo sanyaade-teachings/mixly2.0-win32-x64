@@ -2248,6 +2248,7 @@ Blockly.MIXLY_ESP32_OW_WRITE = "Write a string / byte on the bus";
 Blockly.MIXLY_ESP32_OW_SELECT = "Select a specific device by ROM code";
 Blockly.MIXLY_ESP32_OW_RESET = "Reset the bus";
 Blockly.MIXLY_ESP32_SERVO_MOVE = 'Set the rotation angle of the servo (0 ~ 180 °)';
+Blockly.MIXLY_ESP32_SERVO_SPEED_TOOLIPS = 'Set the rotation speed of the servo(-100~100%)';
 Blockly.MIXLY_ESP32_LED_SETONOFF = "Set the status of the embedded LED light";
 Blockly.MIXLY_ESP32_LED_GETONOFF = "Get the current status of the embedded LED light";
 Blockly.MIXLY_ESP32_LED_SETBRIGHT = "Set the current brightness of the embedded LED light (0 ~ 1023)";

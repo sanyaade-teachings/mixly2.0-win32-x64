@@ -2246,6 +2246,7 @@ Blockly.MIXLY_ESP32_OW_WRITE = "在匯流排上寫入字串/位元組";
 Blockly.MIXLY_ESP32_OW_SELECT = "通過ROM代碼選擇特定的設備";
 Blockly.MIXLY_ESP32_OW_RESET = "重置匯流排";
 Blockly.MIXLY_ESP32_SERVO_MOVE = '設置舵機的旋轉角度（0~180°)';
+Blockly.MIXLY_ESP32_SERVO_SPEED_TOOLIPS = '設置舵機的旋轉角度(-100~100%)';
 Blockly.MIXLY_ESP32_LED_SETONOFF = "設置內嵌LED燈的狀態";
 Blockly.MIXLY_ESP32_LED_GETONOFF = "獲取內嵌LED燈當前的狀態";
 Blockly.MIXLY_ESP32_LED_SETBRIGHT = "設置內嵌LED燈的當前亮度（0~65535）";

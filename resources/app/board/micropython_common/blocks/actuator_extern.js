@@ -249,17 +249,17 @@ Blockly.Blocks.servo_speed_360 = {
 };
 
 //Servo
-Blockly.Blocks.servo_move_old = {
+Blockly.Blocks.servo_set_angle = {
     init: function() {
         this.setColour(Blockly.Blocks.actuator_extern.HUE);
         this.appendValueInput("PIN", Number)
-            .appendField(Blockly.MIXLY_SERVO)
+            .appendField('180°'+Blockly.MIXLY_SERVO)
             .appendField(Blockly.MIXLY_PIN )
             .setCheck(Number);
-        this.appendValueInput("DEGREE", Number)
+        this.appendValueInput("NUM", Number)
             .setCheck(Number)
             .setAlign(Blockly.ALIGN_RIGHT)
-            .appendField(Blockly.MIXLY_DEGREE_0_180);
+            .appendField(Blockly.MIXLY_MICROBIT_JS_BY_ANGLE);
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
         this.setInputsInline(true);
@@ -267,6 +267,53 @@ Blockly.Blocks.servo_move_old = {
     }
 };
 
+Blockly.Blocks.servo_set_speed = {
+    init: function() {
+        this.setColour(Blockly.Blocks.actuator_extern.HUE);
+        this.appendValueInput("PIN", Number)
+            .appendField('360°'+Blockly.MIXLY_SERVO)
+            .appendField(Blockly.MIXLY_PIN )
+            .setCheck(Number);
+        this.appendValueInput("NUM", Number)
+            .setCheck(Number)
+            .setAlign(Blockly.ALIGN_RIGHT)
+            .appendField(Blockly.MIXLY_SPEED);
+        this.appendDummyInput()
+            .appendField('%');    
+        this.setPreviousStatement(true, null);
+        this.setNextStatement(true, null);
+        this.setInputsInline(true);
+        this.setTooltip(Blockly.MIXLY_ESP32_SERVO_SPEED_TOOLIPS);
+    }
+};
+
+Blockly.Blocks.servo_get_angle = {
+    init: function() {
+        this.setColour(Blockly.Blocks.actuator_extern.HUE);
+        this.appendValueInput("PIN", Number)
+            .appendField('180°'+Blockly.MIXLY_SERVO)
+            .appendField(Blockly.MIXLY_PIN )
+            .setCheck(Number);  
+        this.appendDummyInput()
+            .appendField(Blockly.MIXLY_GET+Blockly.MIXLY_MICROBIT_JS_BY_ANGLE);      
+        this.setOutput(true,Number);
+        this.setInputsInline(true);
+    }
+};
+
+Blockly.Blocks.servo_get_speed = {
+    init: function() {
+        this.setColour(Blockly.Blocks.actuator_extern.HUE);
+        this.appendValueInput("PIN", Number)
+            .appendField('360°'+Blockly.MIXLY_SERVO)
+            .appendField(Blockly.MIXLY_PIN )
+            .setCheck(Number);        
+        this.appendDummyInput()
+            .appendField(Blockly.MIXLY_GET+Blockly.MIXLY_SPEED);    
+        this.setOutput(true,Number);
+        this.setInputsInline(true);
+    }
+};
 
 Blockly.Blocks.actuator_ms32006_init = {
     init: function () {

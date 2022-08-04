@@ -26,13 +26,34 @@ Blockly.Python.servo_speed_360 = function() {
   return code;
 };
 
-Blockly.Python.servo_move_old = function() {
+Blockly.Python.servo_set_angle = function() {
   Blockly.Python.definitions_['import_servo'] = 'import servo';
-  Blockly.Python.definitions_['import_machine'] = 'import machine';
   var dropdown_pin = Blockly.Python.valueToCode(this, 'PIN',Blockly.Python.ORDER_ATOMIC);
-  var value_degree = Blockly.Python.valueToCode(this, 'DEGREE', Blockly.Python.ORDER_ATOMIC);
-  var code = 'servo.servo_write_angle('+dropdown_pin+','+value_degree+')\n';
+  var num = Blockly.Python.valueToCode(this, 'NUM', Blockly.Python.ORDER_ATOMIC);
+  var code = 'servo.servo180_angle('+dropdown_pin+','+num+')\n';
   return code;
+};
+
+Blockly.Python.servo_set_speed = function() {
+  Blockly.Python.definitions_['import_servo'] = 'import servo';
+  var dropdown_pin = Blockly.Python.valueToCode(this, 'PIN',Blockly.Python.ORDER_ATOMIC);
+  var num = Blockly.Python.valueToCode(this, 'NUM', Blockly.Python.ORDER_ATOMIC);
+  var code = 'servo.servo360_speed('+dropdown_pin+','+num+')\n';
+  return code;
+};
+
+Blockly.Python.servo_get_angle = function() {
+  Blockly.Python.definitions_['import_servo'] = 'import servo';
+  var dropdown_pin = Blockly.Python.valueToCode(this, 'PIN',Blockly.Python.ORDER_ATOMIC);
+  var code = 'servo.servo180_angle('+dropdown_pin+')';
+  return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python.servo_get_speed = function() {
+  Blockly.Python.definitions_['import_servo'] = 'import servo';
+  var dropdown_pin = Blockly.Python.valueToCode(this, 'PIN',Blockly.Python.ORDER_ATOMIC);
+  var code = 'servo.servo360_speed('+dropdown_pin+')';
+  return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
 Blockly.Python.actuator_ms32006_init = function () {
@@ -148,14 +169,14 @@ Blockly.Python.actuator_extern_get_led_bright= function() {
     Blockly.Python.definitions_['import_mixgo'] = 'import mixgo';
     var pin = Blockly.Python.valueToCode(this, 'PIN', Blockly.Python.ORDER_ATOMIC);
     var code = "mixgo.LED(" + pin +").getbrightness("+")";
-    return [code, Blockly.Python.ORDER_ATOMIC];;
+    return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
 Blockly.Python.actuator_extern_get_led_state= function() {
     Blockly.Python.definitions_['import_mixgo'] = 'import mixgo';
     var pin = Blockly.Python.valueToCode(this, 'PIN', Blockly.Python.ORDER_ATOMIC);
     var code = "mixgo.LED(" + pin +").getonoff("+")";
-    return [code, Blockly.Python.ORDER_ATOMIC];;
+    return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
 Blockly.Python.actuator_extern_led_brightness= function() {
