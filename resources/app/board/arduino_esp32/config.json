@@ -249,6 +249,48 @@
                 ]
             }
         },
+        "M5Stick-C": {
+            "xmlPath": "./xml/esp32.xml",
+            "key": "esp32:esp32:m5stick_c",
+            "config": {
+                "PartitionScheme": [
+                    {
+                        "key": "default",
+                        "label": "Default"
+                    }, {
+                        "key": "Large APP",
+                        "label": "No OTA (Large APP)"
+                    }
+                ],
+                "UploadSpeed": [
+                    {
+                        "key": "1500000",
+                        "label": "1500000"
+                    }
+                ]
+            }
+        }, 
+        "M5Stick-CORE": {
+            "xmlPath": "./xml/esp32.xml",
+            "key": "esp32:esp32:m5stick_core",
+            "config": {
+                "PartitionScheme": [
+                    {
+                        "key": "default",
+                        "label": "Default"
+                    }, {
+                        "key": "Large APP",
+                        "label": "No OTA (Large APP)"
+                    }
+                ],
+                "UploadSpeed": [
+                    {
+                        "key": "1500000",
+                        "label": "1500000"
+                    }
+                ]
+            }
+        },                
         "M5Stack-FIRE": {
             "xmlPath": "./xml/esp32.xml",
             "key": "esp32:esp32:m5stack-fire",

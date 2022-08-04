@@ -564,6 +564,8 @@ profile["OLIMEX ESP32-EVB"] =
 profile["OLIMEX ESP32-GATEWAY"] =
 profile["OLIMEX ESP32-PoE"] =
 profile["ThaiEasyElec's ESPino32"] =
+profile["M5Stick-C"] =
+profile["M5Stick-CORE"] =
 profile["M5Stack-FIRE"] =
 profile["ODROID ESP32"] =
 profile["Heltec_WIFI_Kit_32"] =
@@ -595,9 +597,6 @@ profile["esp32_MixGo"];
 
 profile['PocketCard'] =
 profile["PocketCard"];
-
-profile["M5Stick-C"] =
-profile["m5stick_c"];
 
 /* Arduino ESP32S2用管脚定义 */
 profile['Generic ESP32S2 Module'] =
