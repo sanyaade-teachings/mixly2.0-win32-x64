@@ -3,7 +3,7 @@
 goog.provide('Blockly.Blocks.actuator_onboard');
 goog.require('Blockly.Blocks');
 
-Blockly.Blocks.actuator_onboard.HUE = '#8CB478'
+Blockly.Blocks.actuator_onboard.HUE = '#6C9858'
 
 //LED
 Blockly.Blocks['number'] = {
