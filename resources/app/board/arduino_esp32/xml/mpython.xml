@@ -2085,7 +2085,7 @@
       </shadow>
     </value>
     <value name="LEDArray">
-      <block type="display_Matrix_LedArray"></block>
+      <block type="display_matrix_bitmap"></block>
     </value>
   </block>
   <block type="Matrix_img">

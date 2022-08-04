@@ -289,6 +289,25 @@ Blockly.Arduino.display_Matrix_LedArray = function() {
   return [varName, Blockly.Arduino.ORDER_ATOMIC];
 };
 
+//点阵位图数据
+Blockly.Arduino.display_matrix_bitmap = function() {
+  var varName = this.getFieldValue('VAR');
+  var a = this.getFieldValue('BITMAP');
+  var code = '{';
+  for (var i = 7; i >= 0; i--) {
+    var tmp = "";
+    for (var j = 7; j >= 0; j--) {
+      tmp += a[i][j];
+    }
+    tmp = (parseInt(tmp, 2)).toString(16);
+    if (tmp.length == 1) tmp = "0" + tmp;
+    code += '0x' + tmp + ((i !== 0) ? ',' : '');
+  }
+  code += '};';
+  Blockly.Arduino.definitions_[varName] = "const uint8_t " + varName + "[8] PROGMEM =" + code;
+  return [varName, Blockly.Arduino.ORDER_ATOMIC];
+};
+
 //点阵设置亮度
 Blockly.Arduino.display_Matrix_Brightness = function () {
  var matrixType = this.getFieldValue('TYPE');
@@ -738,6 +757,20 @@ Blockly.Arduino.lcd_pattern = function() {
   Blockly.Arduino.definitions_[varName] = "byte " + varName + "[]=" + code;
   return [varName, Blockly.Arduino.ORDER_ATOMIC];
 };
+
+Blockly.Arduino.display_lcd_bitmap = function() {
+  var varName = this.getFieldValue('VAR');
+  var bitmap = this.getFieldValue('BITMAP');
+  var code = '{';
+  var i = 0;
+  for (; i < bitmap.length - 1; i++) {
+    code += '0B' + bitmap[i].join('') + ',';
+  }
+  code += bitmap[i].join('') + '};';
+  Blockly.Arduino.definitions_[varName] = "byte " + varName + "[]=" + code;
+  return [varName, Blockly.Arduino.ORDER_ATOMIC];
+};
+
 function RGB_RGB565(colour){
   colour=colour.substr(1);
   var R,G,B;

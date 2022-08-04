@@ -606,6 +606,33 @@ Blockly.Blocks.display_Matrix_LedArray = {
   }
 };
 
+Blockly.Blocks.display_matrix_bitmap = {
+  init: function() {
+    this.setColour(Blockly.Blocks.display.HUE);
+    this.appendDummyInput("")
+        .appendField(Blockly.MIXLY_DISPLAY_MATRIX_ARRAYVAR)
+        .appendField(new Blockly.FieldTextInput("LedArray1"), "VAR");
+    this.appendDummyInput("")
+        .setAlign(Blockly.ALIGN_CENTRE)
+        .appendField(new Blockly.FieldBitmap([
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0]
+        ], null, {
+          filledColor: '#000',
+          emptyColor: '#5ba5a5',
+          bgColor: '#e5e7f1'
+        }), 'BITMAP');
+    this.setOutput(true, Number);
+    this.setTooltip("");
+  }
+};
+
 //点阵屏亮度
 Blockly.Blocks.display_Matrix_Brightness = {
   init: function () {
@@ -1767,6 +1794,34 @@ Blockly.Blocks.lcd_pattern = {
     this.setTooltip("");
   }
 };
+
+Blockly.Blocks.display_lcd_bitmap = {
+  init: function() {
+    this.setColour(Blockly.Blocks.display.HUE);
+    this.appendDummyInput("")
+        .appendField(Blockly.MIXLY_DISPLAY_MATRIX_ARRAYVAR)
+        .appendField(new Blockly.FieldTextInput("lcd"), "VAR");
+    this.appendDummyInput("")
+        .setAlign(Blockly.ALIGN_CENTRE)
+        .appendField(new Blockly.FieldBitmap([
+          [0, 0, 0, 0, 0],
+          [0, 1, 1, 1, 0],
+          [1, 0, 0, 0, 1],
+          [1, 0, 1, 0, 1],
+          [1, 0, 1, 0, 1],
+          [1, 0, 0, 0, 1],
+          [0, 1, 1, 1, 0],
+          [0, 0, 0, 0, 0]
+        ], null, {
+          filledColor: '#000',
+          emptyColor: '#5ba5a5',
+          bgColor: '#e5e7f1'
+        }), 'BITMAP');
+    this.setOutput(true, Number);
+    this.setTooltip("");
+  }
+};
+
 function RGB_RGB565(colour){
   colour=colour.substr(1);
   var R,G,B;

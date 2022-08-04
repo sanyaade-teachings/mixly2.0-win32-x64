@@ -324,7 +324,6 @@ var indexText = {
     "发送字符串": "发送字符串",
     "帮助": "帮助",
     "退出串口终端": "退出串口终端",
-    "清空": "清空",
     "增大字号": "增大字号",
     "减小字号": "减小字号",
     "默认字号": "默认字号",
@@ -341,6 +340,10 @@ Blockly.Msg.REMOVE_FROM_BACKPACK = '从背包中移除';
 
 /* 画布块查找 */
 Blockly.Msg.WORKSPACE_SEARCH_OPEN = '查找图形块';
+
+/* Blockly.FieldBitmap文本翻译 */
+Blockly.Msg.RANDOM = '随机';
+Blockly.Msg.CLEAR = '清空';
 
 Blockly.Msg.ADD_COMMENT = "添加注释";
 Blockly.Msg.AUTH = "请授权这个应用程序以保存您的作品并共享。";

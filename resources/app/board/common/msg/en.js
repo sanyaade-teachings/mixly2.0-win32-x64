@@ -320,7 +320,6 @@ var indexText = {
     "发送字符串": "Send string",
     "帮助": "Help",
     "退出串口终端": "Exit terminal",
-    "清空": "Empty",
     "增大字号": "Increase font size",
     "减小字号": "Decrease font size",
     "默认字号": "Default font size",
@@ -337,6 +336,10 @@ Blockly.Msg.REMOVE_FROM_BACKPACK = 'Remove from Backpack';
 
 /* 画布块查找 */
 Blockly.Msg.WORKSPACE_SEARCH_OPEN = 'Search blocks';
+
+/* Blockly.FieldBitmap文本翻译 */
+Blockly.Msg.RANDOM = 'Random';
+Blockly.Msg.CLEAR = 'Clear';
 
 Blockly.Msg.ADD_COMMENT = "Add Comment";
 Blockly.Msg.AUTH = "Please authorize this app to enable your work to be saved and to allow it to be shared by you.";
