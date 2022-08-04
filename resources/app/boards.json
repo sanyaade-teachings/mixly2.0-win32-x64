@@ -25,9 +25,14 @@
         "boardIndex": "./board/python_mixpy/index_board_mixpy.html",
         "env": 1
     },{
-        "boardImg": "./board/micropython_nrf51822_microbit/media/microbit.png",
-        "boardName": "BBC micro:bit",
-        "boardIndex": "./board/micropython_nrf51822_microbit/index.html",
+        "boardImg": "./board/python_skulpt/media/webpy.png",
+        "boardName": "Python 3 Lite",
+        "boardIndex": "./board/python_skulpt/index_skulpt_board_mixpy.html",
+        "env": 2
+    },{
+        "boardImg": "./board/python_skulpt/media/webpy.png",
+        "boardName": "Python 3 MixToy",
+        "boardIndex": "./board/python_skulpt_mixtoy/index_skulpt_board_mixpy.html",
         "env": 2
     },{
         "boardImg": "./board/micropython_k210_mixgoai/media/mixgoai.png",
@@ -50,14 +55,9 @@
         "boardIndex": "./board/circuitpython_esp32s2_mixgocar/index.html",
         "env": 2
     },{
-        "boardImg": "./board/python_skulpt/media/webpy.png",
-        "boardName": "Python 3 Lite",
-        "boardIndex": "./board/python_skulpt/index_skulpt_board_mixpy.html",
-        "env": 2
-    },{
-        "boardImg": "./board/python_skulpt/media/webpy.png",
-        "boardName": "Python 3 MixToy",
-        "boardIndex": "./board/python_skulpt_mixtoy/index_skulpt_board_mixpy.html",
+        "boardImg": "./board/micropython_nrf51822_microbit/media/microbit.png",
+        "boardName": "BBC micro:bit",
+        "boardIndex": "./board/micropython_nrf51822_microbit/index.html",
         "env": 2
     },{
         "boardImg": "./board/arduino_esp8266/media/esp8266.png",
