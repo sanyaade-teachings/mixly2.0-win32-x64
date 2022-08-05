@@ -377,7 +377,7 @@ div.blocklyToolboxDiv > div.blocklyToolboxContents > div:nth-child(12) > div.blo
 	background-size: 100% auto; 
 }
 #catOnBoardSensor.blocklyTreeRow > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
-    background:url('../../common/media/mark/sensor_extern.png') no-repeat;
+    background:url('../../common/media/mark/sensor_onboard.png') no-repeat;
     background-size: 100% auto;
 }
 #catOnBoardSensor.blocklyTreeRow.blocklyTreeSelected > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
@@ -385,7 +385,7 @@ div.blocklyToolboxDiv > div.blocklyToolboxContents > div:nth-child(12) > div.blo
     background-size: 100% auto;
 }
 #catOnBoardActuator.blocklyTreeRow > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
-    background:url('../../common/media/mark/actuator_extern.png') no-repeat;
+    background:url('../../common/media/mark/actuator_onboard.png') no-repeat;
     background-size: 100% auto;
 }
 #catOnBoardActuator.blocklyTreeRow.blocklyTreeSelected > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
@@ -393,7 +393,7 @@ div.blocklyToolboxDiv > div.blocklyToolboxContents > div:nth-child(12) > div.blo
     background-size: 100% auto;
 }
 #catOnBoardDisplay.blocklyTreeRow > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
-    background:url('../../common/media/mark/display_extern.png') no-repeat;
+    background:url('../../common/media/mark/display_onboard.png') no-repeat;
     background-size: 100% auto;
 }
 #catOnBoardDisplay.blocklyTreeRow.blocklyTreeSelected > div.blocklyTreeRowContentContainer > span.blocklyTreeIcon{
