@@ -2290,18 +2290,7 @@
           </shadow>
         </value>
       </block>
-      <block type="communicate_buffer">
-        <value name="VAR">
-          <shadow type="variables_get">
-            <field name="VAR">buf</field>
-          </shadow>
-        </value>
-        <value name="data">
-          <shadow type="math_number">
-            <field name="NUM">50</field>
-          </shadow>
-        </value>
-      </block>
+      
       </category>
       <category id="catI2C" colour="140">
       <block type="communicate_i2c_onboard"></block>
@@ -2402,17 +2391,23 @@
           </shadow>
         </value>
       </block>
-      <block type="communicate_spi_unlock">
-        <value name="VAR">
-          <shadow type="variables_get">
-            <field name="VAR">spi</field>
-          </shadow>
-        </value>
-      </block>
+      
       <block type="communicate_i2c_unlock">
         <value name="VAR">
           <shadow type="variables_get">
             <field name="VAR">i2c_extend</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="communicate_buffer">
+        <value name="VAR">
+          <shadow type="variables_get">
+            <field name="VAR">buf</field>
+          </shadow>
+        </value>
+        <value name="data">
+          <shadow type="math_number">
+            <field name="NUM">50</field>
           </shadow>
         </value>
       </block>
@@ -2512,6 +2507,13 @@
         <value name="read">
           <shadow type="variables_get">
             <field name="VAR">buf</field>
+          </shadow>
+        </value>
+      </block>
+      <block type="communicate_spi_unlock">
+        <value name="VAR">
+          <shadow type="variables_get">
+            <field name="VAR">spi</field>
           </shadow>
         </value>
       </block>

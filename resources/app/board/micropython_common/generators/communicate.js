@@ -3,6 +3,13 @@
 goog.provide('Blockly.Python.communicate');
 goog.require('Blockly.Python');
 
+Blockly.Python.communicate_i2c_onboard = function(){
+    var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
+    Blockly.Python.definitions_['import_'+version] = 'import '+version;
+    var code = version+'.onboard_i2c';
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
 Blockly.Python.communicate_i2c_init = function () {
 	Blockly.Python.definitions_['import_machine'] = 'import machine';
 	var dropdown_pin1 = Blockly.Python.valueToCode(this, 'RX',Blockly.Python.ORDER_ATOMIC);

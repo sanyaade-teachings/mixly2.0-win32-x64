@@ -5,6 +5,15 @@ goog.require('Blockly.Blocks');
 
 Blockly.Blocks.communicate.HUE = 140
 
+Blockly.Blocks['communicate_i2c_onboard'] = {
+    init: function(){
+        this.setColour(Blockly.Blocks.communicate.HUE);
+        this.appendDummyInput()
+            .appendField(Blockly.MIXLY_LED_ON_BOARD+"I2C");
+        this.setOutput(true);
+        this.setInputsInline(true);
+    }
+};
 
 Blockly.Blocks['communicate_i2c_init'] = {
     init: function() {
