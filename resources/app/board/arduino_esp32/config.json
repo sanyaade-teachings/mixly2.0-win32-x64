@@ -251,7 +251,7 @@
         },
         "M5Stick-C": {
             "xmlPath": "./xml/esp32.xml",
-            "key": "esp32:esp32:m5stick_c",
+            "key": "esp32:esp32:m5stick-c",
             "config": {
                 "PartitionScheme": [
                     {
@@ -270,9 +270,9 @@
                 ]
             }
         }, 
-        "M5Stick-CORE": {
+        "M5Stack-CORE": {
             "xmlPath": "./xml/esp32.xml",
-            "key": "esp32:esp32:m5stick_core",
+            "key": "esp32:esp32:m5stack-core2",
             "config": {
                 "PartitionScheme": [
                     {
