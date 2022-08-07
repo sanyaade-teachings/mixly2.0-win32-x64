@@ -10,14 +10,15 @@ Blockly.Blocks.sensor.HUE = 40//'#9e77c9'//40;
 
 Blockly.Blocks['sensor_mixgocar_pin_near_line'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput()
             .appendField(Blockly.MIXLY_MICROBIT_PY_STORAGE_GET)
             .appendField(new Blockly.FieldDropdown([
-                [Blockly.Msg.TEXT_TRIM_LEFT, "0"], 
-                [Blockly.MIXGO_LEFT_MID, "1"],
-                [Blockly.MIXGO_RIGHT_MID, "2"],
-                [Blockly.Msg.TEXT_TRIM_RIGHT, "3"]
+                [Blockly.Msg.TEXT_TRIM_LEFT, "[0]"], 
+                [Blockly.MIXGO_LEFT_MID, "[1]"],
+                [Blockly.MIXGO_RIGHT_MID, "[2]"],
+                [Blockly.Msg.TEXT_TRIM_RIGHT, "[3]"],
+                [Blockly.MIXLY_ALL, ""]
                 ]), "key")
             .appendField(Blockly.MIXGO_LINE_SENSOR_VAL);
         this.setOutput(true,Number);
@@ -33,14 +34,15 @@ Blockly.Blocks['sensor_mixgocar_pin_near_line'] = {
 
 Blockly.Blocks['sensor_mixgocar_pin_near'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput()
             .appendField(Blockly.MIXLY_MICROBIT_PY_STORAGE_GET)
             .appendField(new Blockly.FieldDropdown([
-                [Blockly.MIXGO_LEFT_FRONT, "0"], 
-                [Blockly.MIXGO_RIGHT_FRONT, "1"],
-                [Blockly.MIXGO_LEFT_BACK, "3"],
-                [Blockly.MIXGO_RIGHT_BACK, "2"]
+                [Blockly.MIXGO_LEFT_FRONT, "[0]"], 
+                [Blockly.MIXGO_RIGHT_FRONT, "[1]"],
+                [Blockly.MIXGO_LEFT_BACK, "[3]"],
+                [Blockly.MIXGO_RIGHT_BACK, "[2]"],
+                [Blockly.MIXLY_ALL, ""]
                 ]), "key")
             .appendField(Blockly.MIXGO_PROXIMITY_SENSOR);
         this.setOutput(true,Number);
@@ -56,13 +58,13 @@ Blockly.Blocks['sensor_mixgocar_pin_near'] = {
 
 Blockly.Blocks['sensor_mixgocar_pin_near_state_change'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput()
             .appendField(Blockly.MIXLY_MIXGO_CAR_SENSOR_ONBOARD_CHANGE)
             .appendField(new Blockly.FieldDropdown([
-                [Blockly.MIXLY_MIXGO_CAR_SENSOR_ONBOARD_AUTO_CHANGE, "-1"],
-                [Blockly.MIXLY_MIXGO_CAR_USE_LINE_ONLY, "0"], 
-                [Blockly.MIXLY_MIXGO_CAR_USE_PROXIMITY_ONLY, "1"]
+                [Blockly.MIXLY_MIXGO_CAR_SENSOR_ONBOARD_AUTO_CHANGE, "AS"],
+                [Blockly.MIXLY_MIXGO_CAR_USE_LINE_ONLY, "LP"], 
+                [Blockly.MIXLY_MIXGO_CAR_USE_PROXIMITY_ONLY, "OA"]
                 ]), "key");
         this.setPreviousStatement(true, null);
         this.setNextStatement(true, null);
@@ -73,7 +75,7 @@ Blockly.Blocks['sensor_mixgocar_pin_near_state_change'] = {
 
 Blockly.Blocks['sensor_mixgocar_battery_left'] = {
     init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
         this.appendDummyInput()
         .appendField(Blockly.MIXLY_MIXGO_CAR_BATTERY_LEFT);
         this.setOutput(true);
@@ -82,86 +84,10 @@ Blockly.Blocks['sensor_mixgocar_battery_left'] = {
 };
 
 
-//not used
-Blockly.Blocks['sensor_mixgocar_button_is_pressed'] = {
-    init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
-        // this.appendValueInput('btn')
-        // .appendField(Blockly.MIXLY_BUTTON)
-        // .setCheck(Number);
-        this.appendDummyInput()
-        .appendField(Blockly.MIXLY_BUTTON+Blockly.MIXLY_IS_PRESSED);
-        this.setOutput(true, Boolean);
-        this.setInputsInline(true);
-        this.setTooltip(Blockly.MIXLY_SENOR_IS_PRESSED);
-    }
-};
-
-Blockly.Blocks['sensor_mixgocar_button_was_pressed'] = {
-    init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
-        // this.appendValueInput('btn')
-        // .appendField(Blockly.MIXLY_BUTTON)
-        // .setCheck(Number);
-        this.appendDummyInput()
-        .appendField(Blockly.MIXLY_BUTTON+Blockly.MIXLY_WAS_PRESSED);
-        this.setOutput(true, Boolean);
-        this.setInputsInline(true);
-        this.setTooltip(Blockly.MIXLY_SENOR_WAS_PRESSED);
-    }
-};
-
-//not used
-Blockly.Blocks['sensor_mixgocar_button_get_presses'] = {
-    init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
-        // this.appendValueInput('btn')
-        // .appendField(Blockly.MIXLY_BUTTON)
-        // .setCheck(Number);        
-        this.appendDummyInput()
-            .appendField(Blockly.MIXLY_BUTTON+Blockly.MIXLY_GET_PRESSES);
-        this.appendValueInput('VAR')
-            .setCheck(Number)    
-            .appendField(Blockly.MIXLY_GET_PRESSES_TIME);
-        this.setOutput(true, Number);
-        this.setInputsInline(true);
-        this.setTooltip(Blockly.Msg.PROCEDURES_DEFRETURN_RETURN+Blockly.MIXLY_BUTTON+Blockly.MIXLY_GET_PRESSES);
-    }
-};
 
 ////////////////////////////////////////////////////////////////////////////
 
-Blockly.Blocks['sensor_mixgoce_light'] = {
-    init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
-        this.appendDummyInput()
-        .appendField(Blockly.MIXLY_ESP32_LIGHT);
-        this.setOutput(true, Number);
-        this.setInputsInline(true);
-        this.setTooltip(Blockly.ESP32_SENSOR_NIXGO_LIGHT_TOOLTIP);
-    }
-};
 
-Blockly.Blocks['sensor_mixgoce_sound'] = {
-    init: function(){
-        this.setColour(Blockly.Blocks.sensor.HUE);
-        this.appendDummyInput()
-        .appendField(Blockly.MIXLY_ESP32_SOUND);
-        this.setOutput(true, Number);
-        this.setInputsInline(true);
-        this.setTooltip(Blockly.ESP32_SENSOR_NIXGO_SOUND_TOOLTIP);
-    }
-};
-
-Blockly.Blocks['sensor_mixgoce_temperature'] = {
-  	init: function() {
-	    this.setColour(Blockly.Blocks.sensor.HUE);
-	    this.appendDummyInput("")
-	    .appendField(Blockly.MIXLY_GETTEMPERATUE);
-	    this.setInputsInline(true);
-	    this.setOutput(true, Number);
-  	}
-};
 
 Blockly.Blocks['number1'] = {
    	init: function() {

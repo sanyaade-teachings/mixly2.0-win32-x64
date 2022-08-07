@@ -7,58 +7,31 @@ goog.require('Blockly.Python');
 
 Blockly.Python.sensor_mixgocar_pin_near_line = function(){
     var key = this.getFieldValue('key');
-    Blockly.Python.definitions_['import_mixgocar_info'] = 'from mixgocar import info';
-    var code = 'info.patrol()['+key+']';
+    Blockly.Python.definitions_['import_mixgocar_c3_onboard_info'] = 'from mixgocar_c3 import onboard_info';
+    var code = 'onboard_info.patrol()'+key;
     return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
 Blockly.Python.sensor_mixgocar_pin_near = function(){
     var key = this.getFieldValue('key');
-    Blockly.Python.definitions_['import_mixgocar_info'] = 'from mixgocar import info';
-    var code = 'info.obstacle()['+key+']';
+    Blockly.Python.definitions_['import_mixgocar_c3_onboard_info'] = 'from mixgocar_c3 import onboard_info';
+    var code = 'onboard_info.obstacle()'+key;
     return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
 Blockly.Python.sensor_mixgocar_pin_near_state_change = function(){
     var key = this.getFieldValue('key');
-    Blockly.Python.definitions_['import_mixgocar_info'] = 'from mixgocar import info';
-    if (key == '-1'){
-        var code = 'info.set_mod(1)\n';
-    }
-    else{
-        var code = 'info.set_mod(0)\n'+'info.switch('+key+')\n';    
-    }
+    Blockly.Python.definitions_['import_mixgocar_c3_onboard_info'] = 'from mixgocar_c3 import onboard_info';
+    var code = 'onboard_info.ir_mode(onboard_info.'+key+')\n';    
     return code;
 };
 
 Blockly.Python.sensor_mixgocar_battery_left = function(){
-    Blockly.Python.definitions_['import_mixgocar_info'] = 'from mixgocar import info';
-    var code =  'info.read_bat()';
-    return [code, Blockly.Python.ORDER_ATOMIC];
-};
-//not used
-Blockly.Python.sensor_mixgocar_button_is_pressed = function(){
-    Blockly.Python.definitions_['import_mixgocar_button'] = 'from mixgocar import button';
-    var btn = Blockly.Python.valueToCode(this, 'btn', Blockly.Python.ORDER_ATOMIC);
-    var code =  'button.is_pressed()';
+    Blockly.Python.definitions_['import_mixgocar_c3_onboard_info'] = 'from mixgocar_c3 import onboard_info';
+    var code =  'onboard_info.read_bat()';
     return [code, Blockly.Python.ORDER_ATOMIC];
 };
 
-Blockly.Python.sensor_mixgocar_button_was_pressed = function(){
-    Blockly.Python.definitions_['import_mixgocar_button'] = 'from mixgocar import button';
-    var btn = Blockly.Python.valueToCode(this, 'btn', Blockly.Python.ORDER_ATOMIC);
-    var code =  'button.was_pressed()';
-    return [code, Blockly.Python.ORDER_ATOMIC];
-};
-
-//not used
-Blockly.Python.sensor_mixgocar_button_get_presses = function(){
-    Blockly.Python.definitions_['import_mixgocar_button'] = 'from mixgocar import button';
-    var btn = Blockly.Python.valueToCode(this, 'btn', Blockly.Python.ORDER_ATOMIC);
-    var argument = Blockly.Python.valueToCode(this, 'VAR', Blockly.Python.ORDER_ASSIGNMENT) || '0';
-    var code =  'button.get_presses(' + argument + ')';
-    return [code, Blockly.Python.ORDER_ATOMIC];
-};
 
 //////////////////////////////////////////////////////////////////////////////////////////
 

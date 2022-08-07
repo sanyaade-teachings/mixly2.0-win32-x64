@@ -4,36 +4,13 @@ goog.provide('Blockly.Python.actuator');
 goog.require('Blockly.Python');
 
 
-Blockly.Python.actuator_onboard_neopixel_write=function(){
-  Blockly.Python.definitions_['import_mixgocar'] = 'import mixgocar';
-  var code= 'mixgocar.rgb.write()\n';   
-  return code;
-};
 
-Blockly.Python.actuator_onboard_neopixel_rgb=function(){
-  Blockly.Python.definitions_['import_mixgocar'] = 'import mixgocar';
-  var value_led = Blockly.Python.valueToCode(this, '_LED_', Blockly.Python.ORDER_ATOMIC);
-  var value_rvalue = Blockly.Python.valueToCode(this, 'RVALUE', Blockly.Python.ORDER_ATOMIC);
-  var value_gvalue = Blockly.Python.valueToCode(this, 'GVALUE', Blockly.Python.ORDER_ATOMIC);
-  var value_bvalue = Blockly.Python.valueToCode(this, 'BVALUE', Blockly.Python.ORDER_ATOMIC);
-  var code= 'mixgocar.rgb['+value_led+'] = ('+value_gvalue+', '+value_rvalue+', '+value_bvalue+')\n';
-  return code;
-};
-
-Blockly.Python.actuator_onboard_neopixel_rgb_all=function(){
-  Blockly.Python.definitions_['import_mixgocar'] = 'import mixgocar';
-  var value_rvalue = Blockly.Python.valueToCode(this, 'RVALUE', Blockly.Python.ORDER_ATOMIC);
-  var value_gvalue = Blockly.Python.valueToCode(this, 'GVALUE', Blockly.Python.ORDER_ATOMIC);
-  var value_bvalue = Blockly.Python.valueToCode(this, 'BVALUE', Blockly.Python.ORDER_ATOMIC);
-  var code= 'mixgocar.rgb.fill(('+value_gvalue+', '+value_rvalue+', '+value_bvalue+'))\n';
-  return code;
-};
 
 Blockly.Python.actuator_stepper_keep=function(){
     var v = this.getFieldValue('VAR');
-    Blockly.Python.definitions_['import_mixgocar_'+ v] = 'from mixgocar import '+ v;
+    Blockly.Python.definitions_['import_mixgocar_c3_car'] = 'from mixgocar_c3 import car';
     var speed = Blockly.Python.valueToCode(this, 'speed', Blockly.Python.ORDER_ASSIGNMENT);
-    var code = v+"("+ speed +")\n";
+    var code = 'car.motor_move("'+v+'",'+ speed +")\n";
     return code;
 };
 
@@ -48,8 +25,8 @@ Blockly.Python.actuator_stepper=function(){
 
 Blockly.Python.actuator_stepper_stop=function(){
     var v = this.getFieldValue('VAR');
-    Blockly.Python.definitions_['import_mixgocar_'+ v] = 'from mixgocar import '+ v;
-    var code = v+"()\n";
+    Blockly.Python.definitions_['import_mixgocar_c3_car'] = 'from mixgocar_c3 import car';
+    var code = 'car.motor_move("'+v+'"' +")\n";
     return code;
 };
 
@@ -105,20 +82,18 @@ Blockly.Python.esp32_s2_mixgo_car_audio_wave_is_playing=function(){
 };
 
 Blockly.Python.actuator_dc_motor=function(){
-    Blockly.Python.definitions_['import_ms32006'] = 'import ms32006';
     var wheel = this.getFieldValue('wheel');
-    Blockly.Python.definitions_['import_mixgocar_step'+ wheel] = 'from mixgocar import step'+ wheel;
+    Blockly.Python.definitions_['import_mixgocar_c3_car'] = 'from mixgocar_c3 import car';
     var v = this.getFieldValue('direction');
     var speed = Blockly.Python.valueToCode(this, 'speed', Blockly.Python.ORDER_ATOMIC);
-    var code = "step"+wheel+".dc_motor(ms32006."+v+","+speed+")\n";
+    var code = "car.motor(car.MOTO_"+wheel+',"'+v+'",'+speed+")\n";
     return code;
 };
 
 Blockly.Python.actuator_dc_motor_stop=function(){
-    Blockly.Python.definitions_['import_ms32006'] = 'import ms32006';
     var wheel = this.getFieldValue('wheel');
-    Blockly.Python.definitions_['import_mixgocar_step'+ wheel] = 'from mixgocar import step'+ wheel;
+    Blockly.Python.definitions_['import_mixgocar_c3_car'] = 'from mixgocar_c3 import car';
     var v = this.getFieldValue('direction');
-    var code = "step"+wheel+".dc_motor(ms32006."+v+")\n";
+    var code = "car.motor(car.MOTO_"+wheel+',"'+v+'"'+")\n";
     return code;
 };

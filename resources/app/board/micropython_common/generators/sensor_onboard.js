@@ -40,7 +40,37 @@ Blockly.Python.sensor_mixgo_button_attachInterrupt = function () {
     return code;
 };
 //ok
+Blockly.Python.sensor_mixgocar42_button_is_pressed = function(){
+    var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
+    Blockly.Python.definitions_['import_'+version] = 'import '+version;
+    var code =  version + '.' + 'button.is_pressed()';
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+//ok
+Blockly.Python.sensor_mixgocar42_button_was_pressed = function(){
+    var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
+    Blockly.Python.definitions_['import_'+version] = 'import '+version;
+    var code =  version + '.'+ 'button.was_pressed()';
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
 
+Blockly.Python.sensor_mixgocar42_button_get_presses = function(){
+    var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
+    Blockly.Python.definitions_['import_'+version] = 'import '+version;
+    var argument = Blockly.Python.valueToCode(this, 'VAR', Blockly.Python.ORDER_ASSIGNMENT) || '0';
+    var code =   version + '.' + 'button.get_presses(' + argument + ')';
+    return [code, Blockly.Python.ORDER_ATOMIC];
+};
+
+Blockly.Python.sensor_mixgocar42_button_attachInterrupt = function () {
+    Blockly.Python.definitions_['import_machine'] = 'import machine';
+    var version = Mixly.Boards.getSelectedBoardKey().split(':')[2]
+    Blockly.Python.definitions_['import_'+version] = 'import '+version;
+    var dropdown_mode = this.getFieldValue('mode');
+    var atta = Blockly.Python.valueToCode(this, 'DO', Blockly.Python.ORDER_ATOMIC);
+    var code =  version + '.'  + 'button.irq' + '(handler = ' + atta + ', trigger = ' + dropdown_mode + ')\n'
+    return code;
+};
 
 Blockly.Python.HCSR04 = function () {
     Blockly.Python.definitions_['import_sonar'] = 'import sonar';

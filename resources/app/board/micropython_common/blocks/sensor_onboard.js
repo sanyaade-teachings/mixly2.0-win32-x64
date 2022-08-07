@@ -69,6 +69,65 @@ Blockly.Blocks.sensor_mixgo_button_attachInterrupt = {
 }
 };
 
+Blockly.Blocks['sensor_mixgocar42_button_is_pressed'] = {
+    init: function(){
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
+        this.appendDummyInput()
+        .appendField(Blockly.MIXLY_BUTTON)
+        this.appendDummyInput()
+        .appendField(Blockly.MIXLY_IS_PRESSED);
+        this.setOutput(true, Boolean);
+        this.setInputsInline(true);
+        this.setTooltip(Blockly.MIXLY_SENOR_IS_PRESSED);
+    }
+};
+
+Blockly.Blocks['sensor_mixgocar42_button_was_pressed'] = {
+    init: function(){
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
+        this.appendDummyInput()
+        .appendField(Blockly.MIXLY_BUTTON)
+        this.appendDummyInput()
+        .appendField(Blockly.MIXLY_WAS_PRESSED);
+        this.setOutput(true, Boolean);
+        this.setInputsInline(true);
+        this.setTooltip(Blockly.MIXLY_SENOR_WAS_PRESSED);
+    }
+};
+
+Blockly.Blocks['sensor_mixgocar42_button_get_presses'] = {
+    init: function(){
+        this.setColour(Blockly.Blocks.sensor_onboard.HUE);
+        this.appendDummyInput()
+        .appendField(Blockly.MIXLY_BUTTON)
+        this.appendDummyInput()
+            .appendField(Blockly.MIXLY_GET_PRESSES);
+        this.appendValueInput('VAR')
+            .setCheck(Number)    
+            .appendField(Blockly.MIXLY_GET_PRESSES_TIME);
+        this.setOutput(true, Number);
+        this.setInputsInline(true);
+        this.setTooltip(Blockly.Msg.PROCEDURES_DEFRETURN_RETURN+Blockly.MIXLY_BUTTON+Blockly.MIXLY_GET_PRESSES);
+    }
+};
+
+Blockly.Blocks.sensor_mixgocar42_button_attachInterrupt = {
+  init: function() {
+    this.setColour(Blockly.Blocks.sensor_onboard.HUE);
+    this.appendDummyInput()
+    .appendField(Blockly.MIXLY_ESP32_INTERRUPT)
+    .appendField(Blockly.MIXLY_BUTTON)
+    this.appendDummyInput("")
+    .appendField(Blockly.MIXLY_MODE)
+    .appendField(new Blockly.FieldDropdown([[Blockly.MIXLY_RISING, "machine.Pin.IRQ_RISING"], [Blockly.MIXLY_FALLING, "machine.Pin.IRQ_FALLING"], [Blockly.MIXLY_CHANGE, "(machine.Pin.IRQ_RISING | machine.Pin.IRQ_FALLING)"]]), "mode");
+    this.appendValueInput('DO')
+    .appendField(Blockly.MIXLY_DO)
+    this.setPreviousStatement(true);
+    this.setNextStatement(true);
+    this.setTooltip(Blockly.MIXLY_TOOLTIP_INOUT_ATTACHINTERRUPT);
+}
+};
+
 Blockly.Blocks['sensor_mixgo_pin_pressed'] = {
     init: function(){
         this.setColour(Blockly.Blocks.sensor_onboard.HUE);

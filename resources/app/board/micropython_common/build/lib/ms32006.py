@@ -124,7 +124,7 @@ class MS32006:
 			busy =(self._read_u8(0x0d)>>4)&1
 		return bool(busy)
 		
-	def dc_motor(self,state,speed):   #直流电机驱动
+	def dc_motor(self,state,speed=100):   #直流电机驱动
 		if (state==MOT_CW) | (state==MOT_CCW) :
 			speed_st=speed*127//100 |0x80
 			self._write_u8(0x0A,speed_st)

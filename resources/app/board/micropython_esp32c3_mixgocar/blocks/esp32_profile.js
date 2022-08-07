@@ -9,6 +9,7 @@ var profile = {
         // analog_input: [["adc0", "adc0"], ["adc1", "adc1"], ["adc2", "adc2"],["adc3", "adc3"], ["adc4", "adc4"], ["adc5", "adc5"]],        
         // pwm_output: [["pwm2", "pwm2"], ["pwm4", "pwm4"], ["pwm5", "pwm5"], ["pwm7", "pwm7"],["pwm8", "pwm8"],["pwm12", "pwm12"], ["pwm13", "pwm13"], ["pwm14", "pwm14"], ["pwm15", "pwm15"], ["pwm19", "pwm19"], ["pwm20", "pwm20"], ["pwm21", "pwm21"], ["pwm22", "pwm22"], ["pwm25", "pwm25"], ["pwm26", "pwm26"], ["pwm27", "pwm27"], ["pwm32", "pwm32"],["pwm33", "pwm33"]],
         // analog_output: [["adc0", "adc0"], ["adc1", "adc1"], ["adc2", "adc2"],["adc3", "adc3"], ["adc4", "adc4"], ["adc5", "adc5"]],        
+        espnow_channel: [["0", "0"], ["1", "1"], ["2", "2"], ["3", "3"], ["4", "4"], ["5", "5"], ["6", "6"], ["7", "7"], ["8", "8"], ["9", "9"],["10", "10"], ["11", "11"],["12", "12"], ["13", "13"]],
         i2c_A_pin: [["6", "6"], ["9", "9"]],
         i2c_B_pin: [["7", "7"], ["10", "10"]],
         spi_A_pin: [["6", "6"], ["9", "9"]],

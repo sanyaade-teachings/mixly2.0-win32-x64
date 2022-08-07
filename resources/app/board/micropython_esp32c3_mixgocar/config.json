@@ -1,4 +1,8 @@
 {
+    "board": {
+        "MixGo Car 4.2": "micropython:esp32c3:mixgocar_c3"
+       
+    },
     "language": "MicroPython",
     "burn": {
         "portSelect": "all",
