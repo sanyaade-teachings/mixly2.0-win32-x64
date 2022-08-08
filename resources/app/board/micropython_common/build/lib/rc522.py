@@ -1,17 +1,15 @@
 """
 RC522
 
-CircuitPython library for the RC522 RFID-I2C
+CircuitPython library for the RC522 RFID (I2C&SPI)
 =======================================================
-#Preliminary composition		20211008
-#修复读卡速度，及间隔None		20211025
-#增加其他扇区数据读写			20211025
-#变更micropython库SPI-to-I2C	20220114
-#Format unified					20220623
+#Preliminary composition						20211008
+#Optimized integration, merging I2C and SPI     20220808
 
 dahanzimin From the Mixly Team
 
 """
+import machine
 from micropython import const
 
 RC_OK          = 0
@@ -42,20 +40,40 @@ def mydecode(a):
 	return r
 
 class RC522:
-	def __init__(self, i2c_bus,addr=0x28):
-		self._device= i2c_bus
-		self._address = addr
-		self._BUFFER = bytearray(1)
+	def __init__(self, drive_bus,cs_pin=None,addr=0x28):
+		self._device= drive_bus
+		if type(drive_bus) in [machine.I2C,machine.SoftI2C]:
+			self._type=True
+			self._address = addr
+		elif type(drive_bus) in [machine.SPI,machine.SoftSPI]:
+			self._type=False
+			self._cs = machine.Pin(cs_pin, machine.Pin.OUT)
+		else:
+			raise ValueError("RC522 only supports I2C and SPI")
+
 		self.init()	
 		self.add_list=[1,2,4,5,6,8,9,10,12,13,14,16,17,18,20,21,22,24,25,26,28,29,30,32,33,34,36,37,38,40,41,42,44,45,46,48,49,50,52,53,54,56,57,58,60,61,62]
 
 	def _wreg(self, reg, val):
 		'''Write memory address'''
-		self._device.writeto_mem(self._address,reg,val.to_bytes(1, 'little'))
+		if self._type:
+			self._device.writeto_mem(self._address,reg,val.to_bytes(1, 'little'))
+		else:
+			self._cs.value(0)
+			self._device.write(b'%c' % int(0xff & ((reg << 1) & 0x7e)))
+			self._device.write(b'%c' % int(0xff & val))
+			self._cs.value(1)
 
 	def _rreg(self, reg):
 		'''Read memory address'''
-		return  self._device.readfrom_mem(self._address, reg, 1)[0]
+		if self._type:
+			return  self._device.readfrom_mem(self._address, reg, 1)[0]
+		else:
+			self._cs.value(0)
+			self._device.write(b'%c' % int(0xff & (((reg << 1) & 0x7e) | 0x80)))
+			val = self._device.read(1)
+			self._cs.value(1)
+			return val[0]
 
 	def _sflags(self, reg, mask):
 		self._wreg(reg, self._rreg(reg) | mask)
