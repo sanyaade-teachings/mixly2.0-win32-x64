@@ -2,7 +2,7 @@
 	"name": "Mixly",
 	"version": "2.0rc2",
 	"description": "Mixly",
-	"main": "main.js",
+	"main": "./src/main.js",
 	"scripts": {
 		"start": "electron .",
 		"buildWin32Ia32": "electron-packager ./ Mixly --platform=win32 --arch=ia32  --out=./app --app-version=2.0.0 --overwrite --icon=./files/mixly.ico",
