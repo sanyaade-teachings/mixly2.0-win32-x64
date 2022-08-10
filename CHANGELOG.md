@@ -1,5 +1,24 @@
 ### 更新日志
 
+#### 2.0 rc3 2022-08-10
+
+- 修复自代码区切换至模块区颜色选择模块尺寸改变
+- 修复串口操作导致窗口崩溃
+- 修复Blockly解析xml字符串报错
+- 修复Arduino下创建函数块右键生成函数块乱码
+- 修复双击文件打开程序不显示
+- 更新板卡管理工具和库管理工具
+- 更新Electron  ( version: 19.0.6 )
+- 更新Ace、Ampy、Layui、fontello、skulpt、amWiki、fpJS
+- 更新XPython板卡和Arduino板卡
+- 更新Mixly板卡页面布局
+- 更新配置Arduino板卡操作
+- 串口输出框、代码框添加右键菜单
+- 添加反馈、wiki、例程和图文转换按钮
+- 添加Blockly工具箱查找和工作区查找
+- 添加书包
+- 添加Blockly.FieldGridDropdown、Blockly.FieldBitmap和Blockly.FieldSlider
+
 #### 2.0 rc2 2022-03-19
 
 - 修复ESP32数码管问题
