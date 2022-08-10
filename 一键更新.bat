@@ -140,6 +140,7 @@ git config --system core.longpaths true
 git fetch --all
 git reset --hard origin/master
 git pull origin master
+git submodule foreach "git pull origin master"
 @echo off
 rd/s/q "%~dp0\.git\logs\"
 git gc
