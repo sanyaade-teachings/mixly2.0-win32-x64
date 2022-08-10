@@ -1,6 +1,6 @@
 {
 	"name": "Mixly",
-	"version": "2.0rc2",
+	"version": "2.0rc3",
 	"description": "Mixly",
 	"main": "./src/main.js",
 	"scripts": {
