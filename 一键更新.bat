@@ -8,6 +8,9 @@ set b="%a%Mixly.exe"
 rem echo %b%
 wmic process where 'executablepath=%b%' call Terminate > nul
 
+"%~dp0\Git\cmd\git" config --global --add safe.directory "%~dp0"
+"%~dp0\Git\cmd\git" config --system core.longpaths true
+
 rem 删除.git_win_stm32文件夹
 if exist "%~dp0\.git_win_stm32" (
 	attrib -h "%~dp0\.git_win_stm32"
@@ -136,7 +139,6 @@ ren "%~dp0\.git_mixly\" .git
 echo Mixly2.0 正在升级中，请等待...
 @echo off
 cd "%~dp0\Git\cmd\"
-git config --system core.longpaths true
 git fetch --all
 git reset --hard origin/master
 git pull origin master
