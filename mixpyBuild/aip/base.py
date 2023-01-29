@@ -11,8 +11,8 @@ import base64
 import time
 import sys
 import requests
-requests.packages.urllib3.disable_warnings()
 
+requests.packages.urllib3.disable_warnings()
 
 if sys.version_info.major == 2:
     from urllib import urlencode
@@ -22,6 +22,7 @@ else:
     from urllib.parse import urlencode
     from urllib.parse import quote
     from urllib.parse import urlparse
+
 
 class AipBase(object):
     """
@@ -48,7 +49,9 @@ class AipBase(object):
         self.__connectTimeout = 60.0
         self.__socketTimeout = 60.0
         self._proxies = {}
-        self.__version = '2_2_16'
+        self.__version = '4.15.13'
+        self.s = self.__client.session()
+        self.s.keep_alive = False
 
     def getVersion(self):
         """
@@ -91,24 +94,26 @@ class AipBase(object):
 
             data = self._proccessRequest(url, params, data, headers)
             headers = self._getAuthHeaders('POST', url, params, headers)
-            response = self.__client.post(url, data=data, params=params,
-                            headers=headers, verify=False, timeout=(
-                                self.__connectTimeout,
-                                self.__socketTimeout,
-                            ), proxies=self._proxies
-                        )
+
+            response = self.s.post(url, data=data, params=params,
+                              headers=headers, verify=False, timeout=(
+                    self.__connectTimeout,
+                    self.__socketTimeout,
+                ), proxies=self._proxies
+                              )
             obj = self._proccessResult(response.content)
 
             if not self._isCloudUser and obj.get('error_code', '') == 110:
                 authObj = self._auth(True)
                 params = self._getParams(authObj)
                 response = self.__client.post(url, data=data, params=params,
-                                headers=headers, verify=False, timeout=(
-                                    self.__connectTimeout,
-                                    self.__socketTimeout,
-                                ), proxies=self._proxies
-                            )
+                                              headers=headers, verify=False, timeout=(
+                        self.__connectTimeout,
+                        self.__socketTimeout,
+                    ), proxies=self._proxies
+                                              )
                 obj = self._proccessResult(response.content)
+            response.close()
         except (requests.exceptions.ReadTimeout, requests.exceptions.ConnectTimeout) as e:
             return {
                 'error_code': 'SDK108',
@@ -149,7 +154,10 @@ class AipBase(object):
             api access auth
         """
 
-        #未过期
+        if self._isCloudUser:
+            return self._authObj
+
+        # 未过期
         if not refresh:
             tm = self._authObj.get('time', 0) + int(self._authObj.get('expires_in', 0)) - 30
             if tm > int(time.time()):
@@ -163,7 +171,6 @@ class AipBase(object):
             self.__connectTimeout,
             self.__socketTimeout,
         ), proxies=self._proxies).json()
-
         self._isCloudUser = not self._isPermission(obj)
         obj['time'] = int(time.time())
         self._authObj = obj
@@ -217,8 +224,8 @@ class AipBase(object):
         # 1 Generate SigningKey
         val = "bce-auth-v%s/%s/%s/%s" % (version, self._apiKey, timestamp, expire)
         signingKey = hmac.new(self._secretKey.encode('utf-8'), val.encode('utf-8'),
-            hashlib.sha256
-        ).hexdigest()
+                              hashlib.sha256
+                              ).hexdigest()
 
         # 2 Generate CanonicalRequest
         # 2.1 Genrate CanonicalURI
@@ -246,8 +253,8 @@ class AipBase(object):
 
         # 3 Generate Final Signature
         signature = hmac.new(signingKey.encode('utf-8'), canonicalRequest.encode('utf-8'),
-                        hashlib.sha256
-                    ).hexdigest()
+                             hashlib.sha256
+                             ).hexdigest()
 
         headers['authorization'] = 'bce-auth-v%s/%s/%s/%s/%s/%s' % (
             version,
