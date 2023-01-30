@@ -34,6 +34,8 @@ class AipBodyAnalysis(AipBase):
 
     __bodyTrackingUrl = 'https://aip.baidubce.com/rest/2.0/image-classify/v1/body_tracking'
 
+    __handAnalysisUrl = 'https://aip.baidubce.com/rest/2.0/image-classify/v1/hand_analysis'
+
     
     def bodyAnalysis(self, image, options=None):
         """
@@ -126,4 +128,17 @@ class AipBodyAnalysis(AipBase):
         data.update(options)
 
         return self._request(self.__bodyTrackingUrl, data)
+    
+    def handAnalysis(self, image, options=None):
+        """
+            手部关键点识别
+        """
+        options = options or {}
+
+        data = {}
+        data['image'] = base64.b64encode(image).decode()
+
+        data.update(options)
+
+        return self._request(self.__handAnalysisUrl, data)
     

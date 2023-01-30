@@ -9,25 +9,11 @@ import re
 import sys
 import math
 import time
-import base64
 from .base import AipBase
 from .base import base64
 from .base import json
 from .base import urlencode
 from .base import quote
-from my_common import *
-
-def get_image_base64_content(image_file):
-    """获取图片base64编码信息
-
-    Args:
-        image_file: 图片
-
-    Returns:
-        base64编码的图片信息
-    """
-    with open(image_file, 'rb') as fp:
-        return str(base64.b64encode(fp.read()), 'utf-8')
 
 class AipFace(AipBase):
 
@@ -67,7 +53,13 @@ class AipFace(AipBase):
 
     __videoSessioncodeUrl = 'https://aip.baidubce.com/rest/2.0/face/v1/faceliveness/sessioncode'
 
-    
+    __verifyUrl = "https://aip.baidubce.com/rest/2.0/face/v4/mingjing/verify"
+
+    __faceMatchUrlV4 = 'https://aip.baidubce.com/rest/2.0/face/v4/mingjing/match'
+
+    __onlinePictureLiveV4 = 'https://aip.baidubce.com/rest/2.0/face/v4/faceverify'
+
+
     def detect(self, image, image_type, options=None):
         """
             人脸检测
@@ -323,7 +315,7 @@ class AipFace(AipBase):
 
     __matchUrl = 'https://aip.baidubce.com/rest/2.0/face/v3/match'
 
-    def selfmatch(self, images):
+    def match(self, images):
         """
             人脸比对
         """
@@ -332,25 +324,49 @@ class AipFace(AipBase):
             'Content-Type': 'application/json',
         })
 
-    def match(self, img_file1, img_file2, options=None):
-        # 1.获取图片内容
-        images = [
-            {
-                'image': get_image_base64_content(img_file1),
-                'image_type': 'BASE64',
-            },
-            {
-                'image': get_image_base64_content(img_file2),
-                'image_type': 'BASE64',
-            }
-        ]
-        # 2.识别
-        
-        rtn = self.selfmatch(images)
-        # 3.返回识别结果
-        # print_json(rtn)
-        if 'result' not in rtn.keys():
-            print_error(rtn['error_code'], rtn['error_msg'])
-            return []
-        else:
-            return rtn['result']    
+    def faceMingJingVerify(self, id_card_number, name, image, options=None):
+        """
+            人脸 - 人脸实名认证V4
+        """
+        options = options or {}
+
+        data = {}
+        data['id_card_number'] = id_card_number
+        data['name'] = name
+        data['image'] = image
+
+        data.update(options)
+        return self._request(self.__verifyUrl, json.dumps(data, ensure_ascii=False),
+                             {'Content-Type': 'application/json;charset=utf-8'})
+
+    def faceMingJingMatch(self, image, imageType, registerImage, registerImageType, options=None):
+        """
+            人脸 - 人脸对比V4
+        """
+        options = options or {}
+
+        data = {}
+        data['image'] = image
+        data['image_type'] = imageType
+        data['register_image'] = registerImage
+        data['register_image_type'] = registerImageType
+
+        data.update(options)
+        return self._request(self.__faceMatchUrlV4, json.dumps(data, ensure_ascii=False),
+                             {'Content-Type': 'application/json;charset=utf-8'})
+
+    def onlinePictureLiveV4(self, sdkVersion, options=None):
+        """
+            人脸 - 在线图片活体V4
+        """
+        options = options or {}
+
+        data = {}
+        data['sdk_version'] = sdkVersion
+
+        data.update(options)
+        return self._request(self.__onlinePictureLiveV4, json.dumps(data, ensure_ascii=False),
+                             {'Content-Type': 'application/json;charset=utf-8'})
+
+
+
