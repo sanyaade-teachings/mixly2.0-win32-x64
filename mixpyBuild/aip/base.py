@@ -120,6 +120,11 @@ class AipBase(object):
                 'error_msg': 'connection or read data timeout',
             }
 
+        if 'error_msg' in obj.keys():
+            raise RuntimeError(error_msgobj["error_msg"], obj["error_code"])
+        if 'err_msg' in obj.keys():
+            if not (obj["err_msg"] == 'success.'):
+                raise RuntimeError(obj["err_msg"], obj["err_no"])    
         return obj
 
     def _validate(self, url, data):
